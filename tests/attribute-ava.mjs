@@ -1,5 +1,5 @@
 import test from "ava";
-import { tokens, getAttribute } from "../src/attribute.mjs";
+import { tokens, getAttribute } from "pacc";
 
 function tt(t, input, expected) {
   try {

@@ -11,6 +11,9 @@
       "email": "markus.felten@gmx.de"
     }
   ],
+  "exports": {
+    ".": "./src/attribute.mjs"
+  },
   "license": "BSD-2-Clause",
   "scripts": {
     "test": "npm run test:browser-ava && npm run test:ava",
