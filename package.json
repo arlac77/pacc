@@ -1,6 +1,7 @@
 {
   "name": "pacc",
   "version": "0.0.0-semantic-release",
+  "description": "property path utils",
   "publishConfig": {
     "access": "public"
   },
