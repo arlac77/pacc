@@ -27,11 +27,11 @@ export function* tokens(string) {
       case "string-escaping":
         const esc = {
           "\\": "\\",
-          t: "\t",
           b: "\b",
-          r: "\r",
+          f: "\f",
           n: "\n",
-          f: "\f"
+          r: "\r",
+          t: "\t"
         };
         buffer += esc[c];
         state = "string";
