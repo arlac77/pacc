@@ -27,7 +27,7 @@ function sat(t, expression, candidate, value) {
 
     t.deepEqual(result, value);
   } catch (e) {
-    t.deepEqual(e, expected);
+    t.deepEqual(e, value);
   }
 }
 
