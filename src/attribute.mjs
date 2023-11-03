@@ -233,6 +233,10 @@ export function setAttribute(object, expression, value) {
  * @returns {any} value associated with the given property name
  */
 export function getAttribute(object, expression) {
+  if (object?.[expression] !== undefined) {
+    return object[expression];
+  }
+
   return getAttributeAndOperator(object, expression)[0];
 }
 
