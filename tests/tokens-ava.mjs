@@ -17,8 +17,10 @@ tt.title = (providedTitle = "token", input, expected) =>
 
 test(tt, '"a', new Error("unterminated string"));
 
-test(tt, " 'a'b\"c\"d ", ["a", "b", "c", "d"]);
+test(tt, " \t'a'b\"c\"d ", ["a", "b", "c", "d"]);
 test(tt, " 'a\\\\\\n\\r\\t\\b' ", ["a\\\n\r\t\b"]);
+test(tt, " ''+''", ["","+",""]);
+test(tt, " ''=''", ["","=",""]);
 
 test(tt, "a< <= >= b>", ["a", "<", "<=", ">=", "b", ">"]);
 test(tt, "a=", ["a", "="]);
