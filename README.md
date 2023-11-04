@@ -21,13 +21,13 @@ propetty path utils
 
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
-*   [tokens](#tokens)
-    *   [Parameters](#parameters)
 *   [setAttribute](#setattribute)
-    *   [Parameters](#parameters-1)
+    *   [Parameters](#parameters)
 *   [getAttribute](#getattribute)
-    *   [Parameters](#parameters-2)
+    *   [Parameters](#parameters-1)
 *   [getAttributeAndOperator](#getattributeandoperator)
+    *   [Parameters](#parameters-2)
+*   [tokens](#tokens)
     *   [Parameters](#parameters-3)
 
 ## AttributeDefinition
@@ -46,14 +46,6 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `set` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** set the value
 *   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
 *   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable use to provide the value
-
-## tokens
-
-Split property path into tokens
-
-### Parameters
-
-*   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ## setAttribute
 
@@ -90,6 +82,14 @@ The name may be a property path like 'a.b.c <='.
 *   `getters`   (optional, default `{}`)
 
 Returns **\[any, [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)]** value associated with the given property name
+
+## tokens
+
+Split property path into tokens
+
+### Parameters
+
+*   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 # install
 
