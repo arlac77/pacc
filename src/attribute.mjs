@@ -30,8 +30,6 @@ export function setAttribute(object, expression, value) {
 
   for (const token of tokens(expression)) {
     switch (token) {
-      case ">":
-      case "<":
       case ".":
       case "[":
       case "]":

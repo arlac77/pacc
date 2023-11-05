@@ -78,17 +78,16 @@ export function* tokens(string) {
       case "&":
       case "|":
         switch (state) {
-          case '&':
-          case '|':
-            if(state === c) {
+          case "&":
+          case "|":
+            if (state === c) {
               yield state + c;
               state = undefined;
-            }
-            else {
+            } else {
               yield state;
               state = c;
             }
-          break;
+            break;
           case undefined:
             state = c;
             break;
@@ -121,6 +120,9 @@ export function* tokens(string) {
             state += c;
         }
         break;
+      case ":":
+      case ";":
+      case ",":
       case ".":
       case "+":
       case "-":
