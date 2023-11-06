@@ -5,21 +5,32 @@
  * @yields {string}
  */
 export function* tokens(string) {
-  let state, buffer;
+  let state, buffer, hex;
 
   for (const c of string) {
     switch (state) {
+      case "string-escaping-hex":
+        hex += c;
+        if (hex.length === 4) {
+          buffer += String.fromCharCode(parseInt(hex, 16));
+          state = "string";
+        }
+        continue;
       case "string-escaping":
-        const esc = {
-          "\\": "\\",
-          b: "\b",
-          f: "\f",
-          n: "\n",
-          r: "\r",
-          t: "\t"
-        };
-        buffer += esc[c];
-        state = "string";
+        if (c === "u") {
+          state = "string-escaping-hex";
+          hex = "";
+        } else {
+          const esc = {
+            b: "\b",
+            f: "\f",
+            n: "\n",
+            r: "\r",
+            t: "\t"
+          };
+          buffer += esc[c] || c;
+          state = "string";
+        }
         continue;
     }
 
