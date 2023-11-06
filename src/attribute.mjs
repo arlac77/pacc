@@ -13,9 +13,20 @@
  * @property {string[]|string} [env] environment variable use to provide the value
  */
 
-import { tokens } from "./tokens.mjs";
-
-export { tokens };
+import {
+  tokens,
+  EQUAL,
+  NOT_EQUAL,
+  DOT,
+  OPEN_BRACKET,
+  CLOSE_BRACKET,
+  LESS,
+  LESS_EQUAL,
+  GREATER,
+  GREATER_EQUAL,
+  STAR
+} from "./tokens.mjs";
+export * from "./tokens.mjs";
 
 /**
  * Set Object attribute.
@@ -30,9 +41,9 @@ export function setAttribute(object, expression, value) {
 
   for (const token of tokens(expression)) {
     switch (token) {
-      case ".":
-      case "[":
-      case "]":
+      case DOT:
+      case OPEN_BRACKET:
+      case CLOSE_BRACKET:
         break;
 
       default:
@@ -75,24 +86,24 @@ export function getAttribute(object, expression) {
  * @returns {[any,string]} value associated with the given property name
  */
 export function getAttributeAndOperator(object, expression, getters = {}) {
-  let op = "=";
+  let op = EQUAL;
   let predicateTokens;
 
   for (const token of tokens(expression)) {
     switch (token) {
-      case ">=":
-      case "<=":
-      case ">":
-      case "<":
-      case "=":
-      case "!=":
+      case GREATER_EQUAL:
+      case LESS_EQUAL:
+      case GREATER:
+      case LESS:
+      case EQUAL:
+      case NOT_EQUAL:
         op = token;
         break;
-      case ".":
-      case "[":
+      case DOT:
+      case OPEN_BRACKET:
         predicateTokens = [];
         break;
-      case "]":
+      case CLOSE_BRACKET:
         // TODO: should loop over array actually getAttribute api should deliver iterators
         if (object[Symbol.iterator]) {
           object = [...object][0];
@@ -100,7 +111,7 @@ export function getAttributeAndOperator(object, expression, getters = {}) {
 
         predicateTokens = undefined;
         break;
-      case "*":
+      case STAR:
         predicateTokens.push(token);
         break;
 

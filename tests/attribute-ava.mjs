@@ -15,6 +15,7 @@ gat.title = (providedTitle = "getAttribute", expression, candidate, expected) =>
     expected instanceof Error ? " =>ERROR" : ""
   }`.trim();
 
+test(gat, "a", { a: 1 }, 1);
 test(gat, "a.b", { a: { b: 2 } }, 2);
 test(gat, "'a '.b", { "a ": { b: 3 } }, 3);
 test(gat, "a [ * ]", { a: [4] }, 4);

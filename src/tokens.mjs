@@ -1,3 +1,41 @@
+
+
+const lookup = {};
+
+function createToken(str)
+{
+  const token = {str};
+  lookup[str] = token;
+  return token;
+}
+
+export const PLUS = createToken("+");
+export const MINUS = createToken("-");
+export const STAR =createToken("*");
+export const DIVIDE = createToken("/");
+export const NOT = createToken("!");
+export const NOT_EQUAL = createToken("!=");
+export const GREATER = createToken(">");
+export const GREATER_EQUAL = createToken(">=");
+export const LESS = createToken("<");
+export const LESS_EQUAL = createToken("<=");
+export const EQUAL = createToken("=");
+export const OPEN_ROUND = createToken("(");
+export const CLOSE_ROUND = createToken(")");
+export const OPEN_BRACKET = createToken("[");
+export const CLOSE_BRACKET = createToken("]");
+export const OPEN_CURLY = createToken("{");
+export const CLOSE_CURLY = createToken("}");
+export const QUESTION = createToken("?");
+export const COLON = createToken(":");
+export const SEMICOLON = createToken(";");
+export const COMMA = createToken(",");
+export const DOT = createToken(".");
+export const AMPERSAND = createToken('&');
+export const DOUBBLE_AMPERSAND = createToken('&&');
+export const BAR = createToken("|");
+export const DOUBBLE_BAR = createToken('||');
+
 /**
  * Split property path into tokens
  * @generator
@@ -49,7 +87,7 @@ export function* tokens(string) {
             state = undefined;
             break;
           default:
-            yield state;
+            yield lookup[state] || state;
             state = undefined;
         }
         break;
@@ -78,7 +116,7 @@ export function* tokens(string) {
             state = "string";
             break;
           default:
-            yield state;
+            yield lookup[state] || state;
             buffer = "";
             state = "string";
         }
@@ -92,10 +130,11 @@ export function* tokens(string) {
           case "&":
           case "|":
             if (state === c) {
-              yield state + c;
+              state += c;
+              yield lookup[state] || state;
               state = undefined;
             } else {
-              yield state;
+              yield lookup[state] || state;
               state = c;
             }
             break;
@@ -110,7 +149,7 @@ export function* tokens(string) {
             state = c;
             break;
           default:
-            yield state;
+            yield lookup[state] || state;
             state = c;
         }
         break;
@@ -157,7 +196,7 @@ export function* tokens(string) {
             state = c;
             break;
           default:
-            yield state;
+            yield lookup[state] || state;
             state = c;
         }
         break;
@@ -178,7 +217,7 @@ export function* tokens(string) {
               (c >= "0" && c <= "9") ||
               c === "_"
             ) {
-              yield state;
+              yield lookup[state] || state;
               state = "identifier";
               buffer = c;
             } else {
@@ -197,6 +236,6 @@ export function* tokens(string) {
       yield buffer;
       break;
     default:
-      yield state;
+      yield lookup[state] || state;
   }
 }

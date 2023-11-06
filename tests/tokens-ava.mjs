@@ -1,5 +1,31 @@
 import test from "ava";
-import { tokens } from "pacc";
+import {
+  tokens,
+  PLUS,
+  MINUS,
+  STAR,
+  DIVIDE,
+  EQUAL,
+  NOT_EQUAL,
+  LESS,
+  LESS_EQUAL,
+  GREATER_EQUAL,
+  GREATER,
+  DOT,
+  BAR,
+  COLON,
+  OPEN_BRACKET,
+  CLOSE_BRACKET,
+  OPEN_ROUND,
+  CLOSE_ROUND,
+  OPEN_CURLY,
+  CLOSE_CURLY,
+  AMPERSAND,
+  DOUBBLE_BAR,
+  DOUBBLE_AMPERSAND,
+  COMMA,
+  SEMICOLON
+} from "pacc";
 
 function tt(t, input, expected) {
   try {
@@ -19,48 +45,57 @@ test(tt, '"a', new Error("unterminated string"));
 
 test(tt, " \t'a'b\"c\"d ", ["a", "b", "c", "d"]);
 test(tt, " 'a\\\\\\n\\r\\t\\b\\x\u0041' ", ["a\\\n\r\t\bxA"]);
-test(tt, " ''+''", ["", "+", ""]);
-test(tt, " ''=''", ["", "=", ""]);
+test(tt, " ''+''", ["", PLUS, ""]);
+test(tt, " ''=''", ["", EQUAL, ""]);
 test(tt, " '|'", ["|"]);
 test(tt, " '='", ["="]);
 test(tt, " '}'", ["}"]);
 
-test(tt, "a< <= >= b>", ["a", "<", "<=", ">=", "b", ">"]);
-test(tt, "a=", ["a", "="]);
-test(tt, "a!=", ["a", "!="]);
-test(tt, "a>=", ["a", ">="]);
-test(tt, "a<=", ["a", "<="]);
-test(tt, "a[ 2 ] .c", ["a", "[", "2", "]", ".", "c"]);
-test(tt, "a123 <= >= a = <> +-[](){}|&||&&:,; b.c 1234567890", [
-  "a123",
-  "<=",
-  ">=",
+test(tt, "a< <= >= b>", [
   "a",
-  "=",
-  "<",
-  ">",
-  "+",
-  "-",
-  "[",
-  "]",
-  "(",
-  ")",
-  "{",
-  "}",
-  "|",
-  "&",
-  "||",
-  "&&",
-  ":",
-  ",",
-  ";",
+  LESS,
+  LESS_EQUAL,
+  GREATER_EQUAL,
   "b",
-  ".",
+  GREATER
+]);
+test(tt, "a=", ["a", EQUAL]);
+test(tt, "a!=", ["a", NOT_EQUAL]);
+test(tt, "a>=", ["a", GREATER_EQUAL]);
+test(tt, "a<=", ["a", LESS_EQUAL]);
+test(tt, "a[ 2 ] .c", ["a", OPEN_BRACKET, "2", CLOSE_BRACKET, DOT, "c"]);
+test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
+  "a123",
+  LESS_EQUAL,
+  GREATER_EQUAL,
+  "a",
+  EQUAL,
+  LESS,
+  GREATER,
+  PLUS,
+  MINUS,
+  STAR,
+  DIVIDE,
+  OPEN_BRACKET,
+  CLOSE_BRACKET,
+  OPEN_ROUND,
+  CLOSE_ROUND,
+  OPEN_CURLY,
+  CLOSE_CURLY,
+  BAR,
+  AMPERSAND,
+  DOUBBLE_BAR,
+  DOUBBLE_AMPERSAND,
+  COLON,
+  COMMA,
+  SEMICOLON,
+  "b",
+  DOT,
   "c",
   "1234567890"
 ]);
 
-test(tt, "a[*]._b", ["a", "[", "*", "]", ".", "_b"]);
+test(tt, "a[*]._b", ["a", OPEN_BRACKET, STAR, CLOSE_BRACKET, DOT, "_b"]);
 
 test.skip(
   tt,
@@ -81,5 +116,5 @@ n
 >=
 =
 2 + (3 * 17)`,
-  ["4711","0.23","12345",]
+  ["4711", "0.23", "12345"]
 );
