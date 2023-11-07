@@ -32,9 +32,9 @@ export const SEMICOLON = createToken(";");
 export const COMMA = createToken(",");
 export const DOT = createToken(".");
 export const AMPERSAND = createToken('&');
-export const DOUBBLE_AMPERSAND = createToken('&&');
+export const DOUBLE_AMPERSAND = createToken('&&');
 export const BAR = createToken("|");
-export const DOUBBLE_BAR = createToken('||');
+export const DOUBLE_BAR = createToken('||');
 
 /**
  * Split property path into tokens
@@ -87,7 +87,7 @@ export function* tokens(string) {
             state = undefined;
             break;
           default:
-            yield lookup[state] || state;
+            yield lookup[state];
             state = undefined;
         }
         break;
@@ -116,7 +116,7 @@ export function* tokens(string) {
             state = "string";
             break;
           default:
-            yield lookup[state] || state;
+            yield lookup[state];
             buffer = "";
             state = "string";
         }
@@ -131,10 +131,10 @@ export function* tokens(string) {
           case "|":
             if (state === c) {
               state += c;
-              yield lookup[state] || state;
+              yield lookup[state];
               state = undefined;
             } else {
-              yield lookup[state] || state;
+              yield lookup[state];
               state = c;
             }
             break;
@@ -149,7 +149,7 @@ export function* tokens(string) {
             state = c;
             break;
           default:
-            yield lookup[state] || state;
+            yield lookup[state];
             state = c;
         }
         break;
@@ -196,7 +196,7 @@ export function* tokens(string) {
             state = c;
             break;
           default:
-            yield lookup[state] || state;
+            yield lookup[state];
             state = c;
         }
         break;
@@ -217,7 +217,7 @@ export function* tokens(string) {
               (c >= "0" && c <= "9") ||
               c === "_"
             ) {
-              yield lookup[state] || state;
+              yield lookup[state];
               state = "identifier";
               buffer = c;
             } else {
@@ -236,6 +236,6 @@ export function* tokens(string) {
       yield buffer;
       break;
     default:
-      yield lookup[state] || state;
+      yield lookup[state];
   }
 }

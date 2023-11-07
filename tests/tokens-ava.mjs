@@ -21,8 +21,8 @@ import {
   OPEN_CURLY,
   CLOSE_CURLY,
   AMPERSAND,
-  DOUBBLE_BAR,
-  DOUBBLE_AMPERSAND,
+  DOUBLE_BAR,
+  DOUBLE_AMPERSAND,
   COMMA,
   SEMICOLON
 } from "pacc";
@@ -51,14 +51,7 @@ test(tt, " '|'", ["|"]);
 test(tt, " '='", ["="]);
 test(tt, " '}'", ["}"]);
 
-test(tt, "a< <= >= b>", [
-  "a",
-  LESS,
-  LESS_EQUAL,
-  GREATER_EQUAL,
-  "b",
-  GREATER
-]);
+test(tt, "a< <= >= b>", ["a", LESS, LESS_EQUAL, GREATER_EQUAL, "b", GREATER]);
 test(tt, "a=", ["a", EQUAL]);
 test(tt, "a!=", ["a", NOT_EQUAL]);
 test(tt, "a>=", ["a", GREATER_EQUAL]);
@@ -84,8 +77,8 @@ test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
   CLOSE_CURLY,
   BAR,
   AMPERSAND,
-  DOUBBLE_BAR,
-  DOUBBLE_AMPERSAND,
+  DOUBLE_BAR,
+  DOUBLE_AMPERSAND,
   COLON,
   COMMA,
   SEMICOLON,
@@ -116,5 +109,5 @@ n
 >=
 =
 2 + (3 * 17)`,
-  ["4711", "0.23", "12345"]
+  ["4711", "0.23", "12345.0", "12.4E20", "0.4E7", "str2", "str3"]
 );
