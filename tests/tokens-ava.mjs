@@ -42,21 +42,26 @@ tt.title = (providedTitle = "token", input, expected) =>
   }`.trim();
 
 test(tt, '"a', new Error("unterminated string"));
-
+test(tt, '3', [3]);
 test(tt, " \t'a'b\"c\"d ", ["a", "b", "c", "d"]);
-test(tt, " 'a\\\\\\n\\r\\t\\b\\x\u0041' ", ["a\\\n\r\t\bxA"]);
+test(tt, " 'a2\\\\\\n\\r\\t\\b\\x\u0041' ", ["a2\\\n\r\t\bxA"]);
 test(tt, " ''+''", ["", PLUS, ""]);
 test(tt, " ''=''", ["", EQUAL, ""]);
 test(tt, " '|'", ["|"]);
 test(tt, " '='", ["="]);
 test(tt, " '}'", ["}"]);
+test(tt, "2'a'", [2, "a"]);
+test(tt, "'a'2", ["a", 2]);
+//test(tt, "|2", ["|", 2]);
+//test(tt, "2|", [2, "|"]);
 
 test(tt, "a< <= >= b>", ["a", LESS, LESS_EQUAL, GREATER_EQUAL, "b", GREATER]);
 test(tt, "a=", ["a", EQUAL]);
 test(tt, "a!=", ["a", NOT_EQUAL]);
 test(tt, "a>=", ["a", GREATER_EQUAL]);
 test(tt, "a<=", ["a", LESS_EQUAL]);
-test(tt, "a[ 2 ] .c", ["a", OPEN_BRACKET, "2", CLOSE_BRACKET, DOT, "c"]);
+test(tt, "a[ 2 ] .b", ["a", OPEN_BRACKET, 2, CLOSE_BRACKET, DOT, "b"]);
+test(tt, "a[2].b", ["a", OPEN_BRACKET, 2, CLOSE_BRACKET, DOT, "b"]);
 test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
   "a123",
   LESS_EQUAL,
@@ -85,7 +90,7 @@ test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
   "b",
   DOT,
   "c",
-  "1234567890"
+  1234567890
 ]);
 
 test(tt, "a[*]._b", ["a", OPEN_BRACKET, STAR, CLOSE_BRACKET, DOT, "_b"]);

@@ -1,17 +1,14 @@
-
-
 const lookup = {};
 
-function createToken(str)
-{
-  const token = {str};
+function createToken(str) {
+  const token = { str };
   lookup[str] = token;
   return token;
 }
 
 export const PLUS = createToken("+");
 export const MINUS = createToken("-");
-export const STAR =createToken("*");
+export const STAR = createToken("*");
 export const DIVIDE = createToken("/");
 export const NOT = createToken("!");
 export const NOT_EQUAL = createToken("!=");
@@ -31,10 +28,10 @@ export const COLON = createToken(":");
 export const SEMICOLON = createToken(";");
 export const COMMA = createToken(",");
 export const DOT = createToken(".");
-export const AMPERSAND = createToken('&');
-export const DOUBLE_AMPERSAND = createToken('&&');
+export const AMPERSAND = createToken("&");
+export const DOUBLE_AMPERSAND = createToken("&&");
 export const BAR = createToken("|");
-export const DOUBLE_BAR = createToken('||');
+export const DOUBLE_BAR = createToken("||");
 
 /**
  * Split property path into tokens
@@ -81,6 +78,7 @@ export function* tokens(string) {
           case "string":
             buffer += c;
             break;
+          case "number":
           case "identifier":
             yield buffer;
             buffer = "";
@@ -110,6 +108,7 @@ export function* tokens(string) {
             yield buffer;
             state = undefined;
             break;
+          case "number":
           case "identifier":
             yield buffer;
             buffer = "";
@@ -144,6 +143,7 @@ export function* tokens(string) {
           case "string":
             buffer += c;
             break;
+          case "number":
           case "identifier":
             yield buffer;
             state = c;
@@ -162,6 +162,7 @@ export function* tokens(string) {
           case "string":
             buffer += c;
             break;
+          case "number":
           case "identifier":
             yield buffer;
             state = c;
@@ -191,6 +192,7 @@ export function* tokens(string) {
           case "string":
             buffer += c;
             break;
+          case "number":
           case "identifier":
             yield buffer;
             state = c;
@@ -200,6 +202,34 @@ export function* tokens(string) {
             state = c;
         }
         break;
+
+      case "0":
+      case "1":
+      case "2":
+      case "3":
+      case "4":
+      case "5":
+      case "6":
+      case "7":
+      case "8":
+      case "9":
+        switch (state) {
+          default:
+            yield lookup[state];
+          case undefined:
+            buffer = c.charCodeAt(0) - "0".charCodeAt(0);
+            state = "number";
+            break;
+          case "number":
+            buffer = buffer * 10 + c.charCodeAt(0) - "0".charCodeAt(0);
+            break;
+          case "string":
+          case "identifier":
+            buffer += c;
+            break;
+        }
+        break;
+
       default:
         switch (state) {
           case undefined:
@@ -211,12 +241,7 @@ export function* tokens(string) {
             buffer += c;
             break;
           default:
-            if (
-              (c >= "a" && c <= "z") ||
-              (c >= "A" && c <= "Z") ||
-              (c >= "0" && c <= "9") ||
-              c === "_"
-            ) {
+            if ((c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c === "_") {
               yield lookup[state];
               state = "identifier";
               buffer = c;
@@ -232,6 +257,7 @@ export function* tokens(string) {
       break;
     case "string":
       throw new Error("unterminated string");
+    case "number":
     case "identifier":
       yield buffer;
       break;

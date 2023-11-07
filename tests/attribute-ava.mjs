@@ -21,6 +21,7 @@ test(gat, "'a '.b", { "a ": { b: 3 } }, 3);
 test(gat, "a [ * ]", { a: [4] }, 4);
 test(gat, "a[*]", { a: new Set([5]) }, 5);
 test(gat, "a[*].b", { a: [{ b: 6 }] }, 6);
+test(gat, "a[1].b", { a: [{ b: 6 }, { b: 7 }, { b: 8 }] }, 7);
 
 function sat(t, expression, candidate, value) {
   try {
