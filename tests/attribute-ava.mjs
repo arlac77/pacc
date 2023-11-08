@@ -1,27 +1,33 @@
 import test from "ava";
 import { getAttribute, setAttribute } from "pacc";
 
-function gat(t, expression, candidate, expected) {
-  try {
-    const result = getAttribute(candidate, expression);
-    t.deepEqual(result, expected);
-  } catch (e) {
-    t.deepEqual(e, expected);
-  }
+function gat(t, object, key, expected) {
+  const value = getAttribute(object, key);
+  t.is(value, expected);
 }
 
-gat.title = (providedTitle = "getAttribute", expression, candidate, expected) =>
-  `${providedTitle} ${expression} ${JSON.stringify(candidate)} ${
-    expected instanceof Error ? " =>ERROR" : ""
-  }`.trim();
+gat.title = (providedTitle, object, key) =>
+  `getAttribute ${providedTitle ? providedTitle + " " : ""}${JSON.stringify(
+    object
+  )} ${key}`.trim();
 
-test(gat, "a", { a: 1 }, 1);
-test(gat, "a.b", { a: { b: 2 } }, 2);
-test(gat, "'a '.b", { "a ": { b: 3 } }, 3);
-test(gat, "a [ * ]", { a: [4] }, 4);
-test(gat, "a[*]", { a: new Set([5]) }, 5);
-test(gat, "a[*].b", { a: [{ b: 6 }] }, 6);
-test(gat, "a[1].b", { a: [{ b: 6 }, { b: 7 }, { b: 8 }] }, 7);
+test(gat, undefined, "a", undefined);
+test(gat, { a: 1 }, "a", 1);
+test(gat, { b: 1 }, "b>", 1);
+test(gat, { b: 1 }, "b<", 1);
+test(gat, { a: { b: 1 } }, "a.b", 1);
+test(gat, { "a.b": 1 }, "a.b", 1);
+test(gat, {}, "x.y.z", undefined);
+test(gat, [1, 2], "[1]", 2);
+test(gat, [1, 2, 3], " \t[ 1 ] ", 2);
+test(gat, [0, { b: 3 }], "[1].b", 3);
+test(gat, [0, { c: 3 }], " [1 ] .c ", 3);
+test(gat, { a: { b: 2 } }, "a.b", 2);
+test(gat, { "a ": { b: 3 } }, "'a '.b", 3);
+test(gat, { a: [4] }, "a [ * ]", 4);
+test(gat, { a: new Set([5]) }, "a[*]", 5);
+test(gat, { a: [{ b: 6 }] }, "a[*].b", 6);
+test(gat, { a: [{ b: 6 }, { b: 7 }, { b: 8 }] }, "a[1].b", 7);
 
 function sat(t, object, key, value, expected) {
   setAttribute(object, key, value);
@@ -40,5 +46,5 @@ test(sat, { a: 1 }, "a.b", 1, { a: { b: 1 } });
 test(sat, { a: "1" }, "a . b ", 1, { a: { b: 1 } });
 test(sat, { a: { x: 7 } }, "a.b.c.d", 1, { a: { x: 7, b: { c: { d: 1 } } } });
 
-test(sat, { }, "a[0]", 1, { a: [1] });
+test(sat, {}, "a[0]", 1, { a: [1] });
 test(sat, { a: [] }, "a[0]", 1, { a: [1] });
