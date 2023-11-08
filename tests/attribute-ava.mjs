@@ -23,20 +23,22 @@ test(gat, "a[*]", { a: new Set([5]) }, 5);
 test(gat, "a[*].b", { a: [{ b: 6 }] }, 6);
 test(gat, "a[1].b", { a: [{ b: 6 }, { b: 7 }, { b: 8 }] }, 7);
 
-function sat(t, expression, candidate, value) {
-  try {
-    setAttribute(candidate, expression, value);
-    const result = getAttribute(candidate, expression);
-
-    t.deepEqual(result, value);
-  } catch (e) {
-    t.deepEqual(e, value);
-  }
+function sat(t, object, key, value, expected) {
+  setAttribute(object, key, value);
+  t.deepEqual(object, expected);
 }
 
-sat.title = (providedTitle = "setAttribute", expression, candidate, value) =>
-  `${providedTitle} ${expression} ${JSON.stringify(candidate)} ${
-    value instanceof Error ? " =>ERROR" : ""
-  }`.trim();
+sat.title = (providedTitle, object, key, value, expected) =>
+  `setAttribute ${providedTitle ? providedTitle + " " : ""}${JSON.stringify(
+    object
+  )} ${key}=${value} => ${JSON.stringify(expected)}`.trim();
 
-test(sat, "a.b", { a: { b: 2 } }, 5);
+test(sat, {}, "a", 1, { a: 1 });
+test(sat, {}, "a.b", 1, { a: { b: 1 } });
+test(sat, { a: { b: "x" } }, "a.b", 1, { a: { b: 1 } });
+test(sat, { a: 1 }, "a.b", 1, { a: { b: 1 } });
+test(sat, { a: "1" }, "a . b ", 1, { a: { b: 1 } });
+test(sat, { a: { x: 7 } }, "a.b.c.d", 1, { a: { x: 7, b: { c: { d: 1 } } } });
+
+test(sat, { }, "a[0]", 1, { a: [1] });
+test(sat, { a: [] }, "a[0]", 1, { a: [1] });

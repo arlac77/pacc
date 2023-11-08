@@ -36,8 +36,7 @@ export * from "./tokens.mjs";
  * @param {any} value
  */
 export function setAttribute(object, expression, value) {
-  let lastObject = object;
-  let lastKey;
+  let anchor, anchorKey;
 
   for (const token of tokens(expression)) {
     switch (token) {
@@ -47,19 +46,32 @@ export function setAttribute(object, expression, value) {
         break;
 
       default:
-        if (object[token] === undefined || typeof object[token] !== "object") {
-          object[token] = {};
+        if (anchor) {
+          switch (typeof token) {
+            case "number":
+              object = [];
+              break;
+            case "string":
+              object = {};
+              break;
+          }
+          anchor[anchorKey] = object;
+          anchor = undefined;
         }
 
-        lastObject = object;
-        lastKey = token;
+        const next = object[token];
 
-        object = object[token];
+        if (next === undefined || typeof next !== "object") {
+          anchor = object;
+          anchorKey = token;
+        } else {
+          object = next;
+        }
     }
   }
 
-  if (lastKey) {
-    lastObject[lastKey] = value;
+  if (anchor) {
+    anchor[anchorKey] = value;
   }
 }
 
