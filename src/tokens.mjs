@@ -241,13 +241,9 @@ export function* tokens(string) {
             buffer += c;
             break;
           default:
-            if ((c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c === "_") {
-              yield lookup[state];
-              state = "identifier";
-              buffer = c;
-            } else {
-              state += c;
-            }
+            yield lookup[state];
+            state = "identifier";
+            buffer = c;
         }
     }
   }

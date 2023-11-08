@@ -42,7 +42,8 @@ tt.title = (providedTitle = "token", input, expected) =>
   }`.trim();
 
 test(tt, '"a', new Error("unterminated string"));
-test(tt, '3', [3]);
+test(tt, "", []);
+test(tt, "3", [3]);
 test(tt, " \t'a'b\"c\"d ", ["a", "b", "c", "d"]);
 test(tt, " 'a2\\\\\\n\\r\\t\\b\\x\u0041' ", ["a2\\\n\r\t\bxA"]);
 test(tt, " ''+''", ["", PLUS, ""]);
@@ -52,8 +53,9 @@ test(tt, " '='", ["="]);
 test(tt, " '}'", ["}"]);
 test(tt, "2'a'", [2, "a"]);
 test(tt, "'a'2", ["a", 2]);
-//test(tt, "|2", ["|", 2]);
-//test(tt, "2|", [2, "|"]);
+test(tt, "|2", [BAR, 2]);
+test(tt, "2|", [2, BAR]);
+test(tt, "2=", [2, EQUAL]);
 
 test(tt, "a< <= >= b>", ["a", LESS, LESS_EQUAL, GREATER_EQUAL, "b", GREATER]);
 test(tt, "a=", ["a", EQUAL]);
@@ -114,5 +116,5 @@ n
 >=
 =
 2 + (3 * 17)`,
-  ["4711", "0.23", "12345.0", "12.4E20", "0.4E7", "str2", "str3"]
+  [4711, 0.23, 12345.0, 12.4e20, 0.4e7, "str2", "str3"]
 );
