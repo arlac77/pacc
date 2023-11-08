@@ -47,15 +47,7 @@ export function setAttribute(object, expression, value) {
 
       default:
         if (anchor) {
-          switch (typeof token) {
-            case "number":
-              object = [];
-              break;
-            case "string":
-              object = {};
-              break;
-          }
-          anchor[anchorKey] = object;
+          anchor[anchorKey] = object = (typeof token === "string" ? {} : []);
           anchor = undefined;
         }
 
