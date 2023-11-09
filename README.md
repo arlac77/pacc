@@ -13,7 +13,6 @@
 
 propetty path utils
 
-
 ```js
 import { getAttribute } from "pacc";
 
@@ -27,21 +26,16 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 
 ### Table of Contents
 
-- [pacc](#pacc)
-- [API](#api)
-    - [Table of Contents](#table-of-contents)
-  - [AttributeDefinition](#attributedefinition)
-    - [Properties](#properties)
-  - [setAttribute](#setattribute)
-    - [Parameters](#parameters)
-  - [getAttribute](#getattribute)
-    - [Parameters](#parameters-1)
-  - [getAttributeAndOperator](#getattributeandoperator)
-    - [Parameters](#parameters-2)
-  - [tokens](#tokens)
-    - [Parameters](#parameters-3)
-- [install](#install)
-- [license](#license)
+*   [AttributeDefinition](#attributedefinition)
+    *   [Properties](#properties)
+*   [setAttribute](#setattribute)
+    *   [Parameters](#parameters)
+*   [getAttribute](#getattribute)
+    *   [Parameters](#parameters-1)
+*   [getAttributeAndOperator](#getattributeandoperator)
+    *   [Parameters](#parameters-2)
+*   [tokens](#tokens)
+    *   [Parameters](#parameters-3)
 
 ## AttributeDefinition
 
