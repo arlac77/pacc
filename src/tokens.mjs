@@ -217,11 +217,11 @@ export function* tokens(string) {
           default:
             yield lookup[state];
           case undefined:
-            buffer = c.charCodeAt(0) - "0".charCodeAt(0);
+            buffer = c.charCodeAt(0) - 48;
             state = "number";
             break;
           case "number":
-            buffer = buffer * 10 + c.charCodeAt(0) - "0".charCodeAt(0);
+            buffer = buffer * 10 + c.charCodeAt(0) - 48;
             break;
           case "string":
           case "identifier":
