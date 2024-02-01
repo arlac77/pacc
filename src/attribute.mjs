@@ -47,7 +47,7 @@ export function setAttribute(object, expression, value) {
 
       default:
         if (anchor) {
-          anchor[anchorKey] = object = (typeof token === "string" ? {} : []);
+          anchor[anchorKey] = object = typeof token === "string" ? {} : [];
           anchor = undefined;
         }
 
@@ -85,7 +85,7 @@ export function getAttribute(object, expression) {
  * @param {string} expression
  * @returns {[any,string]} value associated with the given property name
  */
-export function getAttributeAndOperator(object, expression, getters = {}) {
+export function getAttributeAndOperator(object, expression) {
   let op = EQUAL;
   let predicateTokens;
 
@@ -120,15 +120,10 @@ export function getAttributeAndOperator(object, expression, getters = {}) {
           break;
         }
 
-        const g = getters[token];
-        if (g) {
-          object = g(object);
+        if (object[token] !== undefined) {
+          object = object[token];
         } else {
-          if (object[token] !== undefined) {
-            object = object[token];
-          } else {
-            return [undefined, op];
-          }
+          return [undefined, op];
         }
     }
   }
