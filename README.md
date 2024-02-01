@@ -86,7 +86,6 @@ The name may be a property path like 'a.b.c <='.
 
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `getters`   (optional, default `{}`)
 
 Returns **\[any, [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)]** value associated with the given property name
 
