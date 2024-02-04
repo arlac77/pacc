@@ -34,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/arlac77/pacc"
+    "url": "git+https://github.com/arlac77/pacc.git"
   },
   "bugs": {
     "url": "https://github.com/arlac77/pacc/issues"
