@@ -5,8 +5,12 @@
     "access": "public",
     "provenance": true
   },
+  "types": "./types/attribute.d.mts",
   "exports": {
-    ".": "./src/attribute.mjs"
+    ".": {
+      "types": "./types/attribute.d.mts",
+      "default": "./src/attribute.mjs"
+    }
   },
   "description": "property path utils",
   "contributors": [
@@ -17,6 +21,7 @@
   ],
   "license": "BSD-2-Clause",
   "scripts": {
+    "prepare": "tsc --allowJs --declaration --emitDeclarationOnly --declarationDir types -t esnext -m esnext --module nodenext --moduleResolution nodenext ./src**/*.mjs",
     "test": "npm run test:browser-ava && npm run test:ava",
     "test:browser-ava": "browser-ava --headless --no-keep-open tests/*-ava.mjs tests/*-ava-browser.mjs",
     "test:ava": "ava --timeout 4m tests/*-ava.mjs tests/*-ava-node.mjs",

@@ -83,7 +83,7 @@ export function getAttribute(object, expression) {
  * The name may be a property path like 'a.b.c <='.
  * @param {Object} object
  * @param {string} expression
- * @returns {[any,string]} value associated with the given property name
+ * @returns {[any,Token]} value associated with the given property name
  */
 export function getAttributeAndOperator(object, expression) {
   let op = EQUAL;

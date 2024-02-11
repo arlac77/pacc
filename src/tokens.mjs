@@ -1,5 +1,15 @@
 const lookup = {};
 
+/**
+ * @typedef {Object} Token
+ * @property {string} str
+ */
+
+/**
+ * 
+ * @param {string} str 
+ * @returns {Token}
+ */
 function createToken(str) {
   const token = { str };
   lookup[str] = token;
@@ -37,7 +47,7 @@ export const DOUBLE_BAR = createToken("||");
  * Split property path into tokens
  * @generator
  * @param {string} string
- * @yields {string}
+ * @yields {Token}
  */
 export function* tokens(string) {
   let state, buffer, hex;
