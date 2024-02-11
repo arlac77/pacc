@@ -35,8 +35,12 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-1)
 *   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-2)
-*   [tokens](#tokens)
+*   [Token](#token)
+    *   [Properties](#properties-1)
+*   [createToken](#createtoken)
     *   [Parameters](#parameters-3)
+*   [tokens](#tokens)
+    *   [Parameters](#parameters-4)
 
 ## AttributeDefinition
 
@@ -88,7 +92,23 @@ The name may be a property path like 'a.b.c <='.
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-Returns **\[any, [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)]** value associated with the given property name
+Returns **\[any, [Token](#token)]** value associated with the given property name
+
+## Token
+
+Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
+
+### Properties
+
+*   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+## createToken
+
+### Parameters
+
+*   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+Returns **[Token](#token)**&#x20;
 
 ## tokens
 
