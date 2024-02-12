@@ -13,6 +13,11 @@
  * @property {string[]|string} [env] environment variable use to provide the value
  */
 
+/**
+ * @typedef {Object} Token
+ * @property {string} str
+ */
+
 import {
   tokens,
   EQUAL,

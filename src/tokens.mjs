@@ -231,6 +231,7 @@ export function* tokens(string) {
             state = "number";
             break;
           case "number":
+            // @ts-ignore
             buffer = buffer * 10 + c.charCodeAt(0) - 48;
             break;
           case "string":
