@@ -29,14 +29,16 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
+*   [Token](#token)
+    *   [Properties](#properties-1)
+*   [Token](#token-1)
+    *   [Properties](#properties-2)
 *   [setAttribute](#setattribute)
     *   [Parameters](#parameters)
 *   [getAttribute](#getattribute)
     *   [Parameters](#parameters-1)
 *   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-2)
-*   [Token](#token)
-    *   [Properties](#properties-1)
 *   [createToken](#createtoken)
     *   [Parameters](#parameters-3)
 *   [tokens](#tokens)
@@ -58,6 +60,22 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `set` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** set the value
 *   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
 *   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable use to provide the value
+
+## Token
+
+Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
+
+### Properties
+
+*   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+## Token
+
+Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
+
+### Properties
+
+*   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ## setAttribute
 
@@ -93,14 +111,6 @@ The name may be a property path like 'a.b.c <='.
 *   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **\[any, [Token](#token)]** value associated with the given property name
-
-## Token
-
-Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
-
-### Properties
-
-*   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ## createToken
 
