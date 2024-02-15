@@ -8,7 +8,7 @@
  * @property {boolean} [private] should the value be shown
  * @property {string} [depends] name of an attribute we depend on
  * @property {string[]} additionalAttributes extra attributes that are present in case our attribute is set
- * @property {string} description human readable
+ * @property {string} [description| human readable
  * @property {any} [default] the default value
  * @property {Function} [set] set the value
  * @property {Function} [get] get the value can be used to calculate default values
