@@ -2,6 +2,7 @@
  * @typedef {Object} AttributeDefinition
  *
  * @property {string} type
+ * @property {string} description
  * @property {boolean} isKey
  * @property {boolean} writable
  * @property {boolean} mandatory
