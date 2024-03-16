@@ -16,32 +16,32 @@ function createToken(str) {
   return token;
 }
 
-export const PLUS = createToken("+");
-export const MINUS = createToken("-");
-export const STAR = createToken("*");
-export const DIVIDE = createToken("/");
-export const NOT = createToken("!");
-export const NOT_EQUAL = createToken("!=");
-export const GREATER = createToken(">");
-export const GREATER_EQUAL = createToken(">=");
-export const LESS = createToken("<");
-export const LESS_EQUAL = createToken("<=");
-export const EQUAL = createToken("=");
-export const OPEN_ROUND = createToken("(");
-export const CLOSE_ROUND = createToken(")");
-export const OPEN_BRACKET = createToken("[");
-export const CLOSE_BRACKET = createToken("]");
-export const OPEN_CURLY = createToken("{");
-export const CLOSE_CURLY = createToken("}");
-export const QUESTION = createToken("?");
-export const COLON = createToken(":");
-export const SEMICOLON = createToken(";");
-export const COMMA = createToken(",");
-export const DOT = createToken(".");
-export const AMPERSAND = createToken("&");
-export const DOUBLE_AMPERSAND = createToken("&&");
-export const BAR = createToken("|");
-export const DOUBLE_BAR = createToken("||");
+export /** @type {Token} */ const PLUS = createToken("+");
+export /** @type {Token} */ const MINUS = createToken("-");
+export /** @type {Token} */ const STAR = createToken("*");
+export /** @type {Token} */ const DIVIDE = createToken("/");
+export /** @type {Token} */ const NOT = createToken("!");
+export /** @type {Token} */ const NOT_EQUAL = createToken("!=");
+export /** @type {Token} */ const GREATER = createToken(">");
+export /** @type {Token} */ const GREATER_EQUAL = createToken(">=");
+export /** @type {Token} */ const LESS = createToken("<");
+export /** @type {Token} */ const LESS_EQUAL = createToken("<=");
+export /** @type {Token} */ const EQUAL = createToken("=");
+export /** @type {Token} */ const OPEN_ROUND = createToken("(");
+export /** @type {Token} */ const CLOSE_ROUND = createToken(")");
+export /** @type {Token} */ const OPEN_BRACKET = createToken("[");
+export /** @type {Token} */ const CLOSE_BRACKET = createToken("]");
+export /** @type {Token} */ const OPEN_CURLY = createToken("{");
+export /** @type {Token} */ const CLOSE_CURLY = createToken("}");
+export /** @type {Token} */ const QUESTION = createToken("?");
+export /** @type {Token} */ const COLON = createToken(":");
+export /** @type {Token} */ const SEMICOLON = createToken(";");
+export /** @type {Token} */ const COMMA = createToken(",");
+export /** @type {Token} */ const DOT = createToken(".");
+export /** @type {Token} */ const AMPERSAND = createToken("&");
+export /** @type {Token} */ const DOUBLE_AMPERSAND = createToken("&&");
+export /** @type {Token} */ const BAR = createToken("|");
+export /** @type {Token} */ const DOUBLE_BAR = createToken("||");
 
 /**
  * Split property path into tokens
