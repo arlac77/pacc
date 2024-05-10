@@ -56,8 +56,10 @@ export function* tokens(string) {
     switch (state) {
       case "string-escaping-hex":
         hex += c;
+        // @ts-ignore
         if (hex.length === 4) {
-          buffer += String.fromCharCode(parseInt(hex, 16));
+        // @ts-ignore
+        buffer += String.fromCharCode(parseInt(hex, 16));
           state = "string";
         }
         continue;
