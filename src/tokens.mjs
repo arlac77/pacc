@@ -1,3 +1,7 @@
+
+/**
+ * Token lookup
+ */
 const lookup = {};
 
 /**
