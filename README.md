@@ -38,6 +38,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-2)
 *   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-3)
+*   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
@@ -132,6 +133,10 @@ The name may be a property path like 'a.b.c <='.
 *   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **\[any, [Token](#token)]** value associated with the given property name
+
+## lookup
+
+Token lookup
 
 ## Token
 
