@@ -1,4 +1,3 @@
-
 /**
  * Token lookup
  */
@@ -10,8 +9,8 @@ const lookup = {};
  */
 
 /**
- * 
- * @param {string} str 
+ *
+ * @param {string} str
  * @returns {Token}
  */
 function createToken(str) {
@@ -62,8 +61,8 @@ export function* tokens(string) {
         hex += c;
         // @ts-ignore
         if (hex.length === 4) {
-        // @ts-ignore
-        buffer += String.fromCharCode(parseInt(hex, 16));
+          // @ts-ignore
+          buffer += String.fromCharCode(parseInt(hex, 16));
           state = "string";
         }
         continue;
