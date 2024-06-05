@@ -268,7 +268,10 @@ export function* tokens(string) {
     case undefined:
       break;
     case "string":
-      throw new Error("unterminated string");
+      const error = new Error("unterminated string");
+      // @ts-ignore
+      error.expression = string;
+      throw error;
     case "number":
     case "identifier":
       yield buffer;

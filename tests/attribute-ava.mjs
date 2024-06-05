@@ -2,14 +2,24 @@ import test from "ava";
 import { getAttribute, setAttribute } from "pacc";
 
 function gat(t, object, key, expected) {
+  try {
   const value = getAttribute(object, key);
   t.is(value, expected);
+  }
+  catch(e) {
+    if(expected instanceof Error) {
+      t.is(e.message,expected.message, "expected error");
+    }
+    else {
+      t.failed();
+    }
+  }
 }
 
-gat.title = (providedTitle, object, key) =>
+gat.title = (providedTitle, object, key, expected) =>
   `getAttribute ${providedTitle ? providedTitle + " " : ""}${JSON.stringify(
     object
-  )} ${key}`.trim();
+  )} '${key}' ${expected instanceof Error ? expected: ''}`.trim();
 
 test(gat, undefined, "a", undefined);
 test(gat, { a: 1 }, "a", 1);
@@ -30,6 +40,7 @@ test(gat, { a: [4] }, "a [ * ]", 4);
 test(gat, { a: new Set([5]) }, "a[*]", 5);
 test(gat, { a: [{ b: 6 }] }, "a[*].b", 6);
 test(gat, { a: [{ b: 6 }, { b: 7 }, { b: 8 }] }, "a[1].b", 7);
+test(gat, { a: 1 }, "a*", new Error("unexpected \'*\' in attribute path"));
 
 function sat(t, object, key, value, expected) {
   setAttribute(object, key, value);

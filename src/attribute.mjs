@@ -118,6 +118,12 @@ export function getAttributeAndOperator(object, expression) {
         predicateTokens = undefined;
         break;
       case STAR:
+        if(!predicateTokens) {
+          const error = new Error("unexpected '*' in attribute path");
+          // @ts-ignore
+          error.expression = expression;
+          throw error;
+        }
         predicateTokens.push(token);
         break;
 

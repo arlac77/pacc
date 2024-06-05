@@ -41,7 +41,16 @@ tt.title = (providedTitle = "token", input, expected) =>
     expected instanceof Error ? " =>ERROR" : ""
   }`.trim();
 
-test(tt, '"a', new Error("unterminated string"));
+test(
+  tt,
+  '"a',
+  (() => {
+    const error = new Error("unterminated string");
+    // @ts-ignore
+    error.expression = '"a';
+    return error;
+  })()
+);
 test(tt, "", []);
 test(tt, "3", [3]);
 test(tt, " \t'a'b\"c\"d ", ["a", "b", "c", "d"]);
