@@ -53,6 +53,7 @@ sat.title = (providedTitle, object, key, value, expected) =>
   )} ${key}=${value} => ${JSON.stringify(expected)}`.trim();
 
 test(sat, {}, "a", 1, { a: 1 });
+test(sat, {}, "b", new Date(1), { b: new Date(1) });
 test(sat, {}, "a.b", 1, { a: { b: 1 } });
 test(sat, { a: { b: "x" } }, "a.b", 1, { a: { b: 1 } });
 test(sat, { a: 1 }, "a.b", 1, { a: { b: 1 } });
