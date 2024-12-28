@@ -8,8 +8,8 @@
   "types": "./types/attribute.d.mts",
   "exports": {
     ".": {
-      "default": "./src/attribute.mjs",
-      "types": "./types/attribute.d.mts"
+      "types": "./types/attribute.d.mts",
+      "default": "./src/attribute.mjs"
     }
   },
   "description": "property path utils",
