@@ -4,7 +4,7 @@ import { getAttribute, setAttribute } from "pacc";
 function gat(t, object, key, expected) {
   try {
     const value = getAttribute(object, key);
-    t.is(value, expected);
+    t.deepEqual(value, expected);
   } catch (e) {
     if (expected instanceof Error) {
       t.is(e.message, expected.message, "expected error");
@@ -42,12 +42,24 @@ test(gat, { a: 1 }, "a*", new Error("unexpected '*' in attribute path"));
 test(
   gat,
   {
-    a: get => {
-      return 7;
+    a() {
+      return 8;
     }
   },
   "a",
-  7
+  8
+);
+
+test(
+  gat,
+  {
+    *b() {
+      yield 9;
+      yield 10;
+    }
+  },
+  "b",
+  [9, 10]
 );
 
 function sat(t, object, key, value, expected) {

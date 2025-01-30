@@ -94,7 +94,11 @@ export function getAttribute(object, expression) {
 export function getAttributeAndOperator(object, expression) {
   switch (typeof object?.[expression]) {
     case "function":
-      return [object[expression](), EQUAL];
+      object = object[expression]();
+      if (typeof object[Symbol.iterator] === "function") {
+        object = [...object];
+      }
+      return [object, EQUAL];
     case "undefined":
       break;
     default:
@@ -141,6 +145,9 @@ export function getAttributeAndOperator(object, expression) {
           switch (typeof object[token]) {
             case "function":
               object = object[token]();
+              if (typeof object[Symbol.iterator] === "function") {
+                object = [...object];
+              }
               break;
             default:
               object = object[token];
