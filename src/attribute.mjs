@@ -81,7 +81,7 @@ export function setAttribute(object, expression, value) {
  * @returns {any} value associated with the given property name
  */
 export function getAttribute(object, expression) {
-  return object?.[expression] || getAttributeAndOperator(object, expression)[0];
+  return getAttributeAndOperator(object, expression)[0];
 }
 
 /**
@@ -92,8 +92,17 @@ export function getAttribute(object, expression) {
  * @returns {[any,Token]} value associated with the given property name
  */
 export function getAttributeAndOperator(object, expression) {
-  let op = EQUAL;
+  switch (typeof object?.[expression]) {
+    case "function":
+      return [object[expression](), EQUAL];
+    case "undefined":
+      break;
+    default:
+      return [object[expression], EQUAL];
+  }
+
   let predicateTokens;
+  let op = EQUAL;
 
   for (const token of tokens(expression)) {
     switch (token) {
@@ -118,7 +127,7 @@ export function getAttributeAndOperator(object, expression) {
         predicateTokens = undefined;
         break;
       case STAR:
-        if(!predicateTokens) {
+        if (!predicateTokens) {
           const error = new Error("unexpected '*' in attribute path");
           // @ts-ignore
           error.expression = expression;
@@ -128,14 +137,17 @@ export function getAttributeAndOperator(object, expression) {
         break;
 
       default:
-        if (object === undefined) {
-          break;
-        }
-
-        if (object[token] !== undefined) {
-          object = object[token];
-        } else {
-          return [undefined, op];
+        if (object !== undefined) {
+          switch (typeof object[token]) {
+            case "function":
+              object = object[token]();
+              break;
+            default:
+              object = object[token];
+              break;
+            case "undefined":
+              return [undefined, op];
+          }
         }
     }
   }
