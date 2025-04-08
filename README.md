@@ -38,11 +38,13 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-2)
 *   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-3)
+*   [filter](#filter)
+    *   [Parameters](#parameters-4)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-4)
+    *   [Parameters](#parameters-5)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -133,6 +135,16 @@ The name may be a property path like 'a.b.c <='.
 *   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **\[any, [Token](#token)]** value associated with the given property name
+
+## filter
+
+Generate filter function.
+
+### Parameters
+
+*   `filterBy` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
+
+Returns **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
 
 ## lookup
 
