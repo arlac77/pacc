@@ -32,6 +32,9 @@
     "lint:docs": "documentation lint ./src**/*.mjs",
     "lint:typescript": "tsc --allowJs --checkJs --noEmit --resolveJsonModule --target es2024 --lib esnext -m esnext --module nodenext --moduleResolution nodenext ./src**/*.mjs"
   },
+  "dependencies": {
+    "npm-pkgbuild": "^18.1.1"
+  },
   "devDependencies": {
     "ava": "^6.2.0",
     "browser-ava": "^2.3.17",
@@ -59,8 +62,5 @@
       "arlac77/template-node-component",
       "arlac77/template-typescript"
     ]
-  },
-  "dependencies": {
-    "npm-pkgbuild": "^18.1.1"
   }
 }
