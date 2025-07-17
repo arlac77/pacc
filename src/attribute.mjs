@@ -1,19 +1,3 @@
-/**
- * @typedef {Object} AttributeDefinition
- *
- * @property {string} type
- * @property {boolean} isKey
- * @property {boolean} writable
- * @property {boolean} mandatory
- * @property {boolean} [private] should the value be shown
- * @property {string} [depends] name of an attribute we depend on
- * @property {string[]} additionalAttributes extra attributes that are present in case our attribute is set
- * @property {string} [description] human readable
- * @property {any} [default] the default value
- * @property {Function} [set] set the value
- * @property {Function} [get] get the value can be used to calculate default values
- * @property {string[]|string} [env] environment variable(s) used to provide the value
- */
 
 /**
  * @typedef {import('./tokens.mjs').Token} Token
@@ -32,8 +16,6 @@ import {
   GREATER_EQUAL,
   STAR
 } from "./tokens.mjs";
-export * from "./tokens.mjs";
-export * from "./filter.mjs";
 
 /**
  * Set object attribute.

@@ -5,11 +5,11 @@
     "access": "public",
     "provenance": true
   },
-  "types": "./types/attribute.d.mts",
+  "types": "./types/module.d.mts",
   "exports": {
     ".": {
-      "types": "./types/attribute.d.mts",
-      "default": "./src/attribute.mjs"
+      "types": "./types/module.d.mts",
+      "default": "./src/module.mjs"
     }
   },
   "description": "property path utils",
