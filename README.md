@@ -40,15 +40,19 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-4)
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
-*   [setAttributes](#setattributes)
+*   [prepareAttributesDefinitions](#prepareattributesdefinitions)
     *   [Parameters](#parameters-5)
-*   [getAttributes](#getattributes)
+*   [mergeAttributeDefinitions](#mergeattributedefinitions)
     *   [Parameters](#parameters-6)
+*   [setAttributes](#setattributes)
+    *   [Parameters](#parameters-7)
+*   [getAttributes](#getattributes)
+    *   [Parameters](#parameters-8)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-7)
+    *   [Parameters](#parameters-9)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -150,6 +154,27 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `set` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** set the value
 *   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
 *   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable(s) used to provide the value
+
+## prepareAttributesDefinitions
+
+Create attributes from its definition.
+
+### Parameters
+
+*   `definitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attributes
+
+## mergeAttributeDefinitions
+
+Merge attribute definitions.
+
+### Parameters
+
+*   `dest` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute definitions to be used also the merge target
+*   `atts` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute definitions to be used
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** merged definitions (dest)
 
 ## setAttributes
 
