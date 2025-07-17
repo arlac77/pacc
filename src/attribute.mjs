@@ -36,7 +36,7 @@ export * from "./tokens.mjs";
 export * from "./filter.mjs";
 
 /**
- * Set Object attribute.
+ * Set object attribute.
  * The name may be a property path like 'a.b.c'.
  * @param {Object} object
  * @param {string} expression
