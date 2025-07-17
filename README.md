@@ -103,7 +103,7 @@ Split property path into tokens
 
 ## setAttribute
 
-Set Object attribute.
+Set object attribute.
 The name may be a property path like 'a.b.c'.
 
 ### Parameters
