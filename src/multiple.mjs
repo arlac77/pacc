@@ -72,9 +72,11 @@ export function mergeAttributeDefinitions(dest, atts) {
 export function setAttributes(object, source, definitions, cb) {
   for (const [name, def] of Object.entries(definitions)) {
     const value = getAttribute(source, name) ?? def.default;
-    setAttribute(object, name, value);
-    if (cb) {
-      cb(def, name, value);
+    if (value !== undefined) {
+      setAttribute(object, name, value);
+      if (cb) {
+        cb(def, name, value);
+      }
     }
   }
 }

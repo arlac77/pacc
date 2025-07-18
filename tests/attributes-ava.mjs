@@ -11,10 +11,18 @@ sat.title = (providedTitle, object, source, definitions, expected) =>
     object
   )} ${source} => ${JSON.stringify(expected)}`.trim();
 
-test(
-  sat,
-  {},
-  { a: 1, b: {} },
-  { a: { name: "a" }, b: { name: "b" } },
-  { a: 1, b: {} }
-);
+const definitions = {
+  a: { name: "a", default: "ad" },
+  b: { name: "b" },
+  c: { name: "c" }
+};
+
+test(sat, {}, { a: 1, b: {}, c: { c1: {} } }, definitions, {
+  a: 1,
+  b: {},
+  c: { c1: {} }
+});
+
+test(sat, {}, {}, definitions, {
+  a: "ad"
+});
