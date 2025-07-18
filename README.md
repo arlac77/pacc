@@ -185,7 +185,7 @@ Copies attribute values from a source object into a destination object.
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** target object to be modified
 *   `source` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** origin of the data to be copied
 *   `definitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute definitions to be used
-*   `cb` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to be executed for each copied value
+*   `cb` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** callback to be executed for each copied value
 
 ## getAttributes
 
