@@ -22,7 +22,9 @@ const types = {
   base: { name: "base" },
   string: { name: "string" },
   number: { name: "number" },
-  boolean: { name: "boolean" }
+  integer: { name: "integer" },
+  boolean: { name: "boolean" },
+  object: { name: "object" }
 };
 
 /**
@@ -65,7 +67,7 @@ export function mergeAttributeDefinitions(dest, atts) {
  * @param {Object} object target object to be modified
  * @param {Object} source origin of the data to be copied
  * @param {Object} definitions attribute definitions to be used
- * @param {function} cb callback to be executed for each copied value
+ * @param {function?} cb callback to be executed for each copied value
  */
 export function setAttributes(object, source, definitions, cb) {
   for (const [name, def] of Object.entries(definitions)) {
