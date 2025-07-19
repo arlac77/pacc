@@ -90,7 +90,7 @@ test(
   (t, object) => t.is(object.nested.att1, "value1a")
 );
 
-test.skip("nested default", sast, {}, {}, definitions, (t, object) =>
+test("nested default", sast, {}, {}, definitions, (t, object) =>
   t.is(object.nested.att1, "the default")
 );
 

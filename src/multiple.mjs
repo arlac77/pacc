@@ -69,14 +69,19 @@ export function mergeAttributeDefinitions(dest, atts) {
  * @param {Object} source origin of the data to be copied
  * @param {Object} definitions attribute definitions to be used
  * @param {function?} cb callback to be executed for each copied value
+ * @param {string?} prefix name parefix
  */
-export function setAttributes(object, source, definitions, cb) {
-  for (const [name, def] of Object.entries(definitions)) {
+export function setAttributes(object, source, definitions, cb, prefix) {
+  for (let [name, def] of Object.entries(definitions)) {
+    if(prefix !== undefined) {
+      name = prefix + name;
+    }
     let value = getAttribute(source, name);
+
     if (value === undefined) {
       if (def.default === undefined) {
         if (def.attributes) {
-          object[name] = {};
+          setAttributes(object, source, def.attributes, cb, name + ".");
         }
         continue;
       } else {

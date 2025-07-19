@@ -76,7 +76,7 @@ const definitions = prepareAttributesDefinitions({
 });
 
 test("default", sast, {}, {}, definitions, (t, object) =>
-  t.deepEqual(object.listen, {})
+  t.deepEqual(object.listen, undefined)
 );
 
 test(
