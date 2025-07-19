@@ -23,6 +23,7 @@ const types = {
   string: { name: "string" },
   number: { name: "number" },
   integer: { name: "integer" },
+  "unsigned-integer": { name: "unsigned-integer" },
   boolean: { name: "boolean" },
   object: { name: "object" }
 };
@@ -71,20 +72,28 @@ export function mergeAttributeDefinitions(dest, atts) {
  */
 export function setAttributes(object, source, definitions, cb) {
   for (const [name, def] of Object.entries(definitions)) {
-    const value = getAttribute(source, name) ?? def.default;
+    let value = getAttribute(source, name);
     if (value === undefined) {
-      if (def.attributes) {
-        object[name] = {};
-      }
-    } else {
-      if (def.set) {
-        def.set.call(object, value, def);
+      if (def.default === undefined) {
+        if (def.attributes) {
+          object[name] = {};
+        }
+        continue;
       } else {
-        setAttribute(object, name, value);
+        if (getAttribute(object, name) !== undefined) {
+          continue;
+        }
+        value = def.default;
       }
-      if (cb) {
-        cb(def, name, value);
-      }
+    }
+
+    if (def.set) {
+      def.set.call(object, value, def);
+    } else {
+      setAttribute(object, name, value);
+    }
+    if (cb) {
+      cb(def, name, value);
     }
   }
 }
