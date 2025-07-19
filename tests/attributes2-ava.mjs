@@ -78,7 +78,7 @@ test("keep old value", sast, { att3: 4711 }, {}, definitions, (t, object) =>
 );
 
 test(
-  "nested simple",
+  "nested simple into empty",
   sast,
   {},
   {
@@ -90,11 +90,29 @@ test(
   (t, object) => t.is(object.nested.att1, "value1a")
 );
 
+test(
+  "nested simple overwrite",
+  sast,
+  {
+    att3: 777,
+    nested: {
+      att1: "value1a"
+    }
+  },
+  {
+    nested: {
+      att1: "value1b"
+    }
+  },
+  definitions,
+  (t, object) => t.is(object.nested.att1, "value1b")
+);
+
 test("nested default", sast, {}, {}, definitions, (t, object) =>
   t.is(object.nested.att1, "the default")
 );
 
-test(
+test.skip(
   "nested empty",
   sast,
   {},

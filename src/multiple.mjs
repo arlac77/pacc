@@ -73,16 +73,19 @@ export function mergeAttributeDefinitions(dest, atts) {
  */
 export function setAttributes(object, source, definitions, cb, prefix) {
   for (let [name, def] of Object.entries(definitions)) {
-    if(prefix !== undefined) {
+    if (prefix !== undefined) {
       name = prefix + name;
     }
+
+    if (def.attributes) {
+      setAttributes(object, source, def.attributes, cb, name + ".");
+      continue;
+    }
+
     let value = getAttribute(source, name);
 
     if (value === undefined) {
       if (def.default === undefined) {
-        if (def.attributes) {
-          setAttributes(object, source, def.attributes, cb, name + ".");
-        }
         continue;
       } else {
         if (getAttribute(object, name) !== undefined) {
