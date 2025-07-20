@@ -173,4 +173,7 @@ export const active_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const language_attribute = default_attribute;
+export const language_attribute = {
+  ...default_attribute,
+  description: "human spoken language"
+};
