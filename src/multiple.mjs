@@ -3,7 +3,6 @@ import { setAttribute, getAttribute } from "./attribute.mjs";
 /**
  * @typedef {Object} AttributeDefinition
  *
- * @property {string} name
  * @property {string} type
  * @property {boolean} isKey
  * @property {boolean} writable
@@ -35,7 +34,6 @@ const types = {
  */
 export function prepareAttributesDefinitions(definitions) {
   for (const [name, d] of Object.entries(definitions)) {
-    d.name = name;
     if (d.attributes === undefined) {
       d.type = types[d.type] || types.base;
     }

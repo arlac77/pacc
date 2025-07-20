@@ -34,7 +34,6 @@ const definitions = prepareAttributesDefinitions({
   }
 });
 
-test("has name", t => t.is(definitions.att1.name, "att1"));
 test("has mandatory", t => t.true(definitions.att1.mandatory));
 test("has private", t => t.true(definitions.att1.private));
 test.skip("has inherited private", t => t.true(definitions.att4.private));
