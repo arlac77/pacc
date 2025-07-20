@@ -36,10 +36,29 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-2)
 *   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-3)
-*   [filter](#filter)
-    *   [Parameters](#parameters-4)
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
+*   [default\_attribute](#default_attribute)
+*   [name\_attribute](#name_attribute)
+*   [description\_attribute](#description_attribute)
+*   [type\_attribute](#type_attribute)
+*   [state\_attribute](#state_attribute)
+*   [boolean\_attribute](#boolean_attribute)
+*   [boolean\_read\_only\_attribute](#boolean_read_only_attribute)
+*   [uuid\_attribute](#uuid_attribute)
+*   [empty\_attribute](#empty_attribute)
+*   [secret\_attribute](#secret_attribute)
+*   [count\_attribute](#count_attribute)
+*   [size\_attribute](#size_attribute)
+*   [url\_attribute](#url_attribute)
+*   [id\_attribute](#id_attribute)
+*   [body\_attribute](#body_attribute)
+*   [title\_attribute](#title_attribute)
+*   [priority\_attribute](#priority_attribute)
+*   [active\_attribute](#active_attribute)
+*   [language\_attribute](#language_attribute)
+*   [filter](#filter)
+    *   [Parameters](#parameters-4)
 *   [prepareAttributesDefinitions](#prepareattributesdefinitions)
     *   [Parameters](#parameters-5)
 *   [mergeAttributeDefinitions](#mergeattributedefinitions)
@@ -125,16 +144,6 @@ The name may be a property path like 'a.b.c <='.
 
 Returns **\[any, [Token](#token)]** value associated with the given property name
 
-## filter
-
-Generate filter function.
-
-### Parameters
-
-*   `filterBy` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
-
-Returns **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
-
 ## AttributeDefinition
 
 Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
@@ -153,6 +162,105 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `set` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** set the value
 *   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
 *   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable(s) used to provide the value
+
+## default\_attribute
+
+Common attribute properties.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## name\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## description\_attribute
+
+The description of the object content.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## type\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## state\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## boolean\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## boolean\_read\_only\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## uuid\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## empty\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## secret\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## count\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## size\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## url\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## id\_attribute
+
+Unique id within the provider.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## body\_attribute
+
+The body text of the pull request.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## title\_attribute
+
+The one line description of the pull request.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## priority\_attribute
+
+In case there are several providers able to support a given source which one sould be used ?
+this defines the order.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## active\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## language\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## filter
+
+Generate filter function.
+
+### Parameters
+
+*   `filterBy` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
+
+Returns **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
 
 ## prepareAttributesDefinitions
 
