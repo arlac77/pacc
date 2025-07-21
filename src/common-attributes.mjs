@@ -103,6 +103,15 @@ export const secret_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const token_attribute = {
+  ...default_attribute,
+  private: true,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const count_attribute = { ...default_attribute, type: "integer" };
 
 /**
