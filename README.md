@@ -48,6 +48,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [uuid\_attribute](#uuid_attribute)
 *   [empty\_attribute](#empty_attribute)
 *   [secret\_attribute](#secret_attribute)
+*   [token\_attribute](#token_attribute)
 *   [count\_attribute](#count_attribute)
 *   [size\_attribute](#size_attribute)
 *   [url\_attribute](#url_attribute)
@@ -207,6 +208,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## token\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## count\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -268,7 +273,9 @@ Create attributes from its definition.
 
 ### Parameters
 
-*   `definitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `newDefinitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `presentDefinitions` &#x20;
+*   `baseDefinitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** optional merg in attributes
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attributes
 
@@ -279,7 +286,7 @@ Merge attribute definitions.
 ### Parameters
 
 *   `dest` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute definitions to be used also the merge target
-*   `atts` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute definitions to be used
+*   `atts` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** attribute definitions to be used
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** merged definitions (dest)
 
