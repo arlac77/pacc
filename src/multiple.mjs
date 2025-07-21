@@ -12,36 +12,45 @@ const types = {
 
 /**
  * Create attributes from its definition.
- * @param {Object} definitions
+ * @param {Object} newDefinitions
+ * @param {Object?} baseDefinitions optional merg in attributes
  * @return {Object} attributes
  */
-export function prepareAttributesDefinitions(definitions) {
-  for (const [name, d] of Object.entries(definitions)) {
+export function prepareAttributesDefinitions(newDefinitions, presentDefinitions) {
+  for (const [name, d] of Object.entries(newDefinitions)) {
     if (d.attributes === undefined) {
       d.type = types[d.type] || types.base;
     }
+    else {
+      prepareAttributesDefinitions(d.attributes);
+    }
   }
-  return definitions;
+
+  return mergeAttributeDefinitions(newDefinitions, presentDefinitions);
 }
 
 /**
  * Merge attribute definitions.
  * @param {Object} dest attribute definitions to be used also the merge target
- * @param {Object} atts attribute definitions to be used
+ * @param {Object?} atts attribute definitions to be used
  * @return {Object} merged definitions (dest)
  */
 export function mergeAttributeDefinitions(dest, atts) {
-  for (const [name, ca] of Object.entries(atts)) {
-    if (ca.attributes !== undefined) {
-      const bn = dest[name];
+  if (atts) {
+    for (const [name, ca] of Object.entries(atts)) {
+      if (ca.attributes !== undefined) {
+        const bn = dest[name];
 
-      if (bn !== undefined) {
-        Object.assign(ca.attributes, bn.attributes);
+        if (bn !== undefined) {
+          Object.assign(ca.attributes, bn.attributes);
+        }
       }
     }
+
+    return Object.assign(dest, atts);
   }
 
-  return Object.assign(dest, atts);
+  return dest;
 }
 
 /**
