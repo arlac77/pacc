@@ -48,6 +48,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [uuid\_attribute](#uuid_attribute)
 *   [empty\_attribute](#empty_attribute)
 *   [secret\_attribute](#secret_attribute)
+*   [username\_attribute](#username_attribute)
+*   [password\_attribute](#password_attribute)
 *   [token\_attribute](#token_attribute)
 *   [certificate\_attribute](#certificate_attribute)
 *   [private\_key\_attribute](#private_key_attribute)
@@ -55,6 +57,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [count\_attribute](#count_attribute)
 *   [size\_attribute](#size_attribute)
 *   [url\_attribute](#url_attribute)
+*   [hostname\_attribute](#hostname_attribute)
+*   [port\_attribute](#port_attribute)
 *   [id\_attribute](#id_attribute)
 *   [body\_attribute](#body_attribute)
 *   [title\_attribute](#title_attribute)
@@ -212,6 +216,14 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## username\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## password\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## token\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -237,6 +249,14 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## url\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## hostname\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## port\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
