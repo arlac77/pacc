@@ -103,6 +103,24 @@ export const secret_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const username_attribute = {
+  ...default_attribute,
+  private: true,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const password_attribute = {
+  ...default_attribute,
+  private: true,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const token_attribute = {
   ...default_attribute,
   private: true,
@@ -155,6 +173,23 @@ export const url_attribute = {
   ...default_attribute,
   type: "url",
   description: "home of the object"
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const hostname_attribute = {
+  ...default_attribute,
+  description: "hostname"
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const port_attribute = {
+  ...default_attribute,
+  type: "integer",
+  description: "port"
 };
 
 /**
