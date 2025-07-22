@@ -1,6 +1,6 @@
 import test from "ava";
 import { sast, gast } from "./util.mjs";
-import { prepareAttributesDefinitions, mergeAttributeDefinitions } from "pacc";
+import { prepareAttributesDefinitions } from "pacc";
 
 const definitions = prepareAttributesDefinitions({
   att1: {
@@ -41,17 +41,19 @@ test("has given type name", t =>
   t.is(definitions.att3.type.name, "unsigned-integer"));
 
 test("merge attributes", t => {
-  const md2 = prepareAttributesDefinitions({
-    nested: {
-      attributes: {
-        att2: {
-          type: "string",
-          default: "the default"
+  const ma = prepareAttributesDefinitions(
+    {
+      nested: {
+        attributes: {
+          att2: {
+            type: "string",
+            default: "the default"
+          }
         }
       }
-    }
-  });
-  const ma = mergeAttributeDefinitions(md2, definitions);
+    },
+    definitions
+  );
   t.deepEqual(Object.keys(ma.nested.attributes), ["att1", "att2"]);
 });
 

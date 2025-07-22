@@ -13,7 +13,7 @@ const types = {
 /**
  * Create attributes from its definition.
  * @param {Object} newDefinitions
- * @param {Object?} baseDefinitions optional merg in attributes
+ * @param {Object|undefined} presentDefinitions optional merg in attributes
  * @return {Object} attributes
  */
 export function prepareAttributesDefinitions(newDefinitions, presentDefinitions) {
@@ -35,7 +35,7 @@ export function prepareAttributesDefinitions(newDefinitions, presentDefinitions)
  * @param {Object?} atts attribute definitions to be used
  * @return {Object} merged definitions (dest)
  */
-export function mergeAttributeDefinitions(dest, atts) {
+function mergeAttributeDefinitions(dest, atts) {
   if (atts) {
     for (const [name, ca] of Object.entries(atts)) {
       if (ca.attributes !== undefined) {
