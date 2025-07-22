@@ -112,6 +112,35 @@ export const token_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const certificate_attribute = {
+  ...default_attribute,
+  private: true,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const private_key_attribute = {
+  ...default_attribute,
+  description: "private key",
+  private: true,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const public_key_attribute = {
+  ...default_attribute,
+  description: "public key",
+  private: true,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const count_attribute = { ...default_attribute, type: "integer" };
 
 /**
@@ -168,6 +197,17 @@ export const priority_attribute = {
   default: 0,
   writable: true
 };
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const timeout_attribute = {
+  ...default_attribute,
+  description: "timeout",
+  type: "number",
+  writable: true
+};
+
 
 /**
  * @type {AttributeDefinition}
