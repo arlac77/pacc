@@ -49,6 +49,9 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [empty\_attribute](#empty_attribute)
 *   [secret\_attribute](#secret_attribute)
 *   [token\_attribute](#token_attribute)
+*   [certificate\_attribute](#certificate_attribute)
+*   [private\_key\_attribute](#private_key_attribute)
+*   [public\_key\_attribute](#public_key_attribute)
 *   [count\_attribute](#count_attribute)
 *   [size\_attribute](#size_attribute)
 *   [url\_attribute](#url_attribute)
@@ -56,6 +59,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [body\_attribute](#body_attribute)
 *   [title\_attribute](#title_attribute)
 *   [priority\_attribute](#priority_attribute)
+*   [timeout\_attribute](#timeout_attribute)
 *   [active\_attribute](#active_attribute)
 *   [language\_attribute](#language_attribute)
 *   [filter](#filter)
@@ -212,6 +216,18 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## certificate\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## private\_key\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## public\_key\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## count\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -246,6 +262,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 In case there are several providers able to support a given source which one sould be used ?
 this defines the order.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## timeout\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
