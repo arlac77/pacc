@@ -32,9 +32,6 @@
     "lint:docs": "documentation lint ./src**/*.mjs",
     "lint:typescript": "tsc --allowJs --checkJs --noEmit --resolveJsonModule --target esnext -m esnext --module nodenext --moduleResolution nodenext ./src**/*.mjs"
   },
-  "dependencies": {
-    "npm-pkgbuild": "^18.1.1"
-  },
   "devDependencies": {
     "ava": "^6.4.1",
     "browser-ava": "^2.3.31",
