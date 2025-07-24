@@ -5,6 +5,7 @@
  * @property {boolean} isKey
  * @property {boolean} writable
  * @property {boolean} mandatory
+ * @property {boolean} collection
  * @property {boolean} [private] should the value be shown
  * @property {string} [depends] name of an attribute we depend on
  * @property {string[]} additionalAttributes extra attributes that are present in case our attribute is set
@@ -23,6 +24,7 @@ export const default_attribute = {
   type: "string",
   writable: false,
   mandatory: false,
+  collection: false,
   private: false,
   isKey: false,
   additionalAttributes: []
@@ -159,12 +161,17 @@ export const public_key_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const count_attribute = { ...default_attribute, type: "integer" };
+export const integer_attribute = { ...default_attribute, type: "integer" };
 
 /**
  * @type {AttributeDefinition}
  */
-export const size_attribute = { ...default_attribute, type: "integer" };
+export const count_attribute = integer_attribute;
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const size_attribute = integer_attribute;
 
 /**
  * @type {AttributeDefinition}
@@ -187,8 +194,7 @@ export const hostname_attribute = {
  * @type {AttributeDefinition}
  */
 export const port_attribute = {
-  ...default_attribute,
-  type: "integer",
+  ...integer_attribute,
   description: "port"
 };
 
@@ -248,8 +254,7 @@ export const timeout_attribute = {
  * @type {AttributeDefinition}
  */
 export const active_attribute = {
-  ...default_attribute,
-  type: "boolean",
+  ...boolean_attribute,
   default: true,
   writable: true
 };
