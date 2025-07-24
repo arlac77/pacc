@@ -54,6 +54,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [certificate\_attribute](#certificate_attribute)
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
+*   [integer\_attribute](#integer_attribute)
 *   [count\_attribute](#count_attribute)
 *   [size\_attribute](#size_attribute)
 *   [url\_attribute](#url_attribute)
@@ -163,6 +164,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `isKey` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `mandatory` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
+*   `collection` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `private` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** should the value be shown
 *   `depends` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** name of an attribute we depend on
 *   `additionalAttributes` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** extra attributes that are present in case our attribute is set
@@ -237,6 +239,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## public\_key\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## integer\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
