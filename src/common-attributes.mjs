@@ -39,6 +39,11 @@ export const name_attribute = {
 };
 
 /**
+ * @type {AttributeDefinition}
+ */
+export const email_attribute = default_attribute;
+
+/**
  * The description of the object content.
  * @type {AttributeDefinition}
  */
