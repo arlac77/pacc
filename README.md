@@ -40,6 +40,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Properties](#properties)
 *   [default\_attribute](#default_attribute)
 *   [name\_attribute](#name_attribute)
+*   [email\_attribute](#email_attribute)
 *   [description\_attribute](#description_attribute)
 *   [type\_attribute](#type_attribute)
 *   [state\_attribute](#state_attribute)
@@ -181,6 +182,10 @@ Common attribute properties.
 Type: [AttributeDefinition](#attributedefinition)
 
 ## name\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## email\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
