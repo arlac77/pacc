@@ -27,15 +27,10 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 
 ### Table of Contents
 
-*   [tokens](#tokens)
-*   [tokens](#tokens-1)
+*   [prepareAttributesDefinitions](#prepareattributesdefinitions)
     *   [Parameters](#parameters)
-*   [setAttribute](#setattribute)
+*   [mergeAttributeDefinitions](#mergeattributedefinitions)
     *   [Parameters](#parameters-1)
-*   [getAttribute](#getattribute)
-    *   [Parameters](#parameters-2)
-*   [getAttributeAndOperator](#getattributeandoperator)
-    *   [Parameters](#parameters-3)
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
 *   [default\_attribute](#default_attribute)
@@ -69,14 +64,19 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [active\_attribute](#active_attribute)
 *   [language\_attribute](#language_attribute)
 *   [filter](#filter)
-    *   [Parameters](#parameters-4)
-*   [prepareAttributesDefinitions](#prepareattributesdefinitions)
-    *   [Parameters](#parameters-5)
-*   [mergeAttributeDefinitions](#mergeattributedefinitions)
-    *   [Parameters](#parameters-6)
+    *   [Parameters](#parameters-2)
 *   [setAttributes](#setattributes)
-    *   [Parameters](#parameters-7)
+    *   [Parameters](#parameters-3)
 *   [getAttributes](#getattributes)
+    *   [Parameters](#parameters-4)
+*   [tokens](#tokens)
+*   [tokens](#tokens-1)
+    *   [Parameters](#parameters-5)
+*   [setAttribute](#setattribute)
+    *   [Parameters](#parameters-6)
+*   [getAttribute](#getattribute)
+    *   [Parameters](#parameters-7)
+*   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-8)
 *   [lookup](#lookup)
 *   [Token](#token)
@@ -110,50 +110,27 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [BAR](#bar)
 *   [DOUBLE\_BAR](#double_bar)
 
-## tokens
+## prepareAttributesDefinitions
 
-## tokens
-
-Split property path into tokens
+Create attributes from its definition.
 
 ### Parameters
 
-*   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `newDefinitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `presentDefinitions` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** optional merg in attributes
 
-## setAttribute
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attributes
 
-Set object attribute.
-The name may be a property path like 'a.b.c'.
+## mergeAttributeDefinitions
 
-### Parameters
-
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `value` **any**&#x20;
-
-## getAttribute
-
-Deliver attribute value.
-The name may be a property path like 'a.b.c' or a\[2]
+Merge attribute definitions.
 
 ### Parameters
 
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `dest` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute definitions to be used also the merge target
+*   `atts` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** attribute definitions to be used
 
-Returns **any** value associated with the given property name
-
-## getAttributeAndOperator
-
-Deliver attribute value and operator.
-The name may be a property path like 'a.b.c <='.
-
-### Parameters
-
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-Returns **\[any, [Token](#token)]** value associated with the given property name
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** merged definitions (dest)
 
 ## AttributeDefinition
 
@@ -318,28 +295,6 @@ Generate filter function.
 
 Returns **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
 
-## prepareAttributesDefinitions
-
-Create attributes from its definition.
-
-### Parameters
-
-*   `newDefinitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `presentDefinitions` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** optional merg in attributes
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attributes
-
-## mergeAttributeDefinitions
-
-Merge attribute definitions.
-
-### Parameters
-
-*   `dest` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute definitions to be used also the merge target
-*   `atts` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** attribute definitions to be used
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** merged definitions (dest)
-
 ## setAttributes
 
 Copies attribute values from a source object into a destination object.
@@ -362,6 +317,51 @@ Retrive attribute values from an object.
 *   `definitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** values
+
+## tokens
+
+## tokens
+
+Split property path into tokens
+
+### Parameters
+
+*   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+## setAttribute
+
+Set object attribute.
+The name may be a property path like 'a.b.c'.
+
+### Parameters
+
+*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `value` **any**&#x20;
+
+## getAttribute
+
+Deliver attribute value.
+The name may be a property path like 'a.b.c' or a\[2]
+
+### Parameters
+
+*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+Returns **any** value associated with the given property name
+
+## getAttributeAndOperator
+
+Deliver attribute value and operator.
+The name may be a property path like 'a.b.c <='.
+
+### Parameters
+
+*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+Returns **\[any, [Token](#token)]** value associated with the given property name
 
 ## lookup
 
