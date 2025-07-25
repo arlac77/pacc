@@ -41,7 +41,10 @@ export const name_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const email_attribute = default_attribute;
+export const email_attribute = {
+  ...default_attribute,
+  description: "email address"
+};
 
 /**
  * The description of the object content.
@@ -56,7 +59,7 @@ export const description_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const type_attribute = default_attribute;
+export { default_attribute as type_attribute };
 
 /**
  * @type {AttributeDefinition}
@@ -69,21 +72,37 @@ export const state_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const boolean_attribute = {
+export const boolean_attribute_writeable_true = {
+  ...default_attribute,
+  type: "boolean",
+  writable: true,
+  default: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const boolean_attribute_writeable_false = {
   ...default_attribute,
   type: "boolean",
   writable: true,
   default: false
 };
 
+export { boolean_attribute_writeable_false as boolean_attribute };
+
 /**
  * @type {AttributeDefinition}
  */
-export const boolean_read_only_attribute = {
-  ...default_attribute,
-  type: "boolean",
-  default: false
+export const boolean_attribute_false = {
+  ...boolean_attribute_writeable_false,
+  writable: false
 };
+
+/**
+ * @type {AttributeDefinition}
+ */
+export { boolean_attribute_writeable_true as active_attribute };
 
 /**
  * @type {AttributeDefinition}
@@ -171,12 +190,12 @@ export const integer_attribute = { ...default_attribute, type: "integer" };
 /**
  * @type {AttributeDefinition}
  */
-export const count_attribute = integer_attribute;
+export { integer_attribute as count_attribute };
 
 /**
  * @type {AttributeDefinition}
  */
-export const size_attribute = integer_attribute;
+export { integer_attribute as size_attribute };
 
 /**
  * @type {AttributeDefinition}
@@ -204,7 +223,7 @@ export const port_attribute = {
 };
 
 /**
- * Unique id within the provider.
+ * Unique id within.
  * @type {AttributeDefinition}
  */
 export const id_attribute = {
@@ -214,7 +233,7 @@ export const id_attribute = {
 };
 
 /**
- * The body text of the pull request.
+ * The body text.
  * @type {AttributeDefinition}
  */
 export const body_attribute = {
@@ -223,7 +242,7 @@ export const body_attribute = {
 };
 
 /**
- * The one line description of the pull request.
+ * The one line description.
  * @type {AttributeDefinition}
  */
 export const title_attribute = {
@@ -251,16 +270,6 @@ export const timeout_attribute = {
   ...default_attribute,
   description: "timeout",
   type: "number",
-  writable: true
-};
-
-
-/**
- * @type {AttributeDefinition}
- */
-export const active_attribute = {
-  ...boolean_attribute,
-  default: true,
   writable: true
 };
 
