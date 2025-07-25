@@ -34,13 +34,15 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
 *   [default\_attribute](#default_attribute)
+*   [default\_attribute](#default_attribute-1)
 *   [name\_attribute](#name_attribute)
 *   [email\_attribute](#email_attribute)
 *   [description\_attribute](#description_attribute)
-*   [type\_attribute](#type_attribute)
 *   [state\_attribute](#state_attribute)
-*   [boolean\_attribute](#boolean_attribute)
-*   [boolean\_read\_only\_attribute](#boolean_read_only_attribute)
+*   [boolean\_attribute\_writeable\_true](#boolean_attribute_writeable_true)
+*   [boolean\_attribute\_writeable\_true](#boolean_attribute_writeable_true-1)
+*   [boolean\_attribute\_writeable\_false](#boolean_attribute_writeable_false)
+*   [boolean\_attribute\_false](#boolean_attribute_false)
 *   [uuid\_attribute](#uuid_attribute)
 *   [empty\_attribute](#empty_attribute)
 *   [secret\_attribute](#secret_attribute)
@@ -51,8 +53,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
 *   [integer\_attribute](#integer_attribute)
-*   [count\_attribute](#count_attribute)
-*   [size\_attribute](#size_attribute)
+*   [integer\_attribute](#integer_attribute-1)
+*   [integer\_attribute](#integer_attribute-2)
 *   [url\_attribute](#url_attribute)
 *   [hostname\_attribute](#hostname_attribute)
 *   [port\_attribute](#port_attribute)
@@ -61,7 +63,6 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [title\_attribute](#title_attribute)
 *   [priority\_attribute](#priority_attribute)
 *   [timeout\_attribute](#timeout_attribute)
-*   [active\_attribute](#active_attribute)
 *   [language\_attribute](#language_attribute)
 *   [filter](#filter)
     *   [Parameters](#parameters-2)
@@ -158,6 +159,10 @@ Common attribute properties.
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## default\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## name\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -172,19 +177,23 @@ The description of the object content.
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## type\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
 ## state\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## boolean\_attribute
+## boolean\_attribute\_writeable\_true
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## boolean\_read\_only\_attribute
+## boolean\_attribute\_writeable\_true
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## boolean\_attribute\_writeable\_false
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## boolean\_attribute\_false
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -228,11 +237,11 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## count\_attribute
+## integer\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## size\_attribute
+## integer\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -250,19 +259,19 @@ Type: [AttributeDefinition](#attributedefinition)
 
 ## id\_attribute
 
-Unique id within the provider.
+Unique id within.
 
 Type: [AttributeDefinition](#attributedefinition)
 
 ## body\_attribute
 
-The body text of the pull request.
+The body text.
 
 Type: [AttributeDefinition](#attributedefinition)
 
 ## title\_attribute
 
-The one line description of the pull request.
+The one line description.
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -274,10 +283,6 @@ this defines the order.
 Type: [AttributeDefinition](#attributedefinition)
 
 ## timeout\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
-## active\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
