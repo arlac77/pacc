@@ -8,7 +8,6 @@
  * @property {boolean} collection
  * @property {boolean} [private] should the value be shown
  * @property {string} [depends] name of an attribute we depend on
- * @property {string[]} additionalAttributes extra attributes that are present in case our attribute is set
  * @property {string} [description] human readable
  * @property {any} [default] the default value
  * @property {Function} [set] set the value
@@ -26,8 +25,7 @@ export const default_attribute = {
   mandatory: false,
   collection: false,
   private: false,
-  isKey: false,
-  additionalAttributes: []
+  isKey: false
 };
 
 /**
