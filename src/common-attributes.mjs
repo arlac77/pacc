@@ -33,6 +33,11 @@ export const default_attribute = {
  */
 export { default_attribute as string_attribute };
 
+export const string_collection_attribute = {
+  ...default_attribute,
+  collection: true
+}
+
 /**
  * @type {AttributeDefinition}
  */
@@ -227,7 +232,7 @@ export const hostname_attribute = {
  */
 export const port_attribute = {
   ...integer_attribute,
-  description: "port"
+  description: "ip port"
 };
 
 /**
@@ -237,7 +242,7 @@ export const port_attribute = {
 export const id_attribute = {
   ...default_attribute,
   isKey: true,
-  description: "internal identifier"
+  description: "identifier"
 };
 
 /**
