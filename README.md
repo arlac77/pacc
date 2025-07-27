@@ -35,6 +35,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Properties](#properties)
 *   [default\_attribute](#default_attribute)
 *   [default\_attribute](#default_attribute-1)
+*   [default\_attribute](#default_attribute-2)
 *   [name\_attribute](#name_attribute)
 *   [email\_attribute](#email_attribute)
 *   [description\_attribute](#description_attribute)
@@ -42,9 +43,9 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [boolean\_attribute\_writeable\_true](#boolean_attribute_writeable_true)
 *   [boolean\_attribute\_writeable\_true](#boolean_attribute_writeable_true-1)
 *   [boolean\_attribute\_writeable\_false](#boolean_attribute_writeable_false)
+*   [boolean\_attribute\_writeable\_false](#boolean_attribute_writeable_false-1)
 *   [boolean\_attribute\_false](#boolean_attribute_false)
 *   [uuid\_attribute](#uuid_attribute)
-*   [empty\_attribute](#empty_attribute)
 *   [secret\_attribute](#secret_attribute)
 *   [username\_attribute](#username_attribute)
 *   [password\_attribute](#password_attribute)
@@ -52,6 +53,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [certificate\_attribute](#certificate_attribute)
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
+*   [number\_attribute](#number_attribute)
 *   [integer\_attribute](#integer_attribute)
 *   [integer\_attribute](#integer_attribute-1)
 *   [integer\_attribute](#integer_attribute-2)
@@ -162,6 +164,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## default\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## name\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -192,15 +198,15 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## boolean\_attribute\_writeable\_false
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## boolean\_attribute\_false
 
 Type: [AttributeDefinition](#attributedefinition)
 
 ## uuid\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
-## empty\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -229,6 +235,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## public\_key\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## number\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
