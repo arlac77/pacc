@@ -5,6 +5,7 @@ const types = {
   integer: { name: "integer" },
   "unsigned-integer": { name: "unsigned-integer" },
   boolean: { name: "boolean" },
+  url: { name: "url" },
   object: { name: "object" }
 };
 

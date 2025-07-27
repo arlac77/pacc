@@ -31,6 +31,11 @@ export const default_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export { default_attribute as string_attribute };
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const name_attribute = {
   ...default_attribute,
   isKey: true
@@ -105,15 +110,15 @@ export { boolean_attribute_writeable_true as active_attribute };
 /**
  * @type {AttributeDefinition}
  */
-export const uuid_attribute = {
-  ...default_attribute,
-  isKey: true
-};
+export { boolean_attribute_writeable_false as empty_attribute };
 
 /**
  * @type {AttributeDefinition}
  */
-export const empty_attribute = { ...default_attribute, type: "boolean" };
+export const uuid_attribute = {
+  ...default_attribute,
+  isKey: true
+};
 
 /**
  * @type {AttributeDefinition}
@@ -179,6 +184,11 @@ export const public_key_attribute = {
   private: true,
   writable: true
 };
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const number_attribute = { ...default_attribute, type: "number" };
 
 /**
  * @type {AttributeDefinition}
