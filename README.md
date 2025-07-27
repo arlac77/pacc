@@ -43,8 +43,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [boolean\_attribute\_writeable\_true](#boolean_attribute_writeable_true)
 *   [boolean\_attribute\_writeable\_true](#boolean_attribute_writeable_true-1)
 *   [boolean\_attribute\_writeable\_false](#boolean_attribute_writeable_false)
-*   [boolean\_attribute\_writeable\_false](#boolean_attribute_writeable_false-1)
 *   [boolean\_attribute\_false](#boolean_attribute_false)
+*   [empty\_attribute](#empty_attribute)
 *   [uuid\_attribute](#uuid_attribute)
 *   [secret\_attribute](#secret_attribute)
 *   [username\_attribute](#username_attribute)
@@ -198,11 +198,11 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## boolean\_attribute\_writeable\_false
+## boolean\_attribute\_false
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## boolean\_attribute\_false
+## empty\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
