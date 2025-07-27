@@ -36,7 +36,7 @@ export { default_attribute as string_attribute };
 export const string_collection_attribute = {
   ...default_attribute,
   collection: true
-}
+};
 
 /**
  * @type {AttributeDefinition}
@@ -115,7 +115,10 @@ export { boolean_attribute_writeable_true as active_attribute };
 /**
  * @type {AttributeDefinition}
  */
-export { boolean_attribute_writeable_false as empty_attribute };
+export const empty_attribute = {
+  ...default_attribute,
+  type: "boolean"
+};
 
 /**
  * @type {AttributeDefinition}

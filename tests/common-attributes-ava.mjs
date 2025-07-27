@@ -1,10 +1,16 @@
 import test from "ava";
-import { boolean_attribute, boolean_attribute_false, string_collection_attribute } from "pacc";
+import { boolean_attribute, empty_attribute, boolean_attribute_false, string_collection_attribute } from "pacc";
 
-test("boolean attribute", t => {
+test("boolean_attribute", t => {
   t.true(boolean_attribute.writable);
   t.false(boolean_attribute.default);
   t.is(boolean_attribute.type, "boolean");
+});
+
+test("empty_attribute", t => {
+  t.false(empty_attribute.writable);
+  t.is(empty_attribute.default, undefined);
+  t.is(empty_attribute.type, "boolean");
 });
 
 test("boolean_attribute_false attribute", t => {
