@@ -1,5 +1,5 @@
 import test from "ava";
-import { boolean_attribute, empty_attribute, boolean_attribute_false, string_collection_attribute } from "pacc";
+import { boolean_attribute, empty_attribute, duration_attribute, boolean_attribute_false, string_collection_attribute } from "pacc";
 
 test("boolean_attribute", t => {
   t.true(boolean_attribute.writable);
@@ -24,4 +24,11 @@ test("string_collection_attribute", t => {
   t.is(string_collection_attribute.default, undefined);
   t.is(string_collection_attribute.type, "string");
   t.is(string_collection_attribute.collection, true);
+});
+
+test("duration_attribute", t => {
+  t.false(duration_attribute.writable);
+  t.is(duration_attribute.default, undefined);
+  t.is(duration_attribute.type, "number");
+  t.is(duration_attribute.collection, false);
 });

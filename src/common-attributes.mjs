@@ -287,10 +287,17 @@ export const priority_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const timeout_attribute = {
+export const duration_attribute = {
   ...default_attribute,
+  type: "number"
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const timeout_attribute = {
+  ...duration_attribute,
   description: "timeout",
-  type: "number",
   writable: true
 };
 
