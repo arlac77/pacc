@@ -57,6 +57,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [integer\_attribute](#integer_attribute)
 *   [integer\_attribute](#integer_attribute-1)
 *   [integer\_attribute](#integer_attribute-2)
+*   [object\_attribute](#object_attribute)
 *   [url\_attribute](#url_attribute)
 *   [hostname\_attribute](#hostname_attribute)
 *   [port\_attribute](#port_attribute)
@@ -64,6 +65,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [body\_attribute](#body_attribute)
 *   [title\_attribute](#title_attribute)
 *   [priority\_attribute](#priority_attribute)
+*   [duration\_attribute](#duration_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [filter](#filter)
@@ -254,6 +256,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## object\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## url\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -288,6 +294,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 In case there are several providers able to support a given source which one sould be used ?
 this defines the order.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## duration\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
