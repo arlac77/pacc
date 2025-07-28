@@ -65,6 +65,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [body\_attribute](#body_attribute)
 *   [title\_attribute](#title_attribute)
 *   [priority\_attribute](#priority_attribute)
+*   [duration\_attribute](#duration_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [filter](#filter)
@@ -293,6 +294,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 In case there are several providers able to support a given source which one sould be used ?
 this defines the order.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## duration\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
