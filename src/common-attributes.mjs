@@ -216,6 +216,11 @@ export { integer_attribute as size_attribute };
 /**
  * @type {AttributeDefinition}
  */
+export const object_attribute = { ...default_attribute, type: "object" };
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const url_attribute = {
   ...default_attribute,
   type: "url",
