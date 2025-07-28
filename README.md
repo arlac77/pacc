@@ -57,6 +57,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [integer\_attribute](#integer_attribute)
 *   [integer\_attribute](#integer_attribute-1)
 *   [integer\_attribute](#integer_attribute-2)
+*   [object\_attribute](#object_attribute)
 *   [url\_attribute](#url_attribute)
 *   [hostname\_attribute](#hostname_attribute)
 *   [port\_attribute](#port_attribute)
@@ -251,6 +252,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## integer\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## object\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
