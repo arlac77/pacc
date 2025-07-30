@@ -41,6 +41,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [email\_attribute](#email_attribute)
 *   [description\_attribute](#description_attribute)
 *   [state\_attribute](#state_attribute)
+*   [boolean\_attribute\_writable](#boolean_attribute_writable)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true-1)
 *   [boolean\_attribute\_writable\_false](#boolean_attribute_writable_false)
@@ -192,6 +193,10 @@ The description of the object content.
 Type: [AttributeDefinition](#attributedefinition)
 
 ## state\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## boolean\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
