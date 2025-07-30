@@ -36,6 +36,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [default\_attribute](#default_attribute)
 *   [default\_attribute](#default_attribute-1)
 *   [default\_attribute](#default_attribute-2)
+*   [string\_collection\_attribute\_writeable](#string_collection_attribute_writeable)
 *   [name\_attribute](#name_attribute)
 *   [email\_attribute](#email_attribute)
 *   [description\_attribute](#description_attribute)
@@ -54,9 +55,12 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
 *   [number\_attribute](#number_attribute)
+*   [number\_attribute](#number_attribute-1)
+*   [number\_attribute\_writable](#number_attribute_writable)
 *   [integer\_attribute](#integer_attribute)
 *   [integer\_attribute](#integer_attribute-1)
 *   [integer\_attribute](#integer_attribute-2)
+*   [integer\_attribute\_writable](#integer_attribute_writable)
 *   [object\_attribute](#object_attribute)
 *   [url\_attribute](#url_attribute)
 *   [hostname\_attribute](#hostname_attribute)
@@ -65,7 +69,6 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [body\_attribute](#body_attribute)
 *   [title\_attribute](#title_attribute)
 *   [priority\_attribute](#priority_attribute)
-*   [duration\_attribute](#duration_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [filter](#filter)
@@ -170,6 +173,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## string\_collection\_attribute\_writeable
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## name\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -244,7 +251,11 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## integer\_attribute
+## number\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## number\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -253,6 +264,14 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## integer\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## integer\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## integer\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -294,10 +313,6 @@ Type: [AttributeDefinition](#attributedefinition)
 
 In case there are several providers able to support a given source which one sould be used ?
 this defines the order.
-
-Type: [AttributeDefinition](#attributedefinition)
-
-## duration\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
