@@ -41,6 +41,14 @@ export const string_collection_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const string_collection_attribute_writeable = {
+  ...string_collection_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const name_attribute = {
   ...default_attribute,
   isKey: true
@@ -201,7 +209,23 @@ export const number_attribute = { ...default_attribute, type: "number" };
 /**
  * @type {AttributeDefinition}
  */
+export const number_attribute_writable = {
+  ...number_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const integer_attribute = { ...default_attribute, type: "integer" };
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const integer_attribute_writable = {
+  ...integer_attribute,
+  writable: true
+};
 
 /**
  * @type {AttributeDefinition}
@@ -278,27 +302,21 @@ export const title_attribute = {
  * @type {AttributeDefinition}
  */
 export const priority_attribute = {
-  ...default_attribute,
-  type: "number",
+  ...number_attribute_writable,
   default: 0,
-  writable: true
 };
 
 /**
  * @type {AttributeDefinition}
  */
-export const duration_attribute = {
-  ...default_attribute,
-  type: "number"
-};
+export { number_attribute as duration_attribute };
 
 /**
  * @type {AttributeDefinition}
  */
 export const timeout_attribute = {
-  ...duration_attribute,
-  description: "timeout",
-  writable: true
+  ...number_attribute_writable,
+  description: "timeout"
 };
 
 /**
