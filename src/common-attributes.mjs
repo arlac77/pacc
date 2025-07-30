@@ -41,7 +41,7 @@ export const string_collection_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const string_collection_attribute_writeable = {
+export const string_collection_attribute_writable = {
   ...string_collection_attribute,
   writable: true
 };
@@ -88,7 +88,7 @@ export const state_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const boolean_attribute_writeable_true = {
+export const boolean_attribute_writable_true = {
   ...default_attribute,
   type: "boolean",
   writable: true,
@@ -98,27 +98,27 @@ export const boolean_attribute_writeable_true = {
 /**
  * @type {AttributeDefinition}
  */
-export const boolean_attribute_writeable_false = {
+export const boolean_attribute_writable_false = {
   ...default_attribute,
   type: "boolean",
   writable: true,
   default: false
 };
 
-export { boolean_attribute_writeable_false as boolean_attribute };
+export { boolean_attribute_writable_false as boolean_attribute };
 
 /**
  * @type {AttributeDefinition}
  */
 export const boolean_attribute_false = {
-  ...boolean_attribute_writeable_false,
+  ...boolean_attribute_writable_false,
   writable: false
 };
 
 /**
  * @type {AttributeDefinition}
  */
-export { boolean_attribute_writeable_true as active_attribute };
+export { boolean_attribute_writable_true as active_attribute };
 
 /**
  * @type {AttributeDefinition}
