@@ -303,7 +303,7 @@ export const title_attribute = {
  */
 export const priority_attribute = {
   ...number_attribute_writable,
-  default: 0,
+  default: 0
 };
 
 /**
