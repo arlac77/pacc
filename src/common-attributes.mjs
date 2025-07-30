@@ -88,10 +88,17 @@ export const state_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const boolean_attribute_writable_true = {
+export const boolean_attribute_writable = {
   ...default_attribute,
   type: "boolean",
   writable: true,
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const boolean_attribute_writable_true = {
+  ...boolean_attribute_writable,
   default: true
 };
 
@@ -99,9 +106,7 @@ export const boolean_attribute_writable_true = {
  * @type {AttributeDefinition}
  */
 export const boolean_attribute_writable_false = {
-  ...default_attribute,
-  type: "boolean",
-  writable: true,
+  ...boolean_attribute_writable,
   default: false
 };
 
