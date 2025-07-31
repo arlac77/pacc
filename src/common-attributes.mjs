@@ -31,7 +31,20 @@ export const default_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const default_attribute_writable = {
+  ...default_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export { default_attribute as string_attribute };
+
+/**
+ * @type {AttributeDefinition}
+ */
+export { default_attribute_writable as string_attribute_writable };
 
 export const string_collection_attribute = {
   ...default_attribute,
@@ -67,9 +80,8 @@ export const email_attribute = {
  * @type {AttributeDefinition}
  */
 export const description_attribute = {
-  ...default_attribute,
-  description: "human readable description",
-  writable: true
+  ...default_attribute_writable,
+  description: "human readable description"
 };
 
 /**
@@ -80,18 +92,14 @@ export { default_attribute as type_attribute };
 /**
  * @type {AttributeDefinition}
  */
-export const state_attribute = {
-  ...default_attribute,
-  writable: true
-};
+export { default_attribute_writable as state_attribute };
 
 /**
  * @type {AttributeDefinition}
  */
 export const boolean_attribute_writable = {
-  ...default_attribute,
-  type: "boolean",
-  writable: true,
+  ...default_attribute_writable,
+  type: "boolean"
 };
 
 /**
@@ -145,65 +153,47 @@ export const uuid_attribute = {
  * @type {AttributeDefinition}
  */
 export const secret_attribute = {
-  ...default_attribute,
-  private: true,
-  writable: true
+  ...default_attribute_writable,
+  private: true
 };
 
 /**
  * @type {AttributeDefinition}
  */
-export const username_attribute = {
-  ...default_attribute,
-  private: true,
-  writable: true
-};
+export { secret_attribute as username_attribute };
 
 /**
  * @type {AttributeDefinition}
  */
-export const password_attribute = {
-  ...default_attribute,
-  private: true,
-  writable: true
-};
+export { secret_attribute as password_attribute };
+
 
 /**
  * @type {AttributeDefinition}
  */
-export const token_attribute = {
-  ...default_attribute,
-  private: true,
-  writable: true
-};
+export { secret_attribute as token_attribute };
 
 /**
  * @type {AttributeDefinition}
  */
-export const certificate_attribute = {
-  ...default_attribute,
-  private: true,
-  writable: true
-};
+export { secret_attribute as certificate_attribute };
 
 /**
  * @type {AttributeDefinition}
  */
 export const private_key_attribute = {
-  ...default_attribute,
+  ...default_attribute_writable,
   description: "private key",
-  private: true,
-  writable: true
+  private: true
 };
 
 /**
  * @type {AttributeDefinition}
  */
 export const public_key_attribute = {
-  ...default_attribute,
+  ...default_attribute_writable,
   description: "public key",
-  private: true,
-  writable: true
+  private: true
 };
 
 /**
@@ -286,10 +276,7 @@ export const id_attribute = {
  * The body text.
  * @type {AttributeDefinition}
  */
-export const body_attribute = {
-  ...default_attribute,
-  writable: true
-};
+export { default_attribute_writable as body_attribute };
 
 /**
  * The one line description.
