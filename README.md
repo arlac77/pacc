@@ -36,11 +36,14 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [default\_attribute](#default_attribute)
 *   [default\_attribute](#default_attribute-1)
 *   [default\_attribute](#default_attribute-2)
+*   [default\_attribute\_writable](#default_attribute_writable)
+*   [default\_attribute\_writable](#default_attribute_writable-1)
+*   [default\_attribute\_writable](#default_attribute_writable-2)
+*   [default\_attribute\_writable](#default_attribute_writable-3)
 *   [string\_collection\_attribute\_writable](#string_collection_attribute_writable)
 *   [name\_attribute](#name_attribute)
 *   [email\_attribute](#email_attribute)
 *   [description\_attribute](#description_attribute)
-*   [state\_attribute](#state_attribute)
 *   [boolean\_attribute\_writable](#boolean_attribute_writable)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true-1)
@@ -49,10 +52,10 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [empty\_attribute](#empty_attribute)
 *   [uuid\_attribute](#uuid_attribute)
 *   [secret\_attribute](#secret_attribute)
-*   [username\_attribute](#username_attribute)
-*   [password\_attribute](#password_attribute)
-*   [token\_attribute](#token_attribute)
-*   [certificate\_attribute](#certificate_attribute)
+*   [secret\_attribute](#secret_attribute-1)
+*   [secret\_attribute](#secret_attribute-2)
+*   [secret\_attribute](#secret_attribute-3)
+*   [secret\_attribute](#secret_attribute-4)
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
 *   [number\_attribute](#number_attribute)
@@ -67,7 +70,6 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [hostname\_attribute](#hostname_attribute)
 *   [port\_attribute](#port_attribute)
 *   [id\_attribute](#id_attribute)
-*   [body\_attribute](#body_attribute)
 *   [title\_attribute](#title_attribute)
 *   [priority\_attribute](#priority_attribute)
 *   [timeout\_attribute](#timeout_attribute)
@@ -174,6 +176,24 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## default\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## default\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## default\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## default\_attribute\_writable
+
+The body text.
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## string\_collection\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -189,10 +209,6 @@ Type: [AttributeDefinition](#attributedefinition)
 ## description\_attribute
 
 The description of the object content.
-
-Type: [AttributeDefinition](#attributedefinition)
-
-## state\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -228,19 +244,19 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## username\_attribute
+## secret\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## password\_attribute
+## secret\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## token\_attribute
+## secret\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## certificate\_attribute
+## secret\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -299,12 +315,6 @@ Type: [AttributeDefinition](#attributedefinition)
 ## id\_attribute
 
 Unique id within.
-
-Type: [AttributeDefinition](#attributedefinition)
-
-## body\_attribute
-
-The body text.
 
 Type: [AttributeDefinition](#attributedefinition)
 
