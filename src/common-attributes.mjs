@@ -76,6 +76,15 @@ export const email_attribute = {
 };
 
 /**
+ * @type {AttributeDefinition}
+ */
+export const version_attribute_writable = {
+  ...default_attribute,
+  description: "version",
+  writable: true
+};
+
+/**
  * The description of the object content.
  * @type {AttributeDefinition}
  */
