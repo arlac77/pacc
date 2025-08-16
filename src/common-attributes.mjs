@@ -258,6 +258,14 @@ export const url_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const url_attribute_writble = {
+  ...url_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const hostname_attribute = {
   ...default_attribute,
   description: "hostname"
