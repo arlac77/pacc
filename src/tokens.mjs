@@ -97,7 +97,7 @@ export function* tokens(string) {
           case "number":
           case "identifier":
             yield value;
-            value = "";
+            value = undefined;
             state = undefined;
             break;
           default:
@@ -245,6 +245,10 @@ export function* tokens(string) {
             value = c.charCodeAt(0) - 48;
             state = "number";
             break;
+          case '.':
+              state = "number-fraction";
+              value = 0;
+              divider = 10;
           case "number-fraction":
             value = value + (c.charCodeAt(0) - 48) / divider;
             divider *= 10;
