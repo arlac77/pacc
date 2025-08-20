@@ -104,6 +104,11 @@ test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
   1234567890
 ]);
 
+test(tt, "2.34", [2.34]);
+test.skip(tt, ".34", [0.34]);
+
+test(tt, "a.b + 2.34 - c", ["a", DOT, "b", PLUS, 2.34, MINUS, "c"]);
+
 test(tt, "a[*]._b", ["a", OPEN_BRACKET, STAR, CLOSE_BRACKET, DOT, "_b"]);
 
 test.skip(

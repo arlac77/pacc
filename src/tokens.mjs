@@ -53,7 +53,7 @@ export /** @type {Token} */ const DOUBLE_BAR = createToken("||");
  * @yields {Token}
  */
 export function* tokens(string) {
-  let state, buffer, hex;
+  let state, value, hex, divider;
 
   for (const c of string) {
     switch (state) {
@@ -62,7 +62,7 @@ export function* tokens(string) {
         // @ts-ignore
         if (hex.length === 4) {
           // @ts-ignore
-          buffer += String.fromCharCode(parseInt(hex, 16));
+          value += String.fromCharCode(parseInt(hex, 16));
           state = "string";
         }
         continue;
@@ -78,7 +78,7 @@ export function* tokens(string) {
             r: "\r",
             t: "\t"
           };
-          buffer += esc[c] || c;
+          value += esc[c] || c;
           state = "string";
         }
         continue;
@@ -91,12 +91,13 @@ export function* tokens(string) {
           case undefined:
             break;
           case "string":
-            buffer += c;
+            value += c;
             break;
+          case "number-fraction":
           case "number":
           case "identifier":
-            yield buffer;
-            buffer = "";
+            yield value;
+            value = "";
             state = undefined;
             break;
           default:
@@ -116,22 +117,23 @@ export function* tokens(string) {
       case "'":
         switch (state) {
           case undefined:
-            buffer = "";
+            value = "";
             state = "string";
             break;
           case "string":
-            yield buffer;
+            yield value;
             state = undefined;
             break;
+          case "number-fraction":
           case "number":
           case "identifier":
-            yield buffer;
-            buffer = "";
+            yield value;
+            value = "";
             state = "string";
             break;
           default:
             yield lookup[state];
-            buffer = "";
+            value = "";
             state = "string";
         }
         break;
@@ -156,11 +158,13 @@ export function* tokens(string) {
             state = c;
             break;
           case "string":
-            buffer += c;
+            value += c;
             break;
+
+          case "number-fraction":
           case "number":
           case "identifier":
-            yield buffer;
+            yield value;
             state = c;
             break;
           default:
@@ -175,21 +179,27 @@ export function* tokens(string) {
             state = c;
             break;
           case "string":
-            buffer += c;
+            value += c;
             break;
+          case "number-fraction":
           case "number":
           case "identifier":
-            yield buffer;
+            yield value;
             state = c;
             break;
           default:
             state += c;
         }
         break;
+      case ".":
+        if (state === "number") {
+          state = "number-fraction";
+          divider = 10;
+          break;
+        }
       case ":":
       case ";":
       case ",":
-      case ".":
       case "+":
       case "-":
       case "*":
@@ -205,11 +215,12 @@ export function* tokens(string) {
             state = c;
             break;
           case "string":
-            buffer += c;
+            value += c;
             break;
           case "number":
+          case "number-fraction":
           case "identifier":
-            yield buffer;
+            yield value;
             state = c;
             break;
           default:
@@ -217,7 +228,6 @@ export function* tokens(string) {
             state = c;
         }
         break;
-
       case "0":
       case "1":
       case "2":
@@ -232,16 +242,20 @@ export function* tokens(string) {
           default:
             yield lookup[state];
           case undefined:
-            buffer = c.charCodeAt(0) - 48;
+            value = c.charCodeAt(0) - 48;
             state = "number";
+            break;
+          case "number-fraction":
+            value = value + (c.charCodeAt(0) - 48) / divider;
+            divider *= 10;
             break;
           case "number":
             // @ts-ignore
-            buffer = buffer * 10 + c.charCodeAt(0) - 48;
+            value = value * 10 + c.charCodeAt(0) - 48;
             break;
           case "string":
           case "identifier":
-            buffer += c;
+            value += c;
             break;
         }
         break;
@@ -249,17 +263,17 @@ export function* tokens(string) {
       default:
         switch (state) {
           case undefined:
-            buffer = c;
+            value = c;
             state = "identifier";
             break;
           case "string":
           case "identifier":
-            buffer += c;
+            value += c;
             break;
           default:
             yield lookup[state];
             state = "identifier";
-            buffer = c;
+            value = c;
         }
     }
   }
@@ -272,9 +286,10 @@ export function* tokens(string) {
       // @ts-ignore
       error.expression = string;
       throw error;
+    case "number-fraction":
     case "number":
     case "identifier":
-      yield buffer;
+      yield value;
       break;
     default:
       yield lookup[state];
