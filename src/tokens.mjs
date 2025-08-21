@@ -116,10 +116,6 @@ export function* tokens(string) {
       case '"':
       case "'":
         switch (state) {
-          case undefined:
-            value = "";
-            state = "string";
-            break;
           case "string":
             yield value;
             state = undefined;
@@ -133,8 +129,10 @@ export function* tokens(string) {
             break;
           default:
             yield lookup[state];
+          case undefined:
             value = "";
             state = "string";
+            break;
         }
         break;
       case "!":
@@ -211,9 +209,6 @@ export function* tokens(string) {
       case "{":
       case "}":
         switch (state) {
-          case undefined:
-            state = c;
-            break;
           case "string":
             value += c;
             break;
@@ -225,7 +220,9 @@ export function* tokens(string) {
             break;
           default:
             yield lookup[state];
+          case undefined:
             state = c;
+            break;
         }
         break;
       case "0":
@@ -245,10 +242,10 @@ export function* tokens(string) {
             value = c.charCodeAt(0) - 48;
             state = "number";
             break;
-          case '.':
-              state = "number-fraction";
-              value = 0;
-              divider = 10;
+          case ".":
+            state = "number-fraction";
+            value = 0;
+            divider = 10;
           case "number-fraction":
             value = value + (c.charCodeAt(0) - 48) / divider;
             divider *= 10;
@@ -266,18 +263,16 @@ export function* tokens(string) {
 
       default:
         switch (state) {
-          case undefined:
-            value = c;
-            state = "identifier";
-            break;
           case "string":
           case "identifier":
             value += c;
             break;
           default:
             yield lookup[state];
+          case undefined:
             state = "identifier";
             value = c;
+            break;
         }
     }
   }
