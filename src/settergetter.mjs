@@ -1,4 +1,3 @@
-
 /**
  * @typedef {import('./tokens.mjs').Token} Token
  */
@@ -17,6 +16,16 @@ import {
   STAR
 } from "./tokens.mjs";
 
+function predicate(tokens, endToken) {
+  let predicate = [];
+  for (const token of tokens) {
+    if (token === endToken) break;
+    predicate.push(token);
+  }
+
+  return predicate;
+}
+
 /**
  * Set object attribute.
  * The name may be a property path like 'a.b.c'.
@@ -27,12 +36,14 @@ import {
 export function setAttribute(object, expression, value) {
   let anchor, anchorKey;
 
-  for (const token of tokens(expression)) {
+  const next = tokens(expression);
+
+  for (let token of next) {
     switch (token) {
       case DOT:
-      case OPEN_BRACKET:
-      case CLOSE_BRACKET:
         break;
+      case OPEN_BRACKET:
+        token = predicate(next, CLOSE_BRACKET)[0];
 
       default:
         if (anchor) {
@@ -40,13 +51,13 @@ export function setAttribute(object, expression, value) {
           anchor = undefined;
         }
 
-        const next = object[token];
+        const walk = object[token];
 
-        if (next === undefined || typeof next !== "object") {
+        if (walk === undefined || typeof walk !== "object") {
           anchor = object;
           anchorKey = token;
         } else {
-          object = next;
+          object = walk;
         }
     }
   }
@@ -91,7 +102,9 @@ export function getAttributeAndOperator(object, expression) {
   let predicateTokens;
   let op = EQUAL;
 
-  for (const token of tokens(expression)) {
+  const next = tokens(expression);
+
+  for (const token of next) {
     switch (token) {
       case GREATER_EQUAL:
       case LESS_EQUAL:
