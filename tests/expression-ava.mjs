@@ -1,5 +1,11 @@
 import test from "ava";
-import { tokens, PLUS, GREATER, OPEN_BRACKET } from "../src/tokens.mjs";
+import {
+  tokens,
+  PLUS,
+  GREATER,
+  LESS,
+  DOUBLE_AMPERSAND
+} from "../src/tokens.mjs";
 import { parse } from "../src/expression.mjs";
 
 function eat(t, input, expected) {
@@ -37,8 +43,16 @@ test(eat, "[ x > 2 ]", {
 test(eat, "a.b[ c > 2 ]", {
   path: ["a", "b", { left: { path: ["c"] }, right: 2, token: GREATER }]
 });
-test(eat, "a[ b.c > 2].d", {
-  path: ["a", { left: { path: ["b", "c"] }, right: 2, token: GREATER }, "d"]
+test(eat, "a[ b.c > 2 && d < 7].d", {
+  path: [
+    "a",
+    {
+      left: { left: { path: ["b", "c"] }, right: 2, token: GREATER },
+      right: { left: { path: ["d"] }, right: 7, token: LESS },
+      token: DOUBLE_AMPERSAND
+    },
+    "d"
+  ]
 });
 test(eat, "a[2].c", {
   path: ["a", 2, "c"]
