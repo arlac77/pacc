@@ -15,16 +15,7 @@ import {
   GREATER_EQUAL,
   STAR
 } from "./tokens.mjs";
-
-function predicate(tokens, endToken) {
-  let predicate = [];
-  for (const token of tokens) {
-    if (token === endToken) break;
-    predicate.push(token);
-  }
-
-  return predicate;
-}
+import { parse } from "./expression.mjs";
 
 /**
  * Set object attribute.
@@ -34,31 +25,23 @@ function predicate(tokens, endToken) {
  * @param {any} value
  */
 export function setAttribute(object, expression, value) {
+  const { path } = parse({ tokens: tokens(expression) });
+
   let anchor, anchorKey;
 
-  const next = tokens(expression);
+  for (const key of path) {
+    if (anchor) {
+      anchor[anchorKey] = object = typeof key === "string" ? {} : [];
+      anchor = undefined;
+    }
 
-  for (let token of next) {
-    switch (token) {
-      case DOT:
-        break;
-      case OPEN_BRACKET:
-        token = predicate(next, CLOSE_BRACKET)[0];
+    const next = object[key];
 
-      default:
-        if (anchor) {
-          anchor[anchorKey] = object = typeof token === "string" ? {} : [];
-          anchor = undefined;
-        }
-
-        const walk = object[token];
-
-        if (walk === undefined || typeof walk !== "object") {
-          anchor = object;
-          anchorKey = token;
-        } else {
-          object = walk;
-        }
+    if (next === undefined || typeof next !== "object") {
+      anchor = object;
+      anchorKey = key;
+    } else {
+      object = next;
     }
   }
 
