@@ -34,13 +34,12 @@ test(eat, "[ x > 2 ]", {
   left: { path: ["x"] },
   right: 2
 });
-test(eat, "a . b [ c > 2 ]", {
+test(eat, "a.b[ c > 2 ]", {
   path: ["a", "b", { left: { path: ["c"] }, right: 2, token: GREATER }]
 });
-test(eat, "a [ b > 2 ] . c", {
-  path: ["a", { left: { path: ["b"] }, right: 2, token: GREATER }, "c"]
+test(eat, "a[ b.c > 2].d", {
+  path: ["a", { left: { path: ["b", "c"] }, right: 2, token: GREATER }, "d"]
 });
-
-test(eat, "a [ 2 ] . c", {
+test(eat, "a[2].c", {
   path: ["a", 2, "c"]
 });
