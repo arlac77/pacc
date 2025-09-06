@@ -53,7 +53,7 @@ export /** @type {Token} */ const DOUBLE_AMPERSAND = createToken(
 );
 export /** @type {Token} */ const BAR = createToken("|");
 export /** @type {Token} */ const DOUBLE_BAR = createToken("||", 30, "infixr");
-export /** @type {Token} */ const EOF = createToken("EOF", -1);
+export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
 
 /**
  * Split property path into tokens

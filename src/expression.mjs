@@ -22,8 +22,8 @@ export function parse(context) {
   let node, token;
 
   function error(message) {
-      const error = new Error(message);
-      throw error;
+    const error = new Error(message);
+    throw error;
   }
 
   const advance = () => {
@@ -33,7 +33,7 @@ export function parse(context) {
 
   const expect = expected => {
     if (token !== expected) {
-       error(`unexpected '${token.str}' expecting '${expected.str}'`);
+      error(`unexpected '${token.str}' expecting '${expected.str}'`);
     }
     advance();
   };
@@ -54,6 +54,8 @@ export function parse(context) {
           }
         }
         return { token, left, right: expression(token.precedence) };
+      case "eof":
+        error("unexpected EOF");
     }
 
     switch (typeof token) {
@@ -87,14 +89,16 @@ export function parse(context) {
             left.path.push(...right.path);
             return left;
           }
-          if(typeof left === 'number') {
+          if (typeof left === "number") {
             right.path.unshift(left);
             return right;
           }
           return { path: [left.token, right.token] };
         }
 
-        if(right.token === EOF) { error("unexpeced EOF"); }
+        if (right.token === EOF) {
+          error("unexpeced EOF");
+        }
         return {
           token,
           left,
