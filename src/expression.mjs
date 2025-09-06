@@ -85,6 +85,10 @@ export function parse(context) {
             left.path.push(...right.path);
             return left;
           }
+          if(typeof left === 'number') {
+            right.path.unshift(left);
+            return right;
+          }
           return { path: [left.token, right.token] };
         }
 

@@ -35,6 +35,8 @@ test(eat, "a . b . c", {
   path: ["a", "b", "c"]
 });
 test(eat, "1 + a", { token: PLUS, left: 1, right: { path: ["a"] } });
+test(eat, "[1]", 1);
+test(eat, "[1+3].b", { path: [4, "b"] });
 test(eat, "[ x > 2 ]", {
   token: GREATER,
   left: { path: ["x"] },
