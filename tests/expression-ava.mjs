@@ -10,9 +10,17 @@ import { parse } from "../src/expression.mjs";
 
 function eat(t, input, expected) {
   const context = { tokens: tokens(input) };
-  const result = parse(context);
 
-  t.deepEqual(result, expected);
+  if (expected instanceof Error) {
+    try {
+      const result = parse(context);
+    } catch (e) {
+      t.is(e.message, expected.message);
+    }
+  } else {
+    const result = parse(context);
+    t.deepEqual(result, expected);
+  }
 }
 
 eat.title = (providedTitle, input, expected) =>
@@ -20,6 +28,8 @@ eat.title = (providedTitle, input, expected) =>
     providedTitle ? providedTitle + " " : ""
   } ${input} => ${expected}`.trim();
 
+test(eat, "1 +", new Error("unexpected EOF"));
+test.skip(eat, "1 )", new Error("unexpected ')'"));
 test(eat, "1 + 2", 3);
 test(eat, "1 + 2 + 4", 7);
 test(eat, "1 + 2 * 4", 9);
