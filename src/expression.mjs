@@ -50,6 +50,9 @@ export function parse(context) {
           case OPEN_BRACKET: {
             const node = expression(0);
             expect(CLOSE_BRACKET);
+            if (typeof node === "number") {
+              return { path: [node] };
+            }
             return node;
           }
         }
@@ -97,7 +100,7 @@ export function parse(context) {
         }
 
         if (right.token === EOF) {
-          error("unexpeced EOF");
+          error("unexpected EOF");
         }
         return {
           token,

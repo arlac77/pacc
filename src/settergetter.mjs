@@ -58,7 +58,27 @@ export function setAttribute(object, expression, value) {
  * @returns {any} value associated with the given property name
  */
 export function getAttribute(object, expression) {
-  return getAttributeAndOperator(object, expression)[0];
+  const { path } = parse({ tokens: tokens(expression) });
+
+  for (const key of path) {
+    if (object !== undefined) {
+      switch (typeof object[key]) {
+        case "function":
+          object = object[key]();
+          if (typeof object[Symbol.iterator] === "function") {
+            object = [...object];
+          }
+          break;
+        default:
+          object = object[key];
+          break;
+        case "undefined":
+          return undefined;
+      }
+    }
+  }
+
+  return object;
 }
 
 /**
