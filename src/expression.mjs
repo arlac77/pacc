@@ -21,6 +21,11 @@ import {
 export function parse(context) {
   let node, token;
 
+  function error(message) {
+      const error = new Error(message);
+      throw error;
+  }
+
   const advance = () => {
     const { value, done } = context.tokens.next();
     token = done ? EOF : value;
@@ -28,10 +33,7 @@ export function parse(context) {
 
   const expect = expected => {
     if (token !== expected) {
-      const error = new Error(
-        `unexpected '${token.str}' expecting '${expected.str}'`
-      );
-      throw error;
+       error(`unexpected '${token.str}' expecting '${expected.str}'`);
     }
     advance();
   };
@@ -92,6 +94,7 @@ export function parse(context) {
           return { path: [left.token, right.token] };
         }
 
+        if(right.token === EOF) { error("unexpeced EOF"); }
         return {
           token,
           left,
