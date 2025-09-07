@@ -23,8 +23,9 @@ import { parse } from "./expression.mjs";
  * @param {Object} object
  * @param {string} expression
  * @param {any} value
+ * @param {Object} definition type def
  */
-export function setAttribute(object, expression, value) {
+export function setAttribute(object, expression, value, definition) {
   const { path } = parse({ tokens: tokens(expression) });
 
   let anchor, anchorKey;

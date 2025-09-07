@@ -4,7 +4,10 @@ const types = {
   number: { name: "number" },
   integer: { name: "integer" },
   "unsigned-integer": { name: "unsigned-integer" },
-  boolean: { name: "boolean" },
+  boolean: {
+    name: "boolean",
+    from: value => (!value || value === "0" ? false : true)
+  },
   url: { name: "url" },
   object: { name: "object" }
 };
@@ -19,12 +22,8 @@ export function prepareAttributesDefinitions(
   newDefinitions,
   presentDefinitions
 ) {
-  for (const [name, d] of Object.entries(newDefinitions)) {
-    if (d.attributes === undefined) {
-      d.type = types[d.type] || types.base;
-    } else {
-      prepareAttributesDefinitions(d.attributes);
-    }
+  for (const [path, def] of attributeIterator(newDefinitions)) {
+    def.type = types[def.type] || types.base;
   }
 
   return mergeAttributeDefinitions(newDefinitions, presentDefinitions);
