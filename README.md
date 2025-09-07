@@ -31,6 +31,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters)
 *   [mergeAttributeDefinitions](#mergeattributedefinitions)
     *   [Parameters](#parameters-1)
+*   [attributeIterator](#attributeiterator)
+    *   [Parameters](#parameters-2)
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
 *   [default\_attribute](#default_attribute)
@@ -77,25 +79,25 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [filter](#filter)
-    *   [Parameters](#parameters-2)
-*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-3)
-*   [getAttributes](#getattributes)
+*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-4)
+*   [getAttributes](#getattributes)
+    *   [Parameters](#parameters-5)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-5)
-*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-6)
-*   [getAttribute](#getattribute)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-7)
-*   [getAttributeAndOperator](#getattributeandoperator)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-8)
+*   [getAttributeAndOperator](#getattributeandoperator)
+    *   [Parameters](#parameters-9)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-9)
+    *   [Parameters](#parameters-10)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -145,6 +147,15 @@ Merge attribute definitions.
 *   `atts` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** attribute definitions to be used
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** merged definitions (dest)
+
+## attributeIterator
+
+iterate over all attributes.
+
+### Parameters
+
+*   `definition` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `path` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `[]`)
 
 ## AttributeDefinition
 
@@ -370,7 +381,6 @@ Copies attribute values from a source object into a destination object.
 *   `source` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** origin of the data to be copied
 *   `definitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute definitions to be used
 *   `cb` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** callback to be executed for each copied value
-*   `prefix` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** name parefix
 
 ## getAttributes
 
