@@ -16,6 +16,7 @@ import {
   STAR
 } from "./tokens.mjs";
 import { parse } from "./expression.mjs";
+import { convertValue } from "./attributes.mjs";
 
 /**
  * Set object attribute.
@@ -47,7 +48,7 @@ export function setAttribute(object, expression, value, definition) {
   }
 
   if (anchor) {
-    anchor[anchorKey] = value;
+    anchor[anchorKey] = convertValue(value, definition);
   }
 }
 
@@ -58,7 +59,7 @@ export function setAttribute(object, expression, value, definition) {
  * @param {string} expression
  * @returns {any} value associated with the given property name
  */
-export function getAttribute(object, expression) {
+export function getAttribute(object, expression, definition) {
   const { path } = parse({ tokens: tokens(expression) });
 
   for (const key of path) {
@@ -77,6 +78,10 @@ export function getAttribute(object, expression) {
           return undefined;
       }
     }
+  }
+
+  if(object === undefined && definition) {
+    object = definition.default;
   }
 
   return object;

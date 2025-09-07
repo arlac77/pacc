@@ -6,7 +6,7 @@ const types = {
   "unsigned-integer": { name: "unsigned-integer" },
   boolean: {
     name: "boolean",
-    from: value => (!value || value === "0" ? false : true)
+    convertValue: value => (!value || value === "0" ? false : true)
   },
   url: { name: "url" },
   object: { name: "object" }
@@ -72,4 +72,11 @@ export function* attributeIterator(definition, path = []) {
       path.pop();
     }
   }
+}
+
+export function convertValue(value, definition) {
+  if (definition?.type?.convertValue) {
+    return definition.type.convertValue(value);
+  }
+  return value;
 }
