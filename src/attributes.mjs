@@ -60,15 +60,17 @@ function mergeAttributeDefinitions(dest, atts) {
  * @param {string[]} path
  */
 export function* attributeIterator(definition, path = []) {
-  for (const [name, def] of Object.entries(definition)) {
-    path.push(name);
+  if (definition) {
+    for (const [name, def] of Object.entries(definition)) {
+      path.push(name);
 
-    if (def.attributes) {
-      yield* attributeIterator(def.attributes, path);
+      if (def.attributes) {
+        yield* attributeIterator(def.attributes, path);
+      }
+
+      yield [path, def];
+
+      path.pop();
     }
-
-    yield [path, def];
-
-    path.pop();
   }
 }
