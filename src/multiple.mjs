@@ -1,4 +1,5 @@
 import { setAttribute, getAttribute } from "./settergetter.mjs";
+import { attributeIterator } from "./attributes.mjs";
 
 /**
  * Copies attribute values from a source object into a destination object.
@@ -6,18 +7,10 @@ import { setAttribute, getAttribute } from "./settergetter.mjs";
  * @param {Object} source origin of the data to be copied
  * @param {Object} definitions attribute definitions to be used
  * @param {function?} cb callback to be executed for each copied value
- * @param {string?} prefix name parefix
  */
-export function setAttributes(object, source, definitions, cb, prefix) {
-  for (let [name, def] of Object.entries(definitions)) {
-    if (prefix !== undefined) {
-      name = prefix + name;
-    }
-
-    if (def.attributes) {
-      setAttributes(object, source, def.attributes, cb, name + ".");
-      continue;
-    }
+export function setAttributes(object, source, definitions, cb) {
+  for (const [path, def] of attributeIterator(definitions)) {
+    const name = path.join(".");
 
     let value = getAttribute(source, name);
 
@@ -52,12 +45,13 @@ export function setAttributes(object, source, definitions, cb, prefix) {
 export function getAttributes(object, definitions) {
   const result = {};
 
-  Object.keys(definitions).forEach(name => {
+  for (const [path, def] of attributeIterator(definitions)) {
+    const name = path.join(".");
+
     const value = getAttribute(object, name);
     if (value !== undefined) {
       result[name] = value;
     }
-  });
-
+  }
   return result;
 }

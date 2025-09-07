@@ -15,12 +15,14 @@ const types = {
  * @param {Object|undefined} presentDefinitions optional merg in attributes
  * @return {Object} attributes
  */
-export function prepareAttributesDefinitions(newDefinitions, presentDefinitions) {
+export function prepareAttributesDefinitions(
+  newDefinitions,
+  presentDefinitions
+) {
   for (const [name, d] of Object.entries(newDefinitions)) {
     if (d.attributes === undefined) {
       d.type = types[d.type] || types.base;
-    }
-    else {
+    } else {
       prepareAttributesDefinitions(d.attributes);
     }
   }
@@ -50,4 +52,23 @@ function mergeAttributeDefinitions(dest, atts) {
   }
 
   return dest;
+}
+
+/**
+ * iterate over all attributes.
+ * @param {Object} definition
+ * @param {string[]} path
+ */
+export function* attributeIterator(definition, path = []) {
+  for (const [name, def] of Object.entries(definition)) {
+    path.push(name);
+
+    if (def.attributes) {
+      yield* attributeIterator(def.attributes, path);
+    }
+
+    yield [path, def];
+
+    path.pop();
+  }
 }
