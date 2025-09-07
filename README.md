@@ -424,6 +424,7 @@ The name may be a property path like 'a.b.c' or a\[2]
 
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `definition` &#x20;
 
 Returns **any** value associated with the given property name
 
