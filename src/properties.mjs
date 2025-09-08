@@ -6,7 +6,7 @@ export function definePropertiesFromAttributes(
   object,
   attributes,
   values,
-  properties
+  properties={}
 ) {
   const applyLater = {};
 
@@ -24,7 +24,6 @@ export function definePropertiesFromAttributes(
       value = convertValue(value, attribute);
       const property = properties[name];
 
-      console.log(name, value);
       if (op?.set || property?.set) {
         applyLater[name] = value;
       } else {

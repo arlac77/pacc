@@ -2,8 +2,11 @@ const types = {
   base: { name: "base" },
   string: { name: "string" },
   number: { name: "number" },
-  integer: { name: "integer" },
-  "unsigned-integer": { name: "unsigned-integer" },
+  integer: {
+    name: "integer",
+    convertValue: value => (typeof value === "string" ? parseInt(value) : value)
+  },
+  "unsigned-integer": { name: "unsigned-integer", extends: "integer" },
   boolean: {
     name: "boolean",
     convertValue: value => (!value || value === "0" ? false : true)
@@ -15,7 +18,7 @@ const types = {
 /**
  * Create attributes from its definition.
  * @param {Object} newDefinitions
- * @param {Object|undefined} presentDefinitions optional merg in attributes
+ * @param {Object} [presentDefinitions] optional merg in attributes
  * @return {Object} attributes
  */
 export function prepareAttributesDefinitions(

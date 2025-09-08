@@ -4,24 +4,30 @@ import { definePropertiesFromAttributes } from "../src/properties.mjs";
 import { prepareAttributesDefinitions } from "../src/attributes.mjs";
 
 test("definePropertiesFromAttributes boolean_conversion", t => {
-  const object = {};
+  const attributes = prepareAttributesDefinitions({
+    boolean_conversion: boolean_attribute_writable
+  });
 
-  definePropertiesFromAttributes(
-    object,
-    prepareAttributesDefinitions(
-      {
-        boolean_conversion: boolean_attribute_writable
-      },
-      undefined
-    ),
-    { boolean_conversion: 1 },
-    {}
-  );
+  const object1 = {};
+  definePropertiesFromAttributes(object1, attributes, {
+    boolean_conversion: 1
+  });
+  t.is(object1.boolean_conversion, true);
 
-  t.is(object.boolean_conversion, true);
+  const object2 = {};
+  definePropertiesFromAttributes(object2, attributes, {
+    boolean_conversion: 0
+  });
+  t.is(object2.boolean_conversion, false);
 
-  object.boolean_conversion = false;
-  t.is(object.boolean_conversion, false);
+  const object3 = {};
+  definePropertiesFromAttributes(object3, attributes, {
+    boolean_conversion: true
+  });
+  t.is(object3.boolean_conversion, true);
+
+  object3.boolean_conversion = false;
+  t.is(object3.boolean_conversion, false);
 });
 
 /*
