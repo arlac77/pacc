@@ -1,15 +1,16 @@
 import test from "ava";
+import { boolean_attribute_writable } from "pacc";
 import { definePropertiesFromAttributes } from "../src/properties.mjs";
 import { prepareAttributesDefinitions } from "../src/attributes.mjs";
 
-test("definePropertiesFromAttributes", t => {
+test("definePropertiesFromAttributes boolean_conversion", t => {
   const object = {};
 
   definePropertiesFromAttributes(
     object,
     prepareAttributesDefinitions(
       {
-        boolean_conversion: { type: "boolean" }
+        boolean_conversion: boolean_attribute_writable
       },
       undefined
     ),
@@ -19,6 +20,8 @@ test("definePropertiesFromAttributes", t => {
 
   t.is(object.boolean_conversion, true);
 
+  object.boolean_conversion = false;
+  t.is(object.boolean_conversion, false);
 });
 
 /*
