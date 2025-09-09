@@ -15,22 +15,25 @@ export function definePropertiesFromAttributes(
 
     let value = getAttribute(values, name, attribute) ?? values?.[name];
 
-    if (value !== undefined && path.length === 1) {
-      const op = Object.getOwnPropertyDescriptor(
-        object.constructor.prototype,
-        name
-      );
+    if (value !== undefined) {
+      if (path.length === 1) {
+        const op = Object.getOwnPropertyDescriptor(
+          object.constructor.prototype,
+          name
+        );
 
-      value = convertValue(value, attribute);
-      const property = properties[name];
+        value = convertValue(value, attribute);
 
-      if (op?.set || property?.set) {
-        applyLater[name] = value;
+        const property = properties[name];
+
+        if (op?.set || property?.set) {
+          applyLater[name] = value;
+        } else {
+          properties[name] = Object.assign({ ...attribute, value }, property);
+        }
       } else {
-        properties[name] = Object.assign({ ...attribute, value }, property);
+        setAttribute(object, name, value, attribute);
       }
-    } else {
-      setAttribute(object, name, value, attribute);
     }
   }
 
