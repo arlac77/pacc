@@ -10,6 +10,115 @@ import { definePropertiesFromAttributes } from "../src/properties.mjs";
 import { prepareAttributesDefinitions } from "../src/attributes.mjs";
 
 /*
+
+function dpct(t, clazz, options, expected) {
+  const object = new clazz(options);
+  expected(t, object);
+}
+
+dpct.title = (providedTitle, clazz, options) =>
+  `constructor options ${providedTitle ? providedTitle + " " : ""}${
+    clazz.name
+  } ${JSON.stringify(options)}`.trim();
+
+class MyClass {
+  static attributes = {
+    read_only: {},
+    rw: { writable: true },
+    att_setter: { set: x => x * 2 },
+    set_conversion: { type: "set" },
+    preexisting_property: {},
+    authentification: {
+      type: "object",
+      attributes: {
+        token: {},
+        user: { default: "hugo" }
+      }
+    },
+    a: {
+      attributes: {
+        b: {
+          attributes: {
+            c: { attributes: { d: { default: 7 } } }
+          }
+        }
+      }
+    },
+
+    calculatedDefault: {
+      get: (attribute, object) => object.preexisting_property + 1
+    }
+  };
+
+  constructor(options, additionalProperties) {
+    definePropertiesFromOptions(this, options, additionalProperties);
+  }
+
+  get preexisting_property() {
+    return 77;
+  }
+  set preexisting_property(value) {
+    this._preexisting_property = value;
+  }
+}
+test(dpct, MyClass, { other: 1 }, (t, o) => t.is(o.calculatedDefault, 77 + 1));
+test(dpct, MyClass, { boolean_conversion: 0 }, (t, o) =>
+  t.is(o.boolean_conversion, false)
+);
+test(dpct, MyClass, { boolean_conversion: "0" }, (t, o) =>
+  t.is(o.boolean_conversion, false)
+);
+test(dpct, MyClass, { boolean_conversion: "1" }, (t, o) =>
+  t.is(o.boolean_conversion, true)
+);
+test(dpct, MyClass, { boolean_conversion: true }, (t, o) =>
+  t.is(o.boolean_conversion, true)
+);
+test(dpct, MyClass, { boolean_conversion: 7 }, (t, o) =>
+  t.is(o.boolean_conversion, true)
+);
+
+test(dpct, MyClass, { set_conversion: ["a", "b"] }, (t, o) =>
+  t.deepEqual(o.set_conversion, new Set(["a", "b"]))
+);
+test(dpct, MyClass, { set_conversion: new Set(["a", "b"]) }, (t, o) =>
+  t.deepEqual(o.set_conversion, new Set(["a", "b"]))
+);
+
+test(dpct, MyClass, { att_setter: 7 }, (t, o) => t.is(o.att_setter, 14));
+test(dpct, MyClass, { read_only: 1 }, (t, o) => {
+  t.is(o.read_only, 1);
+  try {
+    o.read_only = 2;
+    t.fail();
+  } catch (e) {
+    t.true(true);
+  }
+});
+test(dpct, MyClass, { rw: 1 }, (t, o) => {
+  t.is(o.rw, 1);
+  o.rw = 2;
+  t.is(o.rw, 2);
+});
+test(dpct, MyClass, undefined, (t, o) => {
+  o.rw = 2;
+  t.is(o.rw, 2);
+});
+
+
+test(dpct, MyClass, { something: "a" }, (t, object) => {
+  t.is(object.authentification?.token, undefined);
+  t.is(object.authentification?.user, "hugo");
+});
+
+test("default with deep path", dpct, MyClass, { something: "b" }, (t, object) =>
+  t.is(object.a.b.c.d, 7)
+);
+
+test(dpct, MyClass, { preexisting_property: 77 }, (t, object) => {
+  t.is(object.preexisting_property, 77);
+  t.is(object._preexisting_property, 77);
+});
   static attributes = {
     read_only: {},
     rw: { writable: true },

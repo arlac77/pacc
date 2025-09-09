@@ -70,6 +70,14 @@ export const name_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const name_attribute_writable = {
+  ...name_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const email_attribute = {
   ...default_attribute,
   description: "email address"
@@ -175,7 +183,6 @@ export { secret_attribute as username_attribute };
  * @type {AttributeDefinition}
  */
 export { secret_attribute as password_attribute };
-
 
 /**
  * @type {AttributeDefinition}
