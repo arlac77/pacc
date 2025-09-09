@@ -6,14 +6,14 @@ export function definePropertiesFromAttributes(
   object,
   attributes,
   values,
-  properties={}
+  properties = {}
 ) {
   const applyLater = {};
 
   for (const [path, attribute] of attributeIterator(attributes)) {
     const name = path.join(".");
 
-    let value = getAttribute(values, name, attribute);
+    let value = getAttribute(values, name, attribute) ?? values?.[name];
 
     if (value !== undefined && path.length === 1) {
       const op = Object.getOwnPropertyDescriptor(
@@ -27,10 +27,7 @@ export function definePropertiesFromAttributes(
       if (op?.set || property?.set) {
         applyLater[name] = value;
       } else {
-        properties[name] = Object.assign(
-          { value, writable: attribute.writable },
-          property
-        );
+        properties[name] = Object.assign({ ...attribute, value }, property);
       }
     } else {
       setAttribute(object, name, value, attribute);

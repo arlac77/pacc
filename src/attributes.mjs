@@ -1,18 +1,20 @@
 const types = {
   base: { name: "base" },
-  string: { name: "string" },
-  number: { name: "number" },
+  string: { name: "string", extends: "base" },
+  number: { name: "number", extends: "base" },
   integer: {
     name: "integer",
+    extends: "base",
     convertValue: value => (typeof value === "string" ? parseInt(value) : value)
   },
   "unsigned-integer": { name: "unsigned-integer", extends: "integer" },
   boolean: {
     name: "boolean",
+    extends: "base",
     convertValue: value => (!value || value === "0" ? false : true)
   },
-  url: { name: "url" },
-  object: { name: "object" }
+  url: { name: "url", extends: "string" },
+  object: { name: "object", extends: "base" }
 };
 
 /**
