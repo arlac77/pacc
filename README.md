@@ -44,6 +44,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [default\_attribute\_writable](#default_attribute_writable-3)
 *   [string\_collection\_attribute\_writable](#string_collection_attribute_writable)
 *   [name\_attribute](#name_attribute)
+*   [name\_attribute\_writable](#name_attribute_writable)
 *   [email\_attribute](#email_attribute)
 *   [version\_attribute\_writable](#version_attribute_writable)
 *   [description\_attribute](#description_attribute)
@@ -213,6 +214,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## name\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## name\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
