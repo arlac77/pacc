@@ -1,17 +1,23 @@
 const types = {
   base: { name: "base" },
   string: { name: "string", extends: "base" },
-  number: { name: "number", extends: "base" },
+  number: {
+    name: "number",
+    extends: "base",
+    convertValue: (value, attribute) =>
+      typeof value === "string" ? parseFloat(value) : value
+  },
   integer: {
     name: "integer",
     extends: "base",
-    convertValue: value => (typeof value === "string" ? parseInt(value) : value)
+    convertValue: (value, attribute) =>
+      typeof value === "string" ? parseInt(value) : value
   },
   "unsigned-integer": { name: "unsigned-integer", extends: "integer" },
   boolean: {
     name: "boolean",
     extends: "base",
-    convertValue: value => (!value || value === "0" ? false : true)
+    convertValue: (value, attribute) => (!value || value === "0" ? false : true)
   },
   url: { name: "url", extends: "string" },
   object: { name: "object", extends: "base" }
@@ -79,9 +85,9 @@ export function* attributeIterator(definition, path = []) {
   }
 }
 
-export function convertValue(value, definition) {
-  if (definition?.type?.convertValue) {
-    return definition.type.convertValue(value);
+export function convertValue(value, attribute) {
+  if (attribute?.type?.convertValue) {
+    return attribute.type.convertValue(value, attribute);
   }
   return value;
 }
