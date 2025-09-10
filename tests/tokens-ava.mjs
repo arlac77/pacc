@@ -53,6 +53,7 @@ test(
 );
 test(tt, "", []);
 test(tt, "3", [3]);
+test(tt, "true", [true]);
 test(tt, "true false", [true, false]);
 test(tt, " \t'a'b\"c\"d ", ["a", "b", "c", "d"]);
 test(tt, " 'a2\\\\\\n\\r\\t\\b\\x\u0041' ", ["a2\\\n\r\t\bxA"]);

@@ -66,6 +66,7 @@ export function parse(context) {
     switch (typeof token) {
       case "string":
         return { path: [token] };
+      case "boolean":
       case "number":
         return token;
     }
@@ -75,7 +76,45 @@ export function parse(context) {
 
   const led = (token, left) => {
     switch (token.type) {
-      case "infix":
+      case "infixr": {
+        const right = expression(token.precedence - 1);
+        if (typeof left === typeof right) {
+          switch (typeof left) {
+            case "number":
+            case "string":
+              switch (token) {
+                case GREATER:
+                  return left > right;
+                case GREATER_EQUAL:
+                  return left >= right;
+                case LESS:
+                  return left < right;
+                case LESS_EQUAL:
+                  return left <= right;
+                case EQUAL:
+                  return left == right;
+                case NOT_EQUAL:
+                  return left != right;
+              }
+              break;
+
+            case "boolean":
+              switch (token) {
+                case DOUBLE_BAR:
+                  return left || right;
+                case DOUBLE_AMPERSAND:
+                  return left && right;
+              }
+          }
+        }
+        return {
+          token,
+          left,
+          right
+        };
+      }
+
+      case "infix": {
         const right = expression(token.precedence);
         if (typeof left === typeof right) {
           switch (typeof left) {
@@ -91,13 +130,6 @@ export function parse(context) {
                   return left / right;
               }
               break;
-            case "boolean":
-              switch (token) {
-                case DOUBLE_BAR:
-                  return left || right;
-                case DOUBLE_AMPERSAND:
-                  return left && right;
-              }
           }
         }
         if (token === DOT) {
@@ -105,9 +137,11 @@ export function parse(context) {
             left.path.push(...right.path);
             return left;
           }
-          if (typeof left === "number") {
-            right.path.unshift(left);
-            return right;
+          switch (typeof left) {
+            case "number":
+            case "boolean":
+              right.path.unshift(left);
+              return right;
           }
           return { path: [left.token, right.token] };
         }
@@ -120,14 +154,7 @@ export function parse(context) {
           left,
           right
         };
-
-      case "infixr":
-        return {
-          token,
-          left,
-          right: expression(token.precedence - 1)
-        };
-
+      }
       case "prefix":
         switch (token) {
           case OPEN_BRACKET: {

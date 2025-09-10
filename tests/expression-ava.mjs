@@ -40,6 +40,12 @@ test(eat, "(1) + 2", 3);
 test(eat, "1 + (2 + 3)", 6);
 test(eat, "(1 + 2) + 3", 6);
 test(eat, "(1 + 2) * 4 + 5 + 6", 23);
+test(eat, "1 < 2", true);
+test(eat, "1 = 2", false);
+test(eat, "3 = 3", true);
+test(eat, "3 = 1 + 2", true);
+test(eat, "true || false", true);
+test(eat, "true && false", false);
 test(eat, "a", { path: ["a"] });
 test(eat, "a . b . c", {
   path: ["a", "b", "c"]
