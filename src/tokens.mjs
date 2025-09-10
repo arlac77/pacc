@@ -34,7 +34,7 @@ export /** @type {Token} */ const GREATER_EQUAL = createToken(
 export /** @type {Token} */ const LESS = createToken("<", 40, "infixr");
 export /** @type {Token} */ const LESS_EQUAL = createToken("<=", 40, "infixr");
 export /** @type {Token} */ const EQUAL = createToken("=", 40);
-export /** @type {Token} */ const OPEN_ROUND = createToken("(",  0, "prefix");
+export /** @type {Token} */ const OPEN_ROUND = createToken("(", 0, "prefix");
 export /** @type {Token} */ const CLOSE_ROUND = createToken(")", 0, "infix");
 export /** @type {Token} */ const OPEN_BRACKET = createToken("[", 10, "prefix");
 export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0, "infix");
@@ -63,6 +63,17 @@ export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
  */
 export function* tokens(string) {
   let state, value, hex, divider;
+
+  function maybeKeyword() {
+    switch (value) {
+      case "true":
+        return true;
+      case "false":
+        return false;
+      default:
+        return value;
+    }
+  }
 
   for (const c of string) {
     switch (state) {
@@ -105,7 +116,7 @@ export function* tokens(string) {
           case "number-fraction":
           case "number":
           case "identifier":
-            yield value;
+            yield maybeKeyword();
             value = undefined;
             state = undefined;
             break;
@@ -132,7 +143,7 @@ export function* tokens(string) {
           case "number-fraction":
           case "number":
           case "identifier":
-            yield value;
+            yield maybeKeyword();
             value = "";
             state = "string";
             break;
@@ -171,7 +182,7 @@ export function* tokens(string) {
           case "number-fraction":
           case "number":
           case "identifier":
-            yield value;
+            yield maybeKeyword();
             state = c;
             break;
           default:
@@ -191,7 +202,7 @@ export function* tokens(string) {
           case "number-fraction":
           case "number":
           case "identifier":
-            yield value;
+            yield maybeKeyword();
             state = c;
             break;
           default:
@@ -224,7 +235,7 @@ export function* tokens(string) {
           case "number":
           case "number-fraction":
           case "identifier":
-            yield value;
+            yield maybeKeyword();
             state = c;
             break;
           default:
@@ -297,7 +308,7 @@ export function* tokens(string) {
     case "number-fraction":
     case "number":
     case "identifier":
-      yield value;
+      yield maybeKeyword();
       break;
     default:
       yield lookup[state];
