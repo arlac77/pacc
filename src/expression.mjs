@@ -1,12 +1,14 @@
 import {
   tokens,
-  EQUAL,
-  NOT_EQUAL,
   DOT,
   OPEN_ROUND,
   CLOSE_ROUND,
   OPEN_BRACKET,
   CLOSE_BRACKET,
+  DOUBLE_BAR,
+  DOUBLE_AMPERSAND,
+  EQUAL,
+  NOT_EQUAL,
   LESS,
   LESS_EQUAL,
   GREATER,
@@ -75,16 +77,27 @@ export function parse(context) {
     switch (token.type) {
       case "infix":
         const right = expression(token.precedence);
-        if (typeof left === "number" && typeof right === "number") {
-          switch (token) {
-            case PLUS:
-              return left + right;
-            case MINUS:
-              return left - right;
-            case STAR:
-              return left * right;
-            case DIVIDE:
-              return left / right;
+        if (typeof left === typeof right) {
+          switch (typeof left) {
+            case "number":
+              switch (token) {
+                case PLUS:
+                  return left + right;
+                case MINUS:
+                  return left - right;
+                case STAR:
+                  return left * right;
+                case DIVIDE:
+                  return left / right;
+              }
+              break;
+            case "boolean":
+              switch (token) {
+                case DOUBLE_BAR:
+                  return left || right;
+                case DOUBLE_AMPERSAND:
+                  return left && right;
+              }
           }
         }
         if (token === DOT) {
