@@ -105,11 +105,11 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [DIVIDE](#divide)
 *   [NOT](#not)
 *   [NOT\_EQUAL](#not_equal)
+*   [EQUAL](#equal)
 *   [GREATER](#greater)
 *   [GREATER\_EQUAL](#greater_equal)
 *   [LESS](#less)
 *   [LESS\_EQUAL](#less_equal)
-*   [EQUAL](#equal)
 *   [OPEN\_ROUND](#open_round)
 *   [CLOSE\_ROUND](#close_round)
 *   [OPEN\_BRACKET](#open_bracket)
@@ -491,6 +491,10 @@ Type: [Token](#token)
 
 Type: [Token](#token)
 
+## EQUAL
+
+Type: [Token](#token)
+
 ## GREATER
 
 Type: [Token](#token)
@@ -504,10 +508,6 @@ Type: [Token](#token)
 Type: [Token](#token)
 
 ## LESS\_EQUAL
-
-Type: [Token](#token)
-
-## EQUAL
 
 Type: [Token](#token)
 
