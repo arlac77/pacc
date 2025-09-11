@@ -1,5 +1,4 @@
 import {
-  tokens,
   DOT,
   OPEN_ROUND,
   CLOSE_ROUND,
@@ -67,6 +66,7 @@ export function parse(context) {
       case "string":
         return { path: [token] };
       case "boolean":
+      case "bigint":
       case "number":
         return token;
     }
@@ -80,6 +80,7 @@ export function parse(context) {
         const right = expression(token.precedence - 1);
         if (typeof left === typeof right) {
           switch (typeof left) {
+            case "bigint":
             case "number":
             case "string":
               switch (token) {
@@ -97,13 +98,16 @@ export function parse(context) {
                   return left != right;
               }
               break;
-
             case "boolean":
               switch (token) {
                 case DOUBLE_BAR:
                   return left || right;
                 case DOUBLE_AMPERSAND:
                   return left && right;
+                case EQUAL:
+                  return left == right;
+                case NOT_EQUAL:
+                  return left != right;
               }
           }
         }
@@ -118,6 +122,7 @@ export function parse(context) {
         const right = expression(token.precedence);
         if (typeof left === typeof right) {
           switch (typeof left) {
+            case "bigint":
             case "number":
               switch (token) {
                 case PLUS:
@@ -139,7 +144,6 @@ export function parse(context) {
           }
           switch (typeof left) {
             case "number":
-            case "boolean":
               right.path.unshift(left);
               return right;
           }
