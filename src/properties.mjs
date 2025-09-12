@@ -5,7 +5,7 @@ import { convertValue } from "./attributes.mjs";
 export function definePropertiesFromAttributes(
   object,
   attributes,
-  values,
+  initialValues,
   properties = {}
 ) {
   const applyLater = {};
@@ -13,7 +13,7 @@ export function definePropertiesFromAttributes(
   for (const [path, attribute] of attributeIterator(attributes)) {
     const name = path.join(".");
 
-    let value = getAttribute(values, name, attribute) ?? values?.[name];
+    let value = getAttribute(initialValues, name, attribute) ?? initialValues?.[name] ?? attribute.default;
 
     if (value !== undefined) {
       if (path.length === 1) {
