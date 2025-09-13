@@ -7,14 +7,15 @@ import {
   GREATER,
   GREATER_EQUAL
 } from "pacc";
+import { binop } from "./expression.mjs";
 
-function dateOp(value, against, op) {
-  return numberOp(value.getTime(), against.getTime(), op);
+function dateOp(op, value, against) {
+  return binop(op, value.getTime(), against.getTime());
 }
 
-function collectionOp(value, against, op) {
+function collectionOp(op, value, against) {
   for (const v of value) {
-    if (allOp(v, against, op)) {
+    if (allOp(op, v, against)) {
       return true;
     }
   }
@@ -22,7 +23,7 @@ function collectionOp(value, against, op) {
   return false;
 }
 
-function allOp(value, against, op) {
+function allOp(op, value, against) {
   switch (typeof value) {
     case "undefined":
       return false;
@@ -33,13 +34,13 @@ function allOp(value, against, op) {
       }
 
       if (value instanceof Map) {
-        return collectionOp(value.keys(), against, op);
+        return collectionOp(op, value.keys(), against);
       }
       if (value instanceof RegExp) {
         return value.test(against);
       }
       if (value[Symbol.iterator]) {
-        return collectionOp(value, against, op);
+        return collectionOp(op, value, against);
       }
 
       switch (typeof against) {
@@ -50,26 +51,29 @@ function allOp(value, against, op) {
               against[0] instanceof Date &&
               against[1] instanceof Date
             ) {
-              return dateOp(value, against[0], GREATER_EQUAL) && dateOp(value, against[1], LESS_EQUAL);
+              return (
+                dateOp(GREATER_EQUAL, value, against[0]) &&
+                dateOp(LESS_EQUAL, value, against[1])
+              );
             }
 
             if (against instanceof Date) {
-              return dateOp(value, against, op);
+              return dateOp(op, value, against);
             }
           }
 
           if (value[Symbol.toPrimitive] && against[Symbol.toPrimitive]) {
-            return numberOp(
+            return binop(
+              op,
               value[Symbol.toPrimitive]("number"),
-              against[Symbol.toPrimitive]("number"),
-              op
+              against[Symbol.toPrimitive]("number")
             );
           }
           break;
 
         case "bigint":
         case "number":
-          return allOp(value[Symbol.toPrimitive]("number"), against, op);
+          return allOp(op, value[Symbol.toPrimitive]("number"), against);
 
         case "string":
           if (against.length === 0) {
@@ -77,11 +81,11 @@ function allOp(value, against, op) {
           }
 
           if (value instanceof Date) {
-            return dateOp(value, new Date(against), op);
+            return dateOp(op, value, new Date(against));
           }
           break;
         case "boolean":
-          return numberOp(value ? true : false, against, op);
+          return binop(op, value ? true : false, against);
       }
 
       if (against instanceof RegExp) {
@@ -92,7 +96,7 @@ function allOp(value, against, op) {
     case "string":
       switch (typeof against) {
         case "boolean":
-          return numberOp(value.length !== 0, against, op);
+          return binop(op, value.length !== 0, against);
         case "string":
           if (
             op === EQUAL &&
@@ -106,14 +110,14 @@ function allOp(value, against, op) {
           }
         case "bigint":
         case "number":
-          return value.length ? numberOp(value, against, op) : true;
+          return value.length ? binop(op, value, against) : true;
         case "object":
           if (value.length === 0) {
             return false;
           }
 
           if (against instanceof Date) {
-            return dateOp(new Date(value), against, op);
+            return dateOp(op, new Date(value), against);
           }
 
           if (against instanceof RegExp) {
@@ -122,7 +126,7 @@ function allOp(value, against, op) {
 
           if (against instanceof Map) {
             for (const [k, v] of against) {
-              if (allOp(value, k, op) || allOp(value, v, op)) {
+              if (allOp(op, value, k) || allOp(op, value, v)) {
                 return true;
               }
             }
@@ -130,7 +134,7 @@ function allOp(value, against, op) {
 
           if (against[Symbol.iterator]) {
             for (const i of against) {
-              if (allOp(value, i, op)) {
+              if (allOp(op, value, i)) {
                 return true;
               }
             }
@@ -149,7 +153,7 @@ function allOp(value, against, op) {
 
           if (against instanceof Map) {
             for (const [k, v] of against) {
-              if (numberOp(value, k, op) || numberOp(value, v, op)) {
+              if (binop(op, value, k) || binop(op, value, v)) {
                 return true;
               }
             }
@@ -158,20 +162,20 @@ function allOp(value, against, op) {
 
           if (against[Symbol.iterator]) {
             for (const i of against) {
-              if (numberOp(value, i, op)) {
+              if (binop(op, value, i)) {
                 return true;
               }
             }
             return false;
           }
       }
-      return numberOp(value, against, op);
+      return binop(op, value, against);
     case "boolean":
       switch (typeof against) {
         case "object":
           if (against[Symbol.iterator]) {
             for (const i of against) {
-              if (allOp(value, i, op)) {
+              if (allOp(op, value, i)) {
                 return true;
               }
             }
@@ -185,23 +189,6 @@ function allOp(value, against, op) {
   return false;
 }
 
-function numberOp(value, against, op) {
-  switch (op) {
-    case NOT_EQUAL:
-      return value != against;
-    case EQUAL:
-      return value == against;
-    case GREATER:
-      return value > against;
-    case LESS:
-      return value < against;
-    case GREATER_EQUAL:
-      return value >= against;
-    case LESS_EQUAL:
-      return value <= against;
-  }
-}
-
 /**
  * Generate filter function.
  * @param {Object} [filterBy]
@@ -212,7 +199,7 @@ export function filter(filterBy) {
     const filters = Object.entries(filterBy).map(([key, against]) => {
       return a => {
         const [value, op] = getAttributeAndOperator(a, key);
-        return allOp(value, against, op);
+        return allOp(op, value, against);
       };
     });
 

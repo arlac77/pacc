@@ -19,6 +19,35 @@ import {
   EOF
 } from "./tokens.mjs";
 
+export function binop(op, left, right) {
+  switch (op) {
+    case DOUBLE_BAR:
+      return left || right;
+    case DOUBLE_AMPERSAND:
+      return left && right;
+    case EQUAL:
+      return left == right;
+    case NOT_EQUAL:
+      return left != right;
+    case GREATER:
+      return left > right;
+    case LESS:
+      return left < right;
+    case GREATER_EQUAL:
+      return left >= right;
+    case LESS_EQUAL:
+      return left <= right;
+    case PLUS:
+      return left + right;
+    case MINUS:
+      return left - right;
+    case STAR:
+      return left * right;
+    case DIVIDE:
+      return left / right;
+  }
+}
+
 export function parse(context) {
   let node, token;
 
@@ -65,9 +94,9 @@ export function parse(context) {
     switch (typeof token) {
       case "string":
         return { path: [token] };
-      case "boolean":
-      case "bigint":
       case "number":
+      case "bigint":
+      case "boolean":
         return token;
     }
 
@@ -80,35 +109,11 @@ export function parse(context) {
         const right = expression(token.precedence - 1);
         if (typeof left === typeof right) {
           switch (typeof left) {
-            case "bigint":
-            case "number":
             case "string":
-              switch (token) {
-                case GREATER:
-                  return left > right;
-                case GREATER_EQUAL:
-                  return left >= right;
-                case LESS:
-                  return left < right;
-                case LESS_EQUAL:
-                  return left <= right;
-                case EQUAL:
-                  return left == right;
-                case NOT_EQUAL:
-                  return left != right;
-              }
-              break;
+            case "number":
+            case "bigint":
             case "boolean":
-              switch (token) {
-                case DOUBLE_BAR:
-                  return left || right;
-                case DOUBLE_AMPERSAND:
-                  return left && right;
-                case EQUAL:
-                  return left == right;
-                case NOT_EQUAL:
-                  return left != right;
-              }
+              return binop(token, left, right);
           }
         }
         return {
@@ -122,19 +127,9 @@ export function parse(context) {
         const right = expression(token.precedence);
         if (typeof left === typeof right) {
           switch (typeof left) {
-            case "bigint":
             case "number":
-              switch (token) {
-                case PLUS:
-                  return left + right;
-                case MINUS:
-                  return left - right;
-                case STAR:
-                  return left * right;
-                case DIVIDE:
-                  return left / right;
-              }
-              break;
+            case "bigint":
+              return binop(token, left, right);
           }
         }
         if (token === DOT) {
