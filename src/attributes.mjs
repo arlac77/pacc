@@ -2,7 +2,7 @@
 
 export const baseTypes = new Set(["string", "number", "bigint", "boolean"]);
 
-const types = {
+export const types = {
   base: { name: "base" },
   
   string: { name: "string", extends: "base" },
