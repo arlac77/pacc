@@ -1,5 +1,10 @@
+
+
+export const baseTypes = new Set(["string", "number", "bigint", "boolean"]);
+
 const types = {
   base: { name: "base" },
+  
   string: { name: "string", extends: "base" },
   number: {
     name: "number",
@@ -7,6 +12,12 @@ const types = {
     convertValue: (value, attribute) =>
       typeof value === "string" ? parseFloat(value) : value
   },
+  boolean: {
+    name: "boolean",
+    extends: "base",
+    convertValue: (value, attribute) => (!value || value === "0" ? false : true)
+  },
+
   integer: {
     name: "integer",
     extends: "base",
@@ -14,11 +25,6 @@ const types = {
       typeof value === "string" ? parseInt(value) : value
   },
   "unsigned-integer": { name: "unsigned-integer", extends: "integer" },
-  boolean: {
-    name: "boolean",
-    extends: "base",
-    convertValue: (value, attribute) => (!value || value === "0" ? false : true)
-  },
   url: { name: "url", extends: "string" },
   object: { name: "object", extends: "base" }
 };
