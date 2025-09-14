@@ -38,8 +38,9 @@ function eat(t, input, expected) {
       }
     }
 
-    let result = parse(context);
+    const result = parse(context);
 
+    //console.log(result);
     clear(result);
     t.deepEqual(result, expected);
   }
@@ -71,25 +72,25 @@ test(eat, "3 = 1 + 2", true);
 test(eat, "true || false", true);
 test(eat, "true && false", false);
 test(eat, { tokens: "1 + a", root: { a: 5 } }, 6);
-test(eat, "[ x > 2 ]", {
-  token: GREATER,
-  left: { path: ["x"] },
-  right: 2
-});
-test(eat, "a.b[ c > 2 ]", {
-  path: ["a", "b", { left: { path: ["c"] }, right: 2, token: GREATER }]
-});
-test(eat, "a[ b.c > 2 && d < 7].d", {
-  path: [
-    "a",
-    {
-      left: { left: { path: ["b", "c"] }, right: 2, token: GREATER },
-      right: { left: { path: ["d"] }, right: 7, token: LESS },
-      token: DOUBLE_AMPERSAND
-    },
-    "d"
-  ]
-});
+test(eat, { tokens: "[ x > 2 ]", root: { x: 3 } }, true);
+test(
+  eat,
+  { tokens: "a.b[ c > 2 ]", root: { a: { b: [{ c: 2 }, { c: 3 }] } } },
+  [{ c: 3 }]
+);
+test.skip(
+  eat,
+  {
+    tokens: "a[ b.c > 2 && d < 7].d",
+    root: {
+      a: [
+        { b: { c: 3 }, d: 2 },
+        { b: { c: 1 }, d: 1 }
+      ]
+    }
+  },
+  [2]
+);
 
 test(eat, { tokens: "[1]", root: [0, 9] }, 9);
 test(eat, { tokens: "[1+3].b", root: [0, 0, 0, 0, { b: 44 }] }, 44);

@@ -61,14 +61,34 @@ export function parse(context) {
     error(`Unexpected '${op.str || op}'`);
   }
 
-  const pathEval = node => {
-    let result = context.root;
+  const pathEval = (node, current) => {
+    let result = current;
 
     for (const p of node.path) {
       switch (typeof p) {
         case "string":
         case "number":
-          result = result[p];
+          if(typeof result === 'function') {
+            const r = [];
+            for(const x of result()) {
+              r.push(x[p]);
+            }
+            result = r;
+          }
+          else {
+            result = result[p];
+          }
+          break;
+        case "object":
+          function* filter() {
+            for (const x of result) {
+              if (p.eval(p, x)) {
+                yield x;
+              }
+            }
+          }
+          //result = filter;
+          result = [...filter()];
       }
     }
 
@@ -136,6 +156,13 @@ export function parse(context) {
           }
         }
         return {
+          eval: (node, current) =>
+            binop(
+              token,
+              left?.eval ? left.eval(left, current) : left,
+              right?.eval ? right.eval(right, current) : right,
+              binopError
+            ),
           token,
           left,
           right
@@ -143,7 +170,7 @@ export function parse(context) {
       }
 
       case "infix": {
-        const right = expression(token.precedence);
+        let right = expression(token.precedence);
         if (typeof left === typeof right) {
           switch (typeof left) {
             case "number":
@@ -169,11 +196,13 @@ export function parse(context) {
         }
 
         return {
-          eval: (node) => {
-            const left = node.left?.eval ? node.left.eval(node.left) : node.left;
-            const right = node.right?.eval ? node.right.eval(node.right) : node.right;
-            return binop(node.token,left,right);
-          },
+          eval: (node, current) =>
+            binop(
+              token,
+              left?.eval ? left.eval(left, current) : left,
+              right?.eval ? right.eval(right, current) : right,
+              binopError
+            ),
           token,
           left,
           right
@@ -211,8 +240,8 @@ export function parse(context) {
 
   const result = expression(token.precedence ?? 0);
 
-  if(context.exec !== false &&result?.eval) {
-    return result.eval(result);
+  if (context.exec !== false && result?.eval) {
+    return result.eval(result, context.root);
   }
 
   return result;
