@@ -19,7 +19,7 @@ import {
   EOF
 } from "./tokens.mjs";
 
-export function binop(op, left, right) {
+export function binop(op, left, right, fallback) {
   switch (op) {
     case DOUBLE_BAR:
       return left || right;
@@ -46,6 +46,8 @@ export function binop(op, left, right) {
     case DIVIDE:
       return left / right;
   }
+
+  return fallback(op, left, right);
 }
 
 export function parse(context) {
@@ -55,6 +57,23 @@ export function parse(context) {
     const error = new Error(message);
     throw error;
   }
+  function binopError(op, left, right) {
+    error(`Unexpected '${op.str || op}'`);
+  }
+
+  const pathEval = node => {
+    let result = context.root;
+
+    for (const p of node.path) {
+      switch (typeof p) {
+        case "string":
+        case "number":
+          result = result[p];
+      }
+    }
+
+    return result;
+  };
 
   const advance = () => {
     const { value, done } = context.tokens.next();
@@ -81,7 +100,7 @@ export function parse(context) {
             const node = expression(0);
             expect(CLOSE_BRACKET);
             if (typeof node === "number") {
-              return { path: [node] };
+              return { eval: pathEval, path: [node] };
             }
             return node;
           }
@@ -93,7 +112,7 @@ export function parse(context) {
 
     switch (typeof token) {
       case "string":
-        return { path: [token] };
+        return { eval: pathEval, path: [token] };
       case "number":
       case "bigint":
       case "boolean":
@@ -113,7 +132,7 @@ export function parse(context) {
             case "number":
             case "bigint":
             case "boolean":
-              return binop(token, left, right);
+              return binop(token, left, right, binopError);
           }
         }
         return {
@@ -129,7 +148,7 @@ export function parse(context) {
           switch (typeof left) {
             case "number":
             case "bigint":
-              return binop(token, left, right);
+              return binop(token, left, right, binopError);
           }
         }
         if (token === DOT) {
@@ -142,13 +161,19 @@ export function parse(context) {
               right.path.unshift(left);
               return right;
           }
-          return { path: [left.token, right.token] };
+          return { eval: pathEval, path: [left.token, right.token] };
         }
 
         if (right.token === EOF) {
           error("unexpected EOF");
         }
+
         return {
+          eval: (node) => {
+            const left = node.left?.eval ? node.left.eval(node.left) : node.left;
+            const right = node.right?.eval ? node.right.eval(node.right) : node.right;
+            return binop(node.token,left,right);
+          },
           token,
           left,
           right
@@ -184,5 +209,11 @@ export function parse(context) {
 
   advance();
 
-  return expression(token.precedence ?? 0);
+  const result = expression(token.precedence ?? 0);
+
+  if(context.exec !== false &&result?.eval) {
+    return result.eval(result);
+  }
+
+  return result;
 }
