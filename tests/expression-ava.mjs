@@ -73,7 +73,7 @@ test(
   { tokens: "a.b[ c > 2 ]", root: { a: { b: [{ c: 2 }, { c: 3 }] } } },
   [{ c: 3 }]
 );
-test.skip(
+test(
   eat,
   {
     tokens: "a[ b.c > 2 && d < 7].d",

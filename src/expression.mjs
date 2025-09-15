@@ -79,15 +79,15 @@ export function parse(context) {
           }
           break;
         case "object":
+          const input = result;
           function* filter() {
-            for (const x of result) {
+            for (const x of input) {
               if (p.eval(p, x)) {
                 yield x;
               }
             }
           }
-          //result = filter;
-          result = [...filter()];
+          result = filter;
       }
     }
 
@@ -120,9 +120,9 @@ export function parse(context) {
             expect(CLOSE_BRACKET);
             switch (typeof node) {
               case "number":
-              case "string":
                 return { eval: pathEval, path: [node] };
             }
+
             return node;
           }
         }
@@ -239,10 +239,14 @@ export function parse(context) {
 
   advance();
 
-  const result = expression(token.precedence ?? 0);
+  let result = expression(token.precedence ?? 0);
 
   if (context.exec !== false && result?.eval) {
-    return result.eval(result, context.root);
+    result = result.eval(result, context.root);
+
+    if(typeof result === 'function') {
+      return [...result()];
+    }
   }
 
   return result;
