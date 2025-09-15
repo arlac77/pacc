@@ -72,6 +72,7 @@ test(eat, "3 = 1 + 2", true);
 test(eat, "true || false", true);
 test(eat, "true && false", false);
 test(eat, { tokens: "1 + a", root: { a: 5 } }, 6);
+test(eat, { tokens: "x > 2", root: { x: 3 } }, true);
 test(eat, { tokens: "[ x > 2 ]", root: { x: 3 } }, true);
 test(
   eat,

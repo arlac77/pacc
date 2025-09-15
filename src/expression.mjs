@@ -159,8 +159,8 @@ export function parse(context) {
           eval: (node, current) =>
             binop(
               token,
-              left?.eval ? left.eval(left, current) : left,
-              right?.eval ? right.eval(right, current) : right,
+              left.eval ? left.eval(left, current) : left,
+              right.eval ? right.eval(right, current) : right,
               binopError
             ),
           token,
@@ -199,8 +199,8 @@ export function parse(context) {
           eval: (node, current) =>
             binop(
               token,
-              left?.eval ? left.eval(left, current) : left,
-              right?.eval ? right.eval(right, current) : right,
+              left.eval ? left.eval(left, current) : left,
+              right.eval ? right.eval(right, current) : right,
               binopError
             ),
           token,
