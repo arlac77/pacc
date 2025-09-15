@@ -1,11 +1,5 @@
 import test from "ava";
-import {
-  tokens,
-  PLUS,
-  GREATER,
-  LESS,
-  DOUBLE_AMPERSAND
-} from "../src/tokens.mjs";
+import { tokens } from "../src/tokens.mjs";
 import { parse } from "../src/expression.mjs";
 
 function eat(t, input, expected) {
