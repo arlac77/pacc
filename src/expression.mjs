@@ -68,14 +68,13 @@ export function parse(context) {
       switch (typeof p) {
         case "string":
         case "number":
-          if(typeof result === 'function') {
+          if (typeof result === "function") {
             const r = [];
-            for(const x of result()) {
+            for (const x of result()) {
               r.push(x[p]);
             }
             result = r;
-          }
-          else {
+          } else {
             result = result[p];
           }
           break;
@@ -119,8 +118,10 @@ export function parse(context) {
           case OPEN_BRACKET: {
             const node = expression(0);
             expect(CLOSE_BRACKET);
-            if (typeof node === "number") {
-              return { eval: pathEval, path: [node] };
+            switch (typeof node) {
+              case "number":
+              case "string":
+                return { eval: pathEval, path: [node] };
             }
             return node;
           }

@@ -88,6 +88,7 @@ test.skip(
 );
 
 test(eat, { tokens: "[1]", root: [0, 9] }, 9);
+test(eat, { tokens: "['a']", root: { a: 7 } }, 7);
 test(eat, { tokens: "[1+3].b", root: [0, 0, 0, 0, { b: 44 }] }, 44);
 test(eat, { tokens: "a", root: { a: 12 } }, 12);
 test(eat, { tokens: "a[2].c", root: { a: [0, 0, { c: 17 }] } }, 17);
