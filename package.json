@@ -14,6 +14,7 @@
     }
   },
   "description": "property path utils",
+  "keywords": ["xpath","property path"],
   "contributors": [
     {
       "name": "Markus Felten",
