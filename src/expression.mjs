@@ -172,8 +172,10 @@ export function parse(context) {
 
       case "infix": {
         let right = expression(token.precedence);
+
         if (typeof left === typeof right) {
           switch (typeof left) {
+            case "string":
             case "number":
             case "bigint":
               return binop(token, left, right, binopError);

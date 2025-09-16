@@ -57,6 +57,7 @@ test(eat, "(1) + 2", 3);
 test(eat, "1 + (2 + 3)", 6);
 test(eat, "(1 + 2) + 3", 6);
 test(eat, "(1 + 2) * 4 + 5 + 6", 23);
+test.skip(eat, "'a' + 'b'", 'ab');
 test(eat, "1 < 2", true);
 test(eat, "1 = 2", false);
 test(eat, "1 != 2", true);
