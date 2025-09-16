@@ -116,6 +116,10 @@ export function expand(object, context) {
       return array;
     }
 
+    if(object instanceof context.stopClass) {
+      return object;
+    }
+
     let newObject = {};
 
     for (let [key, value] of Object.entries(object)) {
