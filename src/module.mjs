@@ -4,6 +4,7 @@ export * from "./multiple.mjs";
 export * from "./attributes.mjs";
 export * from "./common-attributes.mjs";
 export * from "./properties.mjs";
+export * from "./expression.mjs";
 export {
   setAttribute,
   getAttribute,

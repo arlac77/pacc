@@ -75,7 +75,7 @@ export function parse(context) {
             }
             result = r;
           } else {
-            result = result[p];
+            result = result[p] ?? context.globals?.[p];
           }
           break;
         case "object":

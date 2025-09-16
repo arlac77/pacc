@@ -68,6 +68,7 @@ test(eat, "true && false", false);
 test(eat, { tokens: "1 + a", root: { a: 5 } }, 6);
 test(eat, { tokens: "x > 2", root: { x: 3 } }, true);
 test(eat, { tokens: "[ x > 2 ]", root: { x: 3 } }, true);
+test(eat, { tokens: "[ x > y ]", root: { x: 3 }, globals: { y: 2 } }, true);
 test(
   eat,
   { tokens: "a.b[ c > 2 ]", root: { a: { b: [{ c: 2 }, { c: 3 }] } } },
