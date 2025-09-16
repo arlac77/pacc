@@ -1,9 +1,10 @@
 import { parse } from "./expression.mjs";
 import { tokens } from "./tokens.mjs";
 
+const maxNestingLevel = 5;
+
 export function expand(object, context) {
   const promises = [];
-  const maxNestingLevel = 5;
 
   function _expand(object, path) {
     if (path.length >= maxNestingLevel) {
@@ -16,26 +17,29 @@ export function expand(object, context) {
       let wholeValue;
 
       const localPromises = [];
-      const v = object.replace(/\$\{([^\}]*)\}/g, (match, expression, offset, string) => {
-        context.tokens = tokens(expression);
-        let value = parse(context);
+      const v = object.replace(
+        /\$\{([^\}]*)\}/g,
+        (match, expression, offset, string) => {
+          context.tokens = tokens(expression);
+          let value = parse(context);
 
-        if (typeof value === "string" || value instanceof String) {
-          value = _expand(value, path);
-        } else if (value === undefined) {
-          value = "${" + expression + "}";
-        }
-        if (string.length === expression.length + 3) {
-          wholeValue = value;
-          return "";
-        }
+          if (typeof value === "string" || value instanceof String) {
+            value = _expand(value, path);
+          } else if (value === undefined) {
+            value = "${" + expression + "}";
+          }
+          if (string.length === expression.length + 3) {
+            wholeValue = value;
+            return "";
+          }
 
-        if (value instanceof Promise) {
-          localPromises.push(value);
-          return "${" + (localPromises.length - 1) + "}";
+          if (value instanceof Promise) {
+            localPromises.push(value);
+            return "${" + (localPromises.length - 1) + "}";
+          }
+          return value;
         }
-        return value;
-      });
+      );
 
       if (wholeValue !== undefined) {
         return wholeValue;
@@ -95,7 +99,6 @@ export function expand(object, context) {
 
       for (let index = 0; index < object.length; index++) {
         const o = object[index];
-
         const r = _expand(o, [
           ...path,
           {
@@ -138,9 +141,6 @@ export function expand(object, context) {
     return newObject;
   }
 
-  const value = _expand(object, [], promises);
-  if (promises.length !== 0) {
-    return Promise.all(promises).then(() => value);
-  }
-  return value;
+  const value = _expand(object, []);
+  return promises.length > 0 ? Promise.all(promises).then(() => value) : value;
 }
