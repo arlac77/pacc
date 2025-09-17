@@ -1,18 +1,14 @@
 import test from "ava";
-import { tokens } from "../src/tokens.mjs";
 import { parse } from "../src/expression.mjs";
 
-function eat(t, input, expected) {
-  let context;
-  if (typeof input === "object") {
-    context = { ...input, tokens: tokens(input.tokens) };
-  } else {
-    context = { tokens: tokens(input), exec: false };
+function eat(t, input, context, expected) {
+  if (!context) {
+    context = { exec: false };
   }
 
   if (expected instanceof Error) {
     try {
-      const result = parse(context);
+      const result = parse(input, context);
     } catch (e) {
       t.is(e.message, expected.message);
     }
@@ -32,7 +28,7 @@ function eat(t, input, expected) {
       }
     }
 
-    const result = parse(context);
+    const result = parse(input, context);
 
     //console.log(result);
     clear(result);
@@ -40,45 +36,43 @@ function eat(t, input, expected) {
   }
 }
 
-eat.title = (providedTitle, input, expected) =>
+eat.title = (providedTitle, input, context, expected) =>
   `parse ${providedTitle ? providedTitle + " " : ""} ${
-    typeof input === "object" ? input.tokens : input
+    typeof input === "object" ? input.input : input
   } => ${expected}`.trim();
 
-test(eat, "1 +", new Error("unexpected EOF"));
-test.skip(eat, "1 )", new Error("unexpected ')'"));
-test(eat, "1 + 2", 3);
-test(eat, "1 + 2 + 4", 7);
-test(eat, "1 + 2 * 4", 9);
-test(eat, "1 * 2 + 4", 6);
-test(eat, "1 + (2 + 7)", 10);
-test(eat, "(1 + 2)", 3);
-test(eat, "(1) + 2", 3);
-test(eat, "1 + (2 + 3)", 6);
-test(eat, "(1 + 2) + 3", 6);
-test(eat, "(1 + 2) * 4 + 5 + 6", 23);
-test(eat, "'a' + 'b'", 'ab');
-test(eat, "1 < 2", true);
-test(eat, "1 = 2", false);
-test(eat, "1 != 2", true);
-test(eat, "3 = 3", true);
-test(eat, "true = false", false);
-test(eat, "3 = 1 + 2", true);
-test(eat, "true || false", true);
-test(eat, "true && false", false);
-test(eat, { tokens: "1 + a", root: { a: 5 } }, 6);
-test(eat, { tokens: "x > 2", root: { x: 3 } }, true);
-test(eat, { tokens: "[ x > 2 ]", root: { x: 3 } }, true);
-test(eat, { tokens: "[ x > y ]", root: { x: 3 }, globals: { y: 2 } }, true);
+test(eat, "1 +", undefined, new Error("unexpected EOF"));
+test.skip(eat, "1 )", undefined, new Error("unexpected ')'"));
+test(eat, "1 + 2", undefined, 3);
+test(eat, "1 + 2 + 4", undefined, 7);
+test(eat, "1 + 2 * 4", undefined, 9);
+test(eat, "1 * 2 + 4", undefined, 6);
+test(eat, "1 + (2 + 7)", undefined, 10);
+test(eat, "(1 + 2)", undefined, 3);
+test(eat, "(1) + 2", undefined, 3);
+test(eat, "1 + (2 + 3)", undefined, 6);
+test(eat, "(1 + 2) + 3", undefined, 6);
+test(eat, "(1 + 2) * 4 + 5 + 6", undefined, 23);
+test(eat, "'a' + 'b'", undefined, "ab");
+test(eat, "1 < 2", undefined, true);
+test(eat, "1 = 2", undefined, false);
+test(eat, "1 != 2", undefined, true);
+test(eat, "3 = 3", undefined, true);
+test(eat, "true = false", undefined, false);
+test(eat, "3 = 1 + 2", undefined, true);
+test(eat, "true || false", undefined, true);
+test(eat, "true && false", undefined, false);
+test(eat, "1 + a", { root: { a: 5 } }, 6);
+test(eat, "x > 2", { root: { x: 3 } }, true);
+test(eat, "[ x > 2 ]", { root: { x: 3 } }, true);
+test(eat, "[ x > y ]", { root: { x: 3 }, globals: { y: 2 } }, true);
+test(eat, "a.b[ c > 2 ]", { root: { a: { b: [{ c: 2 }, { c: 3 }] } } }, [
+  { c: 3 }
+]);
 test(
   eat,
-  { tokens: "a.b[ c > 2 ]", root: { a: { b: [{ c: 2 }, { c: 3 }] } } },
-  [{ c: 3 }]
-);
-test(
-  eat,
+  "a[ b.c > 2 && d < 7].d",
   {
-    tokens: "a[ b.c > 2 && d < 7].d",
     root: {
       a: [
         { b: { c: 3 }, d: 2 },
@@ -89,9 +83,9 @@ test(
   [2]
 );
 
-test(eat, { tokens: "[1]", root: [0, 9] }, 9);
-test(eat, { tokens: "['a']", root: { a: 7 } }, 7);
-test(eat, { tokens: "[1+3].b", root: [0, 0, 0, 0, { b: 44 }] }, 44);
-test(eat, { tokens: "a", root: { a: 12 } }, 12);
-test(eat, { tokens: "a[2].c", root: { a: [0, 0, { c: 17 }] } }, 17);
-test(eat, { tokens: "a . b . c", root: { a: { b: { c: 77 } } } }, 77);
+test(eat, "[1]", { root: [0, 9] }, 9);
+test(eat, "['a']", { root: { a: 7 } }, 7);
+test(eat, "[1+3].b", { root: [0, 0, 0, 0, { b: 44 }] }, 44);
+test(eat, "a", { root: { a: 12 } }, 12);
+test(eat, "a[2].c", { root: { a: [0, 0, { c: 17 }] } }, 17);
+test(eat, "a . b . c", { root: { a: { b: { c: 77 } } } }, 77);

@@ -1,4 +1,5 @@
 import {
+  tokens,
   DOT,
   OPEN_ROUND,
   CLOSE_ROUND,
@@ -51,7 +52,9 @@ export function binop(op, left, right, fallback) {
   return fallback(op, left, right);
 }
 
-export function parse(context) {
+export function parse(input, context = {}) {
+  input = tokens(input);
+
   let node, token, value;
 
   function error(message) {
@@ -80,9 +83,9 @@ export function parse(context) {
           }
           break;
         case "object":
-          const input = result;
+          const r = result;
           function* filter() {
-            for (const x of input) {
+            for (const x of r) {
               if (p.eval(p, x)) {
                 yield x;
               }
@@ -96,7 +99,7 @@ export function parse(context) {
   };
 
   const advance = () => {
-    const next = context.tokens.next();
+    const next = input.next();
     if (next.done) {
       token = EOF;
     } else {

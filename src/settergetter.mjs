@@ -28,7 +28,7 @@ import { prepareValue } from "./attributes.mjs";
  * @param {Object} definition type def
  */
 export function setAttribute(object, expression, value, definition) {
-  const { path } = parse({ tokens: tokens(expression), exec: false });
+  const { path } = parse(expression, { exec: false });
 
   let anchor, anchorKey;
 
@@ -61,7 +61,7 @@ export function setAttribute(object, expression, value, definition) {
  * @returns {any} value associated with the given property name
  */
 export function getAttribute(object, expression, definition) {
-  const { path } = parse({ tokens: tokens(expression), exec: false });
+  const { path } = parse(expression, { exec: false });
 
   for (const key of path) {
     if (object !== undefined) {
