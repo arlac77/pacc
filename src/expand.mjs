@@ -1,5 +1,4 @@
 import { parse } from "./expression.mjs";
-import { tokens } from "./tokens.mjs";
 
 const maxNestingLevel = 5;
 
@@ -20,8 +19,7 @@ export function expand(object, context) {
       const v = object.replace(
         /\$\{([^\}]*)\}/g,
         (match, expression, offset, string) => {
-          context.tokens = tokens(expression);
-          let value = parse(context);
+          let value = parse(expression,context);
 
           if (typeof value === "string" || value instanceof String) {
             value = _expand(value, path);
