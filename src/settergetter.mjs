@@ -13,7 +13,8 @@ import {
   LESS_EQUAL,
   GREATER,
   GREATER_EQUAL,
-  STAR
+  STAR,
+  IDENTIFIER
 } from "./tokens.mjs";
 import { parse } from "./expression.mjs";
 import { prepareValue } from "./attributes.mjs";
@@ -80,7 +81,7 @@ export function getAttribute(object, expression, definition) {
     }
   }
 
-  if(object === undefined && definition) {
+  if (object === undefined && definition) {
     object = definition.default;
   }
 
@@ -114,14 +115,14 @@ export function getAttributeAndOperator(object, expression) {
   const next = tokens(expression);
 
   for (const token of next) {
-    switch (token) {
+    switch (token[0]) {
       case GREATER_EQUAL:
       case LESS_EQUAL:
       case GREATER:
       case LESS:
       case EQUAL:
       case NOT_EQUAL:
-        op = token;
+        op = token[0];
         break;
       case DOT:
       case OPEN_BRACKET:
@@ -142,20 +143,37 @@ export function getAttributeAndOperator(object, expression) {
           error.expression = expression;
           throw error;
         }
-        predicateTokens.push(token);
+        predicateTokens.push(token[0]);
         break;
 
-      default:
+      case IDENTIFIER:
         if (object !== undefined) {
-          switch (typeof object[token]) {
+          switch (typeof object[token[1]]) {
             case "function":
-              object = object[token]();
+              object = object[token[1]]();
               if (typeof object[Symbol.iterator] === "function") {
                 object = [...object];
               }
               break;
             default:
-              object = object[token];
+              object = object[token[1]];
+              break;
+            case "undefined":
+              return [undefined, op];
+          }
+        }
+        break;
+      default:
+        if (object !== undefined) {
+          switch (typeof object[token[0]]) {
+            case "function":
+              object = object[token[0]]();
+              if (typeof object[Symbol.iterator] === "function") {
+                object = [...object];
+              }
+              break;
+            default:
+              object = object[token[0]];
               break;
             case "undefined":
               return [undefined, op];

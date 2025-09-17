@@ -15,7 +15,7 @@ const lookup = {};
  */
 function createToken(str, precedence = 0, type) {
   const token = { str, precedence, type };
-  lookup[str] = token;
+  lookup[str] = [token];
   return token;
 }
 
@@ -53,6 +53,7 @@ export /** @type {Token} */ const DOUBLE_AMPERSAND = createToken(
 );
 export /** @type {Token} */ const BAR = createToken("|");
 export /** @type {Token} */ const DOUBLE_BAR = createToken("||", 30, "infixr");
+export /** @type {Token} */ const IDENTIFIER = createToken("IDENTIFIER", 0);
 export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
 
 /**
@@ -67,11 +68,11 @@ export function* tokens(string) {
   function maybeKeyword() {
     switch (value) {
       case "true":
-        return true;
+        return [true];
       case "false":
-        return false;
+        return [false];
       default:
-        return value;
+        return [IDENTIFIER, value];
     }
   }
 
@@ -108,13 +109,15 @@ export function* tokens(string) {
       case "\t":
       case " ":
         switch (state) {
+          case "number":
+          case "number-fraction":
+            yield [value];
+            state = undefined;
           case undefined:
             break;
           case "string":
             value += c;
             break;
-          case "number-fraction":
-          case "number":
           case "identifier":
             yield maybeKeyword();
             value = undefined;
@@ -136,12 +139,17 @@ export function* tokens(string) {
       case '"':
       case "'":
         switch (state) {
+          case "number":
+          case "number-fraction":
+            yield [value];
+          case undefined:
+            value = "";
+            state = "string";
+            break;
           case "string":
-            yield value;
+            yield [value];
             state = undefined;
             break;
-          case "number-fraction":
-          case "number":
           case "identifier":
             yield maybeKeyword();
             value = "";
@@ -149,10 +157,8 @@ export function* tokens(string) {
             break;
           default:
             yield lookup[state];
-          case undefined:
             value = "";
             state = "string";
-            break;
         }
         break;
       case "!":
@@ -161,6 +167,12 @@ export function* tokens(string) {
       case "&":
       case "|":
         switch (state) {
+          case "number":
+          case "number-fraction":
+            yield [value];
+          case undefined:
+            state = c;
+            break;
           case "&":
           case "|":
             if (state === c) {
@@ -172,15 +184,9 @@ export function* tokens(string) {
               state = c;
             }
             break;
-          case undefined:
-            state = c;
-            break;
           case "string":
             value += c;
             break;
-
-          case "number-fraction":
-          case "number":
           case "identifier":
             yield maybeKeyword();
             state = c;
@@ -193,14 +199,15 @@ export function* tokens(string) {
 
       case "=":
         switch (state) {
+          case "number":
+          case "number-fraction":
+            yield [value];
           case undefined:
             state = c;
             break;
           case "string":
             value += c;
             break;
-          case "number-fraction":
-          case "number":
           case "identifier":
             yield maybeKeyword();
             state = c;
@@ -229,20 +236,22 @@ export function* tokens(string) {
       case "{":
       case "}":
         switch (state) {
+          case "number":
+          case "number-fraction":
+            yield [value];
+          case undefined:
+            state = c;
+            break;
           case "string":
             value += c;
             break;
-          case "number":
-          case "number-fraction":
           case "identifier":
             yield maybeKeyword();
             state = c;
             break;
           default:
             yield lookup[state];
-          case undefined:
             state = c;
-            break;
         }
         break;
       case "0":
@@ -283,16 +292,21 @@ export function* tokens(string) {
 
       default:
         switch (state) {
+          case "number":
+          case "number-fraction":
+            yield [value];
+          case undefined:
+            state = "identifier";
+            value = c;
+            break;
           case "string":
           case "identifier":
             value += c;
             break;
           default:
             yield lookup[state];
-          case undefined:
-            state = "identifier";
             value = c;
-            break;
+            state = "identifier";
         }
     }
   }
@@ -307,6 +321,8 @@ export function* tokens(string) {
       throw error;
     case "number-fraction":
     case "number":
+      yield [value];
+      break;
     case "identifier":
       yield maybeKeyword();
       break;

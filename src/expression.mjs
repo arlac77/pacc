@@ -16,6 +16,7 @@ import {
   DIVIDE,
   PLUS,
   MINUS,
+  IDENTIFIER,
   EOF
 } from "./tokens.mjs";
 
@@ -51,7 +52,7 @@ export function binop(op, left, right, fallback) {
 }
 
 export function parse(context) {
-  let node, token;
+  let node, token, value;
 
   function error(message) {
     const error = new Error(message);
@@ -95,8 +96,15 @@ export function parse(context) {
   };
 
   const advance = () => {
-    const { value, done } = context.tokens.next();
-    token = done ? EOF : value;
+    const next = context.tokens.next();
+    if (next.done) {
+      token = EOF;
+    } else {
+      token = next.value[0];
+      if (next.value.length > 1) {
+        value = next.value[1];
+      }
+    }
   };
 
   const expect = expected => {
@@ -119,6 +127,7 @@ export function parse(context) {
             const node = expression(0);
             expect(CLOSE_BRACKET);
             switch (typeof node) {
+              case "string":
               case "number":
                 return { eval: pathEval, path: [node] };
             }
@@ -133,11 +142,14 @@ export function parse(context) {
 
     switch (typeof token) {
       case "string":
-        return { eval: pathEval, path: [token] };
       case "number":
       case "bigint":
       case "boolean":
         return token;
+    }
+
+    if (token === IDENTIFIER) {
+      return { eval: pathEval, path: [value] };
     }
 
     return { token };
@@ -156,6 +168,7 @@ export function parse(context) {
               return binop(token, left, right, binopError);
           }
         }
+
         return {
           eval: (node, current) =>
             binop(
@@ -246,7 +259,7 @@ export function parse(context) {
   if (context.exec !== false && result?.eval) {
     result = result.eval(result, context.root);
 
-    if(typeof result === 'function') {
+    if (typeof result === "function") {
       return [...result()];
     }
   }

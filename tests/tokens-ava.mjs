@@ -2,6 +2,7 @@ import test from "ava";
 import {
   tokens,
   PLUS,
+  IDENTIFIER,
   MINUS,
   STAR,
   DIVIDE,
@@ -30,6 +31,7 @@ import {
 function tt(t, input, expected) {
   try {
     const result = [...tokens(input)];
+    expected = expected.map(e => (Array.isArray(e) ? e : [e]));
     t.deepEqual(result, expected);
   } catch (e) {
     t.deepEqual(e, expected);
@@ -55,7 +57,7 @@ test(tt, "", []);
 test(tt, "3", [3]);
 test(tt, "true", [true]);
 test(tt, "true false", [true, false]);
-test(tt, " \t'a'b\"c\"d ", ["a", "b", "c", "d"]);
+test(tt, " \t'a'b\"c\"d ", ["a", [IDENTIFIER, "b"], "c", [IDENTIFIER, "d"]]);
 test(tt, " 'a2\\\\\\n\\r\\t\\b\\x\u0041' ", ["a2\\\n\r\t\bxA"]);
 test(tt, " ''+''", ["", PLUS, ""]);
 test(tt, " ''=''", ["", EQUAL, ""]);
@@ -67,19 +69,39 @@ test(tt, "'a'2", ["a", 2]);
 test(tt, "|2", [BAR, 2]);
 test(tt, "2|", [2, BAR]);
 test(tt, "2=", [2, EQUAL]);
-
-test(tt, "a< <= >= b>", ["a", LESS, LESS_EQUAL, GREATER_EQUAL, "b", GREATER]);
-test(tt, "a=", ["a", EQUAL]);
-test(tt, "a!=", ["a", NOT_EQUAL]);
-test(tt, "a>=", ["a", GREATER_EQUAL]);
-test(tt, "a<=", ["a", LESS_EQUAL]);
-test(tt, "a[ 2 ] .b", ["a", OPEN_BRACKET, 2, CLOSE_BRACKET, DOT, "b"]);
-test(tt, "a[2].b", ["a", OPEN_BRACKET, 2, CLOSE_BRACKET, DOT, "b"]);
-test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
-  "a123",
+test(tt, "a< <= >= b>", [
+  [IDENTIFIER, "a"],
+  LESS,
   LESS_EQUAL,
   GREATER_EQUAL,
-  "a",
+  [IDENTIFIER, "b"],
+  GREATER
+]);
+test(tt, "a=", [[IDENTIFIER, "a"], EQUAL]);
+test(tt, "a!=", [[IDENTIFIER, "a"], NOT_EQUAL]);
+test(tt, "a>=", [[IDENTIFIER, "a"], GREATER_EQUAL]);
+test(tt, "a<=", [[IDENTIFIER, "a"], LESS_EQUAL]);
+test(tt, "a[ 2 ] .b", [
+  [IDENTIFIER, "a"],
+  OPEN_BRACKET,
+  2,
+  CLOSE_BRACKET,
+  DOT,
+  [IDENTIFIER, "b"]
+]);
+test(tt, "a[2].b", [
+  [IDENTIFIER, "a"],
+  OPEN_BRACKET,
+  2,
+  CLOSE_BRACKET,
+  DOT,
+  [IDENTIFIER, "b"]
+]);
+test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
+  [IDENTIFIER, "a123"],
+  LESS_EQUAL,
+  GREATER_EQUAL,
+  [IDENTIFIER, "a"],
   EQUAL,
   LESS,
   GREATER,
@@ -100,18 +122,33 @@ test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
   COLON,
   COMMA,
   SEMICOLON,
-  "b",
+  [IDENTIFIER, "b"],
   DOT,
-  "c",
+  [IDENTIFIER, "c"],
   1234567890
 ]);
 
 test(tt, "2.34", [2.34]);
 test(tt, ".34", [0.33999999999999997]);
 
-test(tt, "a.b + 2.34 - c", ["a", DOT, "b", PLUS, 2.34, MINUS, "c"]);
+test(tt, "a.b + 2.34 - c", [
+  [IDENTIFIER, "a"],
+  DOT,
+  [IDENTIFIER, "b"],
+  PLUS,
+  2.34,
+  MINUS,
+  [IDENTIFIER, "c"]
+]);
 
-test(tt, "a[*]._b", ["a", OPEN_BRACKET, STAR, CLOSE_BRACKET, DOT, "_b"]);
+test(tt, "a[*]._b", [
+  [IDENTIFIER, "a"],
+  OPEN_BRACKET,
+  STAR,
+  CLOSE_BRACKET,
+  DOT,
+  [IDENTIFIER, "_b"]
+]);
 
 test.skip(
   tt,

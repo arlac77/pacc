@@ -29,7 +29,6 @@ test(gat, [1, 2, 3], " \t[ 1 ] ", 2);
 test(gat, [0, { b: 3 }], "[1].b", 3);
 test(gat, [0, { c: 3 }], " [1 ] .c ", 3);
 test(gat, { a: { b: 2 } }, "a.b", 2);
-test(gat, { "a ": { b: 3 } }, "'a '.b", 3);
 test(gat, { a: [4] }, "a [ 0 ]", 4);
 test.skip(gat, { a: new Set([5]) }, "a[0]", 5);
 test(gat, { a: [{ b: 6 }] }, "a[0].b", 6);
