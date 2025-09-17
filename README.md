@@ -125,6 +125,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [DOUBLE\_AMPERSAND](#double_ampersand)
 *   [BAR](#bar)
 *   [DOUBLE\_BAR](#double_bar)
+*   [IDENTIFIER](#identifier)
 *   [EOF](#eof)
 
 ## prepareAttributesDefinitions
@@ -568,6 +569,10 @@ Type: [Token](#token)
 Type: [Token](#token)
 
 ## DOUBLE\_BAR
+
+Type: [Token](#token)
+
+## IDENTIFIER
 
 Type: [Token](#token)
 
