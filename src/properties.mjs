@@ -1,6 +1,6 @@
 import { attributeIterator } from "./attributes.mjs";
 import { getAttribute, setAttribute } from "./settergetter.mjs";
-import { convertValue } from "./attributes.mjs";
+import { prepareValue } from "./attributes.mjs";
 
 export function definePropertiesFromAttributes(
   object,
@@ -22,7 +22,7 @@ export function definePropertiesFromAttributes(
           name
         );
 
-        value = convertValue(value, attribute);
+        value = prepareValue(value, attribute);
 
         const property = properties[name];
 

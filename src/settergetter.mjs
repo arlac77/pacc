@@ -16,7 +16,7 @@ import {
   STAR
 } from "./tokens.mjs";
 import { parse } from "./expression.mjs";
-import { convertValue } from "./attributes.mjs";
+import { prepareValue } from "./attributes.mjs";
 
 /**
  * Set object attribute.
@@ -48,7 +48,7 @@ export function setAttribute(object, expression, value, definition) {
   }
 
   if (anchor) {
-    anchor[anchorKey] = convertValue(value, definition);
+    anchor[anchorKey] = prepareValue(value, definition);
   }
 }
 

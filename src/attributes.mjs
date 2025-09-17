@@ -9,19 +9,19 @@ export const types = {
   number: {
     name: "number",
     extends: "base",
-    convertValue: (value, attribute) =>
+    prepareValue: (value, attribute) =>
       typeof value === "string" ? parseFloat(value) : value
   },
   boolean: {
     name: "boolean",
     extends: "base",
-    convertValue: (value, attribute) => (!value || value === "0" ? false : true)
+    prepareValue: (value, attribute) => (!value || value === "0" ? false : true)
   },
 
   integer: {
     name: "integer",
     extends: "base",
-    convertValue: (value, attribute) =>
+    prepareValue: (value, attribute) =>
       typeof value === "string" ? parseInt(value) : value
   },
   "unsigned-integer": { name: "unsigned-integer", extends: "integer" },
@@ -91,9 +91,9 @@ export function* attributeIterator(definition, path = []) {
   }
 }
 
-export function convertValue(value, attribute) {
-  if (attribute?.type?.convertValue) {
-    return attribute.type.convertValue(value, attribute);
+export function prepareValue(value, attribute) {
+  if (attribute?.type?.prepareValue) {
+    return attribute.type.prepareValue(value, attribute);
   }
   return value;
 }
