@@ -89,3 +89,14 @@ test(eat, "[1+3].b", { root: [0, 0, 0, 0, { b: 44 }] }, 44);
 test(eat, "a", { root: { a: 12 } }, 12);
 test(eat, "a[2].c", { root: { a: [0, 0, { c: 17 }] } }, 17);
 test(eat, "a . b . c", { root: { a: { b: { c: 77 } } } }, 77);
+test(
+  eat,
+  "b[n=3].x",
+  {
+    root: new Map([
+      ["b", [{ n: 1 }, { n: 2 }, { n: 3, x: 7 }]],
+      ["c", 2]
+    ])
+  },
+  [7]
+);

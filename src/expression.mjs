@@ -79,7 +79,11 @@ export function parse(input, context = {}) {
             }
             result = r;
           } else {
-            result = result[p] ?? context.globals?.[p];
+            if (result instanceof Map) {
+              result = result.get(p);
+            } else {
+              result = result[p] ?? context.globals?.[p];
+            }
           }
           break;
         case "object":
