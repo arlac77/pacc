@@ -10,10 +10,37 @@ test("plain expand string", t => {
     }
   };
 
+  t.is(expand("XYZ", context), "XYZ");
   t.is(expand("${a}", context), 1);
   t.is(expand("A${a}C", context), "A1C");
+  t.is(expand("A${a}", context), "A1");
   t.is(expand("A${a}${b}C", context), "A12C");
   t.is(expand("A${c}C", context), "AtextC");
+});
+
+test("plain expand string special lead-In/Out", t => {
+  const context = {
+    leadIn: "{{",
+    leadOut: "}}",
+    root: {
+      a: 1,
+      b: 2,
+      c: "text"
+    }
+  };
+
+  t.is(expand("XYZ", context), "XYZ");
+  t.is(expand("{{a}}", context), 1);
+  t.is(expand("A{{a}}C", context), "A1C");
+  t.is(expand("A{{a}}", context), "A1");
+  t.is(expand("A{{a}}{{b}}C", context), "A12C");
+  t.is(expand("A{{c}}C", context), "AtextC");
+});
+
+test("expand unterminated", t => {
+  t.throws(() => expand("A${a C", {}), {
+    message: "Unterminated expression between '${' and '}'"
+  });
 });
 
 test("expand empty string", t => {
@@ -50,5 +77,5 @@ test("expand function", t => {
 });
 test("expand Date", t => {
   const d = new Date();
-  t.is(expand(d,{}), d);
+  t.is(expand(d, {}), d);
 });

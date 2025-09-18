@@ -3,15 +3,18 @@ import { parse } from "./expression.mjs";
 const maxNestingLevel = 5;
 
 /**
- * 
- * @param {any} object 
+ *
+ * @param {any} object
  * @param {Object} context
  * @param {any} context.root
- * @param {function} context.stopClass 
+ * @param {function} context.stopClass
  * @returns {any}
  */
-export function expand(object, context) {
+export function expand(object, context = {}) {
   const promises = [];
+
+  const leadIn = context.leadIn ?? "${";
+  const leadOut = context.leadOut ?? "}";
 
   function _expand(object, path) {
     if (path.length >= maxNestingLevel) {
@@ -21,27 +24,70 @@ export function expand(object, context) {
     }
 
     if (typeof object === "string" || object instanceof String) {
-      let wholeValue;
+      let result = "";
 
       const localPromises = [];
+
+      let cur = 0;
+      let start;
+
+      while ((start = object.indexOf(leadIn, cur)) >= 0) {
+        const end = object.indexOf(leadOut, cur + leadIn.length);
+
+        if (end >= 0) {
+          const expression = object.substring(start + leadIn.length, end);
+
+          let value = parse(expression, context);
+          if (value === undefined) {
+            result += object.substring(start, end + leadOut.length);
+          } else {
+            if (typeof value === "string") {
+              value = _expand(value, path);
+            }
+            if (value instanceof Promise) {
+              localPromises.push(value);
+              value = localPromises.length - 1;
+            }
+
+            if (start === 0 && end === object.length - leadOut.length) {
+              return value;
+            }
+            result += object.substring(cur, start) + value;
+          }
+
+          cur = end + leadOut.length;
+        } else {
+          throw new Error(
+            `Unterminated expression between '${leadIn}' and '${leadOut}'`
+          );
+        }
+      }
+
+      result += object.substring(cur);
+
+      return result;
+      /*
       const v = object.replace(
         /\$\{([^\}]*)\}/g,
         (match, expression, offset, string) => {
-          let value = parse(expression,context);
+          let value = parse(expression, context);
 
           if (typeof value === "string" || value instanceof String) {
             value = _expand(value, path);
           } else if (value === undefined) {
-            value = "${" + expression + "}";
+            value = leadIn + expression + leadOut;
           }
-          if (string.length === expression.length + 3) {
+          if (
+            string.length ===
+            expression.length + leadIn.length + leadOut.length
+          ) {
             wholeValue = value;
             return "";
           }
 
           if (value instanceof Promise) {
             localPromises.push(value);
-            return "${" + (localPromises.length - 1) + "}";
+            return leadIn + (localPromises.length - 1) + leadOut;
           }
           return value;
         }
@@ -58,6 +104,7 @@ export function expand(object, context) {
       }
 
       return v;
+      */
     }
 
     switch (typeof object) {
@@ -122,7 +169,7 @@ export function expand(object, context) {
       return array;
     }
 
-    if(object instanceof context.stopClass) {
+    if (object instanceof context.stopClass) {
       return object;
     }
 
