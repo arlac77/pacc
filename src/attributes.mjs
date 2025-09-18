@@ -32,7 +32,7 @@ export const types = {
 /**
  * Create attributes from its definition.
  * @param {Object} newDefinitions
- * @param {Object} [presentDefinitions] optional merg in attributes
+ * @param {Object} [presentDefinitions] optional merge in attributes
  * @return {Object} attributes
  */
 export function prepareAttributesDefinitions(

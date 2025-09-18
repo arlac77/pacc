@@ -2,6 +2,14 @@ import { parse } from "./expression.mjs";
 
 const maxNestingLevel = 5;
 
+/**
+ * 
+ * @param {any} object 
+ * @param {Object} context
+ * @param {any} context.root
+ * @param {function} context.stopClass 
+ * @returns {any}
+ */
 export function expand(object, context) {
   const promises = [];
 
