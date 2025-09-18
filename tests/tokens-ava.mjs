@@ -152,7 +152,7 @@ test(tt, "a[*]._b", [
 
 test.skip(
   tt,
-  `4711 0.23 12345.0 12.4E20 0.4E7
+  `4711 0.23 12345.0
 "str2""str3" "\\\b\f\n\r\t\"\'\u0041" 'str4''str5'
 name1 name_2 _name3
 n
@@ -169,5 +169,22 @@ n
 >=
 =
 2 + (3 * 17)`,
-  [4711, 0.23, 12345.0, 12.4e20, 0.4e7, "str2", "str3"]
+  [
+    4711,
+    0.23,
+    12345.0,
+    "str2",
+    "str3",
+    "\\\b\n\r\t\"'\u0041",
+    "str4",
+    "str5",
+    [IDENTIFIER, "name1"],
+    [IDENTIFIER, "name_2"],
+    [IDENTIFIER, "name_3"],
+    [IDENTIFIER, "n"],
+    PLUS,
+    MINUS,
+    STAR,
+    DIVIDE
+  ]
 );
