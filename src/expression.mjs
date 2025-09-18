@@ -121,10 +121,10 @@ export function parse(input, context = {}) {
     advance();
   };
 
-  const nud = (token, left) => {
-    switch (token.type) {
+  const nud = (last, left) => {
+    switch (last.type) {
       case "prefix":
-        switch (token) {
+        switch (last) {
           case OPEN_ROUND: {
             const node = expression(0);
             expect(CLOSE_ROUND);
@@ -142,66 +142,66 @@ export function parse(input, context = {}) {
             return node;
           }
         }
-        return { token, left, right: expression(token.precedence) };
+        return { token: last, left, right: expression(last.precedence) };
       case "eof":
         error("unexpected EOF");
     }
 
-    switch (typeof token) {
+    switch (typeof last) {
       case "string":
       case "number":
       case "bigint":
       case "boolean":
-        return token;
+        return last;
     }
 
-    if (token === IDENTIFIER) {
+    if (last === IDENTIFIER) {
       return { eval: pathEval, path: [value] };
     }
 
-    return { token };
+    return { token: last };
   };
 
-  const led = (token, left) => {
-    switch (token.type) {
+  const led = (last, left) => {
+    switch (last.type) {
       case "infixr": {
-        const right = expression(token.precedence - 1);
+        const right = expression(last.precedence - 1);
         if (typeof left === typeof right) {
           switch (typeof left) {
             case "string":
             case "number":
             case "bigint":
             case "boolean":
-              return binop(token, left, right, binopError);
+              return binop(last, left, right, binopError);
           }
         }
 
         return {
           eval: (node, current) =>
             binop(
-              token,
+              last,
               left.eval ? left.eval(left, current) : left,
               right.eval ? right.eval(right, current) : right,
               binopError
             ),
-          token,
+          last,
           left,
           right
         };
       }
 
       case "infix": {
-        let right = expression(token.precedence);
+        let right = expression(last.precedence);
 
         if (typeof left === typeof right) {
           switch (typeof left) {
             case "string":
             case "number":
             case "bigint":
-              return binop(token, left, right, binopError);
+              return binop(last, left, right, binopError);
           }
         }
-        if (token === DOT) {
+        if (last === DOT) {
           if (left.path) {
             left.path.push(...right.path);
             return left;
@@ -221,18 +221,18 @@ export function parse(input, context = {}) {
         return {
           eval: (node, current) =>
             binop(
-              token,
+              last,
               left.eval ? left.eval(left, current) : left,
               right.eval ? right.eval(right, current) : right,
               binopError
             ),
-          token,
+          token: last,
           left,
           right
         };
       }
       case "prefix":
-        switch (token) {
+        switch (last) {
           case OPEN_BRACKET: {
             const predicate = expression(0);
             expect(CLOSE_BRACKET);

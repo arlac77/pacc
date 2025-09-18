@@ -100,3 +100,6 @@ test(
   },
   [7]
 );
+
+
+test.skip(eat, "f1()", { globals: { f1: { name: "f1"} } }, "f1");
