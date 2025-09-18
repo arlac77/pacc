@@ -371,13 +371,17 @@ Type: [AttributeDefinition](#attributedefinition)
 
 ## expand
 
+Expand expressions inside of object graphs.
+
 ### Parameters
 
 *   `object` **any**&#x20;
 *   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
     *   `context.root` **any**&#x20;
-    *   `context.stopClass` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
+    *   `context.stopClass` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+    *   `context.leadIn` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
+    *   `context.leadOut` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
 
 Returns **any**&#x20;
 
