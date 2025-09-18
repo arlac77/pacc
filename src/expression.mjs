@@ -53,7 +53,7 @@ export function binop(op, left, right, fallback) {
   return fallback(op, left, right);
 }
 
-export function parse(input, context = {}) {
+export function parse(input, context = { globals }) {
   input = tokens(input);
 
   let node, token, value;
@@ -289,3 +289,9 @@ export function parse(input, context = {}) {
 
   return result;
 }
+
+export const globals = {
+  min: (a, b) => (a < b ? a : b),
+  max: (a, b) => (a > b ? a : b),
+  substring: (s,a,b) => s.substring(a,b)
+};

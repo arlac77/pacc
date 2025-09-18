@@ -1,5 +1,5 @@
 import test from "ava";
-import { parse } from "../src/expression.mjs";
+import { parse, globals } from "../src/expression.mjs";
 
 function eat(t, input, context, expected) {
   if (!context) {
@@ -101,4 +101,6 @@ test(
   [7]
 );
 
-test(eat, "min(1,2)", { globals: { min: (a, b) => (a < b ? a : b) } }, 1);
+test(eat, "min(1,2)", { globals }, 1);
+test(eat, "max(1,2)", { globals }, 2);
+test(eat, "substring('abcd',1,3)", { globals }, "bc");
