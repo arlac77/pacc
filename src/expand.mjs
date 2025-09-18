@@ -3,11 +3,13 @@ import { parse } from "./expression.mjs";
 const maxNestingLevel = 5;
 
 /**
- *
+ * Expand expressions inside of object graphs.
  * @param {any} object
  * @param {Object} context
  * @param {any} context.root
- * @param {function} context.stopClass
+ * @param {function} [context.stopClass]
+ * @param {string} [context.leadIn]
+ * @param {string} [context.leadOut]
  * @returns {any}
  */
 export function expand(object, context = {}) {
