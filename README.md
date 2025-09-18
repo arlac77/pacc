@@ -79,26 +79,28 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [priority\_attribute](#priority_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
-*   [filter](#filter)
+*   [expand](#expand)
     *   [Parameters](#parameters-3)
-*   [setAttributes](#setattributes)
+*   [filter](#filter)
     *   [Parameters](#parameters-4)
-*   [getAttributes](#getattributes)
+*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-5)
+*   [getAttributes](#getattributes)
+    *   [Parameters](#parameters-6)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-6)
-*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-7)
-*   [getAttribute](#getattribute)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-8)
-*   [getAttributeAndOperator](#getattributeandoperator)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-9)
+*   [getAttributeAndOperator](#getattributeandoperator)
+    *   [Parameters](#parameters-10)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-10)
+    *   [Parameters](#parameters-11)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -135,7 +137,7 @@ Create attributes from its definition.
 ### Parameters
 
 *   `newDefinitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `presentDefinitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** optional merg in attributes
+*   `presentDefinitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** optional merge in attributes
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attributes
 
@@ -366,6 +368,22 @@ Type: [AttributeDefinition](#attributedefinition)
 ## language\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
+
+## expand
+
+Expand expressions inside of object graphs.
+
+### Parameters
+
+*   `object` **any**&#x20;
+*   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+
+    *   `context.root` **any**&#x20;
+    *   `context.stopClass` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+    *   `context.leadIn` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
+    *   `context.leadOut` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
+
+Returns **any**&#x20;
 
 ## filter
 
