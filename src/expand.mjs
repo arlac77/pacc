@@ -169,7 +169,7 @@ export function expand(object, context = {}) {
       return array;
     }
 
-    if (object instanceof context.stopClass) {
+    if (context.stopClass && object instanceof context.stopClass) {
       return object;
     }
 
