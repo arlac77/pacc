@@ -374,7 +374,7 @@ Type: [AttributeDefinition](#attributedefinition)
 ### Parameters
 
 *   `object` **any**&#x20;
-*   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
     *   `context.root` **any**&#x20;
     *   `context.stopClass` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
