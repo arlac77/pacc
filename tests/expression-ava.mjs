@@ -101,5 +101,4 @@ test(
   [7]
 );
 
-
-test.skip(eat, "f1()", { globals: { f1: { name: "f1"} } }, "f1");
+test(eat, "min(1,2)", { globals: { min: (a, b) => (a < b ? a : b) } }, 1);

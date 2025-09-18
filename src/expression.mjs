@@ -18,6 +18,7 @@ import {
   PLUS,
   MINUS,
   IDENTIFIER,
+  COMMA,
   EOF
 } from "./tokens.mjs";
 
@@ -233,6 +234,21 @@ export function parse(input, context = {}) {
       }
       case "prefix":
         switch (last) {
+          case OPEN_ROUND:
+            {
+              const args = [];
+              while (token !== CLOSE_ROUND) {
+                args.push(expression(0));
+                if (token === COMMA) {
+                  advance();
+                }
+              }
+              left.path.push(args);
+              left.eval = node =>
+                context.globals[node.path[0]](...node.path[1]);
+              return left;
+            }
+            break;
           case OPEN_BRACKET: {
             const predicate = expression(0);
             expect(CLOSE_BRACKET);
