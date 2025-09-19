@@ -1,30 +1,34 @@
-
-
 export const baseTypes = new Set(["string", "number", "bigint", "boolean"]);
 
 export const types = {
   base: { name: "base" },
-  
+
   string: { name: "string", extends: "base" },
   number: {
     name: "number",
     extends: "base",
-    prepareValue: (value, attribute) =>
+    prepareValue: value =>
       typeof value === "string" ? parseFloat(value) : value
   },
   boolean: {
     name: "boolean",
     extends: "base",
-    prepareValue: (value, attribute) => (!value || value === "0" ? false : true)
+    prepareValue: value =>
+      !value || value === "0" || value === "false" || value === "no"
+        ? false
+        : true
   },
-
   integer: {
     name: "integer",
     extends: "base",
-    prepareValue: (value, attribute) =>
-      typeof value === "string" ? parseInt(value) : value
+    prepareValue: value => (typeof value === "string" ? parseInt(value) : value)
   },
-  "unsigned-integer": { name: "unsigned-integer", extends: "integer" },
+  "unsigned-integer": {
+    name: "unsigned-integer",
+    prepareValue: value =>
+      typeof value === "string" ? parseInt(value) : value,
+    extends: "integer"
+  },
   url: { name: "url", extends: "string" },
   object: { name: "object", extends: "base" }
 };
@@ -71,24 +75,30 @@ function mergeAttributeDefinitions(dest, atts) {
 }
 
 /**
- * iterate over all attributes.
+ * Iterate over all attributes.
  * @param {Object} definition
+ * @param {Function} filter
  * @param {string[]} path
+ * @return {Iterable<[string[],object]>}
  */
-export function* attributeIterator(definition, path = []) {
+export function* attributeIterator(definition, filter, path = []) {
   if (definition) {
     for (const [name, def] of Object.entries(definition)) {
-      path.push(name);
+      if (!filter || filter(name, def)) {
+        const path2 = [...path, name];
 
-      if (def.attributes) {
-        yield* attributeIterator(def.attributes, path);
+        yield [path2, def];
+
+        if (def.attributes) {
+          yield* attributeIterator(def.attributes, filter, path2);
+        }
       }
-
-      yield [path, def];
-
-      path.pop();
     }
   }
+}
+
+export function* writableAttributeIterator(definition) {
+  yield* attributeIterator(definition, (name, def) => def.writable);
 }
 
 export function prepareValue(value, attribute) {

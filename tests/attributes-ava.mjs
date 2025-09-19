@@ -1,5 +1,10 @@
 import test from "ava";
-import { setAttributes } from "pacc";
+import {
+  setAttributes,
+  attributeIterator,
+  writableAttributeIterator,
+  default_attribute
+} from "pacc";
 
 function sat(t, object, source, definitions, expected) {
   setAttributes(object, source, definitions);
@@ -12,12 +17,12 @@ sat.title = (providedTitle, object, source, definitions, expected) =>
   )} ${source} => ${JSON.stringify(expected)}`.trim();
 
 const definitions = {
-  a: { default: "ad" },
-  b: {},
-  c: {},
+  a: { ...default_attribute, default: "ad" },
+  b: default_attribute,
+  c: { ...default_attribute, writable: true },
   d: {
     attributes: {
-      d1: { default: "dd1" }
+      d1: { ...default_attribute, default: "dd1" }
     }
   }
 };
@@ -36,4 +41,24 @@ test(sat, {}, {}, definitions, {
   d: {
     d1: "dd1"
   }
+});
+
+test("attributeIterator", t => {
+  t.deepEqual(
+    [...attributeIterator(definitions)],
+    [
+      [["a"], definitions.a],
+      [["b"], definitions.b],
+      [["c"], definitions.c],
+      [["d"], definitions.d],
+      [["d", "d1"], definitions.d.attributes.d1]
+    ]
+  );
+});
+
+test("writableAttributeIterator", t => {
+  t.deepEqual(
+    [...writableAttributeIterator(definitions)],
+    [[["c"], definitions.c]]
+  );
 });
