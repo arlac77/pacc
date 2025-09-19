@@ -1,3 +1,5 @@
+import {getAttribute} from "./settergetter.mjs";
+
 export const baseTypes = new Set(["string", "number", "bigint", "boolean"]);
 
 export const types = {
@@ -109,4 +111,17 @@ export function prepareValue(value, attribute) {
     }
   }
   return value;
+}
+
+export function manadatoryAttributesPresent(object, attributes) {
+  for (const [path, attribute] of attributeIterator(
+    attributes,
+    (name, attribute) => attribute.mandatory
+  )) {
+    const name = path.join(".");
+    if (getAttribute(object, name) === undefined) {
+      return false;
+    }
+  }
+  return true;
 }

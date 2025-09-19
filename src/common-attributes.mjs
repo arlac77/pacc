@@ -15,6 +15,7 @@
  * @property {Set<any>} [values] allowed values
  * @property {string} [externalName] attrubute name used by external system
  * @property {string[]|string} [env] environment variable(s) used to provide the value
+ * @property {object} [additionalValues] other values to be set in case our attribute is set
  */
 
 /**
