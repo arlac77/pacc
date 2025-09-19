@@ -12,8 +12,9 @@ export function definePropertiesFromAttributes(
 
   for (const [path, attribute] of attributeIterator(attributes)) {
     const name = path.join(".");
+    const externalName = attribute.externalName ?? name;
 
-    let value = getAttribute(initialValues, name, attribute) ?? initialValues?.[name] ?? attribute.default;
+    let value = getAttribute(initialValues, externalName, attribute) ?? initialValues?.[externalName] ?? attribute.default;
 
     if (value !== undefined) {
       if (path.length === 1) {

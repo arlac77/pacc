@@ -95,8 +95,8 @@ const attributes = prepareAttributesDefinitions({
   authentification: {
     ...object_attribute,
     attributes: {
-      token: { ...token_attribute },
-      user: { ...string_attribute, default: "hugo" }
+      token: { ...token_attribute, externalName: "user_token" },
+      user: { ...string_attribute, externalName: "user_name", default: "hugo" }
     }
   },
 
@@ -176,7 +176,7 @@ test(
   dpfat,
   {},
   attributes,
-  { "authentification.token": "abc", "authentification.user": "emil" },
+  { "user_token": "abc", "user_name": "emil" },
   (t, object) => {
     t.is(object.authentification?.token, "abc");
     t.is(object.authentification?.user, "emil");
