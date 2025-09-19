@@ -102,8 +102,11 @@ export function* writableAttributeIterator(definition) {
 }
 
 export function prepareValue(value, attribute) {
-  if (attribute?.type?.prepareValue) {
-    return attribute.type.prepareValue(value, attribute);
+  if (attribute) {
+    const prepareValue = attribute.prepareValue ?? attribute.type?.prepareValue;
+    if (prepareValue) {
+      return prepareValue(value, attribute);
+    }
   }
   return value;
 }
