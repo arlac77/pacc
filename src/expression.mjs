@@ -293,5 +293,6 @@ export function parse(input, context = { globals }) {
 export const globals = {
   min: (a, b) => (a < b ? a : b),
   max: (a, b) => (a > b ? a : b),
-  substring: (s,a,b) => s.substring(a,b)
+  substring: (s, a, b) => s.substring(a, b),
+  length: s => s.length
 };

@@ -101,6 +101,16 @@ test(
   [7]
 );
 
+test.skip(
+  eat,
+  "[n=2].x",
+  {
+    root: new Set([{ n: 1 }, { n: 2, x: 4 }, { n: 3, x: 7 }])
+  },
+  [4]
+);
+
 test(eat, "min(1,2)", { globals }, 1);
 test(eat, "max(1,2)", { globals }, 2);
 test(eat, "substring('abcd',1,3)", { globals }, "bc");
+test(eat, "length('a' + 'b')", { globals }, 2);
