@@ -89,20 +89,22 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-6)
 *   [getAttributes](#getattributes)
     *   [Parameters](#parameters-7)
+*   [getAttributesJSON](#getattributesjson)
+    *   [Parameters](#parameters-8)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-8)
-*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-9)
-*   [getAttribute](#getattribute)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-10)
-*   [getAttributeAndOperator](#getattributeandoperator)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-11)
+*   [getAttributeAndOperator](#getattributeandoperator)
+    *   [Parameters](#parameters-12)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-12)
+    *   [Parameters](#parameters-13)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -428,6 +430,17 @@ Copies attribute values from a source object into a destination object.
 *   `cb` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** callback to be executed for each copied value
 
 ## getAttributes
+
+Retrive attribute values from an object.
+
+### Parameters
+
+*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute value source
+*   `definitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** values
+
+## getAttributesJSON
 
 Retrive attribute values from an object.
 
