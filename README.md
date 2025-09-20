@@ -79,28 +79,30 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [priority\_attribute](#priority_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
-*   [expand](#expand)
+*   [environmentValues](#environmentvalues)
     *   [Parameters](#parameters-3)
-*   [filter](#filter)
+*   [expand](#expand)
     *   [Parameters](#parameters-4)
-*   [setAttributes](#setattributes)
+*   [filter](#filter)
     *   [Parameters](#parameters-5)
-*   [getAttributes](#getattributes)
+*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-6)
+*   [getAttributes](#getattributes)
+    *   [Parameters](#parameters-7)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-7)
-*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-8)
-*   [getAttribute](#getattribute)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-9)
-*   [getAttributeAndOperator](#getattributeandoperator)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-10)
+*   [getAttributeAndOperator](#getattributeandoperator)
+    *   [Parameters](#parameters-11)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-11)
+    *   [Parameters](#parameters-12)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -184,6 +186,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `values` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)\<any>?** allowed values
 *   `externalName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** attrubute name used by external system
 *   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable(s) used to provide the value
+*   `additionalValues` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** other values to be set in case our attribute is set
 
 ## default\_attribute
 
@@ -373,6 +376,18 @@ Type: [AttributeDefinition](#attributedefinition)
 ## language\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
+
+## environmentValues
+
+Extract values from environment.
+
+### Parameters
+
+*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as from process.env
+*   `env` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as from process.env
+*   `instanceIdentifier` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** part of variable name.
+
+Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** undefined if no suitable environment variables have been found
 
 ## expand
 
