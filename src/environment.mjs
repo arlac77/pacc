@@ -12,7 +12,7 @@ export function environmentValues(env, attributes, instanceIdentifier) {
 
   for (const [path, attribute] of attributeIterator(
     attributes,
-    (name, attribute) => attribute.env || attribute.attributes
+    (name, attribute) => attribute.env
   )) {
     const name = path.join(".");
 

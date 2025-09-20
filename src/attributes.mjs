@@ -1,4 +1,4 @@
-import {getAttribute} from "./settergetter.mjs";
+import { getAttribute } from "./settergetter.mjs";
 
 export const baseTypes = new Set(["string", "number", "bigint", "boolean"]);
 
@@ -86,14 +86,13 @@ function mergeAttributeDefinitions(dest, atts) {
 export function* attributeIterator(definition, filter, path = []) {
   if (definition) {
     for (const [name, def] of Object.entries(definition)) {
+      const path2 = [...path, name];
       if (!filter || filter(name, def)) {
-        const path2 = [...path, name];
-
         yield [path2, def];
+      }
 
-        if (def.attributes) {
-          yield* attributeIterator(def.attributes, filter, path2);
-        }
+      if (def.attributes) {
+        yield* attributeIterator(def.attributes, filter, path2);
       }
     }
   }
