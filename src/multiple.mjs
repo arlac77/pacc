@@ -18,7 +18,7 @@ export function setAttributes(object, source, definitions, cb) {
       if (def.default === undefined) {
         continue;
       } else {
-        if (getAttribute(object, name) !== undefined) {
+        if (getAttribute(object, name, def) !== undefined) {
           continue;
         }
         value = def.default;
@@ -28,7 +28,7 @@ export function setAttributes(object, source, definitions, cb) {
     if (def.set) {
       def.set.call(object, value, def);
     } else {
-      setAttribute(object, name, value);
+      setAttribute(object, name, value, def);
     }
     if (cb) {
       cb(def, name, value);
@@ -48,9 +48,32 @@ export function getAttributes(object, definitions) {
   for (const [path, def] of attributeIterator(definitions)) {
     const name = path.join(".");
 
-    const value = getAttribute(object, name);
+    const value = getAttribute(object, name, def);
     if (value !== undefined) {
-      result[name] = value;
+      setAttribute(result, name, value, def);
+    }
+  }
+  return result;
+}
+
+/**
+ * Retrive attribute values from an object.
+ * @param {Object} object attribute value source
+ * @param {Object} definitions
+ * @return {Object} values
+ */
+export function getAttributesJSON(object, definitions) {
+  const result = {};
+
+  for (const [path, def] of attributeIterator(definitions)) {
+    const name = path.join(".");
+
+    let value = getAttribute(object, name, def);
+    if (value !== undefined) {
+      if(value instanceof Set) {
+        value = [...value];
+      }
+      setAttribute(result, def.externalName ?? name, value, def);
     }
   }
   return result;
