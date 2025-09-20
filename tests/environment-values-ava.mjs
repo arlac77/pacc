@@ -5,6 +5,11 @@ import { string_attribute, token_attribute, object_attribute } from "pacc";
 test("environmentValues default empty", t => {
   t.is(environmentValues(), undefined);
   t.is(environmentValues({}), undefined);
+  t.is(
+    environmentValues({}, { a: { ...string_attribute, env: "x" } }),
+    undefined
+  );
+  t.is(environmentValues(undefined, {}), undefined);
 });
 
 const attributes = {
@@ -32,17 +37,16 @@ const attributes = {
 test("environmentValues", t => {
   t.deepEqual(
     environmentValues(
-      attributes,
       {
         GITEA_HOST: "somewhere",
         GITEA_TOKEN: "abc"
       },
+      attributes,
       "GITEA_"
     ),
     { host: "somewhere", authentication: { token: "abc" } }
   );
 });
-
 
 /*
 test(

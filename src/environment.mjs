@@ -2,12 +2,12 @@ import { attributeIterator, setAttribute } from "pacc";
 
 /**
  * Extract values from environment.
- * @param {Object} attributes as from process.env
  * @param {Object} env as from process.env
+ * @param {Object} attributes as from process.env
  * @param {string} instanceIdentifier part of variable name.
  * @return {Object|undefined} undefined if no suitable environment variables have been found
  */
-export function environmentValues(attributes, env, instanceIdentifier) {
+export function environmentValues(env, attributes, instanceIdentifier) {
   let values;
 
   for (const [path, attribute] of attributeIterator(
@@ -23,7 +23,7 @@ export function environmentValues(attributes, env, instanceIdentifier) {
       name =>
         name && name.replace("{{instanceIdentifier}}", () => instanceIdentifier)
     )) {
-      if (env[envName] !== undefined) {
+      if (env?.[envName] !== undefined) {
         values ??= {};
         setAttribute(values, name, env[envName]);
       }

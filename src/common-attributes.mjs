@@ -12,6 +12,7 @@
  * @property {any} [default] the default value
  * @property {Function} [set] set the value
  * @property {Function} [get] get the value can be used to calculate default values
+ * @property {Function} [prepareValue]
  * @property {Set<any>} [values] allowed values
  * @property {string} [externalName] attrubute name used by external system
  * @property {string[]|string} [env] environment variable(s) used to provide the value
