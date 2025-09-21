@@ -1,4 +1,4 @@
-import { types } from "./attributes.mjs";
+import { types } from "./types.mjs";
 
 /**
  * @typedef {Object} AttributeDefinition
