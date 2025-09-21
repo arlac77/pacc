@@ -66,8 +66,10 @@ export function* attributeIterator(definition, filter, path = []) {
   }
 }
 
+export const filterWritable = (name, attribute) => attribute.writable;
+
 export function* writableAttributeIterator(definition) {
-  yield* attributeIterator(definition, (name, def) => def.writable);
+  yield* attributeIterator(definition, filterWritable);
 }
 
 export function prepareValue(value, attribute) {
