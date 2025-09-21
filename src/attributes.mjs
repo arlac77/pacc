@@ -1,5 +1,5 @@
 import { getAttribute } from "./settergetter.mjs";
-import { types, oneOfType } from "./types.mjs";
+import { oneOfType } from "./types.mjs";
 
 /**
  * Create attributes from its definition.
