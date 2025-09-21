@@ -14,10 +14,7 @@ export const types = {
     name: "boolean",
     extends: "base",
     prepareValue: value =>
-      !value ||
-      value === "0" ||
-      value === "false" ||
-      value === "no"
+      !value || value === "0" || value === "false" || value === "no"
         ? false
         : true
   },
@@ -35,3 +32,25 @@ export const types = {
   url: { name: "url", extends: "string" },
   object: { name: "object", extends: "base" }
 };
+
+export function addType(type) {
+  types[type.name] = type;
+  return type;
+}
+
+export function oneOfType(definition) {
+  if (Array.isArray(definition)) {
+    return addType({
+      name: definition.map(t => t.name).join("|"),
+      members: new Set(definition)
+    });
+  } else {
+    return (
+      types[definition] ||
+      addType({
+        name: definition,
+        members: new Set(definition.split("|").map(t => types[t]))
+      })
+    );
+  }
+}
