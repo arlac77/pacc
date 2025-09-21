@@ -1,16 +1,22 @@
 import test from "ava";
 import { sast } from "./util.mjs";
-import { prepareAttributesDefinitions, types } from "pacc";
+import {
+  prepareAttributesDefinitions,
+  private_key_attribute,
+  url_attribute,
+  certificate_attribute,
+  hostname_attribute,
+  string_attribute
+} from "pacc";
 
 const definitions = prepareAttributesDefinitions({
   jwt: {
     description: "jwt related",
     attributes: {
       public: {
+        ...private_key_attribute,
         description: "public key to check token against",
-        mandatory: true,
-        private: true,
-        type: "blob"
+        mandatory: true
       }
     }
   },
@@ -19,39 +25,37 @@ const definitions = prepareAttributesDefinitions({
 
     attributes: {
       url: {
+        ...url_attribute,
         description: "url of the http(s) server",
-        needsRestart: true,
-        type: types.url
+        needsRestart: true
       },
       address: {
+        ...hostname_attribute,
         description: "hostname/ip-address of the http(s) server",
-        needsRestart: true,
-        type: "hostname"
+        needsRestart: true
       },
       socket: {
+        ...string_attribute,
         description: "listening port|socket of the http(s) server",
-        needsRestart: true,
-        type: "listen-socket"
+        needsRestart: true
       }
     }
   },
   key: {
+    ...private_key_attribute,
     description: "ssl key",
-    needsRestart: true,
-    private: true,
-    type: "blob"
+    needsRestart: true
   },
   cert: {
+    ...certificate_attribute,
     description: "ssl cert",
-    needsRestart: true,
-    private: true,
-    type: "blob"
+    needsRestart: true
   },
   timeout: {
     attributes: {
       server: {
         description: "server timeout",
-        type: "duration",
+        ...string_attribute,
         default: 120,
         set(value, attribute) {
           if (value === undefined) {
