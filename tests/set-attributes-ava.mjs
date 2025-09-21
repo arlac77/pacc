@@ -1,9 +1,14 @@
 import test from "ava";
 import { sast, gast } from "./util.mjs";
-import { prepareAttributesDefinitions } from "pacc";
+import {
+  prepareAttributesDefinitions,
+  password_attribute,
+  string_attribute
+} from "pacc";
 
 const definitions = prepareAttributesDefinitions({
   att1: {
+    ...string_attribute,
     mandatory: true,
     private: true
   },
@@ -21,13 +26,11 @@ const definitions = prepareAttributesDefinitions({
     type: "unsigned-integer",
     default: 77
   },
-  att4: {
-    type: "password"
-  },
+  att4: password_attribute,
   nested: {
     attributes: {
       att1: {
-        type: "string",
+        ...string_attribute,
         default: "the default"
       }
     }
