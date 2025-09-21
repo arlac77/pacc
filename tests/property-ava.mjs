@@ -4,7 +4,8 @@ import {
   default_attribute,
   object_attribute,
   string_attribute,
-  token_attribute
+  token_attribute,
+  types
 } from "pacc";
 import { definePropertiesFromAttributes } from "../src/properties.mjs";
 import { prepareAttributesDefinitions } from "../src/attributes.mjs";
@@ -109,7 +110,7 @@ const attributes = prepareAttributesDefinitions({
           c: {
             ...object_attribute,
             attributes: {
-              d: { ...default_attribute, type: "number", default: 7 }
+              d: { ...default_attribute, type: types.number, default: 7 }
             }
           }
         }
@@ -176,7 +177,7 @@ test(
   dpfat,
   {},
   attributes,
-  { "user_token": "abc", "user_name": "emil" },
+  { user_token: "abc", user_name: "emil" },
   (t, object) => {
     t.is(object.authentification?.token, "abc");
     t.is(object.authentification?.user, "emil");

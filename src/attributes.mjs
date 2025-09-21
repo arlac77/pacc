@@ -16,7 +16,10 @@ export const types = {
     name: "boolean",
     extends: "base",
     prepareValue: value =>
-      !value || value === "0" || value === "false" || value === "no"
+      !value ||
+      value === "0" ||
+      value === "false" ||
+      value === "no"
         ? false
         : true
   },
@@ -46,7 +49,9 @@ export function prepareAttributesDefinitions(
   presentDefinitions
 ) {
   for (const [path, def] of attributeIterator(newDefinitions)) {
-    def.type = types[def.type] || types.base;
+    if (typeof def.type === "string") {
+      def.type = types[def.type] || types.base;
+    }
   }
 
   return mergeAttributeDefinitions(newDefinitions, presentDefinitions);

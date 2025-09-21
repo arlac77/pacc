@@ -1,6 +1,6 @@
 import test from "ava";
 import { sast } from "./util.mjs";
-import { prepareAttributesDefinitions } from "pacc";
+import { prepareAttributesDefinitions, types } from "pacc";
 
 const definitions = prepareAttributesDefinitions({
   jwt: {
@@ -21,7 +21,7 @@ const definitions = prepareAttributesDefinitions({
       url: {
         description: "url of the http(s) server",
         needsRestart: true,
-        type: "url"
+        type: types.url
       },
       address: {
         description: "hostname/ip-address of the http(s) server",

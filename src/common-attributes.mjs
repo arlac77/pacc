@@ -1,7 +1,9 @@
+import { types } from "./attributes.mjs";
+
 /**
  * @typedef {Object} AttributeDefinition
  *
- * @property {string} type
+ * @property {object} type
  * @property {boolean} isKey
  * @property {boolean} writable
  * @property {boolean} mandatory
@@ -24,7 +26,7 @@
  * @type {AttributeDefinition}
  */
 export const default_attribute = {
-  type: "string",
+  type: types.string,
   writable: false,
   mandatory: false,
   collection: false,
@@ -118,9 +120,17 @@ export { default_attribute_writable as state_attribute };
 /**
  * @type {AttributeDefinition}
  */
+export const boolean_attribute = {
+  ...default_attribute,
+  type: types.boolean
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const boolean_attribute_writable = {
   ...default_attribute_writable,
-  type: "boolean"
+  type: types.boolean
 };
 
 /**
@@ -138,8 +148,6 @@ export const boolean_attribute_writable_false = {
   ...boolean_attribute_writable,
   default: false
 };
-
-export { boolean_attribute_writable_false as boolean_attribute };
 
 /**
  * @type {AttributeDefinition}
@@ -159,7 +167,7 @@ export { boolean_attribute_writable_true as active_attribute };
  */
 export const empty_attribute = {
   ...default_attribute,
-  type: "boolean"
+  type: types.boolean
 };
 
 /**
@@ -219,7 +227,7 @@ export const public_key_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const number_attribute = { ...default_attribute, type: "number" };
+export const number_attribute = { ...default_attribute, type: types.number };
 
 /**
  * @type {AttributeDefinition}
@@ -232,7 +240,7 @@ export const number_attribute_writable = {
 /**
  * @type {AttributeDefinition}
  */
-export const integer_attribute = { ...default_attribute, type: "integer" };
+export const integer_attribute = { ...default_attribute, type: types.integer };
 
 /**
  * @type {AttributeDefinition}
@@ -255,21 +263,21 @@ export { integer_attribute as size_attribute };
 /**
  * @type {AttributeDefinition}
  */
-export const object_attribute = { ...default_attribute, type: "object" };
+export const object_attribute = { ...default_attribute, type: types.object };
 
 /**
  * @type {AttributeDefinition}
  */
 export const url_attribute = {
   ...default_attribute,
-  type: "url",
+  type: types.url,
   description: "home of the object"
 };
 
 /**
  * @type {AttributeDefinition}
  */
-export const url_attribute_writble = {
+export const url_attribute_writable = {
   ...url_attribute,
   writable: true
 };
