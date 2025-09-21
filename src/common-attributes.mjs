@@ -115,7 +115,7 @@ export { default_attribute as type_attribute };
 /**
  * @type {AttributeDefinition}
  */
-export { default_attribute_writable as state_attribute };
+export { default_attribute_writable as state_attribute_writable };
 
 /**
  * @type {AttributeDefinition}
@@ -312,13 +312,13 @@ export const id_attribute = {
  * The body text.
  * @type {AttributeDefinition}
  */
-export { default_attribute_writable as body_attribute };
+export { default_attribute_writable as body_attribute_writable };
 
 /**
  * The one line description.
  * @type {AttributeDefinition}
  */
-export const title_attribute = {
+export const title_attribute_writable = {
   ...default_attribute,
   description: "human readable title",
   writable: true
