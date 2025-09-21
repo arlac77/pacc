@@ -76,7 +76,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [hostname\_attribute](#hostname_attribute)
 *   [port\_attribute](#port_attribute)
 *   [id\_attribute](#id_attribute)
-*   [title\_attribute](#title_attribute)
+*   [title\_attribute\_writable](#title_attribute_writable)
 *   [priority\_attribute](#priority_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
@@ -364,7 +364,7 @@ Unique id within.
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## title\_attribute
+## title\_attribute\_writable
 
 The one line description.
 
