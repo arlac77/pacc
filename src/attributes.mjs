@@ -1,5 +1,5 @@
 import { getAttribute } from "./settergetter.mjs";
-import { types } from "./types.mjs";
+import { types, oneOfType } from "./types.mjs";
 
 /**
  * Create attributes from its definition.
@@ -13,7 +13,7 @@ export function prepareAttributesDefinitions(
 ) {
   for (const [path, def] of attributeIterator(newDefinitions)) {
     if (typeof def.type === "string") {
-      def.type = types[def.type] || types.base;
+      def.type = oneOfType(def.type);
     }
   }
 

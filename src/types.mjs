@@ -41,7 +41,7 @@ export function addType(type) {
 export function oneOfType(definition) {
   const aggregate = list =>
     list.reduce(
-      (a, c) => a.union(c.members ?? new Set([types[c] ?? c])),
+      (a, c) => a.union(c?.members ?? new Set([types[c] ?? c])),
       new Set()
     );
 

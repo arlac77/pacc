@@ -1,10 +1,26 @@
 import test from "ava";
 import {
+  types,
+  prepareAttributesDefinitions,
   setAttributes,
   attributeIterator,
   writableAttributeIterator,
   default_attribute
 } from "pacc";
+
+test("prepareAttributesDefinitions", t => {
+  const p = prepareAttributesDefinitions({
+    a: { type: "string" },
+    b: { type: "integer|string" },
+    c: { type: "boolean|integer|string" }
+  });
+
+  t.deepEqual(p, {
+    a: { type: types.string },
+    b: { type: types["integer|string"] },
+    c: { type: types["boolean|integer|string"] }
+  });
+});
 
 function sat(t, object, source, definitions, expected) {
   setAttributes(object, source, definitions);
