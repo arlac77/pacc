@@ -39,17 +39,33 @@ export function addType(type) {
 }
 
 export function oneOfType(definition) {
+  const aggregate = list =>
+    list.reduce(
+      (a, c) => a.union(c.members ?? new Set([types[c] ?? c])),
+      new Set()
+    );
+
   if (Array.isArray(definition)) {
-    return addType({
-      name: definition.map(t => t.name).join("|"),
-      members: new Set(definition)
-    });
-  } else {
+    const name = definition
+      .map(t => t.name ?? t)
+      .sort()
+      .join("|");
+
     return (
-      types[definition] ||
+      types[name] ||
       addType({
-        name: definition,
-        members: new Set(definition.split("|").map(t => types[t]))
+        name,
+        members: aggregate(definition)
+      })
+    );
+  } else {
+    const parts = definition.split("|").sort();
+    const name = parts.join("|");
+    return (
+      types[name] ||
+      addType({
+        name,
+        members: aggregate(parts.map(t => types[t]))
       })
     );
   }
