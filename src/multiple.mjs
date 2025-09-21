@@ -60,17 +60,18 @@ export function getAttributes(object, definitions) {
  * Retrive attribute values from an object.
  * @param {Object} object attribute value source
  * @param {Object} definitions
+ * @param {Object} filter
  * @return {Object} values
  */
-export function getAttributesJSON(object, definitions) {
+export function getAttributesJSON(object, definitions, filter) {
   const result = {};
 
-  for (const [path, def] of attributeIterator(definitions)) {
+  for (const [path, def] of attributeIterator(definitions, filter)) {
     const name = path.join(".");
 
     let value = getAttribute(object, name, def);
     if (value !== undefined) {
-      if(value instanceof Set) {
+      if (value instanceof Set) {
         value = [...value];
       }
       setAttribute(result, def.externalName ?? name, value, def);
