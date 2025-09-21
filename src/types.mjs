@@ -1,3 +1,5 @@
+import { attributeIterator } from "./attributes.mjs";
+
 export const types = {
   string: { name: "string", primitive: true },
   number: {
@@ -28,40 +30,61 @@ export const types = {
   object: { name: "object", extends: "base" }
 };
 
+function error(message) {
+  throw new Error(message);
+}
+
 export function addType(type) {
+  if (types[type.name]) {
+    return Object.assign(types[type.name], type);
+  }
+
   types[type.name] = type;
+
+  for (const [path, attribute] of attributeIterator(type.attributes)) {
+    if (typeof attribute.type === "string") {
+      attribute.type = oneOfType(attribute.type);
+    }
+    if(attribute.isKey && !type.key) {
+      type.key = path.join('.');
+    }
+  }
+
   return type;
 }
 
 export function oneOfType(definition) {
-  const aggregate = list =>
-    list.reduce(
-      (a, c) => a.union(c?.members ?? new Set([types[c] ?? c])),
-      new Set()
-    );
+  const aggregate = (name, list) => {
+    const def = {
+      name,
+      members: list.reduce((all, type) => {
+        if (typeof type === "string") {
+          const t = types[type] || addType({ name: type });
+          if (!t) {
+            error(`Unknown type ${type} in '${definition}'`);
+          }
+          type = t;
+        }
+        return all.union(type.members ?? new Set([type]));
+      }, new Set())
+    };
+
+    if (def.members.size < 2) {
+      delete def.members;
+    }
+    return types[name] || addType(def);
+  };
 
   if (Array.isArray(definition)) {
-    const name = definition
-      .map(t => t.name ?? t)
-      .sort()
-      .join("|");
-
-    return (
-      types[name] ||
-      addType({
-        name,
-        members: aggregate(definition)
-      })
+    return aggregate(
+      definition
+        .map(t => t.name ?? t)
+        .sort()
+        .join("|"),
+      definition
     );
   } else {
     const parts = definition.split("|").sort();
-    const name = parts.join("|");
-    return (
-      types[name] ||
-      addType({
-        name,
-        members: aggregate(parts.map(t => types[t]))
-      })
-    );
+    return aggregate(parts.join("|"), parts);
   }
 }
