@@ -1,18 +1,14 @@
-export const baseTypes = new Set(["string", "number", "bigint", "boolean"]);
-
 export const types = {
-  base: { name: "base" },
-
-  string: { name: "string", extends: "base" },
+  string: { name: "string", primitive: true },
   number: {
     name: "number",
-    extends: "base",
+    primitive: true,
     prepareValue: value =>
       typeof value === "string" ? parseFloat(value) : value
   },
   boolean: {
     name: "boolean",
-    extends: "base",
+    primitive: true,
     prepareValue: value =>
       !value || value === "0" || value === "false" || value === "no"
         ? false
@@ -20,16 +16,15 @@ export const types = {
   },
   integer: {
     name: "integer",
-    extends: "base",
+    primitive: true,
     prepareValue: value => (typeof value === "string" ? parseInt(value) : value)
   },
   "unsigned-integer": {
     name: "unsigned-integer",
-    prepareValue: value =>
-      typeof value === "string" ? parseInt(value) : value,
-    extends: "integer"
+    primitive: true,
+    prepareValue: value => (typeof value === "string" ? parseInt(value) : value)
   },
-  url: { name: "url", extends: "string" },
+  url: { name: "url", primitive: true },
   object: { name: "object", extends: "base" }
 };
 
