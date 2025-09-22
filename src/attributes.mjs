@@ -55,7 +55,7 @@ export function* attributeIterator(definition, filter, path = []) {
   if (definition) {
     for (const [name, def] of Object.entries(definition)) {
       const path2 = [...path, name];
-      if (!filter || filter(name, def)) {
+      if (typeof filter !== 'function' || filter(name, def)) {
         yield [path2, def];
       }
 
