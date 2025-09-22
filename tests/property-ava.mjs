@@ -4,6 +4,7 @@ import {
   default_attribute,
   object_attribute,
   string_attribute,
+  string_attribute_writable,
   token_attribute,
   types
 } from "pacc";
@@ -183,3 +184,36 @@ test(
     t.is(object.authentification?.user, "emil");
   }
 );
+
+class A {
+  #a = "value of a";
+
+  set a(value) {
+    this.#a = value.toUpperCase();
+  }
+
+  get a() {
+    return this.#a;
+  }
+}
+
+class B extends A {
+  b = "value of b";
+}
+
+test("use base class setter", t => {
+  const object = new B();
+
+  object.a = "abc";
+  t.is(object.a, "ABC");
+
+  definePropertiesFromAttributes(
+    object,
+    { a: { ...string_attribute_writable } },
+    {
+      a: "new value"
+    }
+  );
+
+  t.is(object.a, "NEW VALUE");
+});

@@ -2,6 +2,15 @@ import { attributeIterator } from "./attributes.mjs";
 import { getAttribute, setAttribute } from "./settergetter.mjs";
 import { prepareValue } from "./attributes.mjs";
 
+function findPropertyDescriptor(obj, name) {
+  let descriptor;
+  do {
+    (descriptor = Object.getOwnPropertyDescriptor(obj, name)) ||
+      (obj = Object.getPrototypeOf(obj));
+  } while (!descriptor && obj);
+  return descriptor;
+}
+
 export function definePropertiesFromAttributes(
   object,
   attributes,
@@ -21,19 +30,19 @@ export function definePropertiesFromAttributes(
 
     if (value !== undefined) {
       if (path.length === 1) {
-        const op = Object.getOwnPropertyDescriptor(
-          object.constructor.prototype,
-          name
-        );
-
         value = prepareValue(value, attribute);
 
         const property = properties[name];
 
-        if (op?.set || property?.set) {
+        if (property?.set) {
           applyLater[name] = value;
         } else {
-          properties[name] = Object.assign({ ...attribute, value }, property);
+          const op = findPropertyDescriptor(object, name);
+          if (op?.set) {
+            applyLater[name] = value;
+          } else {
+            properties[name] = Object.assign({ ...attribute, value }, property);
+          }
         }
       } else {
         setAttribute(object, name, value, attribute);
