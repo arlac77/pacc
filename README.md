@@ -48,6 +48,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [email\_attribute](#email_attribute)
 *   [version\_attribute\_writable](#version_attribute_writable)
 *   [description\_attribute](#description_attribute)
+*   [boolean\_attribute](#boolean_attribute)
 *   [boolean\_attribute\_writable](#boolean_attribute_writable)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true-1)
@@ -71,11 +72,11 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [integer\_attribute\_writable](#integer_attribute_writable)
 *   [object\_attribute](#object_attribute)
 *   [url\_attribute](#url_attribute)
-*   [url\_attribute\_writble](#url_attribute_writble)
+*   [url\_attribute\_writable](#url_attribute_writable)
 *   [hostname\_attribute](#hostname_attribute)
 *   [port\_attribute](#port_attribute)
 *   [id\_attribute](#id_attribute)
-*   [title\_attribute](#title_attribute)
+*   [title\_attribute\_writable](#title_attribute_writable)
 *   [priority\_attribute](#priority_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
@@ -174,7 +175,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 ### Properties
 
-*   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `type` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `isKey` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `mandatory` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
@@ -246,6 +247,10 @@ Type: [AttributeDefinition](#attributedefinition)
 ## description\_attribute
 
 The description of the object content.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## boolean\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -341,7 +346,7 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## url\_attribute\_writble
+## url\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -359,7 +364,7 @@ Unique id within.
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## title\_attribute
+## title\_attribute\_writable
 
 The one line description.
 
@@ -448,6 +453,7 @@ Retrive attribute values from an object.
 
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** attribute value source
 *   `definitions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `filter` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** values
 
