@@ -59,9 +59,7 @@ export function* attributeIterator(definition, filter, path = []) {
         yield [path2, def];
       }
 
-      if (def.attributes) {
-        yield* attributeIterator(def.attributes, filter, path2);
-      }
+      yield* attributeIterator(def.attributes, filter, path2);
     }
   }
 }
