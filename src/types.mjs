@@ -27,7 +27,7 @@ export const types = {
     prepareValue: value => (typeof value === "string" ? parseInt(value) : value)
   },
   url: { name: "url", primitive: true },
-  object: { name: "object", extends: "base" }
+  object: { name: "object" }
 };
 
 function error(message) {
@@ -41,12 +41,16 @@ export function addType(type) {
 
   types[type.name] = type;
 
+  if (typeof type.extends === "string") {
+    type.extends = types[type.extends];
+  }
+
   for (const [path, attribute] of attributeIterator(type.attributes)) {
     if (typeof attribute.type === "string") {
       attribute.type = oneOfType(attribute.type);
     }
-    if(attribute.isKey && !type.key) {
-      type.key = path.join('.');
+    if (attribute.isKey && !type.key) {
+      type.key = path.join(".");
     }
   }
 

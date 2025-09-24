@@ -38,8 +38,14 @@ test("oneOfType new defs", t => {
   t.is(type.members, undefined);
 });
 
-test("add already present", t => {
+test("addType already present", t => {
   const def = { name: "string" };
   const type = addType(def);
   t.is(type, types.string);
+});
+
+test("addType with extends", t => {
+  const def = { name: "extendet", extends: "object" };
+  const type = addType(def);
+  t.is(type.extends, types.object);
 });
