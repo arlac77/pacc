@@ -41,16 +41,21 @@ export function addType(type) {
 
   types[type.name] = type;
 
+  if (!type.owners) {
+    type.owners = [];
+  }
+
   if (typeof type.extends === "string") {
-    type.extends = types[type.extends];
+    const ex = types[type.extends];
+    if (!ex) {
+      error(`${type.name}: missing type '${type.extends}'`);
+    }
+    type.extends = ex;
   }
 
   for (const [path, attribute] of attributeIterator(type.attributes)) {
     if (typeof attribute.type === "string") {
       attribute.type = oneOfType(attribute.type);
-    }
-    if (attribute.isKey && !type.key) {
-      type.key = path.join(".");
     }
   }
 
