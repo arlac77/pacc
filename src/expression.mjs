@@ -80,10 +80,14 @@ export function parse(input, context = { globals }) {
             }
             result = r;
           } else {
-            if (result instanceof Map) {
-              result = result.get(p);
+            if (result === undefined && context.globals?.[p]) {
+              result = context.globals?.[p];
             } else {
-              result = result[p] ?? context.globals?.[p];
+              if (result instanceof Map) {
+                result = result.get(p);
+              } else {
+                result = result[p] ?? context.globals?.[p];
+              }
             }
           }
           break;
@@ -117,7 +121,7 @@ export function parse(input, context = { globals }) {
 
   const expect = expected => {
     if (token !== expected) {
-      error(`unexpected '${token.str}' expecting '${expected.str}'`);
+      error(`unexpected '${token?.str || token}' expecting '${expected.str}'`);
     }
     advance();
   };
@@ -244,8 +248,12 @@ export function parse(input, context = { globals }) {
                 }
               }
               left.path.push(args);
-              left.eval = node =>
-                context.globals[node.path[0]](...node.path[1]);
+              left.eval = node => {
+                const args = node.path[1].map(a =>
+                  typeof a === "object" ? a.eval(a) : a
+                );
+                return context.globals[node.path[0]](...args);
+              };
               return left;
             }
             break;
@@ -291,6 +299,12 @@ export function parse(input, context = { globals }) {
 }
 
 export const globals = {
+  in: (a, b) => {
+    if (Array.isArray(b)) {
+      return b.find(x => x === a) ? true : false;
+    }
+    return b.has(a);
+  },
   min: (a, b) => (a < b ? a : b),
   max: (a, b) => (a > b ? a : b),
   substring: (s, a, b) => s.substring(a, b),

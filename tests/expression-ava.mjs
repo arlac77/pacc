@@ -42,6 +42,7 @@ eat.title = (providedTitle, input, context, expected) =>
   } => ${expected}`.trim();
 
 test(eat, "1 +", undefined, new Error("unexpected EOF"));
+test.skip(eat, "1 2", undefined, new Error("unexpected '2'"));
 test.skip(eat, "1 )", undefined, new Error("unexpected ')'"));
 test(eat, "1 + 2", undefined, 3);
 test(eat, "1 + 2 + 4", undefined, 7);
@@ -110,6 +111,19 @@ test.skip(
   [4]
 );
 
+test(eat, "in(2,array)", { globals: { ...globals, array: [1, 2, 3] } }, true);
+test(
+  eat,
+  "in(2,set)",
+  { globals: { ...globals, set: new Set([1, 2, 3]) } },
+  true
+);
+test(
+  eat,
+  "in(7,set)",
+  { globals: { ...globals, set: new Set([1, 2, 3]) } },
+  false
+);
 test(eat, "min(1,2)", { globals }, 1);
 test(eat, "max(1,2)", { globals }, 2);
 test(eat, "substring('abcd',1,3)", { globals }, "bc");
