@@ -248,12 +248,15 @@ export function parse(input, context = { globals }) {
                 }
               }
               left.path.push(args);
-              left.eval = node => {
+              left.eval = (node, current) => {
                 const args = node.path[1].map(a =>
-                  typeof a === "object" ? a.eval(a) : a
+                  typeof a === "object" ? a.eval(a,current) : a
                 );
                 return context.globals[node.path[0]](...args);
               };
+
+              advance();
+
               return left;
             }
             break;

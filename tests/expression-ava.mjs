@@ -114,6 +114,12 @@ test.skip(
 test(eat, "in(2,array)", { globals: { ...globals, array: [1, 2, 3] } }, true);
 test(
   eat,
+  "in('b',array)",
+  { globals: { ...globals, array: [1, 2, 3] } },
+  false
+);
+test(
+  eat,
   "in(2,set)",
   { globals: { ...globals, set: new Set([1, 2, 3]) } },
   true
@@ -128,3 +134,12 @@ test(eat, "min(1,2)", { globals }, 1);
 test(eat, "max(1,2)", { globals }, 2);
 test(eat, "substring('abcd',1,3)", { globals }, "bc");
 test(eat, "length('a' + 'b')", { globals }, 2);
+test(
+  eat,
+  "all[in(7,x)]",
+  {
+    root: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] },
+    globals
+  },
+  [{ x: [2, 7] }]
+);
