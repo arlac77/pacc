@@ -107,6 +107,8 @@ export const description_attribute = {
   description: "human readable description"
 };
 
+export { description_attribute as description_attribute_writable };
+
 /**
  * @type {AttributeDefinition}
  */
