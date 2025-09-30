@@ -250,7 +250,7 @@ export function parse(input, context = { globals }) {
               left.path.push(args);
               left.eval = (node, current) => {
                 const args = node.path[1].map(a =>
-                  typeof a === "object" ? a.eval(a,current) : a
+                  typeof a === "object" ? a.eval(a, current) : a
                 );
                 return context.globals[node.path[0]](...args);
               };
@@ -303,10 +303,14 @@ export function parse(input, context = { globals }) {
 
 export const globals = {
   in: (a, b) => {
-    if (Array.isArray(b)) {
-      return b.find(x => x === a) ? true : false;
+    if (b?.[Symbol.iterator]) {
+      for (const x of b) {
+        if (x === a) {
+          return true;
+        }
+      }
     }
-    return b.has(a);
+    return false;
   },
   min: (a, b) => (a < b ? a : b),
   max: (a, b) => (a > b ? a : b),

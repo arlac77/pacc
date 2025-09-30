@@ -143,3 +143,12 @@ test(
   },
   [{ x: [2, 7] }]
 );
+test(
+  eat,
+  "all[in(8,x)]",
+  {
+    root: { all: [{ x: new Set([1]) }, { x: new Set([2, 8]) }, { x: new Set([3]) }] },
+    globals
+  },
+  [{ x: new Set([2, 8]) }]
+);
