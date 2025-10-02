@@ -35,6 +35,12 @@ function error(message) {
 }
 
 export function addType(type) {
+  if (type?.typeDefinition) {
+    const clazz = type;
+    type = type.typeDefinition;
+    type.clazz = clazz;
+  }
+
   if (types[type.name]) {
     return Object.assign(types[type.name], type);
   }
