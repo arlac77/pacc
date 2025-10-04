@@ -36,11 +36,11 @@ function allOp(op, value, against) {
       if (value instanceof Map) {
         return collectionOp(op, value.keys(), against);
       }
-      if (value instanceof RegExp) {
-        return value.test(against);
-      }
       if (value[Symbol.iterator]) {
         return collectionOp(op, value, against);
+      }
+      if (value instanceof RegExp) {
+        return value.test(against);
       }
 
       switch (typeof against) {
