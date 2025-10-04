@@ -2,7 +2,6 @@ import test from "ava";
 import { sast } from "./util.mjs";
 import {
   prepareAttributesDefinitions,
-  default_attribute,
   string_attribute,
   setAttributes
 } from "pacc";
