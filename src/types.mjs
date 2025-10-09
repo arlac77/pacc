@@ -35,10 +35,15 @@ function error(message) {
 }
 
 export function addType(type) {
-  if (type?.typeDefinition) {
+  if (type.typeDefinition) {
     const clazz = type;
     type = type.typeDefinition;
     type.clazz = clazz;
+  } else {
+    if (!!type.prototype?.constructor.name) {
+      const clazz = type;
+      type.clazz = clazz;
+    }
   }
 
   if (types[type.name]) {

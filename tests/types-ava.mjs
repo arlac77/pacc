@@ -1,5 +1,6 @@
 import test from "ava";
 import { oneOfType, types, addType } from "pacc";
+import { aClass, cClass } from "./fixtures.mjs";
 
 test("oneOfType basics", t => {
   const type = oneOfType("boolean|string");
@@ -48,4 +49,16 @@ test("addType with extends", t => {
   const def = { name: "extendet", extends: "object" };
   const type = addType(def);
   t.is(type.extends, types.object);
+});
+
+test("addType class", t => {
+  const type = addType(aClass);
+  t.is(type, types.a);
+  t.is(type.clazz, aClass);
+});
+
+test("addType class with typeDefinition", t => {
+  const type = addType(cClass);
+  t.is(type, types.c);
+  t.is(type.clazz, cClass);
 });

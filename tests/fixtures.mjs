@@ -93,7 +93,19 @@ export const attributeDefinitions = {
 };
 
 export class aClass {
+  static name = "a";
   static attributes = attributeDefinitions;
 }
 
-export class bClass extends aClass {}
+export class bClass extends aClass {
+  static name = "b";
+}
+
+export class cClass extends aClass {
+  static typeDefinition = {
+    name: "c",
+    attributes: {
+      c1: default_attribute
+    }
+  };
+}
