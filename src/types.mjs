@@ -30,7 +30,7 @@ export const types = {
   object: { name: "object" }
 };
 
-function error(message) {
+export function error(message) {
   throw new Error(message);
 }
 
@@ -40,7 +40,7 @@ export function addType(type) {
     type = type.typeDefinition;
     type.clazz = clazz;
   } else {
-    if (!!type.prototype?.constructor.name) {
+    if (!!type?.constructor.name) {
       const clazz = type;
       type.clazz = clazz;
     }
@@ -56,12 +56,18 @@ export function addType(type) {
     type.owners = [];
   }
 
-  if (typeof type.extends === "string") {
-    const ex = types[type.extends];
-    if (!ex) {
-      error(`${type.name}: missing type '${type.extends}'`);
+  const ex = Object.getPrototypeOf(type.clazz);
+
+  if (ex?.name) {
+    type.extends = ex.typeDefinition || ex;
+  } else {
+    if (typeof type.extends === "string") {
+      const ex = types[type.extends];
+      if (!ex) {
+        error(`${type.name}: missing type '${type.extends}'`);
+      }
+      type.extends = ex;
     }
-    type.extends = ex;
   }
 
   for (const [path, attribute] of attributeIterator(type.attributes)) {
