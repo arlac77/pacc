@@ -68,6 +68,5 @@ test("addType class with typeDefinition", t => {
 
   t.is(cType, types.c);
   t.is(cType.clazz, cClass);
-    t.is(cType.extends, types.a);
-
+  t.is(cType.extends, types.a);
 });

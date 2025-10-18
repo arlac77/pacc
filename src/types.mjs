@@ -56,18 +56,24 @@ export function addType(type) {
     type.owners = [];
   }
 
-  const ex = Object.getPrototypeOf(type.clazz);
-
-  if (ex?.name) {
-    type.extends = ex.typeDefinition || ex;
-  } else {
-    if (typeof type.extends === "string") {
-      const ex = types[type.extends];
-      if (!ex) {
-        error(`${type.name}: missing type '${type.extends}'`);
+  switch (typeof type.extends) {
+    case "undefined":
+      const ex = Object.getPrototypeOf(type.clazz);
+      if(ex?.name) {
+      type.extends = ex.typeDefinition || ex;
       }
-      type.extends = ex;
-    }
+      break;
+
+    case "string":
+      if (typeof type.extends === "string") {
+        const ex = types[type.extends];
+        if (!ex) {
+          error(`${type.name}: missing type '${type.extends}'`);
+        }
+        type.extends = ex;
+      }
+
+      break;
   }
 
   for (const [path, attribute] of attributeIterator(type.attributes)) {
