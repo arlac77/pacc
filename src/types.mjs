@@ -46,12 +46,6 @@ export function addType(type) {
     }
   }
 
-  if (types[type.name]) {
-    return Object.assign(types[type.name], type);
-  }
-
-  types[type.name] = type;
-
   if (!type.owners) {
     type.owners = [];
   }
@@ -59,8 +53,8 @@ export function addType(type) {
   switch (typeof type.extends) {
     case "undefined":
       const ex = Object.getPrototypeOf(type.clazz);
-      if(ex?.name) {
-      type.extends = ex.typeDefinition || ex;
+      if (ex?.name) {
+        type.extends = ex.typeDefinition || ex;
       }
       break;
 
@@ -81,6 +75,12 @@ export function addType(type) {
       attribute.type = oneOfType(attribute.type);
     }
   }
+
+  if (types[type.name]) {
+    return Object.assign(types[type.name], type);
+  }
+
+  types[type.name] = type;
 
   return type;
 }
