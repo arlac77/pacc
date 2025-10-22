@@ -46,6 +46,10 @@ export function addType(type) {
     }
   }
 
+  if (type.specializationOf) {
+    type.specializationOf.specializations[type.name] = type;
+  }
+
   if (!type.owners) {
     type.owners = [];
   }
