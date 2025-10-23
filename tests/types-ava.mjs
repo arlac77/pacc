@@ -22,6 +22,7 @@ test("oneOfType cascade", t => {
 });
 
 test("oneOfType cascade new defs", t => {
+  addType({ name: "special" });
   const booleanOrString = oneOfType("boolean|string");
   const type = oneOfType([booleanOrString, "special"]);
   t.is(type.name, "boolean|string|special");
@@ -33,6 +34,7 @@ test("oneOfType cascade new defs", t => {
 });
 
 test("oneOfType new defs", t => {
+  addType({ name: "special" });
   const type = oneOfType("special");
   t.is(type.name, "special");
   t.is(types.special.name, "special");

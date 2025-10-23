@@ -30,8 +30,21 @@ export const types = {
   object: { name: "object" }
 };
 
-export function error(message) {
+function error(message) {
   throw new Error(message);
+}
+
+function raiseOnUnknownType(type, origin) {
+  switch (typeof type) {
+    case "string":
+      if (types[type]) {
+        return types[type];
+      }
+    case "undefined":
+      error(`Unknown type ${type} in '${origin}'`);
+  }
+
+  return type;
 }
 
 export function addType(type) {
@@ -64,14 +77,13 @@ export function addType(type) {
 
     case "string":
       if (typeof type.extends === "string") {
-        const ex = types[type.extends];
-        if (!ex) {
-          error(`${type.name}: missing type '${type.extends}'`);
-        }
-        type.extends = ex;
+        type.extends = raiseOnUnknownType(type.extends, type);
       }
-
       break;
+  }
+
+  if (!types[type.name]) {
+    types[type.name] = type;
   }
 
   for (const [path, attribute] of attributeIterator(type.attributes)) {
@@ -80,11 +92,9 @@ export function addType(type) {
     }
   }
 
-  if (types[type.name]) {
+  if (types[type.name] !== type) {
     return Object.assign(types[type.name], type);
   }
-
-  types[type.name] = type;
 
   return type;
 }
@@ -95,11 +105,7 @@ export function oneOfType(definition) {
       name,
       members: list.reduce((all, type) => {
         if (typeof type === "string") {
-          const t = types[type] || addType({ name: type });
-          if (!t) {
-            error(`Unknown type ${type} in '${definition}'`);
-          }
-          type = t;
+          type = raiseOnUnknownType(type, definition); // addType({ name: type });
         }
         return all.union(type.members ?? new Set([type]));
       }, new Set())
@@ -122,5 +128,17 @@ export function oneOfType(definition) {
   } else {
     const parts = definition.split("|").sort();
     return aggregate(parts.join("|"), parts);
+  }
+}
+
+export function resolveTypeLinks() {
+  for (const type of Object.values(types)) {
+    if (typeof type.extends === "string") {
+      type.extends = raiseOnUnknownType(type.extends, type);
+    }
+
+    if (type.owners) {
+      type.owners = type.owners.map(owner => raiseOnUnknownType(owner, type));
+    }
   }
 }
