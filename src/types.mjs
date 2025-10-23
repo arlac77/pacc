@@ -76,9 +76,7 @@ export function addType(type) {
       break;
 
     case "string":
-      if (typeof type.extends === "string") {
-        type.extends = raiseOnUnknownType(type.extends, type);
-      }
+      type.extends = raiseOnUnknownType(type.extends, type);
       break;
   }
 
@@ -105,7 +103,7 @@ export function oneOfType(definition) {
       name,
       members: list.reduce((all, type) => {
         if (typeof type === "string") {
-          type = raiseOnUnknownType(type, definition); // addType({ name: type });
+          type = raiseOnUnknownType(type, definition);
         }
         return all.union(type.members ?? new Set([type]));
       }, new Set())
