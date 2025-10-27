@@ -26,6 +26,11 @@ export const types = {
     primitive: true,
     prepareValue: value => (typeof value === "string" ? parseInt(value) : value)
   },
+  duration: {
+    name: "duration",
+    primitive: true,
+    prepareValue: value => (typeof value === "string" ? parseFloat(value) : value)
+  },
   url: { name: "url", primitive: true },
   object: { name: "object" }
 };
