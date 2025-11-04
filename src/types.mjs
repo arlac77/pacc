@@ -29,7 +29,8 @@ export const types = {
   duration: {
     name: "duration",
     primitive: true,
-    prepareValue: value => (typeof value === "string" ? parseFloat(value) : value)
+    prepareValue: value =>
+      typeof value === "string" ? parseFloat(value) : value
   },
   url: { name: "url", primitive: true },
   object: { name: "object" }
@@ -89,12 +90,6 @@ export function addType(type) {
     types[type.name] = type;
   }
 
-  for (const [path, attribute] of attributeIterator(type.attributes)) {
-    if (typeof attribute.type === "string") {
-      attribute.type = oneOfType(attribute.type);
-    }
-  }
-
   if (types[type.name] !== type) {
     return Object.assign(types[type.name], type);
   }
@@ -143,5 +138,21 @@ export function resolveTypeLinks() {
     if (type.owners) {
       type.owners = type.owners.map(owner => raiseOnUnknownType(owner, type));
     }
+
+    for (const [path, attribute] of attributeIterator(type.attributes)) {
+      if (typeof attribute.type === "string") {
+        attribute.type = oneOfType(attribute.type);
+      }
+    }
   }
+}
+
+export function typeFactory(type, owner, data) {
+  const factory = type.factoryFor?.(owner, data) || type.clazz;
+  //console.log(factory, type, owner, data);
+  const object = new factory(owner);
+
+  object.read(data);
+  owner.addObject(object);
+  return object;
 }
