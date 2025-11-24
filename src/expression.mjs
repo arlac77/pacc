@@ -80,7 +80,7 @@ export function parse(input, context = { globals }) {
             }
             result = r;
           } else {
-            if (result === undefined && context.globals?.[p]) {
+            if (result === undefined) {
               result = context.globals?.[p];
             } else {
               if (result instanceof Map) {
