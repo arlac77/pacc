@@ -23,15 +23,15 @@ export function definePropertiesFromAttributes(
     const name = path.join(".");
     const externalName = attribute.externalName ?? name;
 
-    let value =
+    const value = prepareValue(
       getAttribute(initialValues, externalName, attribute) ??
-      initialValues?.[externalName] ??
-      attribute.default;
+        initialValues?.[externalName] ??
+        attribute.default,
+      attribute
+    );
 
     if (value !== undefined) {
       if (path.length === 1) {
-        value = prepareValue(value, attribute);
-
         const property = properties[name];
 
         if (property?.set) {
