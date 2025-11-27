@@ -1,5 +1,8 @@
 import { attributeIterator } from "./attributes.mjs";
 
+const emptyStringIsUndefined = value =>
+  typeof value === "string" && value.length === 0 ? undefined : value;
+
 export const types = {
   string: { name: "string", primitive: true },
   number: {
@@ -32,7 +35,11 @@ export const types = {
     prepareValue: value =>
       typeof value === "string" ? parseFloat(value) : value
   },
-  url: { name: "url", primitive: true },
+  url: {
+    name: "url",
+    prepareValue: emptyStringIsUndefined,
+    primitive: true
+  },
   object: { name: "object" }
 };
 
