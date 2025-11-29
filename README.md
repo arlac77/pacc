@@ -70,6 +70,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [integer\_attribute](#integer_attribute-1)
 *   [integer\_attribute](#integer_attribute-2)
 *   [integer\_attribute\_writable](#integer_attribute_writable)
+*   [integer\_attribute\_writable](#integer_attribute_writable-1)
 *   [object\_attribute](#object_attribute)
 *   [url\_attribute](#url_attribute)
 *   [url\_attribute\_writable](#url_attribute_writable)
@@ -331,6 +332,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## integer\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## integer\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
