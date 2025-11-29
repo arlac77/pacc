@@ -260,6 +260,11 @@ export { integer_attribute as count_attribute };
 /**
  * @type {AttributeDefinition}
  */
+export { integer_attribute_writable as count_attribute_writable };
+
+/**
+ * @type {AttributeDefinition}
+ */
 export { integer_attribute as size_attribute };
 
 /**
