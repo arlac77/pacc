@@ -1,11 +1,11 @@
 import test from "ava";
-import { manadatoryAttributesPresent, string_attribute } from "pacc";
+import { mandatoryAttributesPresent, string_attribute } from "pacc";
 
-test("manadatoryAttributesPresent", t => {
+test("mandatoryAttributesPresent", t => {
   const attributes = { a: { ...string_attribute, mandatory: true } };
 
-  t.true(manadatoryAttributesPresent({ a: "abc" }, attributes));
-  t.false(manadatoryAttributesPresent({ b: "abc" }, attributes));
-  t.false(manadatoryAttributesPresent(undefined, attributes));
-  t.true(manadatoryAttributesPresent(undefined, undefined));
+  t.true(mandatoryAttributesPresent({ a: "abc" }, attributes));
+  t.false(mandatoryAttributesPresent({ b: "abc" }, attributes));
+  t.false(mandatoryAttributesPresent(undefined, attributes));
+  t.true(mandatoryAttributesPresent(undefined, undefined));
 });

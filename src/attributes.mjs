@@ -80,7 +80,7 @@ export function prepareValue(value, attribute) {
   return value;
 }
 
-export function manadatoryAttributesPresent(object, attributes) {
+export function mandatoryAttributesPresent(object, attributes) {
   for (const [path, attribute] of attributeIterator(
     attributes,
     (name, attribute) => attribute.mandatory
