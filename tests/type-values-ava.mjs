@@ -8,3 +8,10 @@ test("empty url type", t => {
     "http:/example.com"
   );
 });
+
+test("boolean type", t => {
+  t.is(prepareValue("no", { type: types.boolean }), false);
+  t.is(prepareValue("0", { type: types.boolean }), false);
+  t.is(prepareValue(0, { type: types.boolean }), false);
+  t.is(prepareValue(1, { type: types.boolean }), true);
+});
