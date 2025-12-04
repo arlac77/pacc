@@ -60,14 +60,12 @@ test("addType class", t => {
 
   const bType = addType(bClass);
   t.is(bType, types.b);
-
   t.is(bType.clazz, bClass);
   t.is(bType.extends, types.a);
 });
 
 test("addType class with typeDefinition", t => {
   const cType = addType(cClass);
-
   t.is(cType, types.c);
   t.is(cType.clazz, cClass);
   t.is(cType.extends, types.a);
