@@ -134,6 +134,8 @@ test(eat, "min(1,2)", { globals }, 1);
 test(eat, "max(1,2)", { globals }, 2);
 test(eat, "substring('abcd',1,3)", { globals }, "bc");
 test(eat, "length('a' + 'b')", { globals }, 2);
+test(eat, "lowercase('aA')", { globals }, 'aa');
+test(eat, "uppercase('aA')", { globals }, 'AA');
 test(
   eat,
   "all[in(7,x)]",

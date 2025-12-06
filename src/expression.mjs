@@ -314,6 +314,8 @@ export const globals = {
   },
   min: (a, b) => (a < b ? a : b),
   max: (a, b) => (a > b ? a : b),
+  uppercase: (a) => a.toUpperCase(),
+  lowercase: (a) => a.toLowerCase(),
   substring: (s, a, b) => s.substring(a, b),
   length: s => s.length
 };
