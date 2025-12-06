@@ -1,5 +1,12 @@
 import { attributeIterator } from "./attributes.mjs";
 
+/**
+ * @typedef {Object} Type
+ * @property {string} name
+ * @property {boolean} [primitive]
+ * @property {Function} [prepareValue]
+ */
+
 const emptyStringIsUndefined = value =>
   typeof value === "string" && value.length === 0 ? undefined : value;
 
@@ -40,7 +47,7 @@ export const types = {
     prepareValue: emptyStringIsUndefined,
     primitive: true
   },
-  object: { name: "object" }
+  object: { name: "object", primitive: false }
 };
 
 function error(message) {

@@ -9,6 +9,7 @@ import { types } from "./types.mjs";
  * @property {boolean} mandatory
  * @property {boolean} collection
  * @property {boolean} [private] should the value be shown
+ * @property {boolean} [credential] any type of credential
  * @property {string} [depends] name of an attribute we depend on
  * @property {string} [description] human readable
  * @property {any} [default] the default value
@@ -31,6 +32,7 @@ export const default_attribute = {
   mandatory: false,
   collection: false,
   private: false,
+  credential: false,
   isKey: false
 };
 
@@ -185,7 +187,8 @@ export const uuid_attribute = {
  */
 export const secret_attribute = {
   ...default_attribute_writable,
-  private: true
+  private: true,
+  credential: true
 };
 
 /**
@@ -214,7 +217,8 @@ export { secret_attribute as certificate_attribute };
 export const private_key_attribute = {
   ...default_attribute_writable,
   description: "private key",
-  private: true
+  private: true,
+  credential: true
 };
 
 /**
@@ -223,7 +227,7 @@ export const private_key_attribute = {
 export const public_key_attribute = {
   ...default_attribute_writable,
   description: "public key",
-  private: true
+  credential: true
 };
 
 /**
