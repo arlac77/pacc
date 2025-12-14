@@ -70,3 +70,35 @@ export function formatDuration(seconds) {
 
   return out.join(" ");
 }
+
+const durationsISO = [
+  [86400, "D"],
+  [3600, "H"],
+  [60, "M"],
+  [1, "S"]
+];
+
+/**
+ * 
+ * @param {number} seconds 
+ * @returns {string} formatted duration
+ */
+export function formatDurationISO(seconds) {
+  let out = "P";
+  let t = false;
+
+  for (const d of durationsISO) {
+    if (seconds < 86400 && !t) {
+      out += "T";
+      t = true;
+    }
+
+    const n = Math.floor(seconds / Number(d[0]));
+    if (n > 0) {
+      out += `${n}${d[1]}`;
+      seconds -= n * Number(d[0]);
+    }
+  }
+
+  return out;
+}
