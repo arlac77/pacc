@@ -348,7 +348,7 @@ export const priority_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export { number_attribute as duration_attribute };
+export const duration_attribute = { ...default_attribute, type: types.duration }
 
 /**
  * @type {AttributeDefinition}

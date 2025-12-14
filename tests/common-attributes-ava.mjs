@@ -43,6 +43,6 @@ test("string_collection_attribute", t => {
 test("duration_attribute", t => {
   t.false(duration_attribute.writable);
   t.is(duration_attribute.default, undefined);
-  t.is(duration_attribute.type, types.number);
+  t.is(duration_attribute.type, types.duration);
   t.is(duration_attribute.collection, false);
 });
