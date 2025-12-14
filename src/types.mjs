@@ -40,6 +40,11 @@ export const types = {
   duration: {
     name: "duration",
     primitive: true,
+    prepareValue: value => parseTime(value)
+  },
+  duration_ms: {
+    name: "duration_ms",
+    primitive: true,
     prepareValue: value => parseTime(value) * 1000
   },
   url: {

@@ -353,6 +353,11 @@ export const duration_attribute = { ...default_attribute, type: types.duration }
 /**
  * @type {AttributeDefinition}
  */
+export const duration_ms_attribute = { ...default_attribute, type: types.duration_ms }
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const timeout_attribute = {
   ...number_attribute_writable,
   description: "timeout"
