@@ -63,7 +63,6 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
 *   [number\_attribute](#number_attribute)
-*   [number\_attribute](#number_attribute-1)
 *   [number\_attribute\_writable](#number_attribute_writable)
 *   [integer\_attribute](#integer_attribute)
 *   [integer\_attribute](#integer_attribute-1)
@@ -78,6 +77,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [id\_attribute](#id_attribute)
 *   [title\_attribute\_writable](#title_attribute_writable)
 *   [priority\_attribute](#priority_attribute)
+*   [duration\_attribute](#duration_attribute)
+*   [duration\_ms\_attribute](#duration_ms_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [environmentValues](#environmentvalues)
@@ -101,11 +102,13 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-11)
 *   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-12)
+*   [parseTime](#parsetime)
+    *   [Parameters](#parameters-13)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-13)
+    *   [Parameters](#parameters-14)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -317,10 +320,6 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## number\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
 ## number\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -381,6 +380,14 @@ Type: [AttributeDefinition](#attributedefinition)
 
 In case there are several providers able to support a given source which one sould be used ?
 this defines the order.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## duration\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## duration\_ms\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -510,6 +517,14 @@ The name may be a property path like 'a.b.c <='.
 *   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **\[any, [Token](#token)]** value associated with the given property name
+
+## parseTime
+
+### Parameters
+
+*   `value` **([number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))**&#x20;
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## lookup
 
