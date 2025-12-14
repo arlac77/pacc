@@ -102,13 +102,15 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-11)
 *   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-12)
-*   [parseTime](#parsetime)
+*   [parseDuration](#parseduration)
     *   [Parameters](#parameters-13)
+*   [formatDuration](#formatduration)
+    *   [Parameters](#parameters-14)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-14)
+    *   [Parameters](#parameters-15)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -518,13 +520,25 @@ The name may be a property path like 'a.b.c <='.
 
 Returns **\[any, [Token](#token)]** value associated with the given property name
 
-## parseTime
+## parseDuration
+
+Convert duration formatted string into number of seconds.
+
+Convert duration formatted string into number of seconds.
 
 ### Parameters
 
 *   `value` **([number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))**&#x20;
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds
+
+## formatDuration
+
+### Parameters
+
+*   `seconds` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** formatted duration
 
 ## lookup
 
