@@ -1,5 +1,5 @@
 import test from "ava";
-import { prepareValue, types } from "pacc";
+import { prepareValue, types, formatDuration } from "pacc";
 
 test("empty url type", t => {
   t.is(prepareValue("", { type: types.url }), undefined);
@@ -34,4 +34,12 @@ test("duration type", t => {
   t.is(prepareValue("1 h", { type: types.duration }), 3600);
   t.is(prepareValue("1 h 30m", { type: types.duration }), 5400);
   t.is(prepareValue("1hour 30m 5seconds", { type: types.duration }), 5405);
+});
+
+
+test("formatDuration", t => {
+  t.is(formatDuration(1), "1s");
+  t.is(formatDuration(60), "1m");
+  t.is(formatDuration(61), "1m 1s");
+  t.is(formatDuration(3661), "1h 1m 1s");
 });
