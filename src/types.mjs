@@ -1,4 +1,5 @@
 import { attributeIterator } from "./attributes.mjs";
+import { parseTime } from "./time.mjs";
 
 /**
  * @typedef {Object} Type
@@ -39,8 +40,7 @@ export const types = {
   duration: {
     name: "duration",
     primitive: true,
-    prepareValue: value =>
-      typeof value === "string" ? parseFloat(value) : value
+    prepareValue: value => parseTime(value) * 1000
   },
   url: {
     name: "url",
