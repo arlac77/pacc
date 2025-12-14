@@ -25,7 +25,7 @@ const units = {
  * @param {number|string} value 
  * @returns {number} seconds
  */
-export function parseTime(value) {
+export function parseDuration(value) {
   if (typeof value === "string") {
     let seconds = 0;
 
@@ -43,4 +43,30 @@ export function parseTime(value) {
   }
 
   return value;
+}
+
+const durations = [
+  [604800, "w"],
+  [86400, "d"],
+  [3600, "h"],
+  [60, "m"],
+  [1, "s"]
+];
+
+/**
+ * 
+ * @param {number} seconds 
+ * @returns {string} formatted duration
+ */
+export function formatDuration(seconds) {
+  const out = [];
+  for (const d of durations) {
+    const n = Math.floor(seconds / Number(d[0]));
+    if (n > 0) {
+      out.push(`${n}${d[1]}`);
+      seconds -= n * Number(d[0]);
+    }
+  }
+
+  return out.join(" ");
 }
