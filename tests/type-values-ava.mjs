@@ -23,6 +23,7 @@ test("duration_ms type", t => {
   t.is(prepareValue("1 ms", { type: types.duration_ms }), 1);
   t.is(prepareValue("1 h", { type: types.duration_ms }), 3600000);
   t.is(prepareValue("1 h 30m", { type: types.duration_ms }), 5400000);
+  t.is(prepareValue("1hour 30m 5seconds", { type: types.duration_ms }), 5405000);
 });
 
 test("duration type", t => {
@@ -32,4 +33,5 @@ test("duration type", t => {
   t.is(prepareValue("1 ms", { type: types.duration }), 0.001);
   t.is(prepareValue("1 h", { type: types.duration }), 3600);
   t.is(prepareValue("1 h 30m", { type: types.duration }), 5400);
+  t.is(prepareValue("1hour 30m 5seconds", { type: types.duration }), 5405);
 });
