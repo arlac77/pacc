@@ -520,11 +520,13 @@ Returns **\[any, [Token](#token)]** value associated with the given property nam
 
 ## parseTime
 
+Convert duration formatted string into number of seconds.
+
 ### Parameters
 
 *   `value` **([number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))**&#x20;
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds
 
 ## lookup
 
