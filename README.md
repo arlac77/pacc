@@ -32,6 +32,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-1)
 *   [attributeIterator](#attributeiterator)
     *   [Parameters](#parameters-2)
+*   [parseBytes](#parsebytes)
+    *   [Parameters](#parameters-3)
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
 *   [default\_attribute](#default_attribute)
@@ -82,37 +84,37 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [environmentValues](#environmentvalues)
-    *   [Parameters](#parameters-3)
-*   [expand](#expand)
     *   [Parameters](#parameters-4)
-*   [filter](#filter)
+*   [expand](#expand)
     *   [Parameters](#parameters-5)
-*   [setAttributes](#setattributes)
+*   [filter](#filter)
     *   [Parameters](#parameters-6)
-*   [getAttributes](#getattributes)
+*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-7)
-*   [getAttributesJSON](#getattributesjson)
+*   [getAttributes](#getattributes)
     *   [Parameters](#parameters-8)
+*   [getAttributesJSON](#getattributesjson)
+    *   [Parameters](#parameters-9)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-9)
-*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-10)
-*   [getAttribute](#getattribute)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-11)
-*   [getAttributeAndOperator](#getattributeandoperator)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-12)
-*   [parseDuration](#parseduration)
+*   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-13)
-*   [formatDuration](#formatduration)
+*   [parseDuration](#parseduration)
     *   [Parameters](#parameters-14)
-*   [formatDurationISO](#formatdurationiso)
+*   [formatDuration](#formatduration)
     *   [Parameters](#parameters-15)
+*   [formatDurationISO](#formatdurationiso)
+    *   [Parameters](#parameters-16)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-16)
+    *   [Parameters](#parameters-17)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -178,6 +180,16 @@ Iterate over all attributes.
 
 Returns **Iterable<\[[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>, [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)]>**&#x20;
 
+## parseBytes
+
+Convert byte size formatted string into number of bytes.
+
+### Parameters
+
+*   `value` **([number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))**&#x20;
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** number of total bytes
+
 ## AttributeDefinition
 
 Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
@@ -191,6 +203,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `collection` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `private` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** should the value be shown
 *   `credential` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** any type of credential
+*   `persistent` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** should we be stored
 *   `depends` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** name of an attribute we depend on
 *   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** human readable
 *   `default` **any?** the default value
