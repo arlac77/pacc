@@ -14,9 +14,11 @@ const byteSizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
 const units = {
   b: 1,
+  bytes: 1,
   kb: 1024,
   mb: 1024 * 1024,
-  gb: 1024 * 1024 * 1024
+  gb: 1024 * 1024 * 1024,
+  tb: 1024 * 1024 * 1024 * 1024
 };
 
 /**
