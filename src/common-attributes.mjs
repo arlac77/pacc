@@ -10,6 +10,7 @@ import { types } from "./types.mjs";
  * @property {boolean} collection
  * @property {boolean} [private] should the value be shown
  * @property {boolean} [credential] any type of credential
+ * @property {boolean} [persistent] should we be stored
  * @property {string} [depends] name of an attribute we depend on
  * @property {string} [description] human readable
  * @property {any} [default] the default value
@@ -31,6 +32,7 @@ export const default_attribute = {
   writable: false,
   mandatory: false,
   collection: false,
+  persistent: false,
   private: false,
   credential: false,
   isKey: false
@@ -270,6 +272,8 @@ export { integer_attribute_writable as count_attribute_writable };
  * @type {AttributeDefinition}
  */
 export { integer_attribute as size_attribute };
+
+export const bytes_size_attribute = { ...default_attribute, type: types.byte_size };
 
 /**
  * @type {AttributeDefinition}

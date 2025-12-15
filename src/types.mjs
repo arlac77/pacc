@@ -1,5 +1,6 @@
 import { attributeIterator } from "./attributes.mjs";
 import { parseDuration } from "./time.mjs";
+import { parseBytes } from "./bytes.mjs";
 
 /**
  * @typedef {Object} Type
@@ -46,6 +47,11 @@ export const types = {
     name: "duration_ms",
     primitive: true,
     prepareValue: value => parseDuration(value) * 1000
+  },
+  byte_size: {
+    name: "byte_size",
+    primitive: true,
+    prepareValue: parseBytes
   },
   url: {
     name: "url",
