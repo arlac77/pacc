@@ -96,9 +96,16 @@ export const email_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const version_attribute_writable = {
+export const version_attribute = {
   ...default_attribute,
-  description: "version",
+  description: "version"
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const version_attribute_writable = {
+  ...version_attribute,
   writable: true
 };
 
@@ -273,7 +280,10 @@ export { integer_attribute_writable as count_attribute_writable };
  */
 export { integer_attribute as size_attribute };
 
-export const bytes_size_attribute = { ...default_attribute, type: types.byte_size };
+export const bytes_size_attribute = {
+  ...default_attribute,
+  type: types.byte_size
+};
 
 /**
  * @type {AttributeDefinition}
@@ -352,12 +362,18 @@ export const priority_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const duration_attribute = { ...default_attribute, type: types.duration }
+export const duration_attribute = {
+  ...default_attribute,
+  type: types.duration
+};
 
 /**
  * @type {AttributeDefinition}
  */
-export const duration_ms_attribute = { ...default_attribute, type: types.duration_ms }
+export const duration_ms_attribute = {
+  ...default_attribute,
+  type: types.duration_ms
+};
 
 /**
  * @type {AttributeDefinition}
