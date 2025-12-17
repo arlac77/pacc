@@ -37,7 +37,7 @@ export function parseBytes(value) {
       const v = parseFloat(match[1]);
 
       if (match[2]) {
-        bytes += v * units[match[2]];
+        bytes += v * units[match[2].toLocaleLowerCase()];
       } else {
         bytes += v;
       }

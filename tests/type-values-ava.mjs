@@ -50,7 +50,7 @@ test("bytes type", t => {
   t.is(prepareValue(1, { type: types.byte_size }), 1);
   t.is(prepareValue("1", { type: types.byte_size }), 1);
   t.is(prepareValue("1kb", { type: types.byte_size }), 1024);
-  t.is(prepareValue("1k", { type: types.byte_size }), 1024);
+  t.is(prepareValue("1K", { type: types.byte_size }), 1024);
   t.is(prepareValue("1mb", { type: types.byte_size }), 1024 * 1024);
   t.is(prepareValue("1m", { type: types.byte_size }), 1024 * 1024);
 });
