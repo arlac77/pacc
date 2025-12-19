@@ -10,7 +10,7 @@ import { types } from "./types.mjs";
  * @property {boolean} collection
  * @property {boolean} [private] should the value be shown
  * @property {boolean} [credential] any type of credential
- * @property {boolean} [persistent] should we be stored
+ * @property {boolean} [persistent] should we be stored (especially critical for credentials)
  * @property {string} [depends] name of an attribute we depend on
  * @property {string} [description] human readable
  * @property {any} [default] the default value
@@ -18,7 +18,7 @@ import { types } from "./types.mjs";
  * @property {Function} [get] get the value can be used to calculate default values
  * @property {Function} [prepareValue]
  * @property {Set<any>} [values] allowed values
- * @property {string} [externalName] attrubute name used by external system
+ * @property {string} [externalName] attribute name used by external system
  * @property {string[]|string} [env] environment variable(s) used to provide the value
  * @property {object} [additionalValues] other values to be set in case our attribute is set
  */
