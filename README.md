@@ -88,6 +88,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-4)
 *   [expand](#expand)
     *   [Parameters](#parameters-5)
+*   [promises](#promises)
 *   [filter](#filter)
     *   [Parameters](#parameters-6)
 *   [setAttributes](#setattributes)
@@ -146,6 +147,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [EOF](#eof)
 *   [Type](#type)
     *   [Properties](#properties-2)
+*   [raiseOnUnknownType](#raiseonunknowntype)
+    *   [Parameters](#parameters-18)
 
 ## prepareAttributesDefinitions
 
@@ -442,12 +445,16 @@ Expand expressions inside of object graphs.
 *   `object` **any**&#x20;
 *   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
-    *   `context.root` **any**&#x20;
+    *   `context.root` **any?**&#x20;
     *   `context.stopClass` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
     *   `context.leadIn` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
     *   `context.leadOut` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
 
 Returns **any**&#x20;
+
+## promises
+
+Type: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<any>>
 
 ## filter
 
@@ -709,6 +716,15 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `primitive` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?**&#x20;
 *   `prepareValue` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+
+## raiseOnUnknownType
+
+### Parameters
+
+*   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))**&#x20;
+*   `origin` **any**&#x20;
+
+Returns **[Type](#type)**&#x20;
 
 # install
 
