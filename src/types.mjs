@@ -61,10 +61,12 @@ export const types = {
   object: { name: "object", primitive: false }
 };
 
-function error(message) {
-  throw new Error(message);
-}
-
+/**
+ * 
+ * @param {string|undefined} type 
+ * @param {any} origin 
+ * @returns {Type}
+ */
 function raiseOnUnknownType(type, origin) {
   switch (typeof type) {
     case "string":
@@ -72,7 +74,7 @@ function raiseOnUnknownType(type, origin) {
         return types[type];
       }
     case "undefined":
-      error(`Unknown type ${type} in '${origin}'`);
+      throw new Error(`Unknown type ${type} in '${origin}'`, { cause: type });
   }
 
   return type;
@@ -174,7 +176,6 @@ export function resolveTypeLinks() {
 
 export function typeFactory(type, owner, data) {
   const factory = type.factoryFor?.(owner, data) || type.clazz;
-  //console.log(factory, type, owner, data);
   const object = new factory(owner);
 
   object.read(data);

@@ -6,14 +6,14 @@ const maxNestingLevel = 5;
  * Expand expressions inside of object graphs.
  * @param {any} object
  * @param {Object} context
- * @param {any} context.root
+ * @param {any} [context.root]
  * @param {function} [context.stopClass]
  * @param {string} [context.leadIn]
  * @param {string} [context.leadOut]
  * @returns {any}
  */
 export function expand(object, context = {}) {
-  const promises = [];
+  const /** @type {Array<Promise<any>>} */ promises = [];
 
   const leadIn = context.leadIn ?? "${";
   const leadOut = context.leadOut ?? "}";
