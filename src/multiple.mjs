@@ -60,7 +60,7 @@ export function getAttributes(object, definitions) {
  * Retrive attribute values from an object.
  * @param {Object} object attribute value source
  * @param {Object} definitions
- * @param {Object} filter
+ * @param {Function} [filter]
  * @return {Object} values
  */
 export function getAttributesJSON(object, definitions, filter) {

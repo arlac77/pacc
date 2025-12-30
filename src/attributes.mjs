@@ -47,7 +47,7 @@ function mergeAttributeDefinitions(dest, atts) {
 /**
  * Iterate over all attributes.
  * @param {Object} definition
- * @param {Function} filter
+ * @param {Function} [filter]
  * @param {string[]} path
  * @return {Iterable<[string[],object]>}
  */
