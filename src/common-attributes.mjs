@@ -370,6 +370,14 @@ export const duration_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const duration_attribute_writable = {
+  ...duration_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const duration_ms_attribute = {
   ...default_attribute,
   type: types.duration_ms
