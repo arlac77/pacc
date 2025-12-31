@@ -81,6 +81,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [title\_attribute\_writable](#title_attribute_writable)
 *   [priority\_attribute](#priority_attribute)
 *   [duration\_attribute](#duration_attribute)
+*   [duration\_attribute\_writable](#duration_attribute_writable)
 *   [duration\_ms\_attribute](#duration_ms_attribute)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
@@ -409,6 +410,10 @@ this defines the order.
 Type: [AttributeDefinition](#attributedefinition)
 
 ## duration\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## duration\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
