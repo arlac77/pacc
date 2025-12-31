@@ -11,6 +11,7 @@ test("empty url type", t => {
 
 test("boolean type", t => {
   t.is(prepareValue("no", { type: types.boolean }), false);
+  t.is(prepareValue("yes", { type: types.boolean }), true);
   t.is(prepareValue("0", { type: types.boolean }), false);
   t.is(prepareValue(0, { type: types.boolean }), false);
   t.is(prepareValue(1, { type: types.boolean }), true);
