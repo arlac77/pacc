@@ -1,32 +1,32 @@
 import test from "ava";
+import { tokens } from "pacc";
 import {
-  tokens,
+  NOT_EQUAL,
+  GREATER,
+  GREATER_EQUAL,
+  LESS,
+  LESS_EQUAL,
+  BAR,
+  DOUBLE_BAR,
+  EQUAL,
   PLUS,
-  IDENTIFIER,
   MINUS,
   STAR,
   DIVIDE,
-  EQUAL,
-  NOT_EQUAL,
-  LESS,
-  LESS_EQUAL,
-  GREATER_EQUAL,
-  GREATER,
-  DOT,
-  BAR,
-  COLON,
-  OPEN_BRACKET,
-  CLOSE_BRACKET,
-  OPEN_ROUND,
-  CLOSE_ROUND,
-  OPEN_CURLY,
-  CLOSE_CURLY,
   AMPERSAND,
-  DOUBLE_BAR,
   DOUBLE_AMPERSAND,
+  IDENTIFIER,
+  CLOSE_BRACKET,
+  CLOSE_CURLY,
+  CLOSE_ROUND,
+  COLON,
   COMMA,
+  DOT,
+  OPEN_BRACKET,
+  OPEN_CURLY,
+  OPEN_ROUND,
   SEMICOLON
-} from "pacc";
+} from "../src/tokens.mjs";
 
 function tt(t, input, expected) {
   try {
@@ -151,7 +151,7 @@ test(tt, "a[*]._b", [
 test.skip(
   tt,
   `4711 0.23 12345.0
-"str2""str3" "\'\u0041" 'str4''str5'
+"str2""str3" "\\\"\'\u0041" 'str4''str5'
 name1 name_2 _name3
 n
 +
@@ -173,16 +173,30 @@ n
     12345.0,
     "str2",
     "str3",
-    "'\u0041",
+    "\"'\u0041",
     "str4",
     "str5",
     [IDENTIFIER, "name1"],
     [IDENTIFIER, "name_2"],
-    [IDENTIFIER, "name_3"],
+    [IDENTIFIER, "_name3"],
     [IDENTIFIER, "n"],
     PLUS,
     MINUS,
     STAR,
-    DIVIDE
+    DIVIDE,
+    OPEN_ROUND,
+    CLOSE_ROUND,
+    OPEN_CURLY,
+    CLOSE_CURLY,
+    OPEN_BRACKET,
+    CLOSE_BRACKET,
+    COLON,
+    COMMA,
+    SEMICOLON,
+    DOT,
+    LESS,
+    EQUAL,
+    EQUAL,
+    GREATER,
   ]
 );
