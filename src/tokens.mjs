@@ -106,6 +106,8 @@ export function* tokens(string) {
     }
 
     switch (c) {
+      case '\n':
+      case '\r':
       case "\t":
       case " ":
         switch (state) {

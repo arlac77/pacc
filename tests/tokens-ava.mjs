@@ -176,7 +176,7 @@ n
     12345.0,
     "str2",
     "str3",
-    "\\\b\n\r\t\"'\u0041",
+    "\\\b\f\n\r\t\"'\u0041",
     "str4",
     "str5",
     [IDENTIFIER, "name1"],
