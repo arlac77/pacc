@@ -63,7 +63,7 @@ export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
  * @yields {Token}
  */
 export function* tokens(string) {
-  let state, value, hex, divider;
+  let state, value, hex, divider, quote;
 
   function maybeKeyword() {
     switch (value) {
@@ -106,8 +106,8 @@ export function* tokens(string) {
     }
 
     switch (c) {
-      case '\n':
-      case '\r':
+      case "\n":
+      case "\r":
       case "\t":
       case " ":
         switch (state) {
@@ -147,20 +147,27 @@ export function* tokens(string) {
           case undefined:
             value = "";
             state = "string";
+            quote = c;
             break;
           case "string":
-            yield [value];
-            state = undefined;
+            if (c === quote) {
+              yield [value];
+              state = undefined;
+            } else {
+              value += c;
+            }
             break;
           case "identifier":
             yield maybeKeyword();
             value = "";
             state = "string";
+            quote = c;
             break;
           default:
             yield lookup[state];
             value = "";
             state = "string";
+            quote = c;
         }
         break;
       case "!":
@@ -317,10 +324,7 @@ export function* tokens(string) {
     case undefined:
       break;
     case "string":
-      const error = new Error("unterminated string");
-      // @ts-ignore
-      error.expression = string;
-      throw error;
+      throw new Error("unterminated string", { cause: string });
     case "number-fraction":
     case "number":
       yield [value];

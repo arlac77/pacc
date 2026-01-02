@@ -43,22 +43,17 @@ tt.title = (providedTitle = "token", input, expected) =>
     expected instanceof Error ? " =>ERROR" : ""
   }`.trim();
 
-test(
-  tt,
-  '"a',
-  (() => {
-    const error = new Error("unterminated string");
-    // @ts-ignore
-    error.expression = '"a';
-    return error;
-  })()
-);
+test(tt, '"a', (() => new Error("unterminated string", { cause: '"a' }))());
 test(tt, "", []);
 test(tt, "3", [3]);
 test(tt, "12345.0", [12345.0]);
 test(tt, "true", [true]);
 test(tt, "true false", [true, false]);
-test(tt, " \t'a'b\"c\"d ", ["a", [IDENTIFIER, "b"], "c", [IDENTIFIER, "d"]]);
+test(tt, '"A"', ["A"]);
+test(tt, '"\'B"', ["'B"]);
+test(tt, "'\"C'", ['"C']);
+test(tt, '"\'\u0041"', ["'\u0041"]);
+test(tt, ` \t'a'b"c"d `, ["a", [IDENTIFIER, "b"], "c", [IDENTIFIER, "d"]]);
 test(tt, " 'a2\\\\\\n\\r\\t\\b\\x\u0041' ", ["a2\\\n\r\t\bxA"]);
 test(tt, " ''+''", ["", PLUS, ""]);
 test(tt, " ''=''", ["", EQUAL, ""]);
@@ -151,10 +146,12 @@ test(tt, "a[*]._b", [
   [IDENTIFIER, "_b"]
 ]);
 
+// "\\\b\f\n\r\t\"\'\u0041"
+
 test.skip(
   tt,
   `4711 0.23 12345.0
-"str2""str3" "\\\b\f\n\r\t\"\'\u0041" 'str4''str5'
+"str2""str3" "\'\u0041" 'str4''str5'
 name1 name_2 _name3
 n
 +
@@ -176,7 +173,7 @@ n
     12345.0,
     "str2",
     "str3",
-    "\\\b\f\n\r\t\"'\u0041",
+    "'\u0041",
     "str4",
     "str5",
     [IDENTIFIER, "name1"],
