@@ -55,6 +55,7 @@ test(
 );
 test(tt, "", []);
 test(tt, "3", [3]);
+test(tt, "12345.0", [12345.0]);
 test(tt, "true", [true]);
 test(tt, "true false", [true, false]);
 test(tt, " \t'a'b\"c\"d ", ["a", [IDENTIFIER, "b"], "c", [IDENTIFIER, "d"]]);
