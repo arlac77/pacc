@@ -148,7 +148,7 @@ test(tt, "a[*]._b", [
 
 // "\\\b\f\n\r\t\"\'\u0041"
 
-test.skip(
+test(
   tt,
   `4711 0.23 12345.0
 "str2""str3" "\\\"\'\u0041" 'str4''str5'
@@ -162,7 +162,7 @@ n
 {}
 []
 :,;.
-< ===>           !===
+< = = = >!= = =
 <=
 >=
 =
@@ -197,6 +197,20 @@ n
     LESS,
     EQUAL,
     EQUAL,
+    EQUAL,
     GREATER,
+    NOT_EQUAL,
+    EQUAL,
+    EQUAL,
+    LESS_EQUAL,
+    GREATER_EQUAL,
+    EQUAL,
+    2,
+    PLUS,
+    OPEN_ROUND,
+    3,
+    STAR,
+    17,
+    CLOSE_ROUND
   ]
 );
