@@ -57,9 +57,19 @@ export /** @type {Token} */ const IDENTIFIER = createToken("IDENTIFIER", 0);
 export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
 
 const keywords = {
-  "true": [true],
-  "false": [false]
-}
+  true: [true],
+  false: [false]
+};
+
+const esc = {
+  b: "\b",
+  f: "\f",
+  n: "\n",
+  r: "\r",
+  t: "\t",
+  v: "\v"
+};
+
 /**
  * Split property path into tokens
  * @generator
@@ -70,6 +80,11 @@ export function* tokens(string) {
   let state, value, hex, divider, quote;
 
   const keywordOrIdentifier = () => keywords[value] || [IDENTIFIER, value];
+  const startString = c => {
+    value = "";
+    state = "string";
+    quote = c;
+  };
 
   for (const c of string) {
     switch (state) {
@@ -87,14 +102,6 @@ export function* tokens(string) {
           state = "string-escaping-hex";
           hex = "";
         } else {
-          const esc = {
-            b: "\b",
-            f: "\f",
-            n: "\n",
-            r: "\r",
-            t: "\t",
-            v: "\v"
-          };
           value += esc[c] || c;
           state = "string";
         }
@@ -105,6 +112,7 @@ export function* tokens(string) {
       case "\n":
       case "\r":
       case "\t":
+      case "\v":
       case " ":
         switch (state) {
           case "number":
@@ -141,9 +149,7 @@ export function* tokens(string) {
           case "number-fraction":
             yield [value];
           case undefined:
-            value = "";
-            state = "string";
-            quote = c;
+            startString(c);
             break;
           case "string":
             if (c === quote) {
@@ -155,15 +161,11 @@ export function* tokens(string) {
             break;
           case "identifier":
             yield keywordOrIdentifier();
-            value = "";
-            state = "string";
-            quote = c;
+            startString(c);
             break;
           default:
             yield lookup[state];
-            value = "";
-            state = "string";
-            quote = c;
+            startString(c);
         }
         break;
       case "!":
@@ -210,12 +212,12 @@ export function* tokens(string) {
           case undefined:
             state = c;
             break;
-          case "string":
-            value += c;
-            break;
           case "identifier":
             yield keywordOrIdentifier();
             state = c;
+            break;
+          case "string":
+            value += c;
             break;
           default:
             state += c;
@@ -247,12 +249,12 @@ export function* tokens(string) {
           case undefined:
             state = c;
             break;
-          case "string":
-            value += c;
-            break;
           case "identifier":
             yield keywordOrIdentifier();
             state = c;
+            break;
+          case "string":
+            value += c;
             break;
           default:
             yield lookup[state];
