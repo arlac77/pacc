@@ -56,6 +56,10 @@ export /** @type {Token} */ const DOUBLE_BAR = createToken("||", 30, "infixr");
 export /** @type {Token} */ const IDENTIFIER = createToken("IDENTIFIER", 0);
 export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
 
+const keywords = {
+  "true": [true],
+  "false": [false]
+}
 /**
  * Split property path into tokens
  * @generator
@@ -65,16 +69,7 @@ export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
 export function* tokens(string) {
   let state, value, hex, divider, quote;
 
-  function maybeKeyword() {
-    switch (value) {
-      case "true":
-        return [true];
-      case "false":
-        return [false];
-      default:
-        return [IDENTIFIER, value];
-    }
-  }
+  const keywordOrIdentifier = () => keywords[value] || [IDENTIFIER, value];
 
   for (const c of string) {
     switch (state) {
@@ -93,9 +88,7 @@ export function* tokens(string) {
           hex = "";
         } else {
           const esc = {
-            a: "\a",
             b: "\b",
-            e: "\e",
             f: "\f",
             n: "\n",
             r: "\r",
@@ -124,7 +117,7 @@ export function* tokens(string) {
             value += c;
             break;
           case "identifier":
-            yield maybeKeyword();
+            yield keywordOrIdentifier();
             value = undefined;
             state = undefined;
             break;
@@ -161,7 +154,7 @@ export function* tokens(string) {
             }
             break;
           case "identifier":
-            yield maybeKeyword();
+            yield keywordOrIdentifier();
             value = "";
             state = "string";
             quote = c;
@@ -200,7 +193,7 @@ export function* tokens(string) {
             value += c;
             break;
           case "identifier":
-            yield maybeKeyword();
+            yield keywordOrIdentifier();
             state = c;
             break;
           default:
@@ -221,7 +214,7 @@ export function* tokens(string) {
             value += c;
             break;
           case "identifier":
-            yield maybeKeyword();
+            yield keywordOrIdentifier();
             state = c;
             break;
           default:
@@ -258,7 +251,7 @@ export function* tokens(string) {
             value += c;
             break;
           case "identifier":
-            yield maybeKeyword();
+            yield keywordOrIdentifier();
             state = c;
             break;
           default:
@@ -333,7 +326,7 @@ export function* tokens(string) {
       yield [value];
       break;
     case "identifier":
-      yield maybeKeyword();
+      yield keywordOrIdentifier();
       break;
     default:
       yield lookup[state];
