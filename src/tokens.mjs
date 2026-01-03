@@ -93,11 +93,14 @@ export function* tokens(string) {
           hex = "";
         } else {
           const esc = {
+            a: "\a",
             b: "\b",
+            e: "\e",
             f: "\f",
             n: "\n",
             r: "\r",
-            t: "\t"
+            t: "\t",
+            v: "\v"
           };
           value += esc[c] || c;
           state = "string";
