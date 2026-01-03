@@ -77,7 +77,7 @@ const esc = {
  * @yields {Token}
  */
 export function* tokens(string) {
-  let state, value, hex, divider, quote;
+  let state, value, hex, quote;
 
   const keywordOrIdentifier = () => keywords[value] || [IDENTIFIER, value];
   const startString = c => {
@@ -116,8 +116,7 @@ export function* tokens(string) {
       case " ":
         switch (state) {
           case "number":
-          case "number-fraction":
-            yield [value];
+            yield [parseFloat(value)];
             state = undefined;
           case undefined:
             break;
@@ -146,8 +145,7 @@ export function* tokens(string) {
       case "'":
         switch (state) {
           case "number":
-          case "number-fraction":
-            yield [value];
+            yield [parseFloat(value)];
           case undefined:
             startString(c);
             break;
@@ -175,8 +173,7 @@ export function* tokens(string) {
       case "|":
         switch (state) {
           case "number":
-          case "number-fraction":
-            yield [value];
+            yield [parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -207,8 +204,7 @@ export function* tokens(string) {
       case "=":
         switch (state) {
           case "number":
-          case "number-fraction":
-            yield [value];
+            yield [parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -223,17 +219,23 @@ export function* tokens(string) {
             state += c;
         }
         break;
+
       case ".":
         if (state === "number") {
-          state = "number-fraction";
-          divider = 10;
+          value += '.';
           break;
         }
+        else if (state === "-") {
+          value = '-.';
+          state="number";
+          break;
+        }
+
+      case "-":
       case ":":
       case ";":
       case ",":
       case "+":
-      case "-":
       case "*":
       case "/":
       case "(":
@@ -244,8 +246,7 @@ export function* tokens(string) {
       case "}":
         switch (state) {
           case "number":
-          case "number-fraction":
-            yield [value];
+            yield [parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -275,21 +276,17 @@ export function* tokens(string) {
           default:
             yield lookup[state];
           case undefined:
-            value = c.charCodeAt(0) - 48;
+            value = c;
             state = "number";
             break;
+          case "-":
+            state = "number";
+            value = "-" + c;
+          break;
           case ".":
-            state = "number-fraction";
-            value = 0;
-            divider = 10;
-          case "number-fraction":
-            value = value + (c.charCodeAt(0) - 48) / divider;
-            divider *= 10;
-            break;
+            state = "number";
+            value = ".";
           case "number":
-            // @ts-ignore
-            value = value * 10 + c.charCodeAt(0) - 48;
-            break;
           case "string":
           case "identifier":
             value += c;
@@ -300,8 +297,7 @@ export function* tokens(string) {
       default:
         switch (state) {
           case "number":
-          case "number-fraction":
-            yield [value];
+            yield [parseFloat(value)];
           case undefined:
             state = "identifier";
             value = c;
@@ -323,9 +319,8 @@ export function* tokens(string) {
       break;
     case "string":
       throw new Error("unterminated string", { cause: string });
-    case "number-fraction":
     case "number":
-      yield [value];
+      yield [parseFloat(value)];
       break;
     case "identifier":
       yield keywordOrIdentifier();
