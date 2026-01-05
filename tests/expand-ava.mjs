@@ -15,7 +15,9 @@ test("plain expand string", t => {
   t.is(expand("A${a}C", context), "A1C");
   t.is(expand("A${a}", context), "A1");
   t.is(expand("A${a}${b}C", context), "A12C");
+  t.is(expand("A${a}B${b}C", context), "A1B2C");
   t.is(expand("A${c}C", context), "AtextC");
+  t.is(expand("A${d}C", context), "A${d}C");
 });
 
 test("plain expand string special lead-In/Out", t => {
@@ -34,7 +36,9 @@ test("plain expand string special lead-In/Out", t => {
   t.is(expand("A{{a}}C", context), "A1C");
   t.is(expand("A{{a}}", context), "A1");
   t.is(expand("A{{a}}{{b}}C", context), "A12C");
+  t.is(expand("A{{a}}B{{b}}C", context), "A1B2C");
   t.is(expand("A{{c}}C", context), "AtextC");
+  t.is(expand("A{{d}}C", context), "A{{d}}C");
 });
 
 test("expand unterminated", t => {

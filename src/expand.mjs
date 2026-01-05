@@ -41,7 +41,7 @@ export function expand(object, context = {}) {
 
           let value = parse(expression, context);
           if (value === undefined) {
-            result += object.substring(start, end + leadOut.length);
+            result += object.substring(cur, end + leadOut.length);
           } else {
             if (typeof value === "string") {
               value = _expand(value, path);
@@ -60,7 +60,8 @@ export function expand(object, context = {}) {
           cur = end + leadOut.length;
         } else {
           throw new Error(
-            `Unterminated expression between '${leadIn}' and '${leadOut}'`
+            `Unterminated expression between '${leadIn}' and '${leadOut}'`,
+            { cause: object }
           );
         }
       }
