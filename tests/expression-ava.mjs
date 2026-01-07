@@ -103,6 +103,18 @@ test(
   },
   [7]
 );
+test.skip(
+  eat,
+  "[n=3].x",
+  {
+    root: new Map([
+      ["a", { n: 1 }],
+      ["b", { n: 2 }],
+      ["b", { n: 3, x: 7 }]
+    ])
+  },
+  [7]
+);
 
 test(
   "map identifier",
