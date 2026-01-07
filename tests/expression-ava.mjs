@@ -86,6 +86,8 @@ test(
 
 test(eat, "[1]", { root: [0, 9] }, 9);
 test(eat, "['a']", { root: { a: 7 } }, 7);
+test(eat, "['b']", { root: new Map([["b", 8]]) }, 8);
+test(eat, "[c]", { root: new Map([["c", 9]]) }, 9);
 test(eat, "[1+3].b", { root: [0, 0, 0, 0, { b: 44 }] }, 44);
 test(eat, "a", { root: { a: 12 } }, 12);
 test(eat, "a[2].c", { root: { a: [0, 0, { c: 17 }] } }, 17);
@@ -102,7 +104,8 @@ test(
   [7]
 );
 
-test("map",
+test(
+  "map identifier",
   eat,
   "c",
   {
@@ -146,8 +149,8 @@ test(eat, "min(1,2)", { globals }, 1);
 test(eat, "max(1,2)", { globals }, 2);
 test(eat, "substring('abcd',1,3)", { globals }, "bc");
 test(eat, "length('a' + 'b')", { globals }, 2);
-test(eat, "lowercase('aA')", { globals }, 'aa');
-test(eat, "uppercase('aA')", { globals }, 'AA');
+test(eat, "lowercase('aA')", { globals }, "aa");
+test(eat, "uppercase('aA')", { globals }, "AA");
 test(
   eat,
   "all[in(7,x)]",
@@ -161,7 +164,9 @@ test(
   eat,
   "all[in(8,x)]",
   {
-    root: { all: [{ x: new Set([1]) }, { x: new Set([2, 8]) }, { x: new Set([3]) }] },
+    root: {
+      all: [{ x: new Set([1]) }, { x: new Set([2, 8]) }, { x: new Set([3]) }]
+    },
     globals
   },
   [{ x: new Set([2, 8]) }]
