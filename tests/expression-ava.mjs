@@ -102,6 +102,18 @@ test(
   [7]
 );
 
+test("map",
+  eat,
+  "c",
+  {
+    root: new Map([
+      ["b", 1],
+      ["c", 2]
+    ])
+  },
+  2
+);
+
 test.skip(
   eat,
   "[n=2].x",
