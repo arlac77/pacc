@@ -157,8 +157,11 @@ test(
   { globals: { ...globals, set: new Set([1, 2, 3]) } },
   false
 );
+test(eat, "ceil(0.7)", { globals }, 1);
+test(eat, "floor(2.9)", { globals }, 2);
+test(eat, "abs(-7)", { globals }, 7);
 test(eat, "min(1,2)", { globals }, 1);
-test(eat, "max(1,2)", { globals }, 2);
+test(eat, "max(1,2,3)", { globals }, 3);
 test(eat, "substring('abcd',1,3)", { globals }, "bc");
 test(eat, "length('a' + 'b')", { globals }, 2);
 test(eat, "lowercase('aA')", { globals }, "aa");
