@@ -53,19 +53,39 @@ export function binop(op, left, right, fallback) {
   return fallback(op, left, right);
 }
 
+/**
+ *
+ * @param {string} message
+ */
+function error(message) {
+  const error = new Error(message);
+  throw error;
+}
+/**
+ *
+ * @param {Token} op
+ * @param {AST} left
+ * @param {AST} right
+ */
+function binopError(op, left, right) {
+  error(`Unexpected '${op.str || op}'`);
+}
+
 export function parse(input, context = { globals }) {
   input = tokens(input);
 
   let node, token, value;
 
-  function error(message) {
-    const error = new Error(message);
-    throw error;
-  }
-  function binopError(op, left, right) {
-    error(`Unexpected '${op.str || op}'`);
-  }
-
+  const predicateIteratorEval = (node, current) => {
+    if (current instanceof Set) {
+      current = [...current];
+    } else if (current instanceof Map) {
+      current = [...current.values()];
+    }
+    return current
+      .filter(item => node.predicate(node, item))
+      .map(item => node.right.eval(node.right, item));
+  };
   const pathEval = (node, current) => {
     let result = current;
 
@@ -207,15 +227,26 @@ export function parse(input, context = { globals }) {
           }
         }
         if (last === DOT) {
-          if (left.path) {
-            left.path.push(...right.path);
-            return left;
-          }
           switch (typeof left) {
             case "number":
               right.path.unshift(left);
               return right;
           }
+
+          if (left.path) {
+            left.path.push(...right.path);
+            return left;
+          }
+
+          if (left.eval) {
+            return {
+              eval: predicateIteratorEval,
+              predicate: left.eval,
+              right
+              // path: right.path
+            };
+          }
+
           return { eval: pathEval, path: [left.token, right.token] };
         }
 

@@ -103,7 +103,7 @@ test(
   },
   [7]
 );
-test.skip(
+test(
   eat,
   "[n=3].x",
   {
@@ -129,7 +129,7 @@ test(
   2
 );
 
-test.skip(
+test(
   eat,
   "[n=2].x",
   {
