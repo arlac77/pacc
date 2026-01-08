@@ -65,6 +65,7 @@ export function* attributeIterator(definition, filter, path = []) {
 }
 
 export const filterWritable = (name, attribute) => attribute.writable;
+export const filterPublic = (name, attribute) => !attribute.private;
 
 export function* writableAttributeIterator(definition) {
   yield* attributeIterator(definition, filterWritable);
