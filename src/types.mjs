@@ -35,7 +35,7 @@ export const types = {
       !value || value === "0" || value === "false" || value === "no"
         ? false
         : true,
-    toExternal: value => value ? "yes" : "no"
+    toExternal: value => value === undefined ? undefined : value ? "yes" : "no"
   },
   integer: {
     name: "integer",

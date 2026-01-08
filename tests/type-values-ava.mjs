@@ -1,5 +1,5 @@
 import test from "ava";
-import { toInternal, types, formatDuration } from "pacc";
+import { toInternal, toExternal, types, formatDuration } from "pacc";
 
 test("empty url type", t => {
   t.is(toInternal("", { type: types.url }), undefined);
@@ -17,6 +17,18 @@ test("boolean type", t => {
   t.is(toInternal(1, { type: types.boolean }), true);
 });
 
+test("yesno type", t => {
+  t.is(toInternal("no", { type: types.yesno }), false);
+  t.is(toInternal("yes", { type: types.yesno }), true);
+  t.is(toInternal("0", { type: types.yesno }), false);
+  t.is(toInternal(0, { type: types.yesno }), false);
+  t.is(toInternal(1, { type: types.yesno }), true);
+
+  t.is(toExternal(true, { type: types.yesno }), "yes");
+  t.is(toExternal(false, { type: types.yesno }), "no");
+  t.is(toExternal(undefined, { type: types.yesno }), undefined);
+});
+
 test("duration_ms type", t => {
   t.is(toInternal(1, { type: types.duration_ms }), 1000);
   t.is(toInternal("1", { type: types.duration_ms }), 1000);
@@ -24,10 +36,7 @@ test("duration_ms type", t => {
   t.is(toInternal("1 ms", { type: types.duration_ms }), 1);
   t.is(toInternal("1 h", { type: types.duration_ms }), 3600000);
   t.is(toInternal("1 h 30m", { type: types.duration_ms }), 5400000);
-  t.is(
-    toInternal("1hour 30m 5seconds", { type: types.duration_ms }),
-    5405000
-  );
+  t.is(toInternal("1hour 30m 5seconds", { type: types.duration_ms }), 5405000);
 });
 
 test("duration type", t => {
