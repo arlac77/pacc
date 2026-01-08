@@ -90,34 +90,38 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [expand](#expand)
     *   [Parameters](#parameters-5)
 *   [promises](#promises)
-*   [filter](#filter)
+*   [error](#error)
     *   [Parameters](#parameters-6)
-*   [setAttributes](#setattributes)
+*   [binopError](#binoperror)
     *   [Parameters](#parameters-7)
-*   [getAttributes](#getattributes)
+*   [filter](#filter)
     *   [Parameters](#parameters-8)
-*   [getAttributesJSON](#getattributesjson)
+*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-9)
+*   [getAttributes](#getattributes)
+    *   [Parameters](#parameters-10)
+*   [getAttributesJSON](#getattributesjson)
+    *   [Parameters](#parameters-11)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-10)
-*   [setAttribute](#setattribute)
-    *   [Parameters](#parameters-11)
-*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-12)
-*   [getAttributeAndOperator](#getattributeandoperator)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-13)
-*   [parseDuration](#parseduration)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-14)
-*   [formatDuration](#formatduration)
+*   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-15)
-*   [formatDurationISO](#formatdurationiso)
+*   [parseDuration](#parseduration)
     *   [Parameters](#parameters-16)
+*   [formatDuration](#formatduration)
+    *   [Parameters](#parameters-17)
+*   [formatDurationISO](#formatdurationiso)
+    *   [Parameters](#parameters-18)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-1)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-17)
+    *   [Parameters](#parameters-19)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -149,7 +153,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [Type](#type)
     *   [Properties](#properties-2)
 *   [raiseOnUnknownType](#raiseonunknowntype)
-    *   [Parameters](#parameters-18)
+    *   [Parameters](#parameters-20)
 
 ## prepareAttributesDefinitions
 
@@ -460,6 +464,20 @@ Returns **any**&#x20;
 ## promises
 
 Type: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<any>>
+
+## error
+
+### Parameters
+
+*   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+## binopError
+
+### Parameters
+
+*   `op` **[Token](#token)**&#x20;
+*   `left` **AST**&#x20;
+*   `right` **AST**&#x20;
 
 ## filter
 
