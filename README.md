@@ -51,12 +51,13 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [version\_attribute\_writable](#version_attribute_writable)
 *   [description\_attribute](#description_attribute)
 *   [boolean\_attribute](#boolean_attribute)
+*   [boolean\_attribute](#boolean_attribute-1)
 *   [boolean\_attribute\_writable](#boolean_attribute_writable)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true-1)
 *   [boolean\_attribute\_writable\_false](#boolean_attribute_writable_false)
 *   [boolean\_attribute\_false](#boolean_attribute_false)
-*   [empty\_attribute](#empty_attribute)
+*   [yesno\_attribute](#yesno_attribute)
 *   [uuid\_attribute](#uuid_attribute)
 *   [secret\_attribute](#secret_attribute)
 *   [secret\_attribute](#secret_attribute-1)
@@ -218,7 +219,8 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `default` **any?** the default value
 *   `set` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** set the value
 *   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
-*   `prepareValue` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+*   `toInternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+*   `toExternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 *   `values` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)\<any>?** allowed values
 *   `externalName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** attribute name used by external system
 *   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable(s) used to provide the value
@@ -290,6 +292,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## boolean\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## boolean\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -310,7 +316,7 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## empty\_attribute
+## yesno\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -738,7 +744,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 *   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `primitive` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?**&#x20;
-*   `prepareValue` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+*   `toInternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 
 ## raiseOnUnknownType
 
