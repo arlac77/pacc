@@ -1,6 +1,6 @@
 import { setAttribute, getAttribute } from "./settergetter.mjs";
-import { attributeIterator } from "./attributes.mjs";
-
+import { attributeIterator, toExternal } from "./attributes.mjs";
+import { default_attribute } from "./common-attributes.mjs";
 /**
  * Copies attribute values from a source object into a destination object.
  * @param {Object} object target object to be modified
@@ -71,10 +71,11 @@ export function getAttributesJSON(object, definitions, filter) {
 
     let value = getAttribute(object, name, def);
     if (value !== undefined) {
+      value = toExternal(value);
       if (value instanceof Set) {
         value = [...value];
       }
-      setAttribute(result, def.externalName ?? name, value, def);
+      setAttribute(result, def.externalName ?? name, value, default_attribute);
     }
   }
   return result;
