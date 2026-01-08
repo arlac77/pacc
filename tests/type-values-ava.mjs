@@ -15,6 +15,9 @@ test("boolean type", t => {
   t.is(toInternal("0", { type: types.boolean }), false);
   t.is(toInternal(0, { type: types.boolean }), false);
   t.is(toInternal(1, { type: types.boolean }), true);
+  t.is(toInternal(undefined, { type: types.boolean }), undefined);
+  t.is(toInternal(undefined, { type: types.boolean, default: true }), true);
+  t.is(toInternal(undefined, { type: types.boolean, default: false }), false);
 });
 
 test("yesno type", t => {
@@ -23,6 +26,9 @@ test("yesno type", t => {
   t.is(toInternal("0", { type: types.yesno }), false);
   t.is(toInternal(0, { type: types.yesno }), false);
   t.is(toInternal(1, { type: types.yesno }), true);
+  t.is(toInternal(undefined, { type: types.yesno }), undefined);
+  t.is(toInternal(undefined, { type: types.yesno, default: true }), true);
+  t.is(toInternal(undefined, { type: types.yesno, default: false }), false);
 
   t.is(toExternal(true, { type: types.yesno }), "yes");
   t.is(toExternal(false, { type: types.yesno }), "no");

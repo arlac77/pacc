@@ -17,25 +17,29 @@ export const types = {
   number: {
     name: "number",
     primitive: true,
-    toInternal: value =>
-      typeof value === "string" ? parseFloat(value) : value
+    toInternal: value => (typeof value === "string" ? parseFloat(value) : value)
   },
   boolean: {
     name: "boolean",
     primitive: true,
-    toInternal: value =>
-      !value || value === "0" || value === "false" || value === "no"
+    toInternal: (value, attribute) =>
+      value === undefined
+        ? attribute.default
+        : !value || value === "0" || value === "false" || value === "no"
         ? false
         : true
   },
   yesno: {
     name: "yesno",
     primitive: true,
-    toInternal: value =>
-      !value || value === "0" || value === "false" || value === "no"
+    toInternal: (value, attribute) =>
+      value === undefined
+        ? attribute.default
+        : !value || value === "0" || value === "false" || value === "no"
         ? false
         : true,
-    toExternal: value => value === undefined ? undefined : value ? "yes" : "no"
+    toExternal: value =>
+      value === undefined ? undefined : value ? "yes" : "no"
   },
   integer: {
     name: "integer",
@@ -71,9 +75,9 @@ export const types = {
 };
 
 /**
- * 
- * @param {string|undefined} type 
- * @param {any} origin 
+ *
+ * @param {string|undefined} type
+ * @param {any} origin
  * @returns {Type}
  */
 function raiseOnUnknownType(type, origin) {
