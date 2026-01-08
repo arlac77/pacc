@@ -16,7 +16,8 @@ import { types } from "./types.mjs";
  * @property {any} [default] the default value
  * @property {Function} [set] set the value
  * @property {Function} [get] get the value can be used to calculate default values
- * @property {Function} [prepareValue]
+ * @property {Function} [toInternal]
+ * @property {Function} [toExternal]
  * @property {Set<any>} [values] allowed values
  * @property {string} [externalName] attribute name used by external system
  * @property {string[]|string} [env] environment variable(s) used to provide the value
@@ -178,10 +179,20 @@ export { boolean_attribute_writable_true as active_attribute };
 /**
  * @type {AttributeDefinition}
  */
-export const empty_attribute = {
-  ...default_attribute,
-  type: types.boolean
+export const yesno_attribute = {
+  ...boolean_attribute,
+  type: types.yesno
 };
+
+export const yesno_attribute_writable = {
+  ...yesno_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export { boolean_attribute as empty_attribute };
 
 /**
  * @type {AttributeDefinition}

@@ -1,43 +1,43 @@
 import test from "ava";
-import { prepareValue, types, formatDuration } from "pacc";
+import { toInternal, types, formatDuration } from "pacc";
 
 test("empty url type", t => {
-  t.is(prepareValue("", { type: types.url }), undefined);
+  t.is(toInternal("", { type: types.url }), undefined);
   t.is(
-    prepareValue("http:/example.com", { type: types.url }),
+    toInternal("http:/example.com", { type: types.url }),
     "http:/example.com"
   );
 });
 
 test("boolean type", t => {
-  t.is(prepareValue("no", { type: types.boolean }), false);
-  t.is(prepareValue("yes", { type: types.boolean }), true);
-  t.is(prepareValue("0", { type: types.boolean }), false);
-  t.is(prepareValue(0, { type: types.boolean }), false);
-  t.is(prepareValue(1, { type: types.boolean }), true);
+  t.is(toInternal("no", { type: types.boolean }), false);
+  t.is(toInternal("yes", { type: types.boolean }), true);
+  t.is(toInternal("0", { type: types.boolean }), false);
+  t.is(toInternal(0, { type: types.boolean }), false);
+  t.is(toInternal(1, { type: types.boolean }), true);
 });
 
 test("duration_ms type", t => {
-  t.is(prepareValue(1, { type: types.duration_ms }), 1000);
-  t.is(prepareValue("1", { type: types.duration_ms }), 1000);
-  t.is(prepareValue("1ms", { type: types.duration_ms }), 1);
-  t.is(prepareValue("1 ms", { type: types.duration_ms }), 1);
-  t.is(prepareValue("1 h", { type: types.duration_ms }), 3600000);
-  t.is(prepareValue("1 h 30m", { type: types.duration_ms }), 5400000);
+  t.is(toInternal(1, { type: types.duration_ms }), 1000);
+  t.is(toInternal("1", { type: types.duration_ms }), 1000);
+  t.is(toInternal("1ms", { type: types.duration_ms }), 1);
+  t.is(toInternal("1 ms", { type: types.duration_ms }), 1);
+  t.is(toInternal("1 h", { type: types.duration_ms }), 3600000);
+  t.is(toInternal("1 h 30m", { type: types.duration_ms }), 5400000);
   t.is(
-    prepareValue("1hour 30m 5seconds", { type: types.duration_ms }),
+    toInternal("1hour 30m 5seconds", { type: types.duration_ms }),
     5405000
   );
 });
 
 test("duration type", t => {
-  t.is(prepareValue(1, { type: types.duration }), 1);
-  t.is(prepareValue("1", { type: types.duration }), 1);
-  t.is(prepareValue("1ms", { type: types.duration }), 0.001);
-  t.is(prepareValue("1 ms", { type: types.duration }), 0.001);
-  t.is(prepareValue("1 h", { type: types.duration }), 3600);
-  t.is(prepareValue("1 h 30m", { type: types.duration }), 5400);
-  t.is(prepareValue("1hour 30m 5seconds", { type: types.duration }), 5405);
+  t.is(toInternal(1, { type: types.duration }), 1);
+  t.is(toInternal("1", { type: types.duration }), 1);
+  t.is(toInternal("1ms", { type: types.duration }), 0.001);
+  t.is(toInternal("1 ms", { type: types.duration }), 0.001);
+  t.is(toInternal("1 h", { type: types.duration }), 3600);
+  t.is(toInternal("1 h 30m", { type: types.duration }), 5400);
+  t.is(toInternal("1hour 30m 5seconds", { type: types.duration }), 5405);
 });
 
 test("formatDuration", t => {
@@ -48,10 +48,10 @@ test("formatDuration", t => {
 });
 
 test("bytes type", t => {
-  t.is(prepareValue(1, { type: types.byte_size }), 1);
-  t.is(prepareValue("1", { type: types.byte_size }), 1);
-  t.is(prepareValue("1kb", { type: types.byte_size }), 1024);
-  t.is(prepareValue("1K", { type: types.byte_size }), 1024);
-  t.is(prepareValue("1mb", { type: types.byte_size }), 1024 * 1024);
-  t.is(prepareValue("1m", { type: types.byte_size }), 1024 * 1024);
+  t.is(toInternal(1, { type: types.byte_size }), 1);
+  t.is(toInternal("1", { type: types.byte_size }), 1);
+  t.is(toInternal("1kb", { type: types.byte_size }), 1024);
+  t.is(toInternal("1K", { type: types.byte_size }), 1024);
+  t.is(toInternal("1mb", { type: types.byte_size }), 1024 * 1024);
+  t.is(toInternal("1m", { type: types.byte_size }), 1024 * 1024);
 });

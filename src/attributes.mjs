@@ -70,11 +70,23 @@ export function* writableAttributeIterator(definition) {
   yield* attributeIterator(definition, filterWritable);
 }
 
-export function prepareValue(value, attribute) {
+export function toInternal(value, attribute) {
   if (attribute) {
-    const prepareValue = attribute.prepareValue ?? attribute.type?.prepareValue;
-    if (prepareValue) {
-      return prepareValue(value, attribute);
+    const toInternal = attribute.toInternal ?? attribute.type?.toInternal;
+    if (toInternal) {
+      return toInternal(value, attribute);
+    }
+  }
+  return value;
+}
+
+export { toInternal as prepareValue }; // DEPRECATED
+
+export function toExternal(value, attribute) {
+  if (attribute) {
+    const toExternal = attribute.toExternal ?? attribute.type?.toExternal;
+    if (toExternal) {
+      return toExternal(value, attribute);
     }
   }
   return value;

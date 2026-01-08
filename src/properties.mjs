@@ -1,6 +1,6 @@
 import { attributeIterator } from "./attributes.mjs";
 import { getAttribute, setAttribute } from "./settergetter.mjs";
-import { prepareValue } from "./attributes.mjs";
+import { toInternal } from "./attributes.mjs";
 
 function findPropertyDescriptor(obj, name) {
   let descriptor;
@@ -29,7 +29,7 @@ export function definePropertiesFromAttributes(
       attribute.default;
 
     if (value !== undefined) {
-      value = prepareValue(value, attribute);
+      value = toInternal(value, attribute);
 
       if (path.length === 1) {
         const property = properties[name];

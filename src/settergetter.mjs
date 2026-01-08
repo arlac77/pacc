@@ -17,7 +17,7 @@ import {
   IDENTIFIER
 } from "./tokens.mjs";
 import { parse } from "./expression.mjs";
-import { prepareValue } from "./attributes.mjs";
+import { toInternal } from "./attributes.mjs";
 
 /**
  * Set object attribute.
@@ -49,7 +49,7 @@ export function setAttribute(object, expression, value, definition) {
   }
 
   if (anchor) {
-    anchor[anchorKey] = prepareValue(value, definition);
+    anchor[anchorKey] = toInternal(value, definition);
   }
 }
 

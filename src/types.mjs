@@ -6,7 +6,7 @@ import { parseBytes } from "./bytes.mjs";
  * @typedef {Object} Type
  * @property {string} name
  * @property {boolean} [primitive]
- * @property {Function} [prepareValue]
+ * @property {Function} [toInternal]
  */
 
 const emptyStringIsUndefined = value =>
@@ -17,45 +17,54 @@ export const types = {
   number: {
     name: "number",
     primitive: true,
-    prepareValue: value =>
+    toInternal: value =>
       typeof value === "string" ? parseFloat(value) : value
   },
   boolean: {
     name: "boolean",
     primitive: true,
-    prepareValue: value =>
+    toInternal: value =>
       !value || value === "0" || value === "false" || value === "no"
         ? false
         : true
   },
+  yesno: {
+    name: "yesno",
+    primitive: true,
+    toInternal: value =>
+      !value || value === "0" || value === "false" || value === "no"
+        ? false
+        : true,
+    toExternal: value => value ? "yes" : "no"
+  },
   integer: {
     name: "integer",
     primitive: true,
-    prepareValue: value => (typeof value === "string" ? parseInt(value) : value)
+    toInternal: value => (typeof value === "string" ? parseInt(value) : value)
   },
   "unsigned-integer": {
     name: "unsigned-integer",
     primitive: true,
-    prepareValue: value => (typeof value === "string" ? parseInt(value) : value)
+    toInternal: value => (typeof value === "string" ? parseInt(value) : value)
   },
   duration: {
     name: "duration",
     primitive: true,
-    prepareValue: value => parseDuration(value)
+    toInternal: value => parseDuration(value)
   },
   duration_ms: {
     name: "duration_ms",
     primitive: true,
-    prepareValue: value => parseDuration(value) * 1000
+    toInternal: value => parseDuration(value) * 1000
   },
   byte_size: {
     name: "byte_size",
     primitive: true,
-    prepareValue: parseBytes
+    toInternal: parseBytes
   },
   url: {
     name: "url",
-    prepareValue: emptyStringIsUndefined,
+    toInternal: emptyStringIsUndefined,
     primitive: true
   },
   object: { name: "object", primitive: false }
