@@ -214,6 +214,14 @@ export const secret_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const secret_attribute_writable = {
+  ...secret_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export { secret_attribute as username_attribute };
 
 /**
@@ -235,19 +243,16 @@ export { secret_attribute as certificate_attribute };
  * @type {AttributeDefinition}
  */
 export const private_key_attribute = {
-  ...default_attribute_writable,
-  description: "private key",
-  private: true,
-  credential: true
+  ...secret_attribute_writable,
+  description: "private key"
 };
 
 /**
  * @type {AttributeDefinition}
  */
 export const public_key_attribute = {
-  ...default_attribute_writable,
-  description: "public key",
-  credential: true
+  ...secret_attribute_writable,
+  description: "public key"
 };
 
 /**
