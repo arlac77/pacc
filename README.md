@@ -64,6 +64,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [secret\_attribute](#secret_attribute-2)
 *   [secret\_attribute](#secret_attribute-3)
 *   [secret\_attribute](#secret_attribute-4)
+*   [secret\_attribute\_writable](#secret_attribute_writable)
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
 *   [number\_attribute](#number_attribute)
@@ -341,6 +342,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## secret\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## secret\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
