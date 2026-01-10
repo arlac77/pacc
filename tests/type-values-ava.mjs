@@ -53,6 +53,10 @@ test("duration type", t => {
   t.is(toInternal("1 h", { type: types.duration }), 3600);
   t.is(toInternal("1 h 30m", { type: types.duration }), 5400);
   t.is(toInternal("1hour 30m 5seconds", { type: types.duration }), 5405);
+  t.is(toInternal(undefined, { type: types.duration }), undefined);
+
+  t.is(toExternal(5405, { type: types.duration }), "1h 30m 5s");
+  t.is(toExternal(undefined, { type: types.duration }), undefined);
 });
 
 test("formatDuration", t => {
@@ -69,4 +73,9 @@ test("bytes type", t => {
   t.is(toInternal("1K", { type: types.byte_size }), 1024);
   t.is(toInternal("1mb", { type: types.byte_size }), 1024 * 1024);
   t.is(toInternal("1m", { type: types.byte_size }), 1024 * 1024);
+  t.is(toInternal(undefined, { type: types.byte_size }), undefined);
+
+  t.is(toExternal(1, { type: types.byte_size }), 1);
+  //t.is(toExternal(1024, { type: types.byte_size }), "1k");
+  t.is(toExternal(undefined, { type: types.byte_size }), undefined);
 });

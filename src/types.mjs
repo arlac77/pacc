@@ -1,5 +1,5 @@
 import { attributeIterator } from "./attributes.mjs";
-import { parseDuration } from "./time.mjs";
+import { parseDuration, formatDuration } from "./time.mjs";
 import { parseBytes } from "./bytes.mjs";
 
 /**
@@ -54,7 +54,8 @@ export const types = {
   duration: {
     name: "duration",
     primitive: true,
-    toInternal: value => parseDuration(value)
+    toInternal: value => parseDuration(value),
+    toExternal: value => value === undefined ? undefined : formatDuration(value)
   },
   duration_ms: {
     name: "duration_ms",
