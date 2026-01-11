@@ -543,6 +543,7 @@ Split property path into tokens
 ### Parameters
 
 *   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `options`   (optional, default `{}`)
 
 ## setAttribute
 
