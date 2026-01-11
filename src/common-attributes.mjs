@@ -59,6 +59,7 @@ export { default_attribute_writable as string_attribute_writable };
 
 export const string_collection_attribute = {
   ...default_attribute,
+  separator: " ",
   collection: true
 };
 

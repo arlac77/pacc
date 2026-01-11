@@ -17,6 +17,52 @@ test("string type", t => {
   t.is(toExternal(undefined, { type: types.string }), undefined);
 });
 
+test("string collection type", t => {
+  t.deepEqual(
+    toInternal("a b c", {
+      collection: true,
+      separator: " ",
+      type: types.string
+    }),
+    ["a", "b", "c"]
+  );
+  t.deepEqual(
+    toInternal(undefined, {
+      collection: true,
+      separator: " ",
+      type: types.string
+    }),
+    undefined
+  );
+
+  t.deepEqual(
+    toExternal(["a", "b", "c"], {
+      collection: true,
+      separator: " ",
+      type: types.string
+    }),
+    "a b c"
+  );
+
+  t.deepEqual(
+    toExternal(new Set(["a", "b", "c"]), {
+      collection: true,
+      separator: " ",
+      type: types.string
+    }),
+    "a b c"
+  );
+
+  t.deepEqual(
+    toExternal(undefined, {
+      collection: true,
+      separator: " ",
+      type: types.string
+    }),
+    undefined
+  );
+});
+
 test("boolean type", t => {
   t.is(toInternal("no", { type: types.boolean }), false);
   t.is(toInternal("yes", { type: types.boolean }), true);

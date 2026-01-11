@@ -13,7 +13,26 @@ const emptyStringIsUndefined = value =>
   typeof value === "string" && value.length === 0 ? undefined : value;
 
 export const types = {
-  string: { name: "string", primitive: true },
+  string: {
+    name: "string",
+    primitive: true,
+    toInternal: (value, attribute) => {
+      if (value !== undefined) {
+        if (attribute.collection) {
+          return value.split(attribute.separator);
+        }
+      }
+      return value;
+    },
+    toExternal: (value, attribute) => {
+      if (value !== undefined) {
+        if (attribute.collection) {
+          return (Array.isArray(value) ? value : [...value]).join(attribute.separator);
+        }
+      }
+      return value;
+    }
+  },
   number: {
     name: "number",
     primitive: true,
@@ -55,7 +74,8 @@ export const types = {
     name: "duration",
     primitive: true,
     toInternal: value => parseDuration(value),
-    toExternal: value => value === undefined ? undefined : formatDuration(value)
+    toExternal: value =>
+      value === undefined ? undefined : formatDuration(value)
   },
   duration_ms: {
     name: "duration_ms",
