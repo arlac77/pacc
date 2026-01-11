@@ -9,6 +9,14 @@ test("empty url type", t => {
   );
 });
 
+test("string type", t => {
+  t.is(toInternal("abc", { type: types.string }), "abc");
+  t.is(toInternal(undefined, { type: types.string }), undefined);
+
+  t.is(toExternal("abc", { type: types.string }), "abc");
+  t.is(toExternal(undefined, { type: types.string }), undefined);
+});
+
 test("boolean type", t => {
   t.is(toInternal("no", { type: types.boolean }), false);
   t.is(toInternal("yes", { type: types.boolean }), true);
@@ -18,6 +26,10 @@ test("boolean type", t => {
   t.is(toInternal(undefined, { type: types.boolean }), undefined);
   t.is(toInternal(undefined, { type: types.boolean, default: true }), true);
   t.is(toInternal(undefined, { type: types.boolean, default: false }), false);
+
+  t.is(toExternal(true, { type: types.boolean }), true);
+  t.is(toExternal(false, { type: types.boolean }), false);
+  t.is(toExternal(undefined, { type: types.boolean }), undefined);
 });
 
 test("yesno type", t => {
