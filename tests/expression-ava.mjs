@@ -1,6 +1,10 @@
 import test from "ava";
 import { parse, globals } from "../src/expression.mjs";
 
+function getGlobal(other) {
+  return a => globals[a] ?? other?.[a];
+}
+
 function eat(t, input, context, expected) {
   if (!context) {
     context = { exec: false };
@@ -66,7 +70,12 @@ test(eat, "true && false", undefined, false);
 test(eat, "1 + a", { root: { a: 5 } }, 6);
 test(eat, "x > 2", { root: { x: 3 } }, true);
 test(eat, "[ x > 2 ]", { root: { x: 3 } }, true);
-test(eat, "[ x > y ]", { root: { x: 3 }, globals: { y: 2 } }, true);
+test(
+  eat,
+  "[ x > y ]",
+  { root: { x: 3 }, getGlobal: getGlobal({ y: 2 }) },
+  true
+);
 test(eat, "a.b[ c > 2 ]", { root: { a: { b: [{ c: 2 }, { c: 3 }] } } }, [
   { c: 3 }
 ]);
@@ -138,40 +147,40 @@ test(
   [4]
 );
 
-test(eat, "in(2,array)", { globals: { ...globals, array: [1, 2, 3] } }, true);
+test(eat, "in(2,array)", { getGlobal: getGlobal({ array: [1, 2, 3] }) }, true);
 test(
   eat,
   "in('b',array)",
-  { globals: { ...globals, array: [1, 2, 3] } },
+  { getGlobal: getGlobal({ array: [1, 2, 3] }) },
   false
 );
 test(
   eat,
   "in(2,set)",
-  { globals: { ...globals, set: new Set([1, 2, 3]) } },
+  { getGlobal: getGlobal({ set: new Set([1, 2, 3]) }) },
   true
 );
 test(
   eat,
   "in(7,set)",
-  { globals: { ...globals, set: new Set([1, 2, 3]) } },
+  { getGlobal: getGlobal({ set: new Set([1, 2, 3]) }) },
   false
 );
-test(eat, "ceil(0.7)", { globals }, 1);
-test(eat, "floor(2.9)", { globals }, 2);
-test(eat, "abs(-7)", { globals }, 7);
-test(eat, "min(1,2)", { globals }, 1);
-test(eat, "max(1,2,3)", { globals }, 3);
-test(eat, "substring('abcd',1,3)", { globals }, "bc");
-test(eat, "length('a' + 'b')", { globals }, 2);
-test(eat, "lowercase('aA')", { globals }, "aa");
-test(eat, "uppercase('aA')", { globals }, "AA");
+
+test(eat, "ceil(0.7)", {}, 1);
+test(eat, "floor(2.9)", {}, 2);
+test(eat, "abs(-7)", {}, 7);
+test(eat, "min(1,2)", {}, 1);
+test(eat, "max(1,2,3)", {}, 3);
+test(eat, "substring('abcd',1,3)", {}, "bc");
+test(eat, "length('a' + 'b')", {}, 2);
+test(eat, "lowercase('aA')", {}, "aa");
+test(eat, "uppercase('aA')", {}, "AA");
 test(
   eat,
   "all[in(7,x)]",
   {
-    root: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] },
-    globals
+    root: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] }
   },
   [{ x: [2, 7] }]
 );
@@ -181,8 +190,7 @@ test(
   {
     root: {
       all: [{ x: new Set([1]) }, { x: new Set([2, 8]) }, { x: new Set([3]) }]
-    },
-    globals
+    }
   },
   [{ x: new Set([2, 8]) }]
 );

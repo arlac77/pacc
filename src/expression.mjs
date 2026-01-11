@@ -71,8 +71,9 @@ function binopError(op, left, right) {
   error(`Unexpected '${op.str || op}'`);
 }
 
-export function parse(input, context = { globals }) {
-  input = tokens(input);
+export function parse(input, context = {}) {
+  const getGlobal = context?.getGlobal ?? (a => globals[a]);
+  input = tokens(input, context);
 
   let node, token, value;
 
@@ -101,12 +102,12 @@ export function parse(input, context = { globals }) {
             result = r;
           } else {
             if (result === undefined) {
-              result = context.globals?.[p];
+              result = getGlobal(p);
             } else {
               if (result instanceof Map) {
                 result = result.get(p);
               } else {
-                result = result[p] ?? context.globals?.[p];
+                result = result[p] ?? getGlobal(p);
               }
             }
           }
@@ -283,7 +284,7 @@ export function parse(input, context = { globals }) {
                 const args = node.path[1].map(a =>
                   typeof a === "object" ? a.eval(a, current) : a
                 );
-                return context.globals[node.path[0]](...args);
+                return getGlobal(node.path[0])(...args);
               };
 
               advance();

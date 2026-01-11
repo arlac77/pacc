@@ -56,7 +56,7 @@ export /** @type {Token} */ const DOUBLE_BAR = createToken("||", 30, "infixr");
 export /** @type {Token} */ const IDENTIFIER = createToken("IDENTIFIER", 0);
 export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
 
-const keywords = {
+export const keywords = {
   true: [true],
   false: [false]
 };
@@ -76,10 +76,14 @@ const esc = {
  * @param {string} string
  * @yields {Token}
  */
-export function* tokens(string) {
+export function* tokens(string, options = {}) {
+  options.keywords ||= keywords;
+  options.parseFloat ||= parseFloat;
+
   let state, value, hex, quote;
 
-  const keywordOrIdentifier = () => keywords[value] || [IDENTIFIER, value];
+  const keywordOrIdentifier = () =>
+    options.keywords[value] || [IDENTIFIER, value];
   const startString = c => {
     value = "";
     state = "string";
@@ -116,7 +120,7 @@ export function* tokens(string) {
       case " ":
         switch (state) {
           case "number":
-            yield [parseFloat(value)];
+            yield [options.parseFloat(value)];
             state = undefined;
           case undefined:
             break;
@@ -145,7 +149,7 @@ export function* tokens(string) {
       case "'":
         switch (state) {
           case "number":
-            yield [parseFloat(value)];
+            yield [options.parseFloat(value)];
           case undefined:
             startString(c);
             break;
@@ -173,7 +177,7 @@ export function* tokens(string) {
       case "|":
         switch (state) {
           case "number":
-            yield [parseFloat(value)];
+            yield [options.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -204,7 +208,7 @@ export function* tokens(string) {
       case "=":
         switch (state) {
           case "number":
-            yield [parseFloat(value)];
+            yield [options.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -222,12 +226,11 @@ export function* tokens(string) {
 
       case ".":
         if (state === "number") {
-          value += '.';
+          value += ".";
           break;
-        }
-        else if (state === "-") {
-          value = '-.';
-          state="number";
+        } else if (state === "-") {
+          value = "-.";
+          state = "number";
           break;
         }
 
@@ -246,7 +249,7 @@ export function* tokens(string) {
       case "}":
         switch (state) {
           case "number":
-            yield [parseFloat(value)];
+            yield [options.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -282,7 +285,7 @@ export function* tokens(string) {
           case "-":
             state = "number";
             value = "-" + c;
-          break;
+            break;
           case ".":
             state = "number";
             value = ".";
@@ -297,7 +300,7 @@ export function* tokens(string) {
       default:
         switch (state) {
           case "number":
-            yield [parseFloat(value)];
+            yield [options.parseFloat(value)];
           case undefined:
             state = "identifier";
             value = c;
@@ -320,7 +323,7 @@ export function* tokens(string) {
     case "string":
       throw new Error("unterminated string", { cause: string });
     case "number":
-      yield [parseFloat(value)];
+      yield [options.parseFloat(value)];
       break;
     case "identifier":
       yield keywordOrIdentifier();
