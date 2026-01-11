@@ -17,7 +17,7 @@ export const types = {
     name: "string",
     primitive: true,
     toInternal: (value, attribute) => {
-      if (value !== undefined) {
+      if (typeof value === "string") {
         if (attribute.collection) {
           return value.split(attribute.separator);
         }

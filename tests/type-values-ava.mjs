@@ -26,6 +26,18 @@ test("string collection type", t => {
     }),
     ["a", "b", "c"]
   );
+
+  /*
+  t.deepEqual(
+    toInternal(2, {
+      collection: true,
+      separator: " ",
+      type: types.string
+    }),
+    2
+  );
+*/
+
   t.deepEqual(
     toInternal(undefined, {
       collection: true,
