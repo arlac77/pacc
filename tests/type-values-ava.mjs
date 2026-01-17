@@ -48,6 +48,15 @@ test("string collection type", t => {
   );
 
   t.deepEqual(
+    toExternal("abc", {
+      collection: true,
+      separator: " ",
+      type: types.string
+    }),
+    "abc"
+  );
+
+  t.deepEqual(
     toExternal(["a", "b", "c"], {
       collection: true,
       separator: " ",

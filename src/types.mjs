@@ -26,8 +26,8 @@ export const types = {
     },
     toExternal: (value, attribute) => {
       if (value !== undefined) {
-        if (attribute.collection) {
-          return (Array.isArray(value) ? value : [...value]).join(attribute.separator);
+        if (attribute.collection && typeof value !== "string") {
+          return [...value].join(attribute.separator);
         }
       }
       return value;
@@ -45,8 +45,8 @@ export const types = {
       value === undefined
         ? attribute.default
         : !value || value === "0" || value === "false" || value === "no"
-        ? false
-        : true
+          ? false
+          : true
   },
   yesno: {
     name: "yesno",
@@ -55,8 +55,8 @@ export const types = {
       value === undefined
         ? attribute.default
         : !value || value === "0" || value === "false" || value === "no"
-        ? false
-        : true,
+          ? false
+          : true,
     toExternal: value =>
       value === undefined ? undefined : value ? "yes" : "no"
   },
