@@ -7,6 +7,7 @@ import { parseBytes } from "./bytes.mjs";
  * @property {string} name
  * @property {boolean} [primitive]
  * @property {Function} [toInternal]
+ * @property {Function} [toExternal]
  */
 
 const emptyStringIsUndefined = value =>
