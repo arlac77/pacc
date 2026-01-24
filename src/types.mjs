@@ -20,7 +20,7 @@ export const types = {
     toInternal: (value, attribute) => {
       if (typeof value === "string") {
         if (attribute.collection) {
-          return value.split(attribute.separator);
+          return value.split(attribute.separator||" ");
         }
       }
       return value;
@@ -28,7 +28,7 @@ export const types = {
     toExternal: (value, attribute) => {
       if (value !== undefined) {
         if (attribute.collection && typeof value !== "string") {
-          return [...value].join(attribute.separator);
+          return [...value].join(attribute.separator||" ");
         }
       }
       return value;
