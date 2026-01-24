@@ -149,9 +149,9 @@ test(
   [4]
 );
 
-test.skip(
+test(
   eat,
-  "[true].x",
+  "[].x",
   {
     root: new Set([{ x: 7 }, { x: 4 }, { x: 8 }])
   },

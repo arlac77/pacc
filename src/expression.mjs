@@ -63,6 +63,11 @@ export function parse(input, context = {}) {
             return node;
           }
           case OPEN_BRACKET: {
+            if(token === CLOSE_BRACKET) {
+              advance();
+              return { eval: () => true };
+            }
+
             const node = expression(0);
             expect(CLOSE_BRACKET);
             switch (typeof node) {
@@ -163,23 +168,21 @@ export function parse(input, context = {}) {
       }
       case "prefix":
         switch (last) {
-          case OPEN_ROUND:
-            {
-              const args = [];
-              while (token !== CLOSE_ROUND) {
-                args.push(expression(0));
-                if (token === COMMA) {
-                  advance();
-                }
+          case OPEN_ROUND: {
+            const args = [];
+            while (token !== CLOSE_ROUND) {
+              args.push(expression(0));
+              if (token === COMMA) {
+                advance();
               }
-              left.args = args;
-              left.eval = functionEval;
-
-              advance();
-
-              return left;
             }
-            break;
+            left.args = args;
+            left.eval = functionEval;
+
+            advance();
+
+            return left;
+          }
           case OPEN_BRACKET: {
             const predicate = expression(0);
             expect(CLOSE_BRACKET);
