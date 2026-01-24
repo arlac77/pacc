@@ -78,7 +78,7 @@ export function predicateIteratorEval(node, current, context) {
     current = [...current.values()];
   }
   return current
-    .filter(item => node.predicate(node, item, context))
+    .filter(item => node.left.eval(node.left, item, context))
     .map(item => node.right.eval(node.right, item, context));
 }
 

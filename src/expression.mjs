@@ -101,14 +101,8 @@ export function parse(input, context = {}) {
           }
         }
 
-        return {          
-          eval: (node, current, context) =>
-            binop(
-              last,
-              left.eval ? left.eval(left, current, context) : left,
-              right.eval ? right.eval(right, current, context) : right,
-              binopError
-            ),
+        return {
+          eval: binopEval,
           token: last,
           left,
           right
@@ -141,7 +135,7 @@ export function parse(input, context = {}) {
           if (left.eval) {
             return {
               eval: predicateIteratorEval,
-              predicate: left.eval,
+              left,
               right
             };
           }
