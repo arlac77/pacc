@@ -26,6 +26,8 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 
 ### Table of Contents
 
+*   [AST](#ast)
+    *   [Properties](#properties)
 *   [binopError](#binoperror)
     *   [Parameters](#parameters)
 *   [prepareAttributesDefinitions](#prepareattributesdefinitions)
@@ -37,7 +39,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [parseBytes](#parsebytes)
     *   [Parameters](#parameters-4)
 *   [AttributeDefinition](#attributedefinition)
-    *   [Properties](#properties)
+    *   [Properties](#properties-1)
 *   [default\_attribute](#default_attribute)
 *   [default\_attribute](#default_attribute-1)
 *   [default\_attribute](#default_attribute-2)
@@ -121,7 +123,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Parameters](#parameters-18)
 *   [lookup](#lookup)
 *   [Token](#token)
-    *   [Properties](#properties-1)
+    *   [Properties](#properties-2)
 *   [createToken](#createtoken)
     *   [Parameters](#parameters-19)
 *   [PLUS](#plus)
@@ -153,17 +155,25 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [IDENTIFIER](#identifier)
 *   [EOF](#eof)
 *   [Type](#type)
-    *   [Properties](#properties-2)
+    *   [Properties](#properties-3)
 *   [raiseOnUnknownType](#raiseonunknowntype)
     *   [Parameters](#parameters-20)
+
+## AST
+
+Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
+
+### Properties
+
+*   `eval` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 
 ## binopError
 
 ### Parameters
 
 *   `op` **[Token](#token)**&#x20;
-*   `left` **AST**&#x20;
-*   `right` **AST**&#x20;
+*   `left` **[AST](#ast)**&#x20;
+*   `right` **[AST](#ast)**&#x20;
 
 ## prepareAttributesDefinitions
 
