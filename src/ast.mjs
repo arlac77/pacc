@@ -14,6 +14,11 @@ import {
 } from "./tokens.mjs";
 
 /**
+ * @typedef {Object} AST
+ * @property {Function} [eval]
+ */
+
+/**
  *
  * @param {Token} op
  * @param {AST} left
