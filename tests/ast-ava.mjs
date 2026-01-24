@@ -1,7 +1,7 @@
 import test from "ava";
-import { predicateIteratorEval } from "../src/ast.mjs";
+import { predicateIteratorEval, pathEval } from "../src/ast.mjs";
 
-export function piet(t, iterable, result) {
+export function iet(t, iterable, result) {
   const context = {};
 
   const node = {
@@ -19,14 +19,13 @@ export function piet(t, iterable, result) {
     result
   );
 }
-
-piet.title = (providedTitle = "", iterable, result) =>
+iet.title = (providedTitle = "", iterable, result) =>
   `predicateIteratorEval ${providedTitle} ${iterable} ->${result}`.trim();
 
-test(piet, new Set([1, 2, 3]), [1, 2, 3]);
-test(piet, [1, 2, 3], [1, 2, 3]);
+test(iet, new Set([1, 2, 3]), [1, 2, 3]);
+test(iet, [1, 2, 3], [1, 2, 3]);
 test(
-  piet,
+  iet,
   new Map([
     [1.1, 1],
     [2.2, 2],
@@ -34,3 +33,28 @@ test(
   ]),
   [1, 2, 3]
 );
+
+function* iter() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+test(iet, iter(), [1, 2, 3]);
+
+export function pet(t, item, path, result) {
+  const context = {
+    getGlobal: name => undefined
+  };
+
+  const node = {
+    eval: pathEval,
+    path
+  };
+
+  t.deepEqual(pathEval(node, item, context), result);
+}
+pet.title = (providedTitle = "", item, path, result) =>
+  `pathEval ${providedTitle} ${item} ${path} ->${result}`.trim();
+
+test(pet, { a: { b: { c: 1 } } }, ["a", "b", "c"], 1);
