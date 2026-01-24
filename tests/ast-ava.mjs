@@ -58,3 +58,4 @@ pet.title = (providedTitle = "", item, path, result) =>
   `pathEval ${providedTitle} ${item} ${path} ->${result}`.trim();
 
 test(pet, { a: { b: { c: 1 } } }, ["a", "b", "c"], 1);
+test(pet, {}, [], {});

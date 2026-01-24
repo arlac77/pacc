@@ -82,32 +82,30 @@ export function predicateIteratorEval(node, current, context) {
 }
 
 export function pathEval(node, current, context) {
-  let result = current;
-
   for (const item of node.path) {
     switch (typeof item) {
       case "string":
       case "number":
-        if (typeof result === "function") {
+        if (typeof current === "function") {
           const r = [];
-          for (const x of result()) {
+          for (const x of current()) {
             r.push(x[item]);
           }
-          result = r;
+          current = r;
         } else {
-          if (result === undefined) {
-            result = context.getGlobal(item);
+          if (current === undefined) {
+            current = context.getGlobal(item);
           } else {
-            if (result instanceof Map) {
-              result = result.get(item);
+            if (current instanceof Map) {
+              current = current.get(item);
             } else {
-              result = result[item] ?? context.getGlobal(item);
+              current = current[item] ?? context.getGlobal(item);
             }
           }
         }
         break;
       case "object":
-        const r = result;
+        const r = current;
         function* filter() {
           for (const x of r) {
             if (item.eval(item, x, context)) {
@@ -115,11 +113,11 @@ export function pathEval(node, current, context) {
             }
           }
         }
-        result = filter;
+        current = filter;
     }
   }
 
-  return result;
+  return current;
 }
 
 export function functionEval(node, current, context) {
