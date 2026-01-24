@@ -66,15 +66,15 @@ export function binopEval(node, current, context) {
   );
 }
 
-export function predicateIteratorEval(node, current) {
+export function predicateIteratorEval(node, current, context) {
   if (current instanceof Set) {
     current = [...current];
   } else if (current instanceof Map) {
     current = [...current.values()];
   }
   return current
-    .filter(item => node.predicate(node, item))
-    .map(item => node.right.eval(node.right, item));
+    .filter(item => node.predicate(node, item, context))
+    .map(item => node.right.eval(node.right, item, context));
 }
 
 export function pathEval(node, current, context) {
