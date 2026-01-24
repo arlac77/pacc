@@ -26,14 +26,16 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 
 ### Table of Contents
 
-*   [prepareAttributesDefinitions](#prepareattributesdefinitions)
+*   [binopError](#binoperror)
     *   [Parameters](#parameters)
-*   [mergeAttributeDefinitions](#mergeattributedefinitions)
+*   [prepareAttributesDefinitions](#prepareattributesdefinitions)
     *   [Parameters](#parameters-1)
-*   [attributeIterator](#attributeiterator)
+*   [mergeAttributeDefinitions](#mergeattributedefinitions)
     *   [Parameters](#parameters-2)
-*   [parseBytes](#parsebytes)
+*   [attributeIterator](#attributeiterator)
     *   [Parameters](#parameters-3)
+*   [parseBytes](#parsebytes)
+    *   [Parameters](#parameters-4)
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties)
 *   [default\_attribute](#default_attribute)
@@ -88,13 +90,11 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [environmentValues](#environmentvalues)
-    *   [Parameters](#parameters-4)
-*   [expand](#expand)
     *   [Parameters](#parameters-5)
+*   [expand](#expand)
+    *   [Parameters](#parameters-6)
 *   [promises](#promises)
 *   [error](#error)
-    *   [Parameters](#parameters-6)
-*   [binopError](#binoperror)
     *   [Parameters](#parameters-7)
 *   [filter](#filter)
     *   [Parameters](#parameters-8)
@@ -156,6 +156,14 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
     *   [Properties](#properties-2)
 *   [raiseOnUnknownType](#raiseonunknowntype)
     *   [Parameters](#parameters-20)
+
+## binopError
+
+### Parameters
+
+*   `op` **[Token](#token)**&#x20;
+*   `left` **AST**&#x20;
+*   `right` **AST**&#x20;
 
 ## prepareAttributesDefinitions
 
@@ -481,14 +489,6 @@ Type: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global
 ### Parameters
 
 *   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-## binopError
-
-### Parameters
-
-*   `op` **[Token](#token)**&#x20;
-*   `left` **AST**&#x20;
-*   `right` **AST**&#x20;
 
 ## filter
 
