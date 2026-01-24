@@ -86,22 +86,25 @@ export function pathEval(node, current, context) {
     switch (typeof item) {
       case "string":
       case "number":
-        if (typeof current === "function") {
-          const r = [];
-          for (const x of current()) {
-            r.push(x[item]);
-          }
-          current = r;
-        } else {
-          if (current === undefined) {
+        switch (typeof current) {
+          case "function":
+            {
+              const r = [];
+              for (const x of current()) {
+                r.push(x[item]);
+              }
+              current = r;
+            }
+            break;
+          case "undefined":
             current = context.getGlobal(item);
-          } else {
+            break;
+          default:
             if (current instanceof Map) {
               current = current.get(item);
             } else {
               current = current[item] ?? context.getGlobal(item);
             }
-          }
         }
         break;
       case "object":
