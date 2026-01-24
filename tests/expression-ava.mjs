@@ -113,19 +113,6 @@ test(
   [7]
 );
 test(
-  eat,
-  "[n=3].x",
-  {
-    root: new Map([
-      ["a", { n: 1 }],
-      ["b", { n: 2 }],
-      ["b", { n: 3, x: 7 }]
-    ])
-  },
-  [7]
-);
-
-test(
   "map identifier",
   eat,
   "c",
@@ -136,6 +123,19 @@ test(
     ])
   },
   2
+);
+
+test(
+  eat,
+  "[n=3].x",
+  {
+    root: new Map([
+      ["a", { n: 1 }],
+      ["b", { n: 2 }],
+      ["b", { n: 3, x: 7 }]
+    ])
+  },
+  [7]
 );
 
 test(
@@ -153,7 +153,7 @@ test.skip(
   {
     root: new Set([{ x: 7 }, { x: 4 }, { x: 8 }])
   },
-  [7,4,8]
+  [7, 4, 8]
 );
 
 test(eat, "in(2,array)", { getGlobal: getGlobal({ array: [1, 2, 3] }) }, true);
@@ -189,17 +189,17 @@ test(
   eat,
   "all[in(7,x)]",
   {
-    root: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] },
+    root: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] }
   },
   [{ x: [2, 7] }]
 );
 test(
   eat,
-  "all[in(8,x)]",
+  "all[in(8,y)]",
   {
     root: {
-      all: [{ x: new Set([1]) }, { x: new Set([2, 8]) }, { x: new Set([3]) }]
-    },
+      all: [{ y: new Set([1]) }, { y: new Set([2, 8]) }, { y: new Set([3]) }]
+    }
   },
-  [{ x: new Set([2, 8]) }]
+  [{ y: new Set([2, 8]) }]
 );
