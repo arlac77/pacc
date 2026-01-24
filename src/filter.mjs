@@ -7,7 +7,7 @@ import {
   GREATER,
   GREATER_EQUAL
 } from "pacc";
-import { binop } from "./expression.mjs";
+import { binop } from "./ast.mjs";
 
 function dateOp(op, value, against) {
   return binop(op, value.getTime(), against.getTime());
