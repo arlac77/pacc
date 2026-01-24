@@ -72,11 +72,11 @@ export function binopEval(node, current, context) {
 }
 
 export function predicateIteratorEval(node, current, context) {
-  if (current instanceof Set) {
-    current = [...current];
-  } else if (current instanceof Map) {
-    current = [...current.values()];
+
+  if(current.values) {
+    current = current.values();
   }
+
   return current
     .filter(item => node.left.eval(node.left, item, context))
     .map(item => node.right.eval(node.right, item, context));

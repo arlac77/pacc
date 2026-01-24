@@ -34,9 +34,11 @@ function eat(t, input, context, expected) {
 
     const result = parse(input, context);
 
-    //console.log(result);
     clear(result);
-    t.deepEqual(result, expected);
+    t.deepEqual(
+      Array.isArray(expected) ? Array.from(result) : result,
+      expected
+    );
   }
 }
 
