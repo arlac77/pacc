@@ -26,7 +26,7 @@ import {
  *
  */
 export function binopError(op, left, right) {
-  throw new Error(`Unexpected '${op.str || op}'`,{ cause: op});
+  throw new Error(`Unexpected '${op.str || op}'`, { cause: op });
 }
 
 export function binop(op, left, right, fallback) {
@@ -121,4 +121,11 @@ export function pathEval(node, current, context) {
   }
 
   return result;
+}
+
+export function functionEval(node, current, context) {
+  const args = node.args.map(a =>
+    typeof a === "object" ? a.eval(a, current, context) : a
+  );
+  return context.getGlobal(node.path[0])(...args);
 }

@@ -10,7 +10,14 @@ import {
   EOF
 } from "./tokens.mjs";
 
-import {binopError, binop, binopEval, predicateIteratorEval, pathEval} from "./ast.mjs";
+import {
+  binopError,
+  binop,
+  binopEval,
+  predicateIteratorEval,
+  pathEval,
+  functionEval
+} from "./ast.mjs";
 
 /**
  *
@@ -165,13 +172,8 @@ export function parse(input, context = {}) {
                   advance();
                 }
               }
-              left.path.push(args);
-              left.eval = (node, current, context) => {
-                const args = node.path[1].map(a =>
-                  typeof a === "object" ? a.eval(a, current, context) : a
-                );
-                return context.getGlobal(node.path[0])(...args);
-              };
+              left.args = args;
+              left.eval = functionEval;
 
               advance();
 
