@@ -71,62 +71,75 @@ function binopError(op, left, right) {
   error(`Unexpected '${op.str || op}'`);
 }
 
+function binopEval(node, current, context) {
+  return binop(
+    node.token,
+    node.left.eval ? node.left.eval(node.left, current, context) : node.left,
+    node.right.eval
+      ? node.right.eval(node.right, current, context)
+      : node.right,
+    binopError
+  );
+}
+
+function predicateIteratorEval(node, current) {
+  if (current instanceof Set) {
+    current = [...current];
+  } else if (current instanceof Map) {
+    current = [...current.values()];
+  }
+  return current
+    .filter(item => node.predicate(node, item))
+    .map(item => node.right.eval(node.right, item));
+}
+
+function pathEval(node, current, context) {
+  let result = current;
+
+  for (const p of node.path) {
+    switch (typeof p) {
+      case "string":
+      case "number":
+        if (typeof result === "function") {
+          const r = [];
+          for (const x of result()) {
+            r.push(x[p]);
+          }
+          result = r;
+        } else {
+          if (result === undefined) {
+            result = context.getGlobal(p);
+          } else {
+            if (result instanceof Map) {
+              result = result.get(p);
+            } else {
+              result = result[p] ?? context.getGlobal(p);
+            }
+          }
+        }
+        break;
+      case "object":
+        const r = result;
+        function* filter() {
+          for (const x of r) {
+            if (p.eval(p, x, context)) {
+              yield x;
+            }
+          }
+        }
+        result = filter;
+    }
+  }
+
+  return result;
+}
+
 export function parse(input, context = {}) {
-  const getGlobal = context?.getGlobal ?? (a => globals[a]);
+  context.getGlobal ||= a => globals[a];
+
   input = tokens(input, context);
 
   let node, token, value;
-
-  const predicateIteratorEval = (node, current) => {
-    if (current instanceof Set) {
-      current = [...current];
-    } else if (current instanceof Map) {
-      current = [...current.values()];
-    }
-    return current
-      .filter(item => node.predicate(node, item))
-      .map(item => node.right.eval(node.right, item));
-  };
-  const pathEval = (node, current) => {
-    let result = current;
-
-    for (const p of node.path) {
-      switch (typeof p) {
-        case "string":
-        case "number":
-          if (typeof result === "function") {
-            const r = [];
-            for (const x of result()) {
-              r.push(x[p]);
-            }
-            result = r;
-          } else {
-            if (result === undefined) {
-              result = getGlobal(p);
-            } else {
-              if (result instanceof Map) {
-                result = result.get(p);
-              } else {
-                result = result[p] ?? getGlobal(p);
-              }
-            }
-          }
-          break;
-        case "object":
-          const r = result;
-          function* filter() {
-            for (const x of r) {
-              if (p.eval(p, x)) {
-                yield x;
-              }
-            }
-          }
-          result = filter;
-      }
-    }
-
-    return result;
-  };
 
   const advance = () => {
     const next = input.next();
@@ -203,14 +216,15 @@ export function parse(input, context = {}) {
         }
 
         return {
-          eval: (node, current) =>
+          eval: /*binopEval,*/ (node, current, context) =>
             binop(
               last,
-              left.eval ? left.eval(left, current) : left,
-              right.eval ? right.eval(right, current) : right,
+              left.eval ? left.eval(left, current, context) : left,
+              right.eval ? right.eval(right, current, context) : right,
               binopError
             ),
-          last,
+            
+          token: last,
           left,
           right
         };
@@ -244,7 +258,6 @@ export function parse(input, context = {}) {
               eval: predicateIteratorEval,
               predicate: left.eval,
               right
-              // path: right.path
             };
           }
 
@@ -256,11 +269,11 @@ export function parse(input, context = {}) {
         }
 
         return {
-          eval: (node, current) =>
+          eval: (node, current, context) =>
             binop(
               last,
-              left.eval ? left.eval(left, current) : left,
-              right.eval ? right.eval(right, current) : right,
+              left.eval ? left.eval(left, current, context) : left,
+              right.eval ? right.eval(right, current, context) : right,
               binopError
             ),
           token: last,
@@ -280,11 +293,11 @@ export function parse(input, context = {}) {
                 }
               }
               left.path.push(args);
-              left.eval = (node, current) => {
+              left.eval = (node, current, context) => {
                 const args = node.path[1].map(a =>
-                  typeof a === "object" ? a.eval(a, current) : a
+                  typeof a === "object" ? a.eval(a, current, context) : a
                 );
-                return getGlobal(node.path[0])(...args);
+                return context.getGlobal(node.path[0])(...args);
               };
 
               advance();
@@ -323,7 +336,7 @@ export function parse(input, context = {}) {
   let result = expression(token.precedence ?? 0);
 
   if (context.exec !== false && result?.eval) {
-    result = result.eval(result, context.root);
+    result = result.eval(result, context.root, context);
 
     if (typeof result === "function") {
       return [...result()];

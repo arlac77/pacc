@@ -147,6 +147,15 @@ test(
   [4]
 );
 
+test.skip(
+  eat,
+  "[true].x",
+  {
+    root: new Set([{ x: 7 }, { x: 4 }, { x: 8 }])
+  },
+  [7,4,8]
+);
+
 test(eat, "in(2,array)", { getGlobal: getGlobal({ array: [1, 2, 3] }) }, true);
 test(
   eat,
@@ -180,7 +189,7 @@ test(
   eat,
   "all[in(7,x)]",
   {
-    root: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] }
+    root: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] },
   },
   [{ x: [2, 7] }]
 );
@@ -190,7 +199,7 @@ test(
   {
     root: {
       all: [{ x: new Set([1]) }, { x: new Set([2, 8]) }, { x: new Set([3]) }]
-    }
+    },
   },
   [{ x: new Set([2, 8]) }]
 );
