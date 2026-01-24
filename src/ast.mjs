@@ -72,8 +72,7 @@ export function binopEval(node, current, context) {
 }
 
 export function predicateIteratorEval(node, current, context) {
-
-  if(current.values) {
+  if (current.values) {
     current = current.values();
   }
 
@@ -85,24 +84,24 @@ export function predicateIteratorEval(node, current, context) {
 export function pathEval(node, current, context) {
   let result = current;
 
-  for (const p of node.path) {
-    switch (typeof p) {
+  for (const item of node.path) {
+    switch (typeof item) {
       case "string":
       case "number":
         if (typeof result === "function") {
           const r = [];
           for (const x of result()) {
-            r.push(x[p]);
+            r.push(x[item]);
           }
           result = r;
         } else {
           if (result === undefined) {
-            result = context.getGlobal(p);
+            result = context.getGlobal(item);
           } else {
             if (result instanceof Map) {
-              result = result.get(p);
+              result = result.get(item);
             } else {
-              result = result[p] ?? context.getGlobal(p);
+              result = result[item] ?? context.getGlobal(item);
             }
           }
         }
@@ -111,7 +110,7 @@ export function pathEval(node, current, context) {
         const r = result;
         function* filter() {
           for (const x of r) {
-            if (p.eval(p, x, context)) {
+            if (item.eval(item, x, context)) {
               yield x;
             }
           }
