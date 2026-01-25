@@ -57,5 +57,5 @@ export function pet(t, item, path, result) {
 pet.title = (providedTitle = "", item, path, result) =>
   `pathEval ${providedTitle} ${item} ${path} ->${result}`.trim();
 
-test(pet, { a: { b: { c: 1 } } }, ["a", "b", "c"], 1);
+test(pet, { a: ["x", new Map([["c", 7]])] }, ["a", 1, "c"], 7);
 test(pet, {}, [], {});
