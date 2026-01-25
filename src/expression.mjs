@@ -16,7 +16,8 @@ import {
   binopEval,
   predicateIteratorEval,
   pathEval,
-  functionEval
+  functionEval,
+  ASTNodeTrue
 } from "./ast.mjs";
 
 /**
@@ -65,7 +66,7 @@ export function parse(input, context = {}) {
           case OPEN_BRACKET: {
             if(token === CLOSE_BRACKET) {
               advance();
-              return { eval: () => true };
+              return ASTNodeTrue;
             }
 
             const node = expression(0);
@@ -129,6 +130,7 @@ export function parse(input, context = {}) {
             case "string":
             case "number":
             case "bigint":
+            case "boolean":
               return binop(last, left, right, binopError);
           }
         }

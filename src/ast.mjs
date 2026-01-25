@@ -60,6 +60,10 @@ export function binop(op, left, right, fallback) {
   return fallback(op, left, right);
 }
 
+export const ASTNodeTrue = {
+  eval: () => true
+};
+
 export function binopEval(node, current, context) {
   return binop(
     node.token,
