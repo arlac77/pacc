@@ -42,7 +42,7 @@ function* iter() {
 
 test(iet, iter(), [1, 2, 3]);
 
-export function pet(t, item, path, result) {
+export function pet(t, item, path, expectedResult) {
   const context = {
     getGlobal: name => undefined
   };
@@ -52,10 +52,24 @@ export function pet(t, item, path, result) {
     path
   };
 
-  t.deepEqual(pathEval(node, item, context), result);
+  let result = pathEval(node, item, context);
+
+  if (typeof result == "function") {
+    result = Array.from(result());
+  }
+  t.deepEqual(result, expectedResult);
 }
 pet.title = (providedTitle = "", item, path, result) =>
   `pathEval ${providedTitle} ${item} ${path} ->${result}`.trim();
 
 test(pet, { a: ["x", new Map([["c", 7]])] }, ["a", 1, "c"], 7);
 test(pet, {}, [], {});
+
+test(
+  pet,
+  { a: { b: [{ c: 2 }, { c: 3 }] } },
+  ["a", "b", { eval: (node, current, context) => current.c > 2 }],
+  [{ c: 3 }]
+);
+
+//a.b[c > 2];
