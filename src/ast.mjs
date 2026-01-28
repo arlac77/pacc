@@ -86,41 +86,30 @@ export function predicateIteratorEval(node, current, context) {
 }
 
 export function pathEval(node, current, context) {
+  let collection = false;
   for (const item of node.path) {
     switch (typeof item) {
       case "string":
       case "number":
         switch (typeof current) {
-          case "function":
-            {
-              const r = [];
-              for (const x of current()) {
-                r.push(x[item]);
-              }
-              current = r;
-            }
-            break;
           case "undefined":
             current = context.getGlobal(item);
             break;
           default:
-            if (current instanceof Map) {
-              current = current.get(item);
+            if (collection) {
+              current = current.map(x => x[item]);
             } else {
-              current = current[item] ?? context.getGlobal(item);
+              if (current instanceof Map) {
+                current = current.get(item);
+              } else {
+                current = current[item] ?? context.getGlobal(item);
+              }
             }
         }
         break;
       case "object":
-        const r = current;
-        function* filter() {
-          for (const x of r) {
-            if (item.eval(item, x, context)) {
-              yield x;
-            }
-          }
-        }
-        current = filter;
+        current = current.filter(c => item.eval(item, c, context));
+        collection = true;
     }
   }
 
