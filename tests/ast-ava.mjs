@@ -56,7 +56,10 @@ export function pet(t, item, path, expectedResult) {
 
   if (typeof result == "function") {
     result = Array.from(result());
+  } else if (result instanceof Iterator) {
+    result = Array.from(result);
   }
+
   t.deepEqual(result, expectedResult);
 }
 pet.title = (providedTitle = "", item, path, result) =>
