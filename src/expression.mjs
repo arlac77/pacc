@@ -240,5 +240,10 @@ export const globals = {
   uppercase: a => a.toUpperCase(),
   lowercase: a => a.toLowerCase(),
   substring: (s, a, b) => s.substring(a, b),
-  length: s => s.length
+  length: s => s.length,
+  join: (separator, ...args) =>
+    args
+      .map(item => (item instanceof Iterator ? Array.from(item) : item))
+      .flat()
+      .join(separator)
 };

@@ -196,6 +196,25 @@ test(eat, "substring('abcd',1,3)", {}, "bc");
 test(eat, "length('a' + 'b')", {}, 2);
 test(eat, "lowercase('aA')", {}, "aa");
 test(eat, "uppercase('aA')", {}, "AA");
+test(eat, "join(',','A','B','C')", {}, "A,B,C");
+test(
+  eat,
+  "join(',',array)",
+  { getGlobal: getGlobal({ array: ["A", "B", "C"] }) },
+  "A,B,C"
+);
+function* iter() {
+  yield "A";
+  yield "B";
+  yield "C";
+}
+test(
+  eat,
+  "join(',',iter)",
+  { getGlobal: getGlobal({ iter: iter() }) },
+  "A,B,C"
+);
+
 test(
   eat,
   "all[in(7,x)]",
