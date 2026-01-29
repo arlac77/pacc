@@ -158,6 +158,15 @@ test(
   [7, 4, 8]
 );
 
+test(
+  eat,
+  "a[].x",
+  {
+    root: { a: new Set([{ x: 7 }, { x: 4 }, { x: 8 }]) }
+  },
+  [7, 4, 8]
+);
+
 test(eat, "in(2,array)", { getGlobal: getGlobal({ array: [1, 2, 3] }) }, true);
 test(
   eat,

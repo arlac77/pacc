@@ -64,7 +64,7 @@ export function parse(input, context = {}) {
             return node;
           }
           case OPEN_BRACKET: {
-            if(token === CLOSE_BRACKET) {
+            if (token === CLOSE_BRACKET) {
               advance();
               return ASTNodeTrue;
             }
@@ -180,9 +180,14 @@ export function parse(input, context = {}) {
             return left;
           }
           case OPEN_BRACKET: {
-            const predicate = expression(0);
-            expect(CLOSE_BRACKET);
-            left.path.push(predicate);
+            if (token === CLOSE_BRACKET) {
+              advance();
+              left.path.push(ASTNodeTrue);
+            } else {
+              const predicate = expression(0);
+              expect(CLOSE_BRACKET);
+              left.path.push(predicate);
+            }
             return left;
           }
         }

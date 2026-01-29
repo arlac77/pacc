@@ -106,6 +106,10 @@ export function pathEval(node, current, context) {
         }
         break;
       case "object":
+        if (current.values) {
+          current = current.values();
+        }
+
         current = current.filter(c => item.eval(item, c, context));
         collection = true;
     }
