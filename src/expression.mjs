@@ -135,12 +135,6 @@ export function parse(input, context = {}) {
           }
         }
         if (last === DOT) {
-          switch (typeof left) {
-            case "number":
-              right.path.unshift(left);
-              return right;
-          }
-
           if (left.path) {
             left.path.push(...right.path);
             return left;
