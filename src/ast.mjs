@@ -99,11 +99,9 @@ export function pathEval(node, current, context) {
             if (collection) {
               current = current.map(x => x[item]);
             } else {
-              if (current instanceof Map) {
-                current = current.get(item);
-              } else {
-                current = current[item] ?? context.getGlobal(item);
-              }
+              current =
+                (current instanceof Map ? current.get(item) : current[item]) ??
+                context.getGlobal(item);
             }
         }
         break;
