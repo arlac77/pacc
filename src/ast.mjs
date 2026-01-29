@@ -77,6 +77,7 @@ export function binopEval(node, current, context) {
 
 export function pathEval(node, current, context) {
   let collection = false;
+  let first = true;
   for (const item of node.path) {
     switch (typeof item) {
       case "string":
@@ -90,8 +91,11 @@ export function pathEval(node, current, context) {
               current = current.map(x => x[item]);
             } else {
               current =
-                (current instanceof Map ? current.get(item) : current[item]) ??
-                context.getGlobal(item);
+                (current instanceof Map ? current.get(item) : current[item]);
+
+              if(first && current === undefined) {
+                current = context.getGlobal(item);
+              }
             }
         }
         break;
@@ -103,6 +107,8 @@ export function pathEval(node, current, context) {
         current = current.filter(c => item.eval(item, c, context));
         collection = true;
     }
+
+    first = false;
   }
 
   return current;
