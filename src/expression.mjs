@@ -14,7 +14,6 @@ import {
   binopError,
   binop,
   binopEval,
-  predicateIteratorEval,
   pathEval,
   functionEval,
   ASTNodeTrue
@@ -141,11 +140,8 @@ export function parse(input, context = {}) {
           }
 
           if (left.eval) {
-            return {
-              eval: predicateIteratorEval,
-              left,
-              right
-            };
+            right.path.unshift(left);
+            return right;
           }
 
           return { eval: pathEval, path: [left.token, right.token] };

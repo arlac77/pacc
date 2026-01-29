@@ -1,46 +1,5 @@
 import test from "ava";
-import { predicateIteratorEval, pathEval } from "../src/ast.mjs";
-
-export function iet(t, iterable, result) {
-  const context = {};
-
-  const node = {
-    eval: predicateIteratorEval,
-    left: {
-      eval: () => true
-    },
-    right: {
-      eval: (node, current, context) => current
-    }
-  };
-
-  t.deepEqual(
-    Array.from(predicateIteratorEval(node, iterable, context)),
-    result
-  );
-}
-iet.title = (providedTitle = "", iterable, result) =>
-  `predicateIteratorEval ${providedTitle} ${iterable} ->${result}`.trim();
-
-test(iet, new Set([1, 2, 3]), [1, 2, 3]);
-test(iet, [1, 2, 3], [1, 2, 3]);
-test(
-  iet,
-  new Map([
-    [1.1, 1],
-    [2.2, 2],
-    [3.3, 3]
-  ]),
-  [1, 2, 3]
-);
-
-function* iter() {
-  yield 1;
-  yield 2;
-  yield 3;
-}
-
-test(iet, iter(), [1, 2, 3]);
+import { pathEval } from "../src/ast.mjs";
 
 export function pet(t, item, path, expectedResult) {
   const context = {
@@ -75,4 +34,23 @@ test(
   [{ c: 3 }]
 );
 
-//a.b[c > 2];
+test(pet, new Set([1, 2, 3]), [{ eval: () => true }], [1, 2, 3]);
+test(pet, [1, 2, 3], [{ eval: () => true }], [1, 2, 3]);
+test(
+  pet,
+  new Map([
+    [1.1, 1],
+    [2.2, 2],
+    [3.3, 3]
+  ]),
+  [{ eval: () => true }],
+  [1, 2, 3]
+);
+
+function* iter() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+test(pet, iter(), [{ eval: () => true }], [1, 2, 3]);

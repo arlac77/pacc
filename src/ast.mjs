@@ -75,16 +75,6 @@ export function binopEval(node, current, context) {
   );
 }
 
-export function predicateIteratorEval(node, current, context) {
-  if (current.values) {
-    current = current.values();
-  }
-
-  return current
-    .filter(item => node.left.eval(node.left, item, context))
-    .map(item => node.right.eval(node.right, item, context));
-}
-
 export function pathEval(node, current, context) {
   let collection = false;
   for (const item of node.path) {
