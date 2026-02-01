@@ -30,39 +30,11 @@ export function binopError(op, left, right) {
 }
 
 export function binop(op, left, right, fallback) {
-  switch (op) {
-    case DOUBLE_BAR:
-      return left || right;
-    case DOUBLE_AMPERSAND:
-      return left && right;
-    case EQUAL:
-      return left == right;
-    case NOT_EQUAL:
-      return left != right;
-    case GREATER:
-      return left > right;
-    case LESS:
-      return left < right;
-    case GREATER_EQUAL:
-      return left >= right;
-    case LESS_EQUAL:
-      return left <= right;
-    case PLUS:
-      return left + right;
-    case MINUS:
-      return left - right;
-    case STAR:
-      return left * right;
-    case DIVIDE:
-      return left / right;
-  }
+
+  if(op.binop) { return op.binop(left,right); }
 
   return fallback(op, left, right);
 }
-
-export const ASTNodeTrue = {
-  eval: () => true
-};
 
 export function binopEval(node, current, context) {
   return binop(
@@ -73,6 +45,19 @@ export function binopEval(node, current, context) {
       : node.right,
     binopError
   );
+}
+
+export function ASTBinop(token, left, right) {
+  if (!left.eval && !right.eval) {
+    return binop(token, left, right, binopError);
+  }
+
+  return {
+    eval: binopEval,
+    token,
+    left,
+    right
+  };
 }
 
 export function pathEval(node, current, context) {
@@ -91,9 +76,9 @@ export function pathEval(node, current, context) {
               current = current.map(x => x[item]);
             } else {
               current =
-                (current instanceof Map ? current.get(item) : current[item]);
+                current instanceof Map ? current.get(item) : current[item];
 
-              if(first && current === undefined) {
+              if (first && current === undefined) {
                 current = context.getGlobal(item);
               }
             }
@@ -120,3 +105,7 @@ export function functionEval(node, current, context) {
   );
   return context.getGlobal(node.path[0])(...args);
 }
+
+export const ASTTrue = {
+  eval: () => true
+};

@@ -11,12 +11,11 @@ import {
 } from "./tokens.mjs";
 
 import {
-  binopError,
-  binop,
   binopEval,
   pathEval,
   functionEval,
-  ASTNodeTrue
+  ASTTrue,
+  ASTBinop
 } from "./ast.mjs";
 
 /**
@@ -65,7 +64,7 @@ export function parse(input, context = {}) {
           case OPEN_BRACKET: {
             if (token === CLOSE_BRACKET) {
               advance();
-              return ASTNodeTrue;
+              return ASTTrue;
             }
 
             const node = expression(0);
@@ -101,38 +100,16 @@ export function parse(input, context = {}) {
 
   const led = (last, left) => {
     switch (last.type) {
-      case "infixr": {
-        const right = expression(last.precedence - 1);
-        if (typeof left === typeof right) {
-          switch (typeof left) {
-            case "string":
-            case "number":
-            case "bigint":
-            case "boolean":
-              return binop(last, left, right, binopError);
-          }
-        }
-
-        return {
-          eval: binopEval,
-          token: last,
-          left,
-          right
-        };
-      }
+      case "infixr":
+        return ASTBinop(last, left, expression(last.precedence - 1));
 
       case "infix": {
         let right = expression(last.precedence);
 
-        if (typeof left === typeof right) {
-          switch (typeof left) {
-            case "string":
-            case "number":
-            case "bigint":
-            case "boolean":
-              return binop(last, left, right, binopError);
-          }
+        if (last.binop) {
+          return ASTBinop(last, left, right);
         }
+
         if (last === DOT) {
           if (left.path) {
             left.path.push(...right.path);
@@ -178,7 +155,7 @@ export function parse(input, context = {}) {
           case OPEN_BRACKET: {
             if (token === CLOSE_BRACKET) {
               advance();
-              left.path.push(ASTNodeTrue);
+              left.path.push(ASTTrue);
             } else {
               const predicate = expression(0);
               expect(CLOSE_BRACKET);

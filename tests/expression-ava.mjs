@@ -51,6 +51,7 @@ test(eat, "1 +", undefined, new Error("unexpected EOF"));
 test.skip(eat, "1 2", undefined, new Error("unexpected '2'"));
 test.skip(eat, "1 )", undefined, new Error("unexpected ')'"));
 test(eat, "1 + 2", undefined, 3);
+test(eat, "'1' + 2", undefined, '12');
 test(eat, "1 + 2 + 4", undefined, 7);
 test(eat, "1 + 2 * 4", undefined, 9);
 test(eat, "1 * 2 + 4", undefined, 6);
@@ -72,6 +73,7 @@ test(eat, "true && false", undefined, false);
 test(eat, "1 + a", { root: { a: 5 } }, 6);
 test(eat, "x > 2", { root: { x: 3 } }, true);
 test(eat, "[ x > 2 ]", { root: { x: 3 } }, true);
+test(eat, "[ 3 > '2' ]", { root: { x: 3 } }, true);
 test(
   eat,
   "[ x > y ]",

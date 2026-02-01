@@ -11,29 +11,80 @@ const lookup = {};
 /**
  *
  * @param {string} str
+ * @param {number} [precedence]
+ * @param {string} [type]
  * @returns {Token}
  */
-function createToken(str, precedence = 0, type) {
+function createToken(str, precedence = 0, type, binop) {
   const token = { str, precedence, type };
+  if (binop) {
+    token.binop = binop;
+  }
   lookup[str] = [token];
   return token;
 }
 
-export /** @type {Token} */ const PLUS = createToken("+", 50, "infix");
-export /** @type {Token} */ const MINUS = createToken("-", 50, "infix");
-export /** @type {Token} */ const STAR = createToken("*", 60, "infix");
-export /** @type {Token} */ const DIVIDE = createToken("/", 60, "infix");
+export /** @type {Token} */ const PLUS = createToken(
+  "+",
+  50,
+  "infix",
+  (left, right) => left + right
+);
+export /** @type {Token} */ const MINUS = createToken(
+  "-",
+  50,
+  "infix",
+  (left, right) => left - right
+);
+export /** @type {Token} */ const STAR = createToken(
+  "*",
+  60,
+  "infix",
+  (left, right) => left * right
+);
+export /** @type {Token} */ const DIVIDE = createToken(
+  "/",
+  60,
+  "infix",
+  (left, right) => left / right
+);
 export /** @type {Token} */ const NOT = createToken("!");
-export /** @type {Token} */ const NOT_EQUAL = createToken("!=", 40, "infixr");
-export /** @type {Token} */ const EQUAL = createToken("=", 40, "infixr");
-export /** @type {Token} */ const GREATER = createToken(">", 40, "infixr");
+export /** @type {Token} */ const NOT_EQUAL = createToken(
+  "!=",
+  40,
+  "infixr",
+  (left, right) => left != right
+);
+export /** @type {Token} */ const EQUAL = createToken(
+  "=",
+  40,
+  "infixr",
+  (left, right) => left == right
+);
+export /** @type {Token} */ const GREATER = createToken(
+  ">",
+  40,
+  "infixr",
+  (left, right) => left > right
+);
 export /** @type {Token} */ const GREATER_EQUAL = createToken(
   ">=",
   40,
-  "infixr"
+  "infixr",
+  (left, right) => left >= right
 );
-export /** @type {Token} */ const LESS = createToken("<", 40, "infixr");
-export /** @type {Token} */ const LESS_EQUAL = createToken("<=", 40, "infixr");
+export /** @type {Token} */ const LESS = createToken(
+  "<",
+  40,
+  "infixr",
+  (left, right) => left < right
+);
+export /** @type {Token} */ const LESS_EQUAL = createToken(
+  "<=",
+  40,
+  "infixr",
+  (left, right) => left <= right
+);
 export /** @type {Token} */ const OPEN_ROUND = createToken("(", 40, "prefix");
 export /** @type {Token} */ const CLOSE_ROUND = createToken(")", 0, "infix");
 export /** @type {Token} */ const OPEN_BRACKET = createToken("[", 10, "prefix");
@@ -41,7 +92,7 @@ export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0, "infix");
 export /** @type {Token} */ const OPEN_CURLY = createToken("{");
 export /** @type {Token} */ const CLOSE_CURLY = createToken("}");
 export /** @type {Token} */ const QUESTION = createToken("?", 20, "infix");
-export /** @type {Token} */ const COLON = createToken(":", "infix");
+export /** @type {Token} */ const COLON = createToken(":", undefined, "infix");
 export /** @type {Token} */ const SEMICOLON = createToken(";");
 export /** @type {Token} */ const COMMA = createToken(",");
 export /** @type {Token} */ const DOT = createToken(".", 80, "infix");
@@ -49,10 +100,16 @@ export /** @type {Token} */ const AMPERSAND = createToken("&");
 export /** @type {Token} */ const DOUBLE_AMPERSAND = createToken(
   "&&",
   30,
-  "infixr"
+  "infixr",
+  (left, right) => left && right
 );
 export /** @type {Token} */ const BAR = createToken("|");
-export /** @type {Token} */ const DOUBLE_BAR = createToken("||", 30, "infixr");
+export /** @type {Token} */ const DOUBLE_BAR = createToken(
+  "||",
+  30,
+  "infixr",
+  (left, right) => left || right
+);
 export /** @type {Token} */ const IDENTIFIER = createToken("IDENTIFIER", 0);
 export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
 
