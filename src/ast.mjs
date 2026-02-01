@@ -25,18 +25,17 @@ import {
  * @param {AST} right
  *
  */
-export function binopError(op, left, right) {
+function binopError(op, left, right) {
   throw new Error(`Unexpected '${op.str || op}'`, { cause: op });
 }
 
 export function binop(op, left, right, fallback) {
-
   if(op.binop) { return op.binop(left,right); }
 
   return fallback(op, left, right);
 }
 
-export function binopEval(node, current, context) {
+function binopEval(node, current, context) {
   return binop(
     node.token,
     node.left.eval ? node.left.eval(node.left, current, context) : node.left,

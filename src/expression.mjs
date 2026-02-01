@@ -9,14 +9,7 @@ import {
   COMMA,
   EOF
 } from "./tokens.mjs";
-
-import {
-  binopEval,
-  pathEval,
-  functionEval,
-  ASTTrue,
-  ASTBinop
-} from "./ast.mjs";
+import { pathEval, functionEval, ASTTrue, ASTBinop } from "./ast.mjs";
 
 /**
  *
@@ -104,11 +97,7 @@ export function parse(input, context = {}) {
         return ASTBinop(last, left, expression(last.precedence - 1));
 
       case "infix": {
-        let right = expression(last.precedence);
-
-        if (last.binop) {
-          return ASTBinop(last, left, right);
-        }
+        const right = expression(last.precedence);
 
         if (last === DOT) {
           if (left.path) {
@@ -124,16 +113,7 @@ export function parse(input, context = {}) {
           return { eval: pathEval, path: [left.token, right.token] };
         }
 
-        if (right.token === EOF) {
-          error("unexpected EOF");
-        }
-
-        return {
-          eval: binopEval,
-          token: last,
-          left,
-          right
-        };
+        return ASTBinop(last, left, right);
       }
       case "prefix":
         switch (last) {
@@ -190,9 +170,9 @@ export function parse(input, context = {}) {
   if (context.exec !== false && result?.eval) {
     result = result.eval(result, context.root, context);
 
-    if (typeof result === "function") {
+    /*if (typeof result === "function") {
       return [...result()];
-    }
+    }*/
   }
 
   return result;
