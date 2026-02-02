@@ -11,7 +11,6 @@ import {
 } from "./tokens.mjs";
 import { pathEval, functionEval, ASTTrue, ASTBinop } from "./ast.mjs";
 
-
 export function parseOnly(input, context = {}) {
   context.getGlobal ||= a => globals[a];
 
@@ -33,44 +32,47 @@ export function parseOnly(input, context = {}) {
 
   const expect = expected => {
     if (token !== expected) {
-      throw new Error(`unexpected '${token?.str || token}' expecting '${expected.str}'`,{ cause: token });
+      throw new Error(
+        `unexpected '${token?.str || token}' expecting '${expected.str}'`,
+        { cause: token }
+      );
     }
     advance();
   };
 
   const nud = (last, left) => {
-    switch (last.type) {
-      case "prefix":
-        switch (last) {
-          case OPEN_ROUND: {
-            const node = expression(0);
-            expect(CLOSE_ROUND);
-            return node;
-          }
-          case OPEN_BRACKET: {
-            if (token === CLOSE_BRACKET) {
-              advance();
-              return ASTTrue;
-            }
-
-            const node = expression(0);
-            expect(CLOSE_BRACKET);
-            switch (typeof node) {
-              case "string":
-              case "number":
-                return { eval: pathEval, path: [node] };
-            }
-
-            return node;
-          }
+    switch (last) {
+      case OPEN_ROUND: {
+        const node = expression(0);
+        expect(CLOSE_ROUND);
+        return node;
+      }
+      case OPEN_BRACKET: {
+        if (token === CLOSE_BRACKET) {
+          advance();
+          return ASTTrue;
         }
-        return { token: last, left, right: expression(last.precedence) };
-      case "eof":
+
+        const node = expression(0);
+        expect(CLOSE_BRACKET);
+        switch (typeof node) {
+          case "string":
+          case "number":
+            return { eval: pathEval, path: [node] };
+        }
+
+        return node;
+      }
+
+      case IDENTIFIER:
+        return { eval: pathEval, path: [value] };
+
+      case EOF:
         throw new Error("unexpected EOF");
     }
 
-    if (last === IDENTIFIER) {
-      return { eval: pathEval, path: [value] };
+    if (last.type === "prefix") {
+      return { token: last, left, right: expression(last.precedence) };
     }
 
     return last;
@@ -100,35 +102,35 @@ export function parseOnly(input, context = {}) {
 
         return ASTBinop(last, left, right);
       }
-      case "prefix":
-        switch (last) {
-          case OPEN_ROUND: {
-            const args = [];
-            while (token !== CLOSE_ROUND) {
-              args.push(expression(0));
-              if (token === COMMA) {
-                advance();
-              }
-            }
-            left.args = args;
-            left.eval = functionEval;
+    }
 
+    switch (last) {
+      case OPEN_ROUND: {
+        const args = [];
+        while (token !== CLOSE_ROUND) {
+          args.push(expression(0));
+          if (token === COMMA) {
             advance();
-
-            return left;
-          }
-          case OPEN_BRACKET: {
-            if (token === CLOSE_BRACKET) {
-              advance();
-              left.path.push(ASTTrue);
-            } else {
-              const predicate = expression(0);
-              expect(CLOSE_BRACKET);
-              left.path.push(predicate);
-            }
-            return left;
           }
         }
+        left.args = args;
+        left.eval = functionEval;
+
+        advance();
+
+        return left;
+      }
+      case OPEN_BRACKET: {
+        if (token === CLOSE_BRACKET) {
+          advance();
+          left.path.push(ASTTrue);
+        } else {
+          const predicate = expression(0);
+          expect(CLOSE_BRACKET);
+          left.path.push(predicate);
+        }
+        return left;
+      }
     }
 
     return { token };
