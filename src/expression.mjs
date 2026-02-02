@@ -19,7 +19,7 @@ export function error(message) {
   throw new Error(message);
 }
 
-export function parse(input, context = {}) {
+export function parseOnly(input, context = {}) {
   context.getGlobal ||= a => globals[a];
 
   input = tokens(input, context);
@@ -76,19 +76,11 @@ export function parse(input, context = {}) {
         error("unexpected EOF");
     }
 
-    switch (typeof last) {
-      case "string":
-      case "number":
-      case "bigint":
-      case "boolean":
-        return last;
-    }
-
     if (last === IDENTIFIER) {
       return { eval: pathEval, path: [value] };
     }
 
-    return { token: last };
+    return last;
   };
 
   const led = (last, left) => {
@@ -165,17 +157,12 @@ export function parse(input, context = {}) {
 
   advance();
 
-  let result = expression(token.precedence ?? 0);
+  return expression(token.precedence ?? 0);
+}
 
-  if (context.exec !== false && result?.eval) {
-    result = result.eval(result, context.root, context);
-
-    /*if (typeof result === "function") {
-      return [...result()];
-    }*/
-  }
-
-  return result;
+export function parse(input, context) {
+  const result = parseOnly(input, context);
+  return result.eval ? result.eval(result, context.root, context) : result;
 }
 
 export const globals = {

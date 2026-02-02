@@ -16,7 +16,7 @@ import {
   STAR,
   IDENTIFIER
 } from "./tokens.mjs";
-import { parse } from "./expression.mjs";
+import { parseOnly } from "./expression.mjs";
 import { toInternal } from "./attributes.mjs";
 
 /**
@@ -28,7 +28,7 @@ import { toInternal } from "./attributes.mjs";
  * @param {Object} definition type def
  */
 export function setAttribute(object, expression, value, definition) {
-  const { path } = parse(expression, { exec: false });
+  const { path } = parseOnly(expression);
 
   let anchor, anchorKey;
 
@@ -61,7 +61,7 @@ export function setAttribute(object, expression, value, definition) {
  * @returns {any} value associated with the given property name
  */
 export function getAttribute(object, expression, definition) {
-  const { path } = parse(expression, { exec: false });
+  const { path } = parseOnly(expression);
 
   for (const key of path) {
     if (object !== undefined) {
