@@ -11,13 +11,6 @@ import {
 } from "./tokens.mjs";
 import { pathEval, functionEval, ASTTrue, ASTBinop } from "./ast.mjs";
 
-/**
- *
- * @param {string} message
- */
-export function error(message) {
-  throw new Error(message);
-}
 
 export function parseOnly(input, context = {}) {
   context.getGlobal ||= a => globals[a];
@@ -40,7 +33,7 @@ export function parseOnly(input, context = {}) {
 
   const expect = expected => {
     if (token !== expected) {
-      error(`unexpected '${token?.str || token}' expecting '${expected.str}'`);
+      throw new Error(`unexpected '${token?.str || token}' expecting '${expected.str}'`,{ cause: token });
     }
     advance();
   };
@@ -73,7 +66,7 @@ export function parseOnly(input, context = {}) {
         }
         return { token: last, left, right: expression(last.precedence) };
       case "eof":
-        error("unexpected EOF");
+        throw new Error("unexpected EOF");
     }
 
     if (last === IDENTIFIER) {
