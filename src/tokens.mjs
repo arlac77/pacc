@@ -13,12 +13,13 @@ const lookup = {};
  * @param {string} str
  * @param {number} [precedence]
  * @param {string} [type]
+ * @param {Function} [led]
  * @returns {Token}
  */
-function createToken(str, precedence = 0, type, binop) {
+function createToken(str, precedence = 0, type, led) {
   const token = { str, precedence, type };
-  if (binop) {
-    token.binop = binop;
+  if (led) {
+    token.led = led;
   }
   lookup[str] = [token];
   return token;
@@ -95,7 +96,20 @@ export /** @type {Token} */ const QUESTION = createToken("?", 20, "infix");
 export /** @type {Token} */ const COLON = createToken(":", undefined, "infix");
 export /** @type {Token} */ const SEMICOLON = createToken(";");
 export /** @type {Token} */ const COMMA = createToken(",");
-export /** @type {Token} */ const DOT = createToken(".", 80, "infix");
+export /** @type {Token} */ const DOT = createToken(
+  ".",
+  80,
+  "infix",
+  (left, right) => {
+    if (left.path) {
+      right.path.unshift(...left.path);
+    } else {
+      console.log("DOT",right);
+      right.path.unshift(left);
+    }
+    return right;
+  }
+);
 export /** @type {Token} */ const AMPERSAND = createToken("&");
 export /** @type {Token} */ const DOUBLE_AMPERSAND = createToken(
   "&&",

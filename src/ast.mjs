@@ -30,7 +30,7 @@ function binopError(op, left, right) {
 }
 
 export function binop(op, left, right, fallback) {
-  if(op.binop) { return op.binop(left,right); }
+  if(op.led) { return op.led(left,right); }
 
   return fallback(op, left, right);
 }

@@ -55,6 +55,7 @@ export function parseOnly(input, context = {}) {
 
         const node = expression(0);
         expect(CLOSE_BRACKET);
+
         switch (typeof node) {
           case "string":
           case "number":
@@ -87,17 +88,7 @@ export function parseOnly(input, context = {}) {
         const right = expression(last.precedence);
 
         if (last === DOT) {
-          if (left.path) {
-            left.path.push(...right.path);
-            return left;
-          }
-
-          if (left.eval) {
-            right.path.unshift(left);
-            return right;
-          }
-
-          return { eval: pathEval, path: [left.token, right.token] };
+          return last.led(left, right);
         }
 
         return ASTBinop(last, left, right);
