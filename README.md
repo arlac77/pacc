@@ -96,36 +96,34 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [expand](#expand)
     *   [Parameters](#parameters-6)
 *   [promises](#promises)
-*   [error](#error)
-    *   [Parameters](#parameters-7)
 *   [filter](#filter)
-    *   [Parameters](#parameters-8)
+    *   [Parameters](#parameters-7)
 *   [setAttributes](#setattributes)
-    *   [Parameters](#parameters-9)
+    *   [Parameters](#parameters-8)
 *   [getAttributes](#getattributes)
-    *   [Parameters](#parameters-10)
+    *   [Parameters](#parameters-9)
 *   [getAttributesJSON](#getattributesjson)
-    *   [Parameters](#parameters-11)
+    *   [Parameters](#parameters-10)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-12)
+    *   [Parameters](#parameters-11)
 *   [setAttribute](#setattribute)
-    *   [Parameters](#parameters-13)
+    *   [Parameters](#parameters-12)
 *   [getAttribute](#getattribute)
-    *   [Parameters](#parameters-14)
+    *   [Parameters](#parameters-13)
 *   [getAttributeAndOperator](#getattributeandoperator)
-    *   [Parameters](#parameters-15)
+    *   [Parameters](#parameters-14)
 *   [parseDuration](#parseduration)
-    *   [Parameters](#parameters-16)
+    *   [Parameters](#parameters-15)
 *   [formatDuration](#formatduration)
-    *   [Parameters](#parameters-17)
+    *   [Parameters](#parameters-16)
 *   [formatDurationISO](#formatdurationiso)
-    *   [Parameters](#parameters-18)
+    *   [Parameters](#parameters-17)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-2)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-19)
+    *   [Parameters](#parameters-18)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -157,7 +155,7 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [Type](#type)
     *   [Properties](#properties-3)
 *   [raiseOnUnknownType](#raiseonunknowntype)
-    *   [Parameters](#parameters-20)
+    *   [Parameters](#parameters-19)
 
 ## AST
 
@@ -494,12 +492,6 @@ Returns **any**&#x20;
 
 Type: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<any>>
 
-## error
-
-### Parameters
-
-*   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
 ## filter
 
 Generate filter function.
@@ -637,7 +629,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `precedence` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?**  (optional, default `0`)
 *   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
-*   `binop` &#x20;
+*   `led` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 
 Returns **[Token](#token)**&#x20;
 
