@@ -104,7 +104,6 @@ export /** @type {Token} */ const DOT = createToken(
     if (left.path) {
       right.path.unshift(...left.path);
     } else {
-      console.log("DOT",right);
       right.path.unshift(left);
     }
     return right;
