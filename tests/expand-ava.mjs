@@ -83,3 +83,13 @@ test("expand Date", t => {
   const d = new Date();
   t.is(expand(d, {}), d);
 });
+test("expand Set", t =>
+  t.deepEqual(
+    expand(new Set(["${a}", "${b}", "c"]), { root: { a: "a1", b: "b2" } }),
+    new Set(["a1", "b2", "c"])
+  ));
+test("expand Map", t =>
+  t.deepEqual(
+    expand(new Map([["${a}", "${b}"]]), { root: { a: "a1", b: "b2" } }),
+    new Map([["a1", "b2"]])
+  ));
