@@ -19,7 +19,7 @@ const defaultExpandContext = {
  * @param {function} [context.stopClass]
  * @param {string} [context.leadIn]
  * @param {string} [context.leadOut]
- * @returns {any}
+ * @returns {any|Promise<any>}
  */
 export function expand(object, context) {
   const /** @type {Array<Promise<any>>} */ promises = [];
@@ -99,7 +99,7 @@ export function expand(object, context) {
     }
 
     if (object instanceof Map) {
-      const r = new Map();
+      const r = new object.constructor();
       for (const [key, value] of object.entries()) {
         const path2 = [
           ...path,
@@ -116,7 +116,7 @@ export function expand(object, context) {
     }
 
     if (object instanceof Set) {
-      const r = new Set();
+      const r = new object.constructor();
       for (const value of object.values()) {
         r.add(_expand(value, [...path, { value }]));
       }
