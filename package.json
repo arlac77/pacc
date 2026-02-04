@@ -16,6 +16,8 @@
   "description": "property path utils",
   "keywords": [
     "property path",
+    "attributes",
+    "filtering",
     "xpath"
   ],
   "contributors": [
