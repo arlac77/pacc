@@ -1,6 +1,6 @@
 import { parse } from "./expression.mjs";
 
-const maxNestingLevel = 5;
+const maxNestingLevel = 8;
 
 /**
  * Expand expressions inside of object graphs.
@@ -70,45 +70,6 @@ export function expand(object, context = {}) {
       result += object.substring(cur);
 
       return result;
-      /*
-      const v = object.replace(
-        /\$\{([^\}]*)\}/g,
-        (match, expression, offset, string) => {
-          let value = parse(expression, context);
-
-          if (typeof value === "string" || value instanceof String) {
-            value = _expand(value, path);
-          } else if (value === undefined) {
-            value = leadIn + expression + leadOut;
-          }
-          if (
-            string.length ===
-            expression.length + leadIn.length + leadOut.length
-          ) {
-            wholeValue = value;
-            return "";
-          }
-
-          if (value instanceof Promise) {
-            localPromises.push(value);
-            return leadIn + (localPromises.length - 1) + leadOut;
-          }
-          return value;
-        }
-      );
-
-      if (wholeValue !== undefined) {
-        return wholeValue;
-      }
-
-      if (localPromises.length !== 0) {
-        return Promise.all(localPromises).then(all =>
-          v.replace(/\$\{(\d+)\}/g, (match, key) => all[parseInt(key, 10)])
-        );
-      }
-
-      return v;
-      */
     }
 
     switch (typeof object) {
