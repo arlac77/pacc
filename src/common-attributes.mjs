@@ -58,6 +58,9 @@ export { default_attribute as string_attribute };
  */
 export { default_attribute_writable as string_attribute_writable };
 
+/**
+ * @type {AttributeDefinition}
+ */
 export const string_collection_attribute = {
   ...default_attribute,
   separator: " ",
@@ -69,6 +72,22 @@ export const string_collection_attribute = {
  */
 export const string_collection_attribute_writable = {
   ...string_collection_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const string_set_attribute = {
+  ...string_collection_attribute,
+  constructor: Set
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const string_set_attribute_writable = {
+  ...string_set_attribute,
   writable: true
 };
 
