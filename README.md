@@ -172,7 +172,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 ### Parameters
 
-*   `op` **[Token](#token)**&#x20;
+*   `token` **[Token](#token)**&#x20;
 *   `left` **[AST](#ast)**&#x20;
 *   `right` **[AST](#ast)**&#x20;
 
