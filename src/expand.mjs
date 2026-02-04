@@ -21,8 +21,10 @@ export function expand(object, context = {}) {
   function _expand(object, path) {
     if (path.length >= maxNestingLevel) {
       throw new Error(
-        `Max nesting level ${maxNestingLevel} reached: ${object}`, {
-        cause: path }
+        `Max nesting level ${maxNestingLevel} reached: ${object}`,
+        {
+          cause: path
+        }
       );
     }
 
