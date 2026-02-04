@@ -47,7 +47,10 @@ const result = getAttribute({ a: [0,{ b: 4 }]}, "a[1].b");
 *   [default\_attribute\_writable](#default_attribute_writable-1)
 *   [default\_attribute\_writable](#default_attribute_writable-2)
 *   [default\_attribute\_writable](#default_attribute_writable-3)
+*   [string\_collection\_attribute](#string_collection_attribute)
 *   [string\_collection\_attribute\_writable](#string_collection_attribute_writable)
+*   [string\_set\_attribute](#string_set_attribute)
+*   [string\_set\_attribute\_writable](#string_set_attribute_writable)
 *   [name\_attribute](#name_attribute)
 *   [name\_attribute\_writable](#name_attribute_writable)
 *   [email\_attribute](#email_attribute)
@@ -276,7 +279,19 @@ The body text.
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## string\_collection\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## string\_collection\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## string\_set\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## string\_set\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
