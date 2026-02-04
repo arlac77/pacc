@@ -20,19 +20,19 @@ import {
 
 /**
  *
- * @param {Token} op
+ * @param {Token} token
  * @param {AST} left
  * @param {AST} right
  *
  */
-function binopError(op, left, right) {
-  throw new Error(`Unexpected '${op.str || op}'`, { cause: op });
+function binopError(token, left, right) {
+  throw new Error(`Unexpected '${token.str || token}'`, { cause: token });
 }
 
-export function binop(op, left, right, fallback) {
-  if(op.led) { return op.led(left,right); }
+export function binop(token, left, right, fallback) {
+  if(token.led) { return token.led(left,right); }
 
-  return fallback(op, left, right);
+  return fallback(token, left, right);
 }
 
 function binopEval(node, current, context) {
