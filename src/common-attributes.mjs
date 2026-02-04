@@ -8,6 +8,7 @@ import { types } from "./types.mjs";
  * @property {boolean} writable
  * @property {boolean} mandatory
  * @property {boolean} collection
+ * @property {Function} [constructor] (collection) constructor
  * @property {boolean} [private] should the value be shown
  * @property {boolean} [credential] any type of credential
  * @property {boolean} [persistent] should we be stored (especially critical for credentials)

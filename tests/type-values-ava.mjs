@@ -34,6 +34,23 @@ test("string collection type", t => {
     ["a", "b", "c"]
   );
 
+  t.deepEqual(
+    toInternal("a b c", {
+      collection: true,
+      constructor: Set,
+      type: types.string
+    }),
+    new Set(["a", "b", "c"])
+  );
+  t.deepEqual(
+    toInternal("a b c", {
+      collection: true,
+      constructor: Array,
+      type: types.string
+    }),
+    ["a", "b", "c"]
+  );
+
   /*
   t.deepEqual(
     toInternal(2, {

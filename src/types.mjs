@@ -20,6 +20,11 @@ export const types = {
     toInternal: (value, attribute) => {
       if (typeof value === "string") {
         if (attribute.collection) {
+          if (attribute.constructor && attribute.constructor !== Array) {
+            return new attribute.constructor(
+              value.split(attribute.separator || " ")
+            );
+          }
           return value.split(attribute.separator || " ");
         }
       }
