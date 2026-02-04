@@ -3,6 +3,15 @@ import { parse } from "./expression.mjs";
 const maxNestingLevel = 8;
 
 /**
+ * Default expand context
+ */
+const defaultExpandContext = {
+  root: {},
+  leadIn: "${",
+  leadOut: "}"
+};
+
+/**
  * Expand expressions inside of object graphs.
  * @param {any} object
  * @param {Object} context
@@ -12,11 +21,12 @@ const maxNestingLevel = 8;
  * @param {string} [context.leadOut]
  * @returns {any}
  */
-export function expand(object, context = {}) {
+export function expand(object, context) {
   const /** @type {Array<Promise<any>>} */ promises = [];
 
-  const leadIn = context.leadIn ?? "${";
-  const leadOut = context.leadOut ?? "}";
+  context = Object.assign({}, defaultExpandContext, context);
+  const leadIn = context.leadIn;
+  const leadOut = context.leadOut;
 
   function _expand(object, path) {
     if (path.length >= maxNestingLevel) {
