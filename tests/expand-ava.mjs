@@ -1,5 +1,5 @@
 import test from "ava";
-import { expand } from "pacc";
+import { expand, expandContextDoubbleCurly } from "pacc";
 
 test("plain expand string", t => {
   const context = {
@@ -22,8 +22,7 @@ test("plain expand string", t => {
 
 test("plain expand string special lead-In/Out", t => {
   const context = {
-    leadIn: "{{",
-    leadOut: "}}",
+    ...expandContextDoubbleCurly,
     root: {
       a: 1,
       b: 2,

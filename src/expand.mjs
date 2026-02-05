@@ -5,26 +5,35 @@ const maxNestingLevel = 8;
 /**
  * Default expand context
  */
-const defaultExpandContext = {
+export const expandContextDefault = {
   root: {},
   leadIn: "${",
   leadOut: "}"
 };
 
 /**
+ * Expand context with doubble curly separaion '{{' '}}'
+ */
+export const expandContextDoubbleCurly = {
+  ...expandContextDefault,
+  leadIn: "{{",
+  leadOut: "}}"
+};
+
+/**
  * Expand expressions inside of object graphs.
  * @param {any} object
  * @param {Object} context
- * @param {any} [context.root]
+ * @param {any} [context.root] actual replacement values
  * @param {function} [context.stopClass]
- * @param {string} [context.leadIn]
- * @param {string} [context.leadOut]
+ * @param {string} [context.leadIn] starting separator
+ * @param {string} [context.leadOut] ending separator
  * @returns {any|Promise<any>}
  */
 export function expand(object, context) {
   const /** @type {Array<Promise<any>>} */ promises = [];
 
-  context = Object.assign({}, defaultExpandContext, context);
+  context = Object.assign({}, expandContextDefault, context);
   const leadIn = context.leadIn;
   const leadOut = context.leadOut;
 
