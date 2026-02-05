@@ -100,7 +100,8 @@ const result = expand("${a + 1}",{ root: { a: 2 }});
 *   [language\_attribute](#language_attribute)
 *   [environmentValues](#environmentvalues)
     *   [Parameters](#parameters-5)
-*   [defaultExpandContext](#defaultexpandcontext)
+*   [expandContextDefault](#expandcontextdefault)
+*   [expandContextDoubbleCurly](#expandcontextdoubblecurly)
 *   [expand](#expand)
     *   [Parameters](#parameters-6)
 *   [promises](#promises)
@@ -493,9 +494,13 @@ Extract values from environment.
 
 Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** undefined if no suitable environment variables have been found
 
-## defaultExpandContext
+## expandContextDefault
 
 Default expand context
+
+## expandContextDoubbleCurly
+
+Expand context with doubble curly separaion '{{' '}}'
 
 ## expand
 
@@ -506,10 +511,10 @@ Expand expressions inside of object graphs.
 *   `object` **any**&#x20;
 *   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
-    *   `context.root` **any?**&#x20;
+    *   `context.root` **any?** actual replacement values
     *   `context.stopClass` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
-    *   `context.leadIn` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
-    *   `context.leadOut` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
+    *   `context.leadIn` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** starting separator
+    *   `context.leadOut` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** ending separator
 
 Returns **(any | [Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<any>)**&#x20;
 
