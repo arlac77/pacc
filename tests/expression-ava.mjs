@@ -240,3 +240,4 @@ test(
   },
   [{ y: new Set([2, 8]) }]
 );
+test(eat, "encodeURI('http://localhost/a b')", {}, "http://localhost/a%20b");
