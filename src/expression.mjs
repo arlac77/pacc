@@ -18,7 +18,7 @@ export function parseOnly(input, context = {}) {
 
   let node, token, value;
 
-  const advance = () => {
+  function advance() {
     const next = input.next();
     if (next.done) {
       token = EOF;
@@ -28,9 +28,9 @@ export function parseOnly(input, context = {}) {
         value = next.value[1];
       }
     }
-  };
+  }
 
-  const expect = expected => {
+  function expect(expected) {
     if (token !== expected) {
       throw new Error(
         `unexpected '${token?.str || token}' expecting '${expected.str}'`,
@@ -38,9 +38,9 @@ export function parseOnly(input, context = {}) {
       );
     }
     advance();
-  };
+  }
 
-  const nud = (last, left) => {
+  function nud(last, left) {
     switch (last) {
       case OPEN_ROUND: {
         const sequence = [];
@@ -86,9 +86,9 @@ export function parseOnly(input, context = {}) {
     }
 
     return last;
-  };
+  }
 
-  const led = (last, left) => {
+  function led(last, left) {
     switch (last.type) {
       case "infixr":
         return ASTBinop(last, left, expression(last.precedence - 1));
@@ -134,9 +134,9 @@ export function parseOnly(input, context = {}) {
     }
 
     return { token };
-  };
+  }
 
-  const expression = precedence => {
+  function expression(precedence) {
     const last = token;
     advance();
     node = nud(last, node);
@@ -148,7 +148,7 @@ export function parseOnly(input, context = {}) {
     }
 
     return node;
-  };
+  }
 
   advance();
 
