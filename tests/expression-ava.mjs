@@ -193,24 +193,24 @@ test(
   false
 );
 
-test(eat, "ceil(0.7)", {}, 1);
-test(eat, "floor(2.9)", {}, 2);
-test(eat, "abs(-7)", {}, 7);
-test(eat, "min(1,2)", {}, 1);
+test(eat, "ceil(0.7)", undefined, 1);
+test(eat, "floor(2.9)", undefined, 2);
+test(eat, "abs(-7)", undefined, 7);
+test(eat, "min(1,2)", undefined, 1);
 test(eat, "min(1,2)+3", undefined, 4);
 test.skip(eat, "3+min(1,2)", undefined, 4);
 test(eat, "max(1,2,3)", undefined, 3);
-test(eat, "substring('abcd',1,3)", {}, "bc");
-test(eat, "substring('abcd',1,1+2)", {}, "bc");
-test(eat, "substring('abcd',1,min(3,4))", {}, "bc");
-test(eat, "substring('abcd',1,min(2,3)+1)", {}, "bc");
-test.skip(eat, "substring('abcd',1,1+min(2,3))", {}, "bc");
-test(eat, "length('a' + 'b')", {}, 2);
-test(eat, "lowercase('aA')", {}, "aa");
-test(eat, "uppercase('aA')", {}, "AA");
-test(eat, "trim(' aA X')", {}, "aA X");
-test(eat, "join(',','A','B','C')", {}, "A,B,C");
-test(eat, "join(',','ABC')", {}, "ABC");
+test(eat, "substring('abcd',1,3)", undefined, "bc");
+test(eat, "substring('abcd',1,1+2)", undefined, "bc");
+test(eat, "substring('abcd',1,min(3,4))", undefined, "bc");
+test(eat, "substring('abcd',1,min(2,3)+1)", undefined, "bc");
+test.skip(eat, "substring('abcd',1,1+min(2,3))", undefined, "bc");
+test(eat, "length('a' + 'b')", undefined, 2);
+test(eat, "lowercase('aA')", undefined, "aa");
+test(eat, "uppercase('aA')", undefined, "AA");
+test(eat, "trim(' aA X')", undefined, "aA X");
+test(eat, "join(',','A','B','C')", undefined, "A,B,C");
+test(eat, "join(',','ABC')", undefined, "ABC");
 test(
   eat,
   "join(',',array)",
