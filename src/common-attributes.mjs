@@ -397,6 +397,7 @@ export const priority_attribute = {
 };
 
 /**
+ * Duration in seconds.
  * @type {AttributeDefinition}
  */
 export const duration_attribute = {
