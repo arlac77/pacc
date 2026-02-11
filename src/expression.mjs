@@ -43,7 +43,6 @@ export function parseOnly(input, context = {}) {
   const nud = (last, left) => {
     switch (last) {
       case OPEN_ROUND: {
-
         const sequence = [];
 
         while (token !== CLOSE_ROUND) {

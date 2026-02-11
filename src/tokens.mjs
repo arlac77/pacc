@@ -29,7 +29,14 @@ export /** @type {Token} */ const PLUS = createToken(
   "+",
   50,
   "infix",
-  (left, right) => left + right
+  (left, right) => {
+    if (Array.isArray(left)) {
+      if (Array.isArray(right)) {
+        return [...left, ...right];
+      }
+    }
+    return left + right;
+  }
 );
 export /** @type {Token} */ const MINUS = createToken(
   "-",
