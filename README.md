@@ -464,6 +464,8 @@ Type: [AttributeDefinition](#attributedefinition)
 
 ## duration\_attribute
 
+Duration in seconds.
+
 Type: [AttributeDefinition](#attributedefinition)
 
 ## duration\_attribute\_writable
