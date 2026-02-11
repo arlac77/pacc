@@ -56,6 +56,7 @@ test(eat, "1 + 2 + 4", undefined, 7);
 test(eat, "1 + 2 * 4", undefined, 9);
 test(eat, "1 * 2 + 4", undefined, 6);
 test(eat, "1 + (2 + 7)", undefined, 10);
+test(eat, "(1 + 2) + 7", undefined, 10);
 test(eat, "(1 + 2)", undefined, 3);
 test(eat, "(1) + 2", undefined, 3);
 test(eat, "(1)", undefined, 1);
