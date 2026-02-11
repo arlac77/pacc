@@ -43,9 +43,19 @@ export function parseOnly(input, context = {}) {
   const nud = (last, left) => {
     switch (last) {
       case OPEN_ROUND: {
-        const node = expression(0);
+
+        const sequence = [];
+
+        while (token !== CLOSE_ROUND) {
+          sequence.push(expression(0));
+          if (token === COMMA) {
+            advance();
+          }
+        }
         expect(CLOSE_ROUND);
-        return node;
+
+        // TODO always a sequence ?
+        return sequence.length > 1 ? sequence : sequence[0];
       }
       case OPEN_BRACKET: {
         if (token === CLOSE_BRACKET) {
