@@ -202,6 +202,7 @@ test.failing(eat, "substring('abcd',1,1+min(2,3))", {}, "bc");
 test(eat, "length('a' + 'b')", {}, 2);
 test(eat, "lowercase('aA')", {}, "aa");
 test(eat, "uppercase('aA')", {}, "AA");
+test(eat, "trim(' aA X')", {}, "aA X");
 test(eat, "join(',','A','B','C')", {}, "A,B,C");
 test(eat, "join(',','ABC')", {}, "ABC");
 test(

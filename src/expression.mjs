@@ -171,6 +171,7 @@ export const globals = {
   decodeURI: decodeURI,
   encodeURIComponent: encodeURIComponent,
   decodeURIComponent: decodeURIComponent,
+  trim: a => a.trim(),
   uppercase: a => a.toUpperCase(),
   lowercase: a => a.toLowerCase(),
   substring: (s, a, b) => s.substring(a, b),
