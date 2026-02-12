@@ -93,7 +93,7 @@ export /** @type {Token} */ const MINUS = createBinopToken(
   (left, right) => left - right
 );
 
-MINUS.nud = (parser) => - parser.value;
+MINUS.nud = (parser) => - parser.expression(100);
 
 export /** @type {Token} */ const STAR = createBinopToken(
   "*",

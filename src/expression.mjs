@@ -56,7 +56,7 @@ export function parseOnly(input, context = {}) {
 
   advance();
 
-  return parser.expression(token.precedence);
+  return parser.expression(0);
 }
 
 export function parse(input, context) {
