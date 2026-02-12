@@ -33,7 +33,7 @@ export function parseOnly(input, context = {}) {
     expect(expected) {
       if (token !== expected) {
         throw new Error(
-          `unexpected '${token?.str || token}' expecting '${expected.str}'`,
+          `unexpected '${token.str}' expecting '${expected.str}'`,
           { cause: token }
         );
       }
@@ -56,7 +56,7 @@ export function parseOnly(input, context = {}) {
 
   advance();
 
-  return parser.expression(token.precedence ?? 0);
+  return parser.expression(token.precedence);
 }
 
 export function parse(input, context) {

@@ -52,6 +52,7 @@ test(eat, "( 1", undefined, new Error("unexpected EOF"));
 test.skip(eat, "1 2", undefined, new Error("unexpected '2'"));
 test(eat, "1", undefined, 1);
 test(eat, "- 1", undefined, -1);
+test.skip(eat, "- 1 + 1", undefined, 0);
 test(eat, "2 * - 1", undefined, -2);
 test.skip(eat, "- 1 * 2", undefined, -2);
 test(eat, "1 + 2", undefined, 3);
