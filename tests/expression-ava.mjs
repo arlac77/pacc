@@ -50,6 +50,9 @@ eat.title = (providedTitle, input, context, expected) =>
 test(eat, "1 +", undefined, new Error("unexpected EOF"));
 test(eat, "( 1", undefined, new Error("unexpected EOF"));
 test.skip(eat, "1 2", undefined, new Error("unexpected '2'"));
+test(eat, "1", undefined, 1);
+test(eat, "- 1", undefined, -1);
+test(eat, "2 * - 1", undefined, -2);
 test(eat, "1 + 2", undefined, 3);
 test(eat, "'1' + 2", undefined, "12");
 test(eat, "1 + 2 + 4", undefined, 7);
