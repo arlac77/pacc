@@ -32,16 +32,14 @@ const result = expand("${a + 1}",{ root: { a: 2 }});
 
 *   [AST](#ast)
     *   [Properties](#properties)
-*   [binopError](#binoperror)
-    *   [Parameters](#parameters)
 *   [prepareAttributesDefinitions](#prepareattributesdefinitions)
-    *   [Parameters](#parameters-1)
+    *   [Parameters](#parameters)
 *   [mergeAttributeDefinitions](#mergeattributedefinitions)
-    *   [Parameters](#parameters-2)
+    *   [Parameters](#parameters-1)
 *   [attributeIterator](#attributeiterator)
-    *   [Parameters](#parameters-3)
+    *   [Parameters](#parameters-2)
 *   [parseBytes](#parsebytes)
-    *   [Parameters](#parameters-4)
+    *   [Parameters](#parameters-3)
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties-1)
 *   [default\_attribute](#default_attribute)
@@ -99,40 +97,40 @@ const result = expand("${a + 1}",{ root: { a: 2 }});
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [environmentValues](#environmentvalues)
-    *   [Parameters](#parameters-5)
+    *   [Parameters](#parameters-4)
 *   [expandContextDefault](#expandcontextdefault)
 *   [expandContextDoubbleCurly](#expandcontextdoubblecurly)
 *   [expand](#expand)
-    *   [Parameters](#parameters-6)
+    *   [Parameters](#parameters-5)
 *   [promises](#promises)
 *   [filter](#filter)
-    *   [Parameters](#parameters-7)
+    *   [Parameters](#parameters-6)
 *   [setAttributes](#setattributes)
-    *   [Parameters](#parameters-8)
+    *   [Parameters](#parameters-7)
 *   [getAttributes](#getattributes)
-    *   [Parameters](#parameters-9)
+    *   [Parameters](#parameters-8)
 *   [getAttributesJSON](#getattributesjson)
-    *   [Parameters](#parameters-10)
+    *   [Parameters](#parameters-9)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-11)
+    *   [Parameters](#parameters-10)
 *   [setAttribute](#setattribute)
-    *   [Parameters](#parameters-12)
+    *   [Parameters](#parameters-11)
 *   [getAttribute](#getattribute)
-    *   [Parameters](#parameters-13)
+    *   [Parameters](#parameters-12)
 *   [getAttributeAndOperator](#getattributeandoperator)
-    *   [Parameters](#parameters-14)
+    *   [Parameters](#parameters-13)
 *   [parseDuration](#parseduration)
-    *   [Parameters](#parameters-15)
+    *   [Parameters](#parameters-14)
 *   [formatDuration](#formatduration)
-    *   [Parameters](#parameters-16)
+    *   [Parameters](#parameters-15)
 *   [formatDurationISO](#formatdurationiso)
-    *   [Parameters](#parameters-17)
+    *   [Parameters](#parameters-16)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-2)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-18)
+    *   [Parameters](#parameters-17)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -164,7 +162,7 @@ const result = expand("${a + 1}",{ root: { a: 2 }});
 *   [Type](#type)
     *   [Properties](#properties-3)
 *   [raiseOnUnknownType](#raiseonunknowntype)
-    *   [Parameters](#parameters-19)
+    *   [Parameters](#parameters-18)
 
 ## AST
 
@@ -173,14 +171,6 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 ### Properties
 
 *   `eval` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
-
-## binopError
-
-### Parameters
-
-*   `token` **[Token](#token)**&#x20;
-*   `left` **[AST](#ast)**&#x20;
-*   `right` **[AST](#ast)**&#x20;
 
 ## prepareAttributesDefinitions
 
@@ -661,7 +651,8 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `precedence` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?**  (optional, default `0`)
 *   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
-*   `led` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+*   `led` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**  (optional, default `()=>{}`)
+*   `nud`   (optional, default `()=>{}`)
 
 Returns **[Token](#token)**&#x20;
 
