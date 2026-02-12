@@ -3,46 +3,6 @@
  * @property {Function} [eval]
  */
 
-/**
- *
- * @param {Token} token
- * @param {AST} left
- * @param {AST} right
- *
- */
-function binopError(token, left, right) {
-  throw new Error(`Unexpected '${token.str || token}'`, { cause: token });
-}
-
-export function binop(token, left, right, fallback) {
-  if(token.led) { return token.led(left,right); }
-
-  return fallback(token, left, right);
-}
-
-function binopEval(node, current, context) {
-  return binop(
-    node.token,
-    node.left.eval ? node.left.eval(node.left, current, context) : node.left,
-    node.right.eval
-      ? node.right.eval(node.right, current, context)
-      : node.right,
-    binopError
-  );
-}
-
-export function ASTBinop(token, left, right) {
-  if (!left.eval && !right.eval) {
-    return binop(token, left, right, binopError);
-  }
-
-  return {
-    eval: binopEval,
-    token,
-    left,
-    right
-  };
-}
 
 export function pathEval(node, current, context) {
   let collection = false;

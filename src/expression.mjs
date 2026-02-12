@@ -1,15 +1,4 @@
-import {
-  tokens,
-  DOT,
-  OPEN_ROUND,
-  CLOSE_ROUND,
-  OPEN_BRACKET,
-  CLOSE_BRACKET,
-  IDENTIFIER,
-  COMMA,
-  EOF
-} from "./tokens.mjs";
-import { pathEval, functionEval, ASTTrue, ASTBinop } from "./ast.mjs";
+import { tokens, EOF } from "./tokens.mjs";
 
 export function parseOnly(input, context = {}) {
   context.getGlobal ||= a => globals[a];
@@ -30,129 +19,44 @@ export function parseOnly(input, context = {}) {
     }
   }
 
-  function expect(expected) {
-    if (token !== expected) {
-      throw new Error(
-        `unexpected '${token?.str || token}' expecting '${expected.str}'`,
-        { cause: token }
-      );
-    }
-    advance();
-  }
-
-  function nud(last, left) {
-    switch (last) {
-      case OPEN_ROUND: {
-        const sequence = [];
-
-        while (token !== CLOSE_ROUND) {
-          sequence.push(expression(0));
-          if (token === COMMA) {
-            advance();
-          }
-        }
-        expect(CLOSE_ROUND);
-
-        // TODO always a sequence ?
-        return sequence.length > 1 ? sequence : sequence[0];
+  const parser = {
+    get node() {
+      return node;
+    },
+    get token() {
+      return token;
+    },
+    get value() {
+      return value;
+    },
+    advance,
+    expect(expected) {
+      if (token !== expected) {
+        throw new Error(
+          `unexpected '${token?.str || token}' expecting '${expected.str}'`,
+          { cause: token }
+        );
       }
-      case OPEN_BRACKET: {
-        if (token === CLOSE_BRACKET) {
-          advance();
-          return ASTTrue;
-        }
-
-        const node = expression(0);
-        expect(CLOSE_BRACKET);
-
-        switch (typeof node) {
-          case "string":
-          case "number":
-            return { eval: pathEval, path: [node] };
-        }
-
-        return node;
-      }
-
-      case IDENTIFIER:
-        return { eval: pathEval, path: [value] };
-
-      case EOF:
-        throw new Error("unexpected EOF");
-    }
-
-    if (last.type === "prefix") {
-      return { token: last, left, right: expression(last.precedence) };
-    }
-
-    return last;
-  }
-
-  function led(last, left) {
-    switch (last.type) {
-      case "infixr":
-        return ASTBinop(last, left, expression(last.precedence - 1));
-
-      case "infix": {
-        const right = expression(last.precedence);
-
-        if (last === DOT) {
-          return last.led(left, right);
-        }
-
-        return ASTBinop(last, left, right);
-      }
-    }
-
-    switch (last) {
-      case OPEN_ROUND: {
-        const args = [];
-        while (token !== CLOSE_ROUND) {
-          args.push(expression(0));
-          if (token === COMMA) {
-            advance();
-          }
-        }
-        left.args = args;
-        left.eval = functionEval;
-
-        advance();
-
-        return left;
-      }
-      case OPEN_BRACKET: {
-        if (token === CLOSE_BRACKET) {
-          advance();
-          left.path.push(ASTTrue);
-        } else {
-          const predicate = expression(0);
-          expect(CLOSE_BRACKET);
-          left.path.push(predicate);
-        }
-        return left;
-      }
-    }
-
-    return { token };
-  }
-
-  function expression(precedence) {
-    const last = token;
-    advance();
-    node = nud(last, node);
-
-    while (token.precedence > precedence) {
+      advance();
+    },
+    expression(precedence) {
       const last = token;
       advance();
-      node = led(last, node);
-    }
+      node = last.nud ? last.nud(parser) : last;
 
-    return node;
-  }
+      while (token.precedence > precedence) {
+        const last = token;
+        advance();
+        node = last.led(parser, node);
+      }
+
+      return node;
+    }
+  };
 
   advance();
 
-  return expression(token.precedence ?? 0);
+  return parser.expression(token.precedence ?? 0);
 }
 
 export function parse(input, context) {

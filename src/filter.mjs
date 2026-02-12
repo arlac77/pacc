@@ -7,7 +7,10 @@ import {
   GREATER,
   GREATER_EQUAL
 } from "pacc";
-import { binop } from "./ast.mjs";
+
+function binop(token, left, right) {
+  return token.binop(left, right);
+}
 
 function dateOp(op, value, against) {
   return binop(op, value.getTime(), against.getTime());

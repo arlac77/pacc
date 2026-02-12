@@ -1,3 +1,5 @@
+import { pathEval, ASTTrue, functionEval } from "./ast.mjs";
+
 /**
  * Token lookup
  */
@@ -8,6 +10,8 @@ const lookup = {};
  * @property {string} str
  */
 
+function infix() {}
+
 /**
  *
  * @param {string} str
@@ -16,16 +20,61 @@ const lookup = {};
  * @param {Function} [led]
  * @returns {Token}
  */
-function createToken(str, precedence = 0, type, led) {
+function createToken(
+  str,
+  precedence = 0,
+  type,
+  led = () => {},
+  nud = () => {}
+) {
   const token = { str, precedence, type };
-  if (led) {
-    token.led = led;
+
+  switch (type) {
+    case "infix":
+      token.led = (parser, left) =>
+        led(left, parser.expression(token.precedence));
+      break;
+    case "infixr":
+      token.led = (parser, left) =>
+        led(left, parser.expression(token.precedence - 1));
+      break;
+    default:
+      token.led = led;
   }
+
+  token.nud = nud;
   lookup[str] = [token];
   return token;
 }
 
-export /** @type {Token} */ const PLUS = createToken(
+function createBinopToken(str, precedence, type, binop) {
+  const token = createToken(str, precedence, type, (left, right) => {
+    if (!left.eval && !right.eval) {
+      return binop(left, right);
+    }
+
+    return {
+      eval: (node, current, context) =>
+        binop(
+          node.left.eval
+            ? node.left.eval(node.left, current, context)
+            : node.left,
+          node.right.eval
+            ? node.right.eval(node.right, current, context)
+            : node.right
+        ),
+      token,
+      left,
+      right
+    };
+  });
+
+  token.binop = binop;
+
+  return token;
+}
+
+export /** @type {Token} */ const PLUS = createBinopToken(
   "+",
   50,
   "infix",
@@ -38,64 +87,132 @@ export /** @type {Token} */ const PLUS = createToken(
     return left + right;
   }
 );
-export /** @type {Token} */ const MINUS = createToken(
+
+export /** @type {Token} */ const MINUS = createBinopToken(
   "-",
   50,
   "infix",
   (left, right) => left - right
 );
-export /** @type {Token} */ const STAR = createToken(
+export /** @type {Token} */ const STAR = createBinopToken(
   "*",
   60,
   "infix",
   (left, right) => left * right
 );
-export /** @type {Token} */ const DIVIDE = createToken(
+export /** @type {Token} */ const DIVIDE = createBinopToken(
   "/",
   60,
   "infix",
   (left, right) => left / right
 );
 export /** @type {Token} */ const NOT = createToken("!");
-export /** @type {Token} */ const NOT_EQUAL = createToken(
+export /** @type {Token} */ const NOT_EQUAL = createBinopToken(
   "!=",
   40,
   "infixr",
   (left, right) => left != right
 );
-export /** @type {Token} */ const EQUAL = createToken(
+export /** @type {Token} */ const EQUAL = createBinopToken(
   "=",
   40,
   "infixr",
   (left, right) => left == right
 );
-export /** @type {Token} */ const GREATER = createToken(
+export /** @type {Token} */ const GREATER = createBinopToken(
   ">",
   40,
   "infixr",
   (left, right) => left > right
 );
-export /** @type {Token} */ const GREATER_EQUAL = createToken(
+export /** @type {Token} */ const GREATER_EQUAL = createBinopToken(
   ">=",
   40,
   "infixr",
   (left, right) => left >= right
 );
-export /** @type {Token} */ const LESS = createToken(
+export /** @type {Token} */ const LESS = createBinopToken(
   "<",
   40,
   "infixr",
   (left, right) => left < right
 );
-export /** @type {Token} */ const LESS_EQUAL = createToken(
+export /** @type {Token} */ const LESS_EQUAL = createBinopToken(
   "<=",
   40,
   "infixr",
   (left, right) => left <= right
 );
-export /** @type {Token} */ const OPEN_ROUND = createToken("(", 40, "prefix");
+export /** @type {Token} */ const OPEN_ROUND = createToken(
+  "(",
+  40,
+  "prefix",
+  (parser, left) => {
+    const args = [];
+    while (parser.token !== CLOSE_ROUND) {
+      args.push(parser.expression(0));
+      if (parser.token === COMMA) {
+        parser.advance();
+      }
+    }
+    left.args = args;
+    left.eval = functionEval;
+
+    parser.advance();
+
+    return left;
+  },
+  parser => {
+    const sequence = [];
+
+    while (parser.token !== CLOSE_ROUND) {
+      sequence.push(parser.expression(0));
+      if (parser.token === COMMA) {
+        parser.advance();
+      }
+    }
+    parser.expect(CLOSE_ROUND);
+
+    // TODO always a sequence ?
+    return sequence.length > 1 ? sequence : sequence[0];
+  }
+);
+
 export /** @type {Token} */ const CLOSE_ROUND = createToken(")", 0, "infix");
-export /** @type {Token} */ const OPEN_BRACKET = createToken("[", 10, "prefix");
+export /** @type {Token} */ const OPEN_BRACKET = createToken(
+  "[",
+  10,
+  "prefix",
+  (parser, left) => {
+    if (parser.token === CLOSE_BRACKET) {
+      parser.advance();
+      left.path.push(ASTTrue);
+    } else {
+      const predicate = parser.expression(0);
+      parser.expect(CLOSE_BRACKET);
+      left.path.push(predicate);
+    }
+    return left;
+  },
+  parser => {
+    if (parser.token === CLOSE_BRACKET) {
+      parser.advance();
+      return ASTTrue;
+    }
+
+    const node = parser.expression(0);
+    parser.expect(CLOSE_BRACKET);
+
+    switch (typeof node) {
+      case "string":
+      case "number":
+        return { eval: pathEval, path: [node] };
+    }
+
+    return node;
+  }
+);
+
 export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0, "infix");
 export /** @type {Token} */ const OPEN_CURLY = createToken("{");
 export /** @type {Token} */ const CLOSE_CURLY = createToken("}");
@@ -117,21 +234,38 @@ export /** @type {Token} */ const DOT = createToken(
   }
 );
 export /** @type {Token} */ const AMPERSAND = createToken("&");
-export /** @type {Token} */ const DOUBLE_AMPERSAND = createToken(
+export /** @type {Token} */ const DOUBLE_AMPERSAND = createBinopToken(
   "&&",
   30,
   "infixr",
   (left, right) => left && right
 );
 export /** @type {Token} */ const BAR = createToken("|");
-export /** @type {Token} */ const DOUBLE_BAR = createToken(
+export /** @type {Token} */ const DOUBLE_BAR = createBinopToken(
   "||",
   30,
   "infixr",
   (left, right) => left || right
 );
-export /** @type {Token} */ const IDENTIFIER = createToken("IDENTIFIER", 0);
-export /** @type {Token} */ const EOF = createToken("EOF", -1, "eof");
+export /** @type {Token} */ const IDENTIFIER = createToken(
+  "IDENTIFIER",
+  0,
+  undefined,
+  undefined,
+  parser => {
+    return { eval: pathEval, path: [parser.value] };
+  }
+);
+
+export /** @type {Token} */ const EOF = createToken(
+  "EOF",
+  -1,
+  "eof",
+  undefined,
+  parser => {
+    throw new Error("unexpected EOF");
+  }
+);
 
 export const keywords = {
   true: [true],
