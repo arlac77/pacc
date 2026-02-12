@@ -1,3 +1,18 @@
+import {
+  DOUBLE_BAR,
+  DOUBLE_AMPERSAND,
+  EQUAL,
+  NOT_EQUAL,
+  LESS,
+  LESS_EQUAL,
+  GREATER,
+  GREATER_EQUAL,
+  STAR,
+  DIVIDE,
+  PLUS,
+  MINUS
+} from "./tokens.mjs";
+
 /**
  * @typedef {Object} AST
  * @property {Function} [eval]
