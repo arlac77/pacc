@@ -158,6 +158,9 @@ const result = expand("${a + 1}",{ root: { a: 2 }});
 *   [BAR](#bar)
 *   [DOUBLE\_BAR](#double_bar)
 *   [IDENTIFIER](#identifier)
+*   [STRING](#string)
+*   [NUMBER](#number)
+*   [BOOLEAN](#boolean)
 *   [EOF](#eof)
 *   [Type](#type)
     *   [Properties](#properties-3)
@@ -761,6 +764,18 @@ Type: [Token](#token)
 Type: [Token](#token)
 
 ## IDENTIFIER
+
+Type: [Token](#token)
+
+## STRING
+
+Type: [Token](#token)
+
+## NUMBER
+
+Type: [Token](#token)
+
+## BOOLEAN
 
 Type: [Token](#token)
 
