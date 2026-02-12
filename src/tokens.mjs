@@ -257,6 +257,29 @@ export /** @type {Token} */ const IDENTIFIER = createToken(
   }
 );
 
+export /** @type {Token} */ const STRING = createToken(
+  "STRING",
+  0,
+  undefined,
+  undefined,
+  parser => parser.value
+);
+
+export /** @type {Token} */ const NUMBER = createToken(
+  "NUMBER",
+  0,
+  undefined,
+  undefined,
+  parser => parser.value
+);
+export /** @type {Token} */ const BOOLEAN = createToken(
+  "BOOLEAN",
+  0,
+  undefined,
+  undefined,
+  parser => parser.value
+);
+
 export /** @type {Token} */ const EOF = createToken(
   "EOF",
   -1,
@@ -268,8 +291,8 @@ export /** @type {Token} */ const EOF = createToken(
 );
 
 export const keywords = {
-  true: [true],
-  false: [false]
+  true: [BOOLEAN, true],
+  false: [BOOLEAN, false]
 };
 
 const esc = {
@@ -331,7 +354,7 @@ export function* tokens(string, options = {}) {
       case " ":
         switch (state) {
           case "number":
-            yield [options.parseFloat(value)];
+            yield [NUMBER, options.parseFloat(value)];
             state = undefined;
           case undefined:
             break;
@@ -360,13 +383,13 @@ export function* tokens(string, options = {}) {
       case "'":
         switch (state) {
           case "number":
-            yield [options.parseFloat(value)];
+            yield [NUMBER,options.parseFloat(value)];
           case undefined:
             startString(c);
             break;
           case "string":
             if (c === quote) {
-              yield [value];
+              yield [STRING, value];
               state = undefined;
             } else {
               value += c;
@@ -388,7 +411,7 @@ export function* tokens(string, options = {}) {
       case "|":
         switch (state) {
           case "number":
-            yield [options.parseFloat(value)];
+            yield [NUMBER, options.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -419,7 +442,7 @@ export function* tokens(string, options = {}) {
       case "=":
         switch (state) {
           case "number":
-            yield [options.parseFloat(value)];
+            yield [NUMBER, options.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -460,7 +483,7 @@ export function* tokens(string, options = {}) {
       case "}":
         switch (state) {
           case "number":
-            yield [options.parseFloat(value)];
+            yield [NUMBER, options.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -511,7 +534,7 @@ export function* tokens(string, options = {}) {
       default:
         switch (state) {
           case "number":
-            yield [options.parseFloat(value)];
+            yield [NUMBER, options.parseFloat(value)];
           case undefined:
             state = "identifier";
             value = c;
@@ -534,7 +557,7 @@ export function* tokens(string, options = {}) {
     case "string":
       throw new Error("unterminated string", { cause: string });
     case "number":
-      yield [options.parseFloat(value)];
+      yield [NUMBER, options.parseFloat(value)];
       break;
     case "identifier":
       yield keywordOrIdentifier();

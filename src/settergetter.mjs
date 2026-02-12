@@ -14,7 +14,10 @@ import {
   GREATER,
   GREATER_EQUAL,
   STAR,
-  IDENTIFIER
+  IDENTIFIER,
+  STRING,
+  NUMBER,
+  BOOLEAN
 } from "./tokens.mjs";
 import { parseOnly } from "./expression.mjs";
 import { toInternal } from "./attributes.mjs";
@@ -146,6 +149,9 @@ export function getAttributeAndOperator(object, expression) {
         predicateTokens.push(token[0]);
         break;
 
+      case STRING:
+      case NUMBER:
+      case BOOLEAN:
       case IDENTIFIER:
         if (object !== undefined) {
           switch (typeof object[token[1]]) {
@@ -163,22 +169,6 @@ export function getAttributeAndOperator(object, expression) {
           }
         }
         break;
-      default:
-        if (object !== undefined) {
-          switch (typeof object[token[0]]) {
-            case "function":
-              object = object[token[0]]();
-              if (typeof object[Symbol.iterator] === "function") {
-                object = [...object];
-              }
-              break;
-            default:
-              object = object[token[0]];
-              break;
-            case "undefined":
-              return [undefined, op];
-          }
-        }
     }
   }
 

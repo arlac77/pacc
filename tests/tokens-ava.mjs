@@ -16,6 +16,9 @@ import {
   AMPERSAND,
   DOUBLE_AMPERSAND,
   IDENTIFIER,
+  NUMBER,
+  BOOLEAN,
+  STRING,
   CLOSE_BRACKET,
   CLOSE_CURLY,
   CLOSE_ROUND,
@@ -45,26 +48,40 @@ tt.title = (providedTitle = "token", input, expected) =>
 
 test(tt, '"a', (() => new Error("unterminated string", { cause: '"a' }))());
 test(tt, "", []);
-test(tt, "3", [3]);
-test(tt, "12345.0", [12345.0]);
-test(tt, "true", [true]);
-test(tt, "true false", [true, false]);
-test(tt, '"A"', ["A"]);
-test(tt, '"\'B"', ["'B"]);
-test(tt, "'\"C'", ['"C']);
-test(tt, '"\'\u0041"', ["'\u0041"]);
-test(tt, ` \t'a'b"c"d `, ["a", [IDENTIFIER, "b"], "c", [IDENTIFIER, "d"]]);
-test(tt, " 'a2\\\\\\n\\r\\t\\b\\x\u0041' ", ["a2\\\n\r\t\bxA"]);
-test(tt, " ''+''", ["", PLUS, ""]);
-test(tt, " ''=''", ["", EQUAL, ""]);
-test(tt, " '|'", ["|"]);
-test(tt, " '='", ["="]);
-test(tt, " '}'", ["}"]);
-test(tt, "2'a'", [2, "a"]);
-test(tt, "'a'2", ["a", 2]);
-test(tt, "|2", [BAR, 2]);
-test(tt, "2|", [2, BAR]);
-test(tt, "2=", [2, EQUAL]);
+test(tt, "3", [[NUMBER, 3]]);
+test(tt, "12345.0", [[NUMBER, 12345.0]]);
+test(tt, "true", [[BOOLEAN, true]]);
+test(tt, "true false", [
+  [BOOLEAN, true],
+  [BOOLEAN, false]
+]);
+test(tt, '"A"', [[STRING, "A"]]);
+test(tt, '"\'B"', [[STRING, "'B"]]);
+test(tt, "'\"C'", [[STRING, '"C']]);
+test(tt, '"\'\u0041"', [[STRING, "'\u0041"]]);
+test(tt, ` \t'a'b"c"d `, [
+  [STRING, "a"],
+  [IDENTIFIER, "b"],
+  [STRING, "c"],
+  [IDENTIFIER, "d"]
+]);
+test(tt, " 'a2\\\\\\n\\r\\t\\b\\x\u0041' ", [[STRING, "a2\\\n\r\t\bxA"]]);
+test(tt, " ''+''", [[STRING, ""], PLUS, [STRING, ""]]);
+test(tt, " ''=''", [[STRING, ""], EQUAL, [STRING, ""]]);
+test(tt, " '|'", [[STRING, "|"]]);
+test(tt, " '='", [[STRING, "="]]);
+test(tt, " '}'", [[STRING, "}"]]);
+test(tt, "2'a'", [
+  [NUMBER, 2],
+  [STRING, "a"]
+]);
+test(tt, "'a'2", [
+  [STRING, "a"],
+  [NUMBER, 2]
+]);
+test(tt, "|2", [BAR, [NUMBER, 2]]);
+test(tt, "2|", [[NUMBER, 2], BAR]);
+test(tt, "2=", [[NUMBER, 2], EQUAL]);
 test(tt, "a< <= >= b>", [
   [IDENTIFIER, "a"],
   LESS,
@@ -80,7 +97,7 @@ test(tt, "a<=", [[IDENTIFIER, "a"], LESS_EQUAL]);
 test(tt, "a[ 2 ] .b", [
   [IDENTIFIER, "a"],
   OPEN_BRACKET,
-  2,
+  [NUMBER, 2],
   CLOSE_BRACKET,
   DOT,
   [IDENTIFIER, "b"]
@@ -88,7 +105,7 @@ test(tt, "a[ 2 ] .b", [
 test(tt, "a[2].b", [
   [IDENTIFIER, "a"],
   OPEN_BRACKET,
-  2,
+  [NUMBER, 2],
   CLOSE_BRACKET,
   DOT,
   [IDENTIFIER, "b"]
@@ -121,20 +138,20 @@ test(tt, "a123 <= >= a = <> +-*/[](){}|&||&&:,; b.c 1234567890", [
   [IDENTIFIER, "b"],
   DOT,
   [IDENTIFIER, "c"],
-  1234567890
+  [NUMBER, 1234567890]
 ]);
 
-test(tt, "2.34", [2.34]);
-test(tt, ".34", [0.34]);
-test(tt, "-1.35", [-1.35]);
-test(tt, "-.36", [-0.36]);
+test(tt, "2.34", [[NUMBER, 2.34]]);
+test(tt, ".34", [[NUMBER, 0.34]]);
+test(tt, "-1.35", [[NUMBER, -1.35]]);
+test(tt, "-.36", [[NUMBER, -0.36]]);
 
 test(tt, "a.b + 2.34 - c", [
   [IDENTIFIER, "a"],
   DOT,
   [IDENTIFIER, "b"],
   PLUS,
-  2.34,
+  [NUMBER, 2.34],
   MINUS,
   [IDENTIFIER, "c"]
 ]);
@@ -170,14 +187,14 @@ n
 =
 2 + (3 * 17)`,
   [
-    4711,
-    0.23,
-    12345.0,
-    "str2",
-    "str3",
-    "\"'\u0041",
-    "str4",
-    "str5",
+    [NUMBER, 4711],
+    [NUMBER, 0.23],
+    [NUMBER, 12345.0],
+    [STRING, "str2"],
+    [STRING, "str3"],
+    [STRING, "\"'\u0041"],
+    [STRING, "str4"],
+    [STRING, "str5"],
     [IDENTIFIER, "name1"],
     [IDENTIFIER, "name_2"],
     [IDENTIFIER, "_name3"],
@@ -207,12 +224,12 @@ n
     LESS_EQUAL,
     GREATER_EQUAL,
     EQUAL,
-    2,
+    [NUMBER, 2],
     PLUS,
     OPEN_ROUND,
-    3,
+    [NUMBER, 3],
     STAR,
-    17,
+    [NUMBER, 17],
     CLOSE_ROUND
   ]
 );
