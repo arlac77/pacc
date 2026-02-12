@@ -179,7 +179,7 @@ export /** @type {Token} */ const OPEN_ROUND = createToken(
   }
 );
 
-export /** @type {Token} */ const CLOSE_ROUND = createToken(")", 0, "infix");
+export /** @type {Token} */ const CLOSE_ROUND = createToken(")", 0);
 export /** @type {Token} */ const OPEN_BRACKET = createToken(
   "[",
   10,
@@ -214,7 +214,7 @@ export /** @type {Token} */ const OPEN_BRACKET = createToken(
   }
 );
 
-export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0, "infix");
+export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0);
 export /** @type {Token} */ const OPEN_CURLY = createToken("{");
 export /** @type {Token} */ const CLOSE_CURLY = createToken("}");
 export /** @type {Token} */ const QUESTION = createToken("?", 20, "infix");
