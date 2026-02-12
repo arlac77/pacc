@@ -10,8 +10,6 @@ const lookup = {};
  * @property {string} str
  */
 
-function infix() {}
-
 /**
  *
  * @param {string} str
