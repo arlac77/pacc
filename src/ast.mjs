@@ -1,4 +1,3 @@
-
 /**
  * @typedef {Object} AST
  * @property {Function} [eval]
@@ -29,7 +28,7 @@ export function pathEval(node, current, context) {
         }
         break;
       case "object":
-        if (current.values) {
+        if (typeof current.values === "function") {
           current = current.values();
         }
 

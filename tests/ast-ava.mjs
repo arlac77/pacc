@@ -35,6 +35,12 @@ test(
 );
 
 test(pet, new Set([1, 2, 3]), [{ eval: () => true }], [1, 2, 3]);
+test(
+  pet,
+  new Set([1, 2, 3, 4]).values(),
+  [{ eval: () => true }],
+  [1, 2, 3, 4]
+);
 test(pet, [1, 2, 3], [{ eval: () => true }], [1, 2, 3]);
 test(
   pet,
