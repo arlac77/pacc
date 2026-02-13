@@ -48,7 +48,7 @@ eat.title = (providedTitle, input, context, expected) =>
   } => ${expected}`.trim();
 
 test(eat, "1 +", undefined, new Error("unexpected EOF"));
-test(eat, "( 1", undefined, new Error("unexpected EOF"));
+test(eat, "( 1", undefined, new Error("unexpected 'EOF' expecting ')'"));
 test.skip(eat, "1 2", undefined, new Error("unexpected '2'"));
 test(eat, "1", undefined, 1);
 test(eat, "- 1", undefined, -1);

@@ -93,7 +93,7 @@ export /** @type {Token} */ const MINUS = createBinopToken(
   (left, right) => left - right
 );
 
-MINUS.nud = (parser) => - parser.expression(100);
+MINUS.nud = parser => -parser.expression(100);
 
 export /** @type {Token} */ const STAR = createBinopToken(
   "*",
@@ -148,34 +148,17 @@ export /** @type {Token} */ const OPEN_ROUND = createToken(
   "(",
   40,
   "prefix",
-  (parser, left) => {
-    const args = [];
-    while (parser.token !== CLOSE_ROUND) {
-      args.push(parser.expression(0));
-      if (parser.token === COMMA) {
-        parser.advance();
-      }
-    }
-    left.args = args;
+   (parser, left) => {
+    const args = parser.expression(0);
+    parser.expect(CLOSE_ROUND);
+    left.args = Array.isArray(args) ? args : [args];
     left.eval = functionEval;
-
-    parser.advance();
-
     return left;
   },
   parser => {
-    const sequence = [];
-
-    while (parser.token !== CLOSE_ROUND) {
-      sequence.push(parser.expression(0));
-      if (parser.token === COMMA) {
-        parser.advance();
-      }
-    }
+    const result = parser.expression(0);
     parser.expect(CLOSE_ROUND);
-
-    // TODO always a sequence ?
-    return sequence.length > 1 ? sequence : sequence[0];
+    return result;
   }
 );
 
@@ -220,7 +203,8 @@ export /** @type {Token} */ const CLOSE_CURLY = createToken("}");
 export /** @type {Token} */ const QUESTION = createToken("?", 20, "infix");
 export /** @type {Token} */ const COLON = createToken(":", undefined, "infix");
 export /** @type {Token} */ const SEMICOLON = createToken(";");
-export /** @type {Token} */ const COMMA = createToken(",");
+export /** @type {Token} */ const COMMA = createToken(",",20,"infix",(left,right)=>Array.isArray(left) ? [...left,right] : [left,right]);
+
 export /** @type {Token} */ const DOT = createToken(
   ".",
   80,
@@ -384,7 +368,7 @@ export function* tokens(string, options = {}) {
       case "'":
         switch (state) {
           case "number":
-            yield [NUMBER,options.parseFloat(value)];
+            yield [NUMBER, options.parseFloat(value)];
           case undefined:
             startString(c);
             break;
