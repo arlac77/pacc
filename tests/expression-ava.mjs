@@ -48,6 +48,7 @@ eat.title = (providedTitle, input, context, expected) =>
   } => ${expected}`.trim();
 
 test(eat, "1 +", undefined, new Error("unexpected EOF"));
+test(eat, "1,", undefined, new Error("unexpected EOF"));
 test(eat, "( 1", undefined, new Error("unexpected 'EOF' expecting ')'"));
 test.skip(eat, "1 2", undefined, new Error("unexpected '2'"));
 test(eat, "1", undefined, 1);
@@ -203,13 +204,13 @@ test(eat, "floor(2.9)", undefined, 2);
 test(eat, "abs(-7)", undefined, 7);
 test(eat, "min(1,2)", undefined, 1);
 test(eat, "min(1,2)+3", undefined, 4);
-test.skip(eat, "3+min(1,2)", undefined, 4);
+test(eat, "3+min(1,2)", undefined, 4);
 test(eat, "max(1,2,3)", undefined, 3);
 test(eat, "substring('abcd',1,3)", undefined, "bc");
 test(eat, "substring('abcd',1,1+2)", undefined, "bc");
 test(eat, "substring('abcd',1,min(3,4))", undefined, "bc");
 test(eat, "substring('abcd',1,min(2,3)+1)", undefined, "bc");
-test.skip(eat, "substring('abcd',1,1+min(2,3))", undefined, "bc");
+test(eat, "substring('abcd',1,1+min(2,3))", undefined, "bc");
 test(eat, "length('a' + 'b')", undefined, 2);
 test(eat, "lowercase('aA')", undefined, "aa");
 test(eat, "uppercase('aA')", undefined, "AA");

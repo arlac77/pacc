@@ -151,8 +151,12 @@ export /** @type {Token} */ const OPEN_ROUND = createToken(
    (parser, left) => {
     const args = parser.expression(0);
     parser.expect(CLOSE_ROUND);
-    left.args = Array.isArray(args) ? args : [args];
-    left.eval = functionEval;
+  
+    // TODO why is there a right side ?
+    const node = left.right || left;
+    node.eval = functionEval;
+    node.args = Array.isArray(args) ? args : [args];
+  
     return left;
   },
   parser => {
