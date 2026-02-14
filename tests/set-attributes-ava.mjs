@@ -113,7 +113,7 @@ test(
 );
 
 test("nested default", sast, {}, {}, definitions, (t, object) =>
-  t.is(object.nested.att1, "the default")
+  t.is(object.nested?.att1, "the default")
 );
 
 test.skip(
