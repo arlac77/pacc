@@ -18,7 +18,7 @@ const definitions = prepareAttributesDefinitions({
       this.att2x = value;
       return true;
     },
-    getter() {
+    get() {
       return this.att2x;
     }
   },

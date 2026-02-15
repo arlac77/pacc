@@ -1,4 +1,11 @@
-import { pathEval, ASTTrue, functionEval } from "./ast.mjs";
+import {
+  pathEval,
+  ASTNullFilter,
+  keyedAccessEval,
+  keyedAccessOrGlobalEval,
+  filterEval,
+  functionEval
+} from "./ast.mjs";
 
 /**
  * Token lookup
@@ -22,8 +29,8 @@ function createToken(
   str,
   precedence = 0,
   type,
-  led = () => {},
-  nud = () => {}
+  led = (parser, node) => node,
+  nud = parser => this
 ) {
   const token = { str, precedence, type };
 
@@ -146,18 +153,16 @@ export /** @type {Token} */ const LESS_EQUAL = createBinopToken(
 );
 export /** @type {Token} */ const OPEN_ROUND = createToken(
   "(",
-  40,
+  100,
   "prefix",
-   (parser, left) => {
+  (parser, left) => {
     const args = parser.expression(0);
     parser.expect(CLOSE_ROUND);
-  
-    // TODO why is there a right side ?
-    const node = left.right || left;
-    node.eval = functionEval;
-    node.args = Array.isArray(args) ? args : [args];
-  
-    return left;
+    return {
+      eval: functionEval,
+      name: left.key,
+      args: Array.isArray(args) ? args : [args]
+    };
   },
   parser => {
     const result = parser.expression(0);
@@ -167,38 +172,40 @@ export /** @type {Token} */ const OPEN_ROUND = createToken(
 );
 
 export /** @type {Token} */ const CLOSE_ROUND = createToken(")", 0);
+
+function createFilter(parser) {
+  if (parser.token === CLOSE_BRACKET) {
+    parser.advance();
+    return ASTNullFilter;
+  }
+
+  const filter = parser.expression(0);
+  parser.expect(CLOSE_BRACKET);
+
+  switch (typeof filter) {
+    case "string":
+    case "number":
+      return { eval: keyedAccessEval, key: filter };
+    default:
+      return { eval: filterEval, filter };
+  }
+}
+
 export /** @type {Token} */ const OPEN_BRACKET = createToken(
   "[",
-  10,
+  80,
   "prefix",
   (parser, left) => {
-    if (parser.token === CLOSE_BRACKET) {
-      parser.advance();
-      left.path.push(ASTTrue);
-    } else {
-      const predicate = parser.expression(0);
-      parser.expect(CLOSE_BRACKET);
-      left.path.push(predicate);
+    const node = createFilter(parser);
+
+    if (left.key) {
+      return { eval: pathEval, path: [left, node] };
     }
+
+    left.path.push(node);
     return left;
   },
-  parser => {
-    if (parser.token === CLOSE_BRACKET) {
-      parser.advance();
-      return ASTTrue;
-    }
-
-    const node = parser.expression(0);
-    parser.expect(CLOSE_BRACKET);
-
-    switch (typeof node) {
-      case "string":
-      case "number":
-        return { eval: pathEval, path: [node] };
-    }
-
-    return node;
-  }
+  parser => createFilter(parser)
 );
 
 export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0);
@@ -207,19 +214,27 @@ export /** @type {Token} */ const CLOSE_CURLY = createToken("}");
 export /** @type {Token} */ const QUESTION = createToken("?", 20, "infix");
 export /** @type {Token} */ const COLON = createToken(":", undefined, "infix");
 export /** @type {Token} */ const SEMICOLON = createToken(";");
-export /** @type {Token} */ const COMMA = createToken(",",20,"infix",(left,right)=>Array.isArray(left) ? [...left,right] : [left,right]);
+export /** @type {Token} */ const COMMA = createToken(
+  ",",
+  20,
+  "infix",
+  (left, right) => (Array.isArray(left) ? [...left, right] : [left, right])
+);
 
 export /** @type {Token} */ const DOT = createToken(
   ".",
   80,
   "infix",
   (left, right) => {
-    if (left.path) {
-      right.path.unshift(...left.path);
-    } else {
-      right.path.unshift(left);
+    if (right.eval === keyedAccessOrGlobalEval) {
+      right.eval = keyedAccessEval;
     }
-    return right;
+    if (left.path) {
+      left.path.push(right);
+      return left;
+    }
+
+    return { eval: pathEval, path: [left, right] };
   }
 );
 export /** @type {Token} */ const AMPERSAND = createToken("&");
@@ -242,7 +257,7 @@ export /** @type {Token} */ const IDENTIFIER = createToken(
   undefined,
   undefined,
   parser => {
-    return { eval: pathEval, path: [parser.value] };
+    return { eval: keyedAccessOrGlobalEval, key: parser.value };
   }
 );
 
@@ -279,11 +294,6 @@ export /** @type {Token} */ const EOF = createToken(
   }
 );
 
-export const keywords = {
-  true: [BOOLEAN, true],
-  false: [BOOLEAN, false]
-};
-
 const esc = {
   b: "\b",
   f: "\f",
@@ -293,20 +303,58 @@ const esc = {
   v: "\v"
 };
 
+export const keywords = {
+  true: [BOOLEAN, true],
+  false: [BOOLEAN, false]
+};
+
+export const globals = {
+  in: (a, b) => {
+    if (b?.[Symbol.iterator]) {
+      for (const x of b) {
+        if (x === a) {
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+  ceil: Math.ceil,
+  floor: Math.floor,
+  abs: Math.abs,
+  min: Math.min,
+  max: Math.max,
+  encodeURI: encodeURI,
+  decodeURI: decodeURI,
+  encodeURIComponent: encodeURIComponent,
+  decodeURIComponent: decodeURIComponent,
+  trim: a => a.trim(),
+  uppercase: a => a.toUpperCase(),
+  lowercase: a => a.toLowerCase(),
+  substring: (s, a, b) => s.substring(a, b),
+  length: s => s.length,
+  join: (separator, ...args) =>
+    args
+      .map(item => (item instanceof Iterator ? Array.from(item) : item))
+      .flat()
+      .join(separator)
+};
+
 /**
- * Split property path into tokens
+ * Split expression path into tokens.
  * @generator
  * @param {string} string
  * @yields {Token}
  */
-export function* tokens(string, options = {}) {
-  options.keywords ||= keywords;
-  options.parseFloat ||= parseFloat;
+export function* tokens(string, context = {}) {
+  context.keywords ||= keywords;
+  context.parseFloat ||= parseFloat;
+  context.valueFor ||= (name,at) => globals[name];
 
   let state, value, hex, quote;
 
   const keywordOrIdentifier = () =>
-    options.keywords[value] || [IDENTIFIER, value];
+    context.keywords[value] || [IDENTIFIER, value];
   const startString = c => {
     value = "";
     state = "string";
@@ -343,7 +391,7 @@ export function* tokens(string, options = {}) {
       case " ":
         switch (state) {
           case "number":
-            yield [NUMBER, options.parseFloat(value)];
+            yield [NUMBER, context.parseFloat(value)];
             state = undefined;
           case undefined:
             break;
@@ -372,7 +420,7 @@ export function* tokens(string, options = {}) {
       case "'":
         switch (state) {
           case "number":
-            yield [NUMBER, options.parseFloat(value)];
+            yield [NUMBER, context.parseFloat(value)];
           case undefined:
             startString(c);
             break;
@@ -400,7 +448,7 @@ export function* tokens(string, options = {}) {
       case "|":
         switch (state) {
           case "number":
-            yield [NUMBER, options.parseFloat(value)];
+            yield [NUMBER, context.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -431,7 +479,7 @@ export function* tokens(string, options = {}) {
       case "=":
         switch (state) {
           case "number":
-            yield [NUMBER, options.parseFloat(value)];
+            yield [NUMBER, context.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -472,7 +520,7 @@ export function* tokens(string, options = {}) {
       case "}":
         switch (state) {
           case "number":
-            yield [NUMBER, options.parseFloat(value)];
+            yield [NUMBER, context.parseFloat(value)];
           case undefined:
             state = c;
             break;
@@ -523,7 +571,7 @@ export function* tokens(string, options = {}) {
       default:
         switch (state) {
           case "number":
-            yield [NUMBER, options.parseFloat(value)];
+            yield [NUMBER, context.parseFloat(value)];
           case undefined:
             state = "identifier";
             value = c;
@@ -546,7 +594,7 @@ export function* tokens(string, options = {}) {
     case "string":
       throw new Error("unterminated string", { cause: string });
     case "number":
-      yield [NUMBER, options.parseFloat(value)];
+      yield [NUMBER, context.parseFloat(value)];
       break;
     case "identifier":
       yield keywordOrIdentifier();

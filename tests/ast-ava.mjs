@@ -1,9 +1,10 @@
 import test from "ava";
-import { pathEval } from "../src/ast.mjs";
+import { pathEval, keyedAccessEval, ASTNullFilter } from "../src/ast.mjs";
 
-export function pet(t, item, path, expectedResult) {
+export function pet(t, root, path, expectedResult) {
   const context = {
-    getGlobal: name => undefined
+    valueFor: name => undefined,
+    root
   };
 
   const node = {
@@ -11,7 +12,7 @@ export function pet(t, item, path, expectedResult) {
     path
   };
 
-  let result = pathEval(node, item, context);
+  let result = pathEval(node, root, context);
 
   if (typeof result == "function") {
     result = Array.from(result());
@@ -22,26 +23,35 @@ export function pet(t, item, path, expectedResult) {
   t.deepEqual(result, expectedResult);
 }
 pet.title = (providedTitle = "", item, path, result) =>
-  `pathEval ${providedTitle} ${item} ${path} ->${result}`.trim();
+  `pathEval ${providedTitle} ${item} ${path.map(p => p.key || p).join()} ->${result}`.trim();
 
-test(pet, { a: ["x", new Map([["c", 7]])] }, ["a", 1, "c"], 7);
+test(
+  pet,
+  { b: ["x", new Map([["c", 7]])] },
+  [
+    { eval: keyedAccessEval, key: "b" },
+    { eval: keyedAccessEval, key: 1 },
+    { eval: keyedAccessEval, key: "c" }
+  ],
+  7
+);
+
 test(pet, {}, [], {});
 
 test(
   pet,
   { a: { b: [{ c: 2 }, { c: 3 }] } },
-  ["a", "b", { eval: (node, current, context) => current.c > 2 }],
+  [
+    { eval: keyedAccessEval, key: "a" },
+    { eval: keyedAccessEval, key: "b" },
+    { eval: (node, current, context) => current.filter(item => item.c > 2) }
+  ],
   [{ c: 3 }]
 );
 
-test(pet, new Set([1, 2, 3]), [{ eval: () => true }], [1, 2, 3]);
-test(
-  pet,
-  new Set([1, 2, 3, 4]).values(),
-  [{ eval: () => true }],
-  [1, 2, 3, 4]
-);
-test(pet, [1, 2, 3], [{ eval: () => true }], [1, 2, 3]);
+test(pet, new Set([1, 2, 3]), [ASTNullFilter], [1, 2, 3]);
+test(pet, new Set([1, 2, 3, 4]).values(), [ASTNullFilter], [1, 2, 3, 4]);
+test(pet, [1, 2, 3], [ASTNullFilter], [1, 2, 3]);
 test(
   pet,
   new Map([
@@ -49,7 +59,7 @@ test(
     [2.2, 2],
     [3.3, 3]
   ]),
-  [{ eval: () => true }],
+  [ASTNullFilter],
   [1, 2, 3]
 );
 
@@ -59,4 +69,4 @@ function* iter() {
   yield 3;
 }
 
-test(pet, iter(), [{ eval: () => true }], [1, 2, 3]);
+test(pet, iter(), [ASTNullFilter], [1, 2, 3]);

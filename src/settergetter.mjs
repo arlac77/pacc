@@ -19,8 +19,9 @@ import {
   NUMBER,
   BOOLEAN
 } from "./tokens.mjs";
-import { parseOnly } from "./expression.mjs";
+import { parseOnly, parse } from "./parser.mjs";
 import { toInternal } from "./attributes.mjs";
+import { keyedAccessOrGlobalEval, keyedAccessEval, pathEval } from "./ast.mjs";
 
 /**
  * Set object attribute.
@@ -28,31 +29,43 @@ import { toInternal } from "./attributes.mjs";
  * @param {Object} object
  * @param {string} expression
  * @param {any} value
- * @param {Object} definition type def
+ * @param {Object} [definition] type def
  */
 export function setAttribute(object, expression, value, definition) {
-  const { path } = parseOnly(expression);
-
-  let anchor, anchorKey;
-
-  for (const key of path) {
-    if (anchor) {
-      anchor[anchorKey] = object = typeof key === "string" ? {} : [];
-      anchor = undefined;
-    }
-
-    const next = object[key];
-
-    if (next === undefined || typeof next !== "object") {
-      anchor = object;
-      anchorKey = key;
-    } else {
-      object = next;
-    }
+  if(definition?.set) {
+    definition.set.call(object, value, definition);
+    return;
   }
 
-  if (anchor) {
-    anchor[anchorKey] = toInternal(value, definition);
+  const context = {};
+  const ast = parseOnly(expression, context);
+
+  let parent, parentItem;
+
+  switch (ast.eval) {
+    case keyedAccessEval:
+    case keyedAccessOrGlobalEval:
+      object[ast.key] = toInternal(value, definition);
+      break;
+
+    case pathEval:
+      for (const item of ast.path) {
+        if (typeof object !== "object") {
+          object = typeof item.key === "number" ? [] : {};
+          parent[parentItem.key] = object;
+        }
+
+        parent = object;
+        parentItem = item;
+
+        object = item.eval(item, object, context);
+      }
+
+      parent[parentItem.key] = toInternal(value, definition);
+      break;
+
+      default:
+        console.log("UKNOWN AST",ast);
   }
 }
 
@@ -61,34 +74,11 @@ export function setAttribute(object, expression, value, definition) {
  * The name may be a property path like 'a.b.c' or a[2]
  * @param {Object} object
  * @param {string} expression
+ * @param {Object} [definition]
  * @returns {any} value associated with the given property name
  */
 export function getAttribute(object, expression, definition) {
-  const { path } = parseOnly(expression);
-
-  for (const key of path) {
-    if (object !== undefined) {
-      switch (typeof object[key]) {
-        case "function":
-          object = object[key]();
-          if (typeof object[Symbol.iterator] === "function") {
-            object = [...object];
-          }
-          break;
-        default:
-          object = object[key];
-          break;
-        case "undefined":
-          return undefined;
-      }
-    }
-  }
-
-  if (object === undefined && definition) {
-    object = definition.default;
-  }
-
-  return object;
+  return parse(expression, { root: object }) ?? definition?.default;
 }
 
 /**

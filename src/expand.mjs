@@ -1,4 +1,4 @@
-import { parse } from "./expression.mjs";
+import { parse } from "./parser.mjs";
 
 const maxNestingLevel = 8;
 

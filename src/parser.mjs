@@ -1,10 +1,8 @@
 import { tokens, EOF } from "./tokens.mjs";
 
 export function parseOnly(input, context = {}) {
-  context.getGlobal ||= a => globals[a];
-
   input = tokens(input, context);
-
+  
   let node, token, value;
 
   function advance() {
@@ -42,7 +40,7 @@ export function parseOnly(input, context = {}) {
     expression(precedence) {
       const last = token;
       advance();
-      node = last.nud ? last.nud(parser) : last;
+      node = last.nud(parser);
 
       while (token.precedence > precedence) {
         const last = token;
@@ -63,35 +61,3 @@ export function parse(input, context) {
   const result = parseOnly(input, context);
   return result.eval ? result.eval(result, context.root, context) : result;
 }
-
-export const globals = {
-  in: (a, b) => {
-    if (b?.[Symbol.iterator]) {
-      for (const x of b) {
-        if (x === a) {
-          return true;
-        }
-      }
-    }
-    return false;
-  },
-  ceil: Math.ceil,
-  floor: Math.floor,
-  abs: Math.abs,
-  min: Math.min,
-  max: Math.max,
-  encodeURI: encodeURI,
-  decodeURI: decodeURI,
-  encodeURIComponent: encodeURIComponent,
-  decodeURIComponent: decodeURIComponent,
-  trim: a => a.trim(),
-  uppercase: a => a.toUpperCase(),
-  lowercase: a => a.toLowerCase(),
-  substring: (s, a, b) => s.substring(a, b),
-  length: s => s.length,
-  join: (separator, ...args) =>
-    args
-      .map(item => (item instanceof Iterator ? Array.from(item) : item))
-      .flat()
-      .join(separator)
-};

@@ -4,39 +4,8 @@
  */
 
 export function pathEval(node, current, context) {
-  let collection = false;
-  let first = true;
   for (const item of node.path) {
-    switch (typeof item) {
-      case "string":
-      case "number":
-        switch (typeof current) {
-          case "undefined":
-            current = context.getGlobal(item);
-            break;
-          default:
-            if (collection) {
-              current = current.map(x => x[item]);
-            } else {
-              current =
-                current instanceof Map ? current.get(item) : current[item];
-
-              if (first && current === undefined) {
-                current = context.getGlobal(item);
-              }
-            }
-        }
-        break;
-      case "object":
-        if (typeof current.values === "function") {
-          current = current.values();
-        }
-
-        current = current.filter(c => item.eval(item, c, context));
-        collection = true;
-    }
-
-    first = false;
+    current = item.eval(item, current, context);
   }
 
   return current;
@@ -46,9 +15,60 @@ export function functionEval(node, current, context) {
   const args = node.args.map(a =>
     typeof a === "object" ? a.eval(a, current, context) : a
   );
-  return context.getGlobal(node.path[0])(...args);
+  return context.valueFor(node.name)(...args);
 }
 
-export const ASTTrue = {
-  eval: () => true
+export function keyedAccessOrGlobalEval(node, current, context) {
+  return keyedAccessEval(node, current, context) ?? context.valueFor(node.key);
+}
+
+export function keyedAccessEval(node, current, context) {
+  if (current === undefined) {
+    return undefined;
+  }
+  if (current instanceof Map) {
+    return current.get(node.key);
+  }
+  if (current instanceof Set) {
+    return current.has(node.key) ? node.key : undefined;
+  }
+  if (current instanceof Iterator) {
+    return current.map(item => item[node.key]);
+  }
+
+  switch (typeof current[node.key]) {
+    case "function": {
+      const value = current[node.key]();
+
+      if (typeof value[Symbol.iterator] === "function") {
+        return [...value];
+        //return value[Symbol.iterator]();
+      }
+      return value;
+    }
+    case "undefined":
+      return context.valueFor(node.key, current);
+  }
+
+  return current[node.key];
+}
+
+export function filterEval(node, current, context) {
+  if (typeof current.values === "function") {
+    current = current.values();
+  }
+
+  return current.filter(item => node.filter.eval(node.filter, item, context));
+}
+
+export function nullFilterEval(node, current, context) {
+  if (typeof current.values === "function") {
+    current = current.values();
+  }
+
+  return current;
+}
+
+export const ASTNullFilter = {
+  eval: nullFilterEval
 };

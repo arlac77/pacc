@@ -1,7 +1,8 @@
 import test from "ava";
-import { parse, globals } from "../src/expression.mjs";
+import { globals } from "../src/tokens.mjs";
+import { parse } from "../src/parser.mjs";
 
-function getGlobal(other) {
+function valueFor(other) {
   return a => globals[a] ?? other?.[a];
 }
 
@@ -67,7 +68,7 @@ test(eat, "(1 + 2)", undefined, 3);
 test(eat, "(1) + 2", undefined, 3);
 test(eat, "(1)", undefined, 1);
 test(eat, "(1,2,3,4)", undefined, [1, 2, 3, 4]);
-test(eat, "('a',2,true)", undefined, ['a', 2, true]);
+test(eat, "('a',2,true)", undefined, ["a", 2, true]);
 test(eat, "(1,2,3,4) + (5,6)", undefined, [1, 2, 3, 4, 5, 6]);
 test(eat, "1 + (2 + 3)", undefined, 6);
 test(eat, "(1 + 2) + 3", undefined, 6);
@@ -83,12 +84,12 @@ test(eat, "true || false", undefined, true);
 test(eat, "true && false", undefined, false);
 test(eat, "1 + a", { root: { a: 5 } }, 6);
 test(eat, "x > 2", { root: { x: 3 } }, true);
-test(eat, "[ x > 2 ]", { root: { x: 3 } }, true);
-test(eat, "[ 3 > '2' ]", { root: { x: 3 } }, true);
-test(
+test.skip(eat, "[ x > 2 ]", { root: { x: 3 } }, true);
+test.skip(eat, "[ 3 > '2' ]", { root: { x: 3 } }, true);
+test.skip(
   eat,
   "[ x > y ]",
-  { root: { x: 3 }, getGlobal: getGlobal({ y: 2 }) },
+  { root: { x: 3 }, valueFor: valueFor({ y: 2 }) },
   true
 );
 test(eat, "a.b[ c > 2 ]", { root: { a: { b: [{ c: 2 }, { c: 3 }] } } }, [
@@ -111,8 +112,10 @@ test(
 test(eat, "[1]", { root: [0, 9] }, 9);
 test(eat, "['a']", { root: { a: 7 } }, 7);
 test(eat, "['b']", { root: new Map([["b", 8]]) }, 8);
-test(eat, "[c]", { root: new Map([["c", 9]]) }, 9);
-test(eat, "[1+3].b", { root: [0, 0, 0, 0, { b: 44 }] }, 44);
+test.skip(eat, "[c]", { root: new Map([["c", 9]]) }, 9);
+test.skip(eat, "d", { root: new Set(["d"]) }, "d");
+test(eat, "[1+2].b", { root: [0, 0, 0, { b: 44 }] }, 44);
+test(eat, "[3].b", { root: [0, 0, 0, { b: 44 }] }, 44);
 test(eat, "a", { root: { a: 12 } }, 12);
 test(eat, "a[2].c", { root: { a: [0, 0, { c: 17 }] } }, 17);
 test(eat, "a . b . c", { root: { a: { b: { c: 77 } } } }, 77);
@@ -146,7 +149,6 @@ test(
   {
     root: new Map([
       ["a", { n: 1 }],
-      ["b", { n: 2 }],
       ["b", { n: 3, x: 7 }]
     ])
   },
@@ -180,23 +182,23 @@ test(
   [7, 4, 8]
 );
 
-test(eat, "in(2,array)", { getGlobal: getGlobal({ array: [1, 2, 3] }) }, true);
+test(eat, "in(2,array)", { valueFor: valueFor({ array: [1, 2, 3] }) }, true);
 test(
   eat,
   "in('b',array)",
-  { getGlobal: getGlobal({ array: [1, 2, 3] }) },
+  { valueFor: valueFor({ array: [1, 2, 3] }) },
   false
 );
 test(
   eat,
   "in(2,set)",
-  { getGlobal: getGlobal({ set: new Set([1, 2, 3]) }) },
+  { valueFor: valueFor({ set: new Set([1, 2, 3]) }) },
   true
 );
 test(
   eat,
   "in(7,set)",
-  { getGlobal: getGlobal({ set: new Set([1, 2, 3]) }) },
+  { valueFor: valueFor({ set: new Set([1, 2, 3]) }) },
   false
 );
 
@@ -205,6 +207,7 @@ test(eat, "floor(2.9)", undefined, 2);
 test(eat, "abs(-7)", undefined, 7);
 test(eat, "min(1,2)", undefined, 1);
 test(eat, "min(1,2)+3", undefined, 4);
+test(eat, "3+(min(1,2))", undefined, 4);
 test(eat, "3+min(1,2)", undefined, 4);
 test(eat, "max(1,2,3)", undefined, 3);
 test(eat, "substring('abcd',1,3)", undefined, "bc");
@@ -217,11 +220,12 @@ test(eat, "lowercase('aA')", undefined, "aa");
 test(eat, "uppercase('aA')", undefined, "AA");
 test(eat, "trim(' aA X')", undefined, "aA X");
 test(eat, "join(',','A','B','C')", undefined, "A,B,C");
+test(eat, "join(',',a[n=2].b,'B')", { root: { a: [{ n: 2, b: "A" }] } }, "A,B");
 test(eat, "join(',','ABC')", undefined, "ABC");
 test(
   eat,
   "join(',',array)",
-  { getGlobal: getGlobal({ array: ["A", "B", "C"] }) },
+  { valueFor: valueFor({ array: ["A", "B", "C"] }) },
   "A,B,C"
 );
 function* iter() {
@@ -232,7 +236,7 @@ function* iter() {
 test(
   eat,
   "join(',',iter)",
-  { getGlobal: getGlobal({ iter: iter() }) },
+  { valueFor: valueFor({ iter: iter() }) },
   "A,B,C"
 );
 

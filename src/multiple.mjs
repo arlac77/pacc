@@ -15,21 +15,17 @@ export function setAttributes(object, source, definitions, cb) {
     let value = getAttribute(source, name);
 
     if (value === undefined) {
-      if (def.default === undefined) {
+      if (
+        def.default === undefined ||
+        getAttribute(object, name) !== undefined
+      ) {
         continue;
-      } else {
-        if (getAttribute(object, name, def) !== undefined) {
-          continue;
-        }
-        value = def.default;
       }
+      value = def.default;
     }
 
-    if (def.set) {
-      def.set.call(object, value, def);
-    } else {
-      setAttribute(object, name, value, def);
-    }
+    setAttribute(object, name, value, def);
+
     if (cb) {
       cb(def, name, value);
     }
@@ -40,12 +36,13 @@ export function setAttributes(object, source, definitions, cb) {
  * Retrive attribute values from an object.
  * @param {Object} object attribute value source
  * @param {Object} definitions
+ * @param {Function} [filter]
  * @return {Object} values
  */
-export function getAttributes(object, definitions) {
+export function getAttributes(object, definitions, filter) {
   const result = {};
 
-  for (const [path, def] of attributeIterator(definitions)) {
+  for (const [path, def] of attributeIterator(definitions, filter)) {
     const name = path.join(".");
 
     const value = getAttribute(object, name, def);
