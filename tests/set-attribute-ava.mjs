@@ -1,15 +1,15 @@
 import test from "ava";
 import { setAttribute } from "pacc";
 
-function sat(t, object, key, value, expected) {
-  setAttribute(object, key, value);
+function sat(t, object, path, value, expected) {
+  setAttribute(object, path, value);
   t.deepEqual(object, expected);
 }
 
-sat.title = (providedTitle, object, key, value, expected) =>
+sat.title = (providedTitle, object, path, value, expected) =>
   `setAttribute ${providedTitle ? providedTitle + " " : ""}${JSON.stringify(
     object
-  )} ${key}=${value} => ${JSON.stringify(expected)}`.trim();
+  )} ${path}=${value} => ${JSON.stringify(expected)}`.trim();
 
 test(sat, {}, "a", 1, { a: 1 });
 test(sat, {}, "b", new Date(1), { b: new Date(1) });
