@@ -18,8 +18,8 @@
     "attributes",
     "filtering",
     "property path",
-    "xpath"
-  ],
+    "xpath",
+    "pratt"  ],
   "contributors": [
     {
       "name": "Markus Felten",
