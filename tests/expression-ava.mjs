@@ -131,29 +131,13 @@ test(
   2
 );
 
-test(
-  eat,
-  "[n=3].x",
-  {
-    root: new Map([
-      ["a", { n: 1 }],
-      ["b", { n: 3, x: 7 }]
-    ])
-  },
-  [7]
-);
+const root = new Map([
+  ["a", { n: 1 }],
+  ["b", { n: 3, x: 7 }]
+]);
 
-test.skip(
-  eat,
-  "[b].x",
-  {
-    root: new Map([
-      ["a", { n: 1 }],
-      ["b", { n: 3, x: 7 }]
-    ])
-  },
-  [7]
-);
+test(eat, "[n=3].x", { root }, [7]);
+test(eat, "b.x", { root }, 7);
 
 test(
   eat,
