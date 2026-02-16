@@ -18,24 +18,12 @@ function eat(t, input, context, expected) {
       t.is(e.message, expected.message);
     }
   } else {
-    function clear(node) {
-      if (node?.left) {
-        clear(node.left);
-      }
-      if (node?.right) {
-        clear(node.right);
-      }
-      if (node?.path) {
-        node.path.forEach(p => clear(p));
-      }
-      if (node?.eval) {
-        delete node.eval;
-      }
+    let result = parse(input, context);
+
+    if (Array.isArray(expected)) {
+      result = [...result];
     }
 
-    const result = parse(input, context);
-
-    clear(result);
     t.deepEqual(
       Array.isArray(expected) ? Array.from(result) : result,
       expected
@@ -155,6 +143,18 @@ test(
   [7]
 );
 
+test.skip(
+  eat,
+  "[b].x",
+  {
+    root: new Map([
+      ["a", { n: 1 }],
+      ["b", { n: 3, x: 7 }]
+    ])
+  },
+  [7]
+);
+
 test(
   eat,
   "[n=2].x",
@@ -183,12 +183,7 @@ test(
 );
 
 test(eat, "in(2,array)", { valueFor: valueFor({ array: [1, 2, 3] }) }, true);
-test(
-  eat,
-  "in('b',array)",
-  { valueFor: valueFor({ array: [1, 2, 3] }) },
-  false
-);
+test(eat, "in('b',array)", { valueFor: valueFor({ array: [1, 2, 3] }) }, false);
 test(
   eat,
   "in(2,set)",
@@ -233,12 +228,7 @@ function* iter() {
   yield "B";
   yield "C";
 }
-test(
-  eat,
-  "join(',',iter)",
-  { valueFor: valueFor({ iter: iter() }) },
-  "A,B,C"
-);
+test(eat, "join(',',iter)", { valueFor: valueFor({ iter: iter() }) }, "A,B,C");
 
 test(
   eat,
