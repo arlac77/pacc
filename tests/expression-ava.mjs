@@ -112,11 +112,11 @@ test(
   "b[n=3].x",
   {
     root: new Map([
-      ["b", [{ n: 1 }, { n: 2 }, { n: 3, x: 7 }]],
+      ["b", [{ n: 1 }, { n: 2 }, { n: 3, x: 6 }, { n: 3, x: 7 }]],
       ["c", 2]
     ])
   },
-  [7]
+  [6, 7]
 );
 test(
   "map identifier",
@@ -138,6 +138,15 @@ const root = new Map([
 
 test(eat, "[n=3].x", { root }, [7]);
 test(eat, "b.x", { root }, 7);
+
+test.skip(
+  eat,
+  "[].n",
+  {
+    root: [{ n: ["a"] }, { n: ["b"] }, { n: ["v"] }]
+  },
+  ["a", "b", "c"]
+);
 
 test(
   eat,
