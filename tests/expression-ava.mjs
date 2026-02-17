@@ -212,8 +212,13 @@ test(eat, "join(',','A','B','C')", undefined, "A,B,C");
 test(eat, "join(',',a[n=2].b,'B')", { root: { a: [{ n: 2, b: "A" }] } }, "A,B");
 test(eat, "join(',','ABC')", undefined, "ABC");
 test(eat, "sort(a)", { root: { a: [2, 1, 3] } }, [1, 2, 3]);
+test(
+  eat,
+  "sort(a,priority,'descending')",
+  { root: { a: [{ priority: 2 }, { priority: 1 }, { priority: 3 }] } },
+  [{ priority: 3 }, { priority: 2 }, { priority: 1 }]
+);
 test(eat, "truncate(a,2)", { root: { a: [2, 1, 3] } }, [2, 1]);
-
 test(
   eat,
   "join(',',array)",

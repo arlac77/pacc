@@ -308,8 +308,23 @@ export const keywords = {
   false: [BOOLEAN, false]
 };
 
+function evalAll(args, current, context) {
+  return args.map(a =>
+    typeof a?.eval === "function" ? a.eval(a, current, context) : a
+  );
+}
+
+function evalOne(arg, current, context) {
+  return typeof arg?.eval === "function"
+    ? arg.eval(arg, current, context)
+    : arg;
+}
+
 export const globals = {
-  in: (a, b) => {
+  in: (args,current,context) => {
+    const a = evalOne(args[0], current, context);
+    const b = evalOne(args[1], current, context);
+
     if (b?.[Symbol.iterator]) {
       for (const x of b) {
         if (x === a) {
@@ -319,29 +334,65 @@ export const globals = {
     }
     return false;
   },
-  ceil: Math.ceil,
-  floor: Math.floor,
-  abs: Math.abs,
-  min: Math.min,
-  max: Math.max,
-  encodeURI: encodeURI,
-  decodeURI: decodeURI,
-  encodeURIComponent: encodeURIComponent,
-  decodeURIComponent: decodeURIComponent,
-  trim: a => a.trim(),
-  uppercase: a => a.toUpperCase(),
-  lowercase: a => a.toLowerCase(),
-  substring: (s, a, b) => s.substring(a, b),
-  length: s => s.length,
-  join: (separator, ...args) =>
-    args
+  ceil: (args, current, context) =>
+    Math.ceil(evalOne(args[0], current, context)),
+  floor: (args, current, context) =>
+    Math.floor(evalOne(args[0], current, context)),
+  abs: (args, current, context) => Math.abs(evalOne(args[0], current, context)),
+  min: (args, current, context) => Math.min(...evalAll(args, current, context)),
+  max: (args, current, context) => Math.max(...evalAll(args, current, context)),
+  encodeURI: (args, current, context) =>
+    encodeURI(...evalAll(args, current, context)),
+  decodeURI: (args, current, context) =>
+    decodeURI(...evalAll(args, current, context)),
+  encodeURIComponent: (args, current, context) =>
+    encodeURIComponent(...evalAll(args, current, context)),
+  decodeURIComponent: (args, current, context) =>
+    decodeURIComponent(...evalAll(args, current, context)),
+  trim: (args, current, context) => evalOne(args[0], current, context).trim(),
+  length: (args, current, context) => evalOne(args[0], current, context).length,
+  uppercase: (args, current, context) =>
+    evalOne(args[0], current, context).toUpperCase(),
+  lowercase: (args, current, context) =>
+    evalOne(args[0], current, context).toLowerCase(),
+  substring: (args, current, context) => {
+    const str = evalOne(args[0], current, context);
+    const n1 = evalOne(args[1], current, context);
+    return args.length > 2
+      ? str.substring(n1, evalOne(args[2], current, context))
+      : str.substring(n1);
+  },
+  join: (args, current, context) => {
+    const separator = evalOne(args.shift(), current, context);
+    return evalAll(args, current, context)
       .map(item => (item instanceof Iterator ? Array.from(item) : item))
       .flat()
-      .join(separator),
-  sort: data => {
+      .join(separator);
+  },
+  sort: (args, current, context) => {
+    const data = evalOne(args[0], current, context);
+    if (args.length >= 2) {
+      let order = 1;
+      if(args.length > 2) {
+        const str = evalOne(args[2], current, context);
+        if(str === 'descending') {
+          order = -1;
+        }
+      }
+      const selector = args[1];
+      return data.sort(
+        (a, b) =>
+          (selector.eval(selector, a, context) -
+          selector.eval(selector, b, context)) * order
+      );
+    }
+
     return data.sort();
   },
-  truncate: (data, length) => {
+  truncate: (args, current, context) => {
+    const data = evalOne(args[0], current, context);
+    const length = evalOne(args[1], current, context);
+
     data.length = length;
     return data;
   }

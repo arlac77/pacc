@@ -12,10 +12,7 @@ export function pathEval(node, current, context) {
 }
 
 export function functionEval(node, current, context) {
-  const args = node.args.map(a =>
-    typeof a === "object" ? a.eval(a, current, context) : a
-  );
-  return context.valueFor(node.name)(...args);
+  return context.valueFor(node.name)(node.args, current, context);
 }
 
 export function keyedAccessOrGlobalEval(node, current, context) {
