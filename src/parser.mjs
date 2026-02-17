@@ -3,7 +3,7 @@ import { tokens, EOF } from "./tokens.mjs";
 export function parseOnly(input, context = {}) {
   input = tokens(input, context);
   
-  let node, token, value;
+  let token, value;
 
   function advance() {
     const next = input.next();
@@ -18,9 +18,6 @@ export function parseOnly(input, context = {}) {
   }
 
   const parser = {
-    get node() {
-      return node;
-    },
     get token() {
       return token;
     },
@@ -40,7 +37,7 @@ export function parseOnly(input, context = {}) {
     expression(precedence) {
       const last = token;
       advance();
-      node = last.nud(parser);
+      let node = last.nud(parser);
 
       while (token.precedence > precedence) {
         const last = token;
