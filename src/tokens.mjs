@@ -337,7 +337,14 @@ export const globals = {
     args
       .map(item => (item instanceof Iterator ? Array.from(item) : item))
       .flat()
-      .join(separator)
+      .join(separator),
+  sort: data => {
+    return data.sort();
+  },
+  truncate: (data, length) => {
+    data.length = length;
+    return data;
+  }
 };
 
 /**
@@ -349,7 +356,7 @@ export const globals = {
 export function* tokens(string, context = {}) {
   context.keywords ||= keywords;
   context.parseFloat ||= parseFloat;
-  context.valueFor ||= (name,at) => globals[name];
+  context.valueFor ||= (name, at) => globals[name];
 
   let state, value, hex, quote;
 

@@ -58,6 +58,7 @@ test(eat, "(1)", undefined, 1);
 test(eat, "(1,2,3,4)", undefined, [1, 2, 3, 4]);
 test(eat, "('a',2,true)", undefined, ["a", 2, true]);
 test(eat, "(1,2,3,4) + (5,6)", undefined, [1, 2, 3, 4, 5, 6]);
+test(eat, "(1,(2,3),4)", undefined, [1, [2, 3], 4]);
 test(eat, "1 + (2 + 3)", undefined, 6);
 test(eat, "(1 + 2) + 3", undefined, 6);
 test(eat, "(1 + 2) * 4 + 5 + 6", undefined, 23);
@@ -210,6 +211,9 @@ test(eat, "trim(' aA X')", undefined, "aA X");
 test(eat, "join(',','A','B','C')", undefined, "A,B,C");
 test(eat, "join(',',a[n=2].b,'B')", { root: { a: [{ n: 2, b: "A" }] } }, "A,B");
 test(eat, "join(',','ABC')", undefined, "ABC");
+test(eat, "sort(a)", { root: { a: [2, 1, 3] } }, [1, 2, 3]);
+test(eat, "truncate(a,2)", { root: { a: [2, 1, 3] } }, [2, 1]);
+
 test(
   eat,
   "join(',',array)",
