@@ -99,10 +99,11 @@ test(
 );
 
 test(eat, "[1]", { root: [0, 9] }, 9);
+test(eat, "[2]", { root: [0, 3, 9].values() }, 9);
 test(eat, "['a']", { root: { a: 7 } }, 7);
 test(eat, "['b']", { root: new Map([["b", 8]]) }, 8);
 test.skip(eat, "[c]", { root: new Map([["c", 9]]) }, 9);
-test.skip(eat, "d", { root: new Set(["d"]) }, "d");
+test(eat, "d", { root: new Set(["d"]) }, "d");
 test(eat, "[1+2].b", { root: [0, 0, 0, { b: 44 }] }, 44);
 test(eat, "[3].b", { root: [0, 0, 0, { b: 44 }] }, 44);
 test(eat, "a", { root: { a: 12 } }, 12);

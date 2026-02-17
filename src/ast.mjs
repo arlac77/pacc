@@ -30,6 +30,12 @@ export function keyedAccessEval(node, current, context) {
     return current.has(node.key) ? node.key : undefined;
   }
   if (current instanceof Iterator) {
+    if(typeof node.key === 'number') {
+      for(const item of current.drop(node.key)) {
+        return item;
+      }
+    }
+
     return current.map(item => item[node.key]);
   }
 
