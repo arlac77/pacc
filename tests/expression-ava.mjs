@@ -220,6 +220,7 @@ test(
   [{ priority: 3 }, { priority: 2 }, { priority: 1 }]
 );
 test(eat, "truncate(a,2)", { root: { a: [2, 1, 3] } }, [2, 1]);
+test(eat, "truncate(a,1)", { root: { a: [2, 1, 3].values() } }, [2]);
 test(
   eat,
   "join(',',array)",

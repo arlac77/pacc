@@ -393,6 +393,10 @@ export const globals = {
     const data = evalOne(args[0], current, context);
     const length = evalOne(args[1], current, context);
 
+    if(data instanceof Iterator) {
+      return data.take(length);
+    }
+
     data.length = length;
     return data;
   }
