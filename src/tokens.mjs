@@ -187,6 +187,13 @@ function createFilter(parser) {
     case "number":
       return { eval: keyedAccessEval, key: filter };
     default:
+      if (
+        filter.eval === keyedAccessEval ||
+        filter.eval === keyedAccessOrGlobalEval
+      ) {
+        return filter;
+      }
+
       return { eval: filterEval, filter };
   }
 }
@@ -321,7 +328,7 @@ function evalOne(arg, current, context) {
 }
 
 export const globals = {
-  in: (args,current,context) => {
+  in: (args, current, context) => {
     const a = evalOne(args[0], current, context);
     const b = evalOne(args[1], current, context);
 
@@ -373,9 +380,9 @@ export const globals = {
     const data = evalOne(args[0], current, context);
     if (args.length >= 2) {
       let order = 1;
-      if(args.length > 2) {
+      if (args.length > 2) {
         const str = evalOne(args[2], current, context);
-        if(str === 'descending') {
+        if (str === "descending") {
           order = -1;
         }
       }
@@ -383,7 +390,8 @@ export const globals = {
       return data.sort(
         (a, b) =>
           (selector.eval(selector, a, context) -
-          selector.eval(selector, b, context)) * order
+            selector.eval(selector, b, context)) *
+          order
       );
     }
 
@@ -393,7 +401,7 @@ export const globals = {
     const data = evalOne(args[0], current, context);
     const length = evalOne(args[1], current, context);
 
-    if(data instanceof Iterator) {
+    if (data instanceof Iterator) {
       return data.take(length);
     }
 

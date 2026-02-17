@@ -19,26 +19,7 @@ export function keyedAccessOrGlobalEval(node, current, context) {
   return keyedAccessEval(node, current, context) ?? context.valueFor(node.key);
 }
 
-export function keyedAccessEval(node, current, context) {
-  if (current === undefined) {
-    return undefined;
-  }
-  if (current instanceof Map) {
-    return current.get(node.key);
-  }
-  if (current instanceof Set) {
-    return current.has(node.key) ? node.key : undefined;
-  }
-  if (current instanceof Iterator) {
-    if(typeof node.key === 'number') {
-      for(const item of current.drop(node.key)) {
-        return item;
-      }
-    }
-
-    return current.map(item => item[node.key]);
-  }
-
+function scalarAccessEval(node, current, context) {
   switch (typeof current[node.key]) {
     case "function": {
       const value = current[node.key]();
@@ -54,6 +35,37 @@ export function keyedAccessEval(node, current, context) {
   }
 
   return current[node.key];
+}
+
+function plain(value) {
+  if (typeof value === "function") {
+    return value();
+  }
+
+  return value;
+}
+
+export function keyedAccessEval(node, current, context) {
+  if (current === undefined) {
+    return undefined;
+  }
+  if (current instanceof Map) {
+    return plain(current.get(node.key));
+  }
+  if (current instanceof Set) {
+    return current.has(node.key) ? node.key : undefined;
+  }
+  if (current instanceof Iterator) {
+    if (typeof node.key === "number") {
+      for (const item of current.drop(node.key)) {
+        return plain(item);
+      }
+    }
+
+    return current.map(item => scalarAccessEval(node, item, context));
+  }
+
+  return scalarAccessEval(node, current, context);
 }
 
 export function filterEval(node, current, context) {
