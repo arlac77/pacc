@@ -137,12 +137,13 @@ test(
 );
 
 const root = new Map([
-  ["a", { n: 1 }],
-  ["b", { n: 3, x: 7 }]
+  ["a", { n: 1, l: [1,2] }],
+  ["b", { n: 3, x: 7, l: [3,4] }]
 ]);
 
 test(eat, "[n=3].x", { root }, [7]);
 test(eat, "b.x", { root }, 7);
+test.skip(eat, "[n<5].l", { root }, [1,2,3,4]);
 
 test.skip(
   eat,
