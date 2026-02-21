@@ -5,7 +5,7 @@
     "access": "public",
     "provenance": true
   },
-  "packageManager": "npm@11.10.0+sha512.8bc844e37892200305b98562f13c6c10849d10b3387c8cdaeb4d1a2e32746a79063cba9dd284cf28c26a01c3bf4169b7d3b31b4a5586cc970d6749463108073c",
+  "packageManager": "npm@11.10.0",
   "types": "./types/module.d.mts",
   "exports": {
     ".": {
@@ -29,7 +29,6 @@
   ],
   "license": "0BSD",
   "scripts": {
-    "benchmark": "node benchmark/*.mjs",
     "prepare": "node --run prepare:typescript",
     "prepare:typescript": "tsc --allowJs --declaration --emitDeclarationOnly --declarationDir types --resolveJsonModule --target esnext -m esnext --module nodenext --moduleResolution nodenext --rootDir src ./src**/*.mjs",
     "test": "node --run test:browser-ava && node --run test:ava",
@@ -39,7 +38,8 @@
     "docs": "documentation readme --section=API ./src**/*.mjs",
     "lint": "node --run lint:docs && node --run lint:typescript",
     "lint:docs": "documentation lint ./src**/*.mjs",
-    "lint:typescript": "tsc --allowJs --checkJs --noEmit --resolveJsonModule --target esnext -m esnext --module nodenext --moduleResolution nodenext ./src**/*.mjs"
+    "lint:typescript": "tsc --allowJs --checkJs --noEmit --resolveJsonModule --target esnext -m esnext --module nodenext --moduleResolution nodenext ./src**/*.mjs",
+    "benchmark": "node benchmark/*.mjs"
   },
   "devDependencies": {
     "@mitata/counters": "^0.0.8",
