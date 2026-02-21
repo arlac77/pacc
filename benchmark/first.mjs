@@ -34,14 +34,14 @@ bench('"[n<5].l"', () => parse("[n<5].l", { root }));
 
 const expression = "a.b.c.d.e.f.g.h.i.j.k.l.m.n";
 
-bench('"a.b.c.d.e.f.g.h.i.j.k.l.m.n"', () =>
+bench(`parse ${expression}`, () =>
   parse(expression, { root: root2 })
 );
 
-bench('parseOnly "a.b.c.d.e.f.g.h.i.j.k.l.m.n"', () =>
+bench(`parseOnly ${expression}`, () =>
   parseOnly(expression, { })
 );
-bench('tokens "a.b.c.d.e.f.g.h.i.j.k.l.m.n"', () =>
+bench(`tokens ${expression}`, () =>
   Array.from(tokens(expression, { }))
 );
 
