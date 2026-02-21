@@ -27,8 +27,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: install
         run: npm ci
-      - name: benchmark
-        run: node benchmark/*.mjs 
       - name: test and coverage
         run: npm run cover --if-present
       - name: coveralls
@@ -39,6 +37,8 @@ jobs:
           path-to-lcov: build/coverage/lcov.info
           parallel: true
         continue-on-error: true
+      - name: benchmark
+        run: node benchmark/*.mjs
   test-browser:
     runs-on: ubuntu-latest
     strategy:
