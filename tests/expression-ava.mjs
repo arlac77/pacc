@@ -7,10 +7,6 @@ function valueFor(other) {
 }
 
 function eat(t, input, context, expected) {
-  if (!context) {
-    context = { exec: false };
-  }
-
   if (expected instanceof Error) {
     try {
       const result = parse(input, context);
@@ -103,7 +99,7 @@ test(eat, "[2]", { root: [0, 3, 9].values() }, 9);
 test(eat, "['a']", { root: { a: 7 } }, 7);
 test(eat, "['b']", { root: new Map([["b", 8]]) }, 8);
 test(eat, "[b]", { root: new Map([["b", 8]]) }, 8);
-test(eat, "['c']", { root: new Map([["c", ()=>9]]) }, 9);
+test(eat, "['c']", { root: new Map([["c", () => 9]]) }, 9);
 test(eat, "d", { root: new Set(["d"]) }, "d");
 test(eat, "[1+2].b", { root: [0, 0, 0, { b: 44 }] }, 44);
 test(eat, "[3].b", { root: [0, 0, 0, { b: 44 }] }, 44);
@@ -137,13 +133,13 @@ test(
 );
 
 const root = new Map([
-  ["a", { n: 1, l: [1,2] }],
-  ["b", { n: 3, x: 7, l: [3,4] }]
+  ["a", { n: 1, l: [1, 2] }],
+  ["b", { n: 3, x: 7, l: [3, 4] }]
 ]);
 
 test(eat, "[n=3].x", { root }, [7]);
 test(eat, "b.x", { root }, 7);
-test.skip(eat, "[n<5].l", { root }, [1,2,3,4]);
+test.skip(eat, "[n<5].l", { root }, [1, 2, 3, 4]);
 
 test.skip(
   eat,

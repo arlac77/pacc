@@ -1,6 +1,6 @@
 import { tokens, EOF } from "./tokens.mjs";
 
-export function parseOnly(input, context = {}) {
+export function parseOnly(input, context) {
   input = tokens(input, context);
   
   let token, value;
@@ -54,7 +54,7 @@ export function parseOnly(input, context = {}) {
   return parser.expression(0);
 }
 
-export function parse(input, context) {
+export function parse(input, context={}) {
   const result = parseOnly(input, context);
   return result.eval ? result.eval(result, context.root, context) : result;
 }
