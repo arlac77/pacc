@@ -31,18 +31,14 @@ const root2 = {
 
 bench('"[n<5].l"', () => parse("[n<5].l", { root }));
 
-
 const expression = "a.b.c.d.e.f.g.h.i.j.k.l.m.n";
 
-bench(`parse ${expression}`, () =>
-  parse(expression, { root: root2 })
-);
+bench(`parse ${expression}`, () => parse(expression, { root: root2 }));
+bench(`parseOnly ${expression}`, () => parseOnly(expression, {}));
+bench(`tokens ${expression}`, () => Array.from(tokens(expression, {})));
 
-bench(`parseOnly ${expression}`, () =>
-  parseOnly(expression, { })
-);
-bench(`tokens ${expression}`, () =>
-  Array.from(tokens(expression, { }))
-);
+const expression2 = '"abc" "\t\n" "abcdefghijklmnopqrstuvwxyz"';
+
+bench(`tokens ${expression2}`, () => Array.from(tokens(expression2, {})));
 
 await run();
