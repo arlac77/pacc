@@ -43,8 +43,8 @@
   },
   "devDependencies": {
     "@mitata/counters": "^0.0.8",
-    "ava": "^6.4.1",
-    "browser-ava": "^2.3.53",
+    "ava": "^7.0.0",
+    "browser-ava": "^2.3.54",
     "c8": "^11.0.0",
     "documentation": "^14.0.3",
     "mitata": "^1.0.34",
