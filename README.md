@@ -608,7 +608,7 @@ Split expression path into tokens.
 ### Parameters
 
 *   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `context`   (optional, default `{}`)
+*   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 ## setAttribute
 
