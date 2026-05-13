@@ -105,7 +105,8 @@ export function getAttributeAndOperator(object, expression) {
   let predicateTokens;
   let op = EQUAL;
 
-  const next = tokens(expression);
+  const context = {};
+  const next = tokens(expression, context);
 
   for (const token of next) {
     switch (token[0]) {

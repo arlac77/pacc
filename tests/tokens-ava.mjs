@@ -33,7 +33,8 @@ import {
 
 function tt(t, input, expected) {
   try {
-    const result = [...tokens(input)];
+    const context = {};
+    const result = [...tokens(input,context)];
     expected = expected.map(e => (Array.isArray(e) ? e : [e]));
     t.deepEqual(result, expected);
   } catch (e) {

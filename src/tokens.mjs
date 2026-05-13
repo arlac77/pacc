@@ -417,7 +417,7 @@ export const globals = {
  * @param {Object} context
  * @yields {Token}
  */
-export function* tokens(string, context = {}) {
+export function* tokens(string, context) {
   context.keywords ||= keywords;
   context.parseFloat ||= parseFloat;
   context.valueFor ||= (name, at) => globals[name];
