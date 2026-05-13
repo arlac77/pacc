@@ -414,6 +414,7 @@ export const globals = {
  * Split expression path into tokens.
  * @generator
  * @param {string} string
+ * @param {Object} context
  * @yields {Token}
  */
 export function* tokens(string, context = {}) {
