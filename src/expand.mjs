@@ -4,6 +4,7 @@ const maxNestingLevel = 8;
 
 /**
  * Default expand context
+ * using '§{' and '}' as lead in/out
  */
 export const expandContextDefault = {
   root: {},
