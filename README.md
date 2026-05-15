@@ -529,6 +529,7 @@ Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 ## expandContextDefault
 
 Default expand context
+using '§{' and '}' as lead in/out
 
 ## expandContextDoubbleCurly
 
