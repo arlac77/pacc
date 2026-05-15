@@ -317,14 +317,12 @@ export const keywords = {
 
 function evalAll(args, current, context) {
   return args.map(a =>
-    typeof a?.eval === "function" ? a.eval(a, current, context) : a
+    a.eval === undefined ? a : a.eval(a, current, context)
   );
 }
 
 function evalOne(arg, current, context) {
-  return typeof arg?.eval === "function"
-    ? arg.eval(arg, current, context)
-    : arg;
+  return arg.eval === undefined ? arg : arg.eval(arg, current, context);
 }
 
 export const globals = {
