@@ -23,6 +23,7 @@ import { types } from "./types.mjs";
  * @property {string} [externalName] attribute name used by external system
  * @property {string[]|string} [env] environment variable(s) used to provide the value
  * @property {object} [additionalValues] other values to be set in case our attribute is set
+ * @property {string} [separator]  separator for collections
  */
 
 /**
