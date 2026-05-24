@@ -136,9 +136,7 @@ export function addType(type) {
     type.specializationOf.specializations[type.name] = type;
   }
 
-  if (!type.owners) {
-    type.owners = [];
-  }
+  type.owners ||= [];
 
   switch (typeof type.extends) {
     case "undefined":
