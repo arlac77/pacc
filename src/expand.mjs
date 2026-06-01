@@ -108,32 +108,6 @@ export function expand(object, context) {
       return object;
     }
 
-    if (object instanceof Map) {
-      const r = new object.constructor();
-      for (const [key, value] of object.entries()) {
-        const path2 = [
-          ...path,
-          {
-            key,
-            value
-          }
-        ];
-
-        r.set(_expand(key, path2), _expand(value, path2));
-      }
-
-      return r;
-    }
-
-    if (object instanceof Set) {
-      const r = new object.constructor();
-      for (const value of object.values()) {
-        r.add(_expand(value, [...path, { value }]));
-      }
-
-      return r;
-    }
-
     if (Array.isArray(object)) {
       const array = new Array(object.length);
 
@@ -154,6 +128,32 @@ export function expand(object, context) {
       }
 
       return array;
+    }
+
+    if (typeof object.add === "function") {
+      const r = new object.constructor();
+      for (const value of object.values()) {
+        r.add(_expand(value, [...path, { value }]));
+      }
+
+      return r;
+    }
+
+    if (typeof object.entries === "function") {
+      const r = new object.constructor();
+      for (const [key, value] of object.entries()) {
+        const path2 = [
+          ...path,
+          {
+            key,
+            value
+          }
+        ];
+
+        r.set(_expand(key, path2), _expand(value, path2));
+      }
+
+      return r;
     }
 
     if (context.stopClass && object instanceof context.stopClass) {
