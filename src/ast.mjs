@@ -49,10 +49,10 @@ export function keyedAccessEval(node, current, context) {
   if (current === undefined) {
     return undefined;
   }
-  if (current instanceof Map) {
+  if (typeof current.get === 'function') {
     return plain(current.get(node.key));
   }
-  if (current instanceof Set) {
+  if (typeof current.has === 'function') {
     return current.has(node.key) ? node.key : undefined;
   }
   if (current instanceof Iterator) {
