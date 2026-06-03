@@ -1,4 +1,5 @@
 import test from "ava";
+import { AggregatedMap } from "aggregated-map";
 import { pathEval, keyedAccessEval, ASTNullFilter } from "../src/ast.mjs";
 
 export function pet(t, root, path, expectedResult) {
@@ -27,7 +28,7 @@ pet.title = (providedTitle = "", item, path, result) =>
 
 test(
   pet,
-  { b: ["x", new Map([["c", 7]])] },
+  { b: ["x", new AggregatedMap([new Map([["c", 7]])])] },
   [
     { eval: keyedAccessEval, key: "b" },
     { eval: keyedAccessEval, key: 1 },

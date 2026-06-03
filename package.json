@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@mitata/counters": "^0.0.8",
+    "aggregated-map": "^1.0.3",
     "ava": "^8.0.1",
     "browser-ava": "^2.3.61",
     "c8": "^11.0.0",
