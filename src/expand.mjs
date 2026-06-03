@@ -102,12 +102,13 @@ export function expand(object, context) {
       case "function":
         return object;
     }
+
     if (object === null) {
       return object;
     }
 
     if (Array.isArray(object)) {
-      const array = new Array(object.length);
+      const copy = new object.constructor[Symbol.species](object.length);
 
       for (let index = 0; index < object.length; index++) {
         const o = object[index];
@@ -120,25 +121,25 @@ export function expand(object, context) {
         ]);
         if (r instanceof Promise) {
           promises.push(r);
-          r.then(f => (array[index] = f));
+          r.then(f => (copy[index] = f));
         }
-        array[index] = r;
+        copy[index] = r;
       }
 
-      return array;
+      return copy;
     }
 
     if (typeof object.add === "function") {
-      const r = new object.constructor();
+      const copy = new object.constructor[Symbol.species]();
       for (const value of object.values()) {
-        r.add(_expand(value, [...path, { value }]));
+        copy.add(_expand(value, [...path, { value }]));
       }
 
-      return r;
+      return copy;
     }
 
     if (typeof object.entries === "function") {
-      const r = new object.constructor();
+      const copy = new object.constructor[Symbol.species]();
       for (const [key, value] of object.entries()) {
         const path2 = [
           ...path,
@@ -148,10 +149,10 @@ export function expand(object, context) {
           }
         ];
 
-        r.set(_expand(key, path2), _expand(value, path2));
+        copy.set(_expand(key, path2), _expand(value, path2));
       }
 
-      return r;
+      return copy;
     }
 
     if (context.stopClass && object instanceof context.stopClass) {
