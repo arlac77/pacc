@@ -78,9 +78,21 @@ test("expand function", t => {
   function f() {}
   t.is(expand(f, {}), f);
 });
+test("expand String", t => {
+  const object = new String("abc");
+  t.is(expand(object, {}).valueOf("number"), object.valueOf("number"));
+});
 test("expand Date", t => {
-  const d = new Date();
-  t.is(expand(d, {}), d);
+  const object = new Date();
+  t.is(expand(object, {}).valueOf("number"), object.valueOf("number"));
+});
+test("expand Number", t => {
+  const object = new Number(42);
+  t.is(expand(object, {}).valueOf("number"), object.valueOf("number"));
+});
+test("expand Boolean", t => {
+  const object = new Boolean("1");
+  t.is(expand(object, {}).valueOf("number"), object.valueOf("number"));
 });
 test("expand Array", t =>
   t.deepEqual(expand(["${a}", "${b}", "c"], { root: { a: "a1", b: "b2" } }), [

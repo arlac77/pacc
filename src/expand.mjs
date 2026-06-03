@@ -102,9 +102,7 @@ export function expand(object, context) {
       case "function":
         return object;
     }
-
-    if (object === null || object instanceof Number || object instanceof Date) {
-      // TODO: find a better way to identify special cases
+    if (object === null) {
       return object;
     }
 
@@ -160,6 +158,10 @@ export function expand(object, context) {
       return object;
     }
 
+    if (typeof object.valueOf === "function") {
+      return object;
+    }
+
     let newObject = {};
 
     for (let [key, value] of Object.entries(object)) {
@@ -182,6 +184,7 @@ export function expand(object, context) {
       }
     }
 
+    console.log(newObject);
     return newObject;
   }
 
