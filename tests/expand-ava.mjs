@@ -67,6 +67,8 @@ test("plain expand string transitive", t => {
   t.is(expand("${a}", context), 2);
 });
 
+test("expand Object", t =>
+  t.deepEqual(expand({ a: "${num}" }, { root: { num: 42 } }), { a: 42 }));
 test("expand undefined", t => t.is(expand(undefined, {}), undefined));
 test("expand null", t => t.is(expand(null, {}), null));
 test("expand NaN", t => t.is(expand(NaN, {}), NaN));

@@ -159,7 +159,7 @@ export function expand(object, context) {
       return object;
     }
 
-    if (typeof object.valueOf === "function") {
+    if(Object.prototype.toString.call(object) !== '[object Object]') {
       return object;
     }
 
@@ -185,7 +185,6 @@ export function expand(object, context) {
       }
     }
 
-    console.log(newObject);
     return newObject;
   }
 
