@@ -6,6 +6,8 @@ import { parseBytes } from "./bytes.mjs";
  * @typedef {Object} Type
  * @property {string} name
  * @property {boolean} [primitive]
+ * @property {Type} [extends]
+ * @property {Function} [clazz]
  * @property {Function} [toInternal]
  * @property {Function} [toExternal]
  */
