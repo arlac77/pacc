@@ -124,28 +124,11 @@ function raiseOnUnknownType(type, origin) {
 }
 
 export function addType(type) {
-  if (type.typeDefinition) {
-    const clazz = type;
-    type = type.typeDefinition;
-    type.clazz = clazz;
-  } else {
-    if (!!type?.constructor.name) {
-      const clazz = type;
-      type.clazz = clazz;
-    }
-  }
-
-  if (type.specializationOf) {
-    type.specializationOf.specializations[type.name] = type;
-  }
-
-  type.owners ||= [];
-
   switch (typeof type.extends) {
     case "undefined":
-      const ex = Object.getPrototypeOf(type.clazz);
+      const ex = Object.getPrototypeOf(type.clazz || type);
       if (ex?.name) {
-        type.extends = ex.typeDefinition || ex;
+        type.extends = ex;
       }
       break;
 
@@ -154,14 +137,19 @@ export function addType(type) {
       break;
   }
 
+  if (type.specializationOf) {
+    type.specializationOf.specializations[type.name] = type;
+  }
+
+  type.owners ||= [];
+
   if (!types[type.name]) {
     types[type.name] = type;
+  } else {
+    if (types[type.name] !== type) {
+      return Object.assign(types[type.name], type);
+    }
   }
-
-  if (types[type.name] !== type) {
-    return Object.assign(types[type.name], type);
-  }
-
   return type;
 }
 
@@ -216,7 +204,7 @@ export function resolveTypeLinks() {
 }
 
 export function typeFactory(type, owner, data) {
-  const factory = type.factoryFor?.(owner, data) || type.clazz;
+  const factory = type.factoryFor?.(owner, data) || type.clazz || type;
   const object = new factory(owner);
 
   object.read(data);

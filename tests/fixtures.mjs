@@ -101,11 +101,12 @@ export class bClass extends aClass {
   static name = "b";
 }
 
-export class cClass extends aClass {
-  static typeDefinition = {
-    name: "c",
-    attributes: {
-      c1: default_attribute
-    }
-  };
-}
+export class cClass extends aClass {}
+
+export const cClassTypeDefinition = {
+  clazz: cClass,
+  name: "c",
+  attributes: {
+    c1: default_attribute
+  }
+};
