@@ -5,10 +5,10 @@ import { types } from "./types.mjs";
  *
  * @property {object} type
  * @property {boolean} isKey
- * @property {boolean} isOwner are we the owner of the value
  * @property {boolean} writable
  * @property {boolean} mandatory
- * @property {boolean} collection
+ * @property {boolean} collection are we a collection (set, map, array)
+ * @property {boolean} owner are we the owner of the value
  * @property {Function} [constructor] (collection) constructor
  * @property {boolean} [private] should the value be shown
  * @property {boolean} [credential] any type of credential
@@ -36,11 +36,11 @@ export const default_attribute = {
   writable: false,
   mandatory: false,
   collection: false,
+  owner: true,
   persistent: false,
   private: false,
   credential: false,
-  isKey: false,
-  isOwner: true
+  isKey: false
 };
 
 /**
