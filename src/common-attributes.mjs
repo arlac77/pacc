@@ -7,7 +7,7 @@ import { types } from "./types.mjs";
  * @property {boolean} isKey
  * @property {boolean} writable
  * @property {boolean} mandatory
- * @property {boolean} collection are we a collection (set, map, array)
+ * @property {boolean} collection are we a collection (set, map, array, object)
  * @property {boolean} owner are we the owner of the value
  * @property {Function} [constructor] (collection) constructor
  * @property {boolean} [private] should the value be shown
