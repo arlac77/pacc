@@ -45,23 +45,37 @@ function mergeAttributeDefinitions(dest, atts) {
 }
 
 /**
- * Iterate over all attributes.
- * @param {Object} definition
+ * Iterate over attributes.
+ * @param {Object} attribute definition
  * @param {Function} [filter]
- * @param {string[]} path
+ * @param {string[]} [path]
  * @return {Iterable<[string[],object]>}
  */
 export function* attributeIterator(definition, filter, path = []) {
   if (definition) {
     for (const [name, def] of Object.entries(definition)) {
       const path2 = [...path, name];
-      if (typeof filter !== 'function' || filter(name, def)) {
+      if (typeof filter !== "function" || filter(name, def)) {
         yield [path2, def];
       }
 
       yield* attributeIterator(def.attributes, filter, path2);
     }
   }
+}
+
+/**
+ * Iterate over all attributes of a type.
+ * @param {Type} type definition
+ * @param {Function} [filter]
+ * @param {string[]} [path]
+ * @return {Iterable<[string[],object]>}
+ */
+export function* extendingAttributeIterator(type, filter, path) {
+  if (type.extends) {
+    yield* extendingAttributeIterator(type.extends, filter, path);
+  }
+  yield* attributeIterator(type.attributes, filter, path);
 }
 
 export const filterWritable = (name, attribute) => attribute.writable;

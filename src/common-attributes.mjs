@@ -5,6 +5,7 @@ import { types } from "./types.mjs";
  *
  * @property {object} type
  * @property {boolean} isKey
+ * @property {boolean} isOwner are we the owner of the value
  * @property {boolean} writable
  * @property {boolean} mandatory
  * @property {boolean} collection
@@ -19,11 +20,11 @@ import { types } from "./types.mjs";
  * @property {Function} [get] get the value can be used to calculate default values
  * @property {Function} [toInternal]
  * @property {Function} [toExternal]
- * @property {Set<any>} [values] allowed values
  * @property {string} [externalName] attribute name used by external system
+ * @property {Set<any>} [values] allowed values
  * @property {string[]|string} [env] environment variable(s) used to provide the value
  * @property {object} [additionalValues] other values to be set in case our attribute is set
- * @property {string} [separator]  separator for collections
+ * @property {string} [separator] separator for collections
  */
 
 /**
@@ -38,7 +39,8 @@ export const default_attribute = {
   persistent: false,
   private: false,
   credential: false,
-  isKey: false
+  isKey: false,
+  isOwner: true
 };
 
 /**
