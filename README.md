@@ -75,8 +75,10 @@ tokens "abc" "
     *   [Parameters](#parameters-1)
 *   [attributeIterator](#attributeiterator)
     *   [Parameters](#parameters-2)
-*   [parseBytes](#parsebytes)
+*   [extendingAttributeIterator](#extendingattributeiterator)
     *   [Parameters](#parameters-3)
+*   [parseBytes](#parsebytes)
+    *   [Parameters](#parameters-4)
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties-1)
 *   [default\_attribute](#default_attribute)
@@ -134,40 +136,40 @@ tokens "abc" "
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [environmentValues](#environmentvalues)
-    *   [Parameters](#parameters-4)
+    *   [Parameters](#parameters-5)
 *   [expandContextDefault](#expandcontextdefault)
 *   [expandContextDoubbleCurly](#expandcontextdoubblecurly)
 *   [expand](#expand)
-    *   [Parameters](#parameters-5)
+    *   [Parameters](#parameters-6)
 *   [promises](#promises)
 *   [filter](#filter)
-    *   [Parameters](#parameters-6)
-*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-7)
-*   [getAttributes](#getattributes)
+*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-8)
-*   [getAttributesJSON](#getattributesjson)
+*   [getAttributes](#getattributes)
     *   [Parameters](#parameters-9)
+*   [getAttributesJSON](#getattributesjson)
+    *   [Parameters](#parameters-10)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-10)
-*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-11)
-*   [getAttribute](#getattribute)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-12)
-*   [getAttributeAndOperator](#getattributeandoperator)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-13)
-*   [parseDuration](#parseduration)
+*   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-14)
-*   [formatDuration](#formatduration)
+*   [parseDuration](#parseduration)
     *   [Parameters](#parameters-15)
-*   [formatDurationISO](#formatdurationiso)
+*   [formatDuration](#formatduration)
     *   [Parameters](#parameters-16)
+*   [formatDurationISO](#formatdurationiso)
+    *   [Parameters](#parameters-17)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-2)
 *   [createToken](#createtoken)
-    *   [Parameters](#parameters-17)
+    *   [Parameters](#parameters-18)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -202,7 +204,7 @@ tokens "abc" "
 *   [Type](#type)
     *   [Properties](#properties-3)
 *   [raiseOnUnknownType](#raiseonunknowntype)
-    *   [Parameters](#parameters-18)
+    *   [Parameters](#parameters-19)
 
 ## AST
 
@@ -236,13 +238,26 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## attributeIterator
 
-Iterate over all attributes.
+Iterate over attributes.
 
 ### Parameters
 
-*   `definition` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `definition` &#x20;
 *   `filter` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
-*   `path` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `[]`)
+*   `path` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?**  (optional, default `[]`)
+*   `attribute` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** definition
+
+Returns **Iterable<\[[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>, [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)]>**&#x20;
+
+## extendingAttributeIterator
+
+Iterate over all attributes of a type.
+
+### Parameters
+
+*   `type` **[Type](#type)** definition
+*   `filter` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+*   `path` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?**&#x20;
 
 Returns **Iterable<\[[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>, [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)]>**&#x20;
 
@@ -264,6 +279,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 *   `type` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `isKey` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
+*   `isOwner` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** are we the owner of the value
 *   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `mandatory` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `collection` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
@@ -278,8 +294,8 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
 *   `toInternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 *   `toExternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
-*   `values` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)\<any>?** allowed values
 *   `externalName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** attribute name used by external system
+*   `values` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)\<any>?** allowed values
 *   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable(s) used to provide the value
 *   `additionalValues` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** other values to be set in case our attribute is set
 *   `separator` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** separator for collections
