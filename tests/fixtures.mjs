@@ -105,6 +105,7 @@ export class cClass extends aClass {}
 
 export const cClassTypeDefinition = {
   clazz: cClass,
+  extends: aClass,
   name: "c",
   attributes: {
     c1: default_attribute
