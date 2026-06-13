@@ -124,17 +124,16 @@ function raiseOnUnknownType(type, origin) {
 }
 
 export function addType(type) {
-  switch (typeof type.extends) {
-    case "undefined":
-      const ex = Object.getPrototypeOf(type.clazz || type);
+  if (typeof type.extends === "string") {
+    type.extends = raiseOnUnknownType(type.extends, type);
+  } else {
+    if (type.extends === undefined || !type.hasOwnProperty("extends")) {
+      const ex = Object.getPrototypeOf(type);
+
       if (ex?.name) {
         type.extends = ex;
       }
-      break;
-
-    case "string":
-      type.extends = raiseOnUnknownType(type.extends, type);
-      break;
+    }
   }
 
   if (type.specializationOf) {
