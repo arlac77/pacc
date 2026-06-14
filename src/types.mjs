@@ -105,22 +105,21 @@ export const types = {
 };
 
 /**
- *
- * @param {string|undefined} type
+ * Throw if type is not known.
+ * @param {Type|string|undefined} type
  * @param {any} origin
  * @returns {Type}
  */
 function raiseOnUnknownType(type, origin) {
-  switch (typeof type) {
-    case "string":
-      if (types[type]) {
-        return types[type];
-      }
-    case "undefined":
-      throw new Error(`Unknown type ${type} in '${origin}'`, { cause: type });
+  if (types[type]) {
+    return types[type];
   }
 
-  return type;
+  if (types[type?.name] === type) {
+    return type;
+  }
+
+  throw new Error(`Unknown type ${type} in '${origin}'`, { cause: type });
 }
 
 export function addType(type) {
