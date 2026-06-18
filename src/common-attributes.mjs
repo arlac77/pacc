@@ -224,7 +224,7 @@ export const yesno_attribute_writable = {
 /**
  * @type {AttributeDefinition}
  */
-export { boolean_attribute as empty_attribute };
+export const empty_attribute = { ...boolean_attribute, name: "empty" };
 
 /**
  * @type {AttributeDefinition}
@@ -265,7 +265,7 @@ export const password_attribute = { ...secret_attribute, name: "password" };
 /**
  * @type {AttributeDefinition}
  */
-export { secret_attribute as token_attribute };
+export const token_attribute = { ...secret_attribute, name: "token" };
 
 /**
  * @type {AttributeDefinition}
@@ -277,6 +277,7 @@ export { secret_attribute as certificate_attribute };
  */
 export const private_key_attribute = {
   ...secret_attribute_writable,
+  name: "private_key",
   description: "private key"
 };
 
@@ -285,6 +286,7 @@ export const private_key_attribute = {
  */
 export const public_key_attribute = {
   ...secret_attribute_writable,
+  name: "public_key",
   description: "public key"
 };
 
@@ -331,7 +333,8 @@ export { integer_attribute as size_attribute };
 
 export const bytes_size_attribute = {
   ...default_attribute,
-  type: types.byte_size
+  type: types.byte_size,
+  name: "bytes"
 };
 
 /**
