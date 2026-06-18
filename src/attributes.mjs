@@ -55,7 +55,7 @@ export function* attributeIterator(definition, filter, path = []) {
   if (definition) {
     for (const [name, def] of Object.entries(definition)) {
       const path2 = [...path, name];
-      if (typeof filter !== "function" || filter(name, def)) {
+      if (typeof filter !== "function" || filter(def)) {
         yield [path2, def];
       }
 
@@ -78,8 +78,8 @@ export function* extendingAttributeIterator(type, filter, path) {
   yield* attributeIterator(type.attributes, filter, path);
 }
 
-export const filterWritable = (name, attribute) => attribute.writable;
-export const filterPublic = (name, attribute) => !attribute.private;
+export const filterWritable = attribute => attribute.writable;
+export const filterPublic = attribute => !attribute.private;
 
 export function* writableAttributeIterator(definition) {
   yield* attributeIterator(definition, filterWritable);
@@ -108,7 +108,7 @@ export function toExternal(value, attribute) {
 export function mandatoryAttributesPresent(object, attributes) {
   for (const [path, attribute] of attributeIterator(
     attributes,
-    (name, attribute) => attribute.mandatory
+    attribute => attribute.mandatory
   )) {
     const name = path.join(".");
     if (getAttribute(object, name) === undefined) {
