@@ -3,6 +3,7 @@ import { types } from "./types.mjs";
 /**
  * @typedef {Object} AttributeDefinition
  *
+ * @property {string} name
  * @property {object} type
  * @property {boolean} isKey
  * @property {boolean} writable
@@ -99,6 +100,7 @@ export const string_set_attribute_writable = {
  */
 export const name_attribute = {
   ...default_attribute,
+  name: "name",
   isKey: true
 };
 
@@ -115,6 +117,7 @@ export const name_attribute_writable = {
  */
 export const email_attribute = {
   ...default_attribute,
+  name: "email",
   description: "email address"
 };
 
@@ -123,6 +126,7 @@ export const email_attribute = {
  */
 export const version_attribute = {
   ...default_attribute,
+  name: "version",
   description: "version"
 };
 
@@ -140,6 +144,7 @@ export const version_attribute_writable = {
  */
 export const description_attribute = {
   ...default_attribute_writable,
+  name: "description",
   description: "human readable description"
 };
 
@@ -148,12 +153,15 @@ export { description_attribute as description_attribute_writable };
 /**
  * @type {AttributeDefinition}
  */
-export { default_attribute as type_attribute };
+export const type_attribute = { ...default_attribute, name: "type" };
 
 /**
  * @type {AttributeDefinition}
  */
-export { default_attribute_writable as state_attribute_writable };
+export const state_attribute_writable = {
+  ...default_attribute_writable,
+  name: "state"
+};
 
 /**
  * @type {AttributeDefinition}
@@ -223,6 +231,7 @@ export { boolean_attribute as empty_attribute };
  */
 export const uuid_attribute = {
   ...default_attribute,
+  name: "uuid",
   isKey: true
 };
 
@@ -246,12 +255,12 @@ export const secret_attribute_writable = {
 /**
  * @type {AttributeDefinition}
  */
-export { secret_attribute as username_attribute };
+export const username_attribute = { ...secret_attribute, name: "username" };
 
 /**
  * @type {AttributeDefinition}
  */
-export { secret_attribute as password_attribute };
+export const password_attribute = { ...secret_attribute, name: "password" };
 
 /**
  * @type {AttributeDefinition}
@@ -336,6 +345,7 @@ export const object_attribute = { ...default_attribute, type: types.object };
 export const url_attribute = {
   ...default_attribute,
   type: types.url,
+  name: "url",
   description: "home of the object"
 };
 
@@ -352,6 +362,7 @@ export const url_attribute_writable = {
  */
 export const hostname_attribute = {
   ...default_attribute,
+  name: "hostname",
   description: "hostname"
 };
 
@@ -360,6 +371,7 @@ export const hostname_attribute = {
  */
 export const port_attribute = {
   ...integer_attribute,
+  name: "port",
   description: "ip port"
 };
 
@@ -370,6 +382,7 @@ export const port_attribute = {
 export const id_attribute = {
   ...default_attribute,
   isKey: true,
+  name: "id",
   description: "identifier"
 };
 
@@ -377,7 +390,10 @@ export const id_attribute = {
  * The body text.
  * @type {AttributeDefinition}
  */
-export { default_attribute_writable as body_attribute_writable };
+export const body_attribute_writable = {
+  ...default_attribute_writable,
+  name: "body"
+};
 
 /**
  * The one line description.
@@ -385,6 +401,7 @@ export { default_attribute_writable as body_attribute_writable };
  */
 export const title_attribute_writable = {
   ...default_attribute,
+  name: "title",
   description: "human readable title",
   writable: true
 };
@@ -396,6 +413,7 @@ export const title_attribute_writable = {
  */
 export const priority_attribute = {
   ...number_attribute_writable,
+  name: "priority",
   default: 0
 };
 
@@ -405,7 +423,8 @@ export const priority_attribute = {
  */
 export const duration_attribute = {
   ...default_attribute,
-  type: types.duration
+  type: types.duration,
+  name: "duration"
 };
 
 /**
@@ -429,6 +448,7 @@ export const duration_ms_attribute = {
  */
 export const timeout_attribute = {
   ...number_attribute_writable,
+  name: "timeout",
   description: "timeout"
 };
 
@@ -437,5 +457,6 @@ export const timeout_attribute = {
  */
 export const language_attribute = {
   ...default_attribute,
+  name: "language",
   description: "human spoken language"
 };
