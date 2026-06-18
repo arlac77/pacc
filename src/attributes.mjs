@@ -95,8 +95,6 @@ export function toInternal(value, attribute) {
   return value;
 }
 
-export { toInternal as prepareValue }; // DEPRECATED
-
 export function toExternal(value, attribute) {
   if (attribute) {
     const toExternal = attribute.toExternal ?? attribute.type?.toExternal;
