@@ -158,6 +158,14 @@ export const type_attribute = { ...default_attribute, name: "type" };
 /**
  * @type {AttributeDefinition}
  */
+export const type_attribute_writable = {
+  ...type_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const state_attribute_writable = {
   ...default_attribute_writable,
   name: "state"
@@ -379,6 +387,14 @@ export const port_attribute = {
 };
 
 /**
+ * @type {AttributeDefinition}
+ */
+export const port_attribute_writable = {
+  ...port_attribute,
+  writable: true
+};
+
+/**
  * Unique id within.
  * @type {AttributeDefinition}
  */
@@ -419,6 +435,11 @@ export const priority_attribute = {
   name: "priority",
   default: 0
 };
+
+/**
+ * @type {AttributeDefinition}
+ */
+export { priority_attribute as priority_attribute_writable };
 
 /**
  * Duration in seconds.
