@@ -83,11 +83,8 @@ tokens "abc" "
     *   [Properties](#properties-1)
 *   [default\_attribute](#default_attribute)
 *   [default\_attribute](#default_attribute-1)
-*   [default\_attribute](#default_attribute-2)
 *   [default\_attribute\_writable](#default_attribute_writable)
 *   [default\_attribute\_writable](#default_attribute_writable-1)
-*   [default\_attribute\_writable](#default_attribute_writable-2)
-*   [default\_attribute\_writable](#default_attribute_writable-3)
 *   [string\_collection\_attribute](#string_collection_attribute)
 *   [string\_collection\_attribute\_writable](#string_collection_attribute_writable)
 *   [string\_set\_attribute](#string_set_attribute)
@@ -98,6 +95,8 @@ tokens "abc" "
 *   [version\_attribute](#version_attribute)
 *   [version\_attribute\_writable](#version_attribute_writable)
 *   [description\_attribute](#description_attribute)
+*   [type\_attribute](#type_attribute)
+*   [state\_attribute\_writable](#state_attribute_writable)
 *   [boolean\_attribute](#boolean_attribute)
 *   [boolean\_attribute](#boolean_attribute-1)
 *   [boolean\_attribute\_writable](#boolean_attribute_writable)
@@ -110,9 +109,9 @@ tokens "abc" "
 *   [secret\_attribute](#secret_attribute)
 *   [secret\_attribute](#secret_attribute-1)
 *   [secret\_attribute](#secret_attribute-2)
-*   [secret\_attribute](#secret_attribute-3)
-*   [secret\_attribute](#secret_attribute-4)
 *   [secret\_attribute\_writable](#secret_attribute_writable)
+*   [username\_attribute](#username_attribute)
+*   [password\_attribute](#password_attribute)
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
 *   [number\_attribute](#number_attribute)
@@ -128,6 +127,7 @@ tokens "abc" "
 *   [hostname\_attribute](#hostname_attribute)
 *   [port\_attribute](#port_attribute)
 *   [id\_attribute](#id_attribute)
+*   [body\_attribute\_writable](#body_attribute_writable)
 *   [title\_attribute\_writable](#title_attribute_writable)
 *   [priority\_attribute](#priority_attribute)
 *   [duration\_attribute](#duration_attribute)
@@ -277,6 +277,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 ### Properties
 
+*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `type` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `isKey` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
@@ -310,25 +311,11 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## default\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
 ## default\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
 ## default\_attribute\_writable
-
-Type: [AttributeDefinition](#attributedefinition)
-
-## default\_attribute\_writable
-
-Type: [AttributeDefinition](#attributedefinition)
-
-## default\_attribute\_writable
-
-The body text.
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -371,6 +358,14 @@ Type: [AttributeDefinition](#attributedefinition)
 ## description\_attribute
 
 The description of the object content.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## type\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## state\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -422,15 +417,15 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## secret\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
-## secret\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
 ## secret\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## username\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## password\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -493,6 +488,12 @@ Type: [AttributeDefinition](#attributedefinition)
 ## id\_attribute
 
 Unique id within.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## body\_attribute\_writable
+
+The body text.
 
 Type: [AttributeDefinition](#attributedefinition)
 
