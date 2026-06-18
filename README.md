@@ -96,6 +96,7 @@ tokens "abc" "
 *   [version\_attribute\_writable](#version_attribute_writable)
 *   [description\_attribute](#description_attribute)
 *   [type\_attribute](#type_attribute)
+*   [type\_attribute\_writable](#type_attribute_writable)
 *   [state\_attribute\_writable](#state_attribute_writable)
 *   [boolean\_attribute](#boolean_attribute)
 *   [boolean\_attribute\_writable](#boolean_attribute_writable)
@@ -126,10 +127,12 @@ tokens "abc" "
 *   [url\_attribute\_writable](#url_attribute_writable)
 *   [hostname\_attribute](#hostname_attribute)
 *   [port\_attribute](#port_attribute)
+*   [port\_attribute\_writable](#port_attribute_writable)
 *   [id\_attribute](#id_attribute)
 *   [body\_attribute\_writable](#body_attribute_writable)
 *   [title\_attribute\_writable](#title_attribute_writable)
 *   [priority\_attribute](#priority_attribute)
+*   [priority\_attribute](#priority_attribute-1)
 *   [duration\_attribute](#duration_attribute)
 *   [duration\_attribute\_writable](#duration_attribute_writable)
 *   [duration\_ms\_attribute](#duration_ms_attribute)
@@ -365,6 +368,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## type\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## state\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -485,6 +492,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
+## port\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
 ## id\_attribute
 
 Unique id within.
@@ -507,6 +518,10 @@ Type: [AttributeDefinition](#attributedefinition)
 
 In case there are several providers able to support a given source which one sould be used ?
 this defines the order.
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## priority\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
