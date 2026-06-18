@@ -98,20 +98,20 @@ tokens "abc" "
 *   [type\_attribute](#type_attribute)
 *   [state\_attribute\_writable](#state_attribute_writable)
 *   [boolean\_attribute](#boolean_attribute)
-*   [boolean\_attribute](#boolean_attribute-1)
 *   [boolean\_attribute\_writable](#boolean_attribute_writable)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true-1)
 *   [boolean\_attribute\_writable\_false](#boolean_attribute_writable_false)
 *   [boolean\_attribute\_false](#boolean_attribute_false)
 *   [yesno\_attribute](#yesno_attribute)
+*   [empty\_attribute](#empty_attribute)
 *   [uuid\_attribute](#uuid_attribute)
 *   [secret\_attribute](#secret_attribute)
 *   [secret\_attribute](#secret_attribute-1)
-*   [secret\_attribute](#secret_attribute-2)
 *   [secret\_attribute\_writable](#secret_attribute_writable)
 *   [username\_attribute](#username_attribute)
 *   [password\_attribute](#password_attribute)
+*   [token\_attribute](#token_attribute)
 *   [private\_key\_attribute](#private_key_attribute)
 *   [public\_key\_attribute](#public_key_attribute)
 *   [number\_attribute](#number_attribute)
@@ -373,10 +373,6 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## boolean\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
 ## boolean\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
@@ -401,11 +397,11 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## uuid\_attribute
+## empty\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## secret\_attribute
+## uuid\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -426,6 +422,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## password\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## token\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
