@@ -340,7 +340,7 @@ export const bytes_size_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const object_attribute = { ...default_attribute, type: types.object };
+export const object_attribute = { ...default_attribute, name: "object", type: types.object };
 
 /**
  * @type {AttributeDefinition}
