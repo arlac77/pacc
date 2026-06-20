@@ -5,7 +5,7 @@ import { types } from "./types.mjs";
  *
  * @property {string} name
  * @property {object} type
- * @property {boolean} isKey
+ * @property {boolean} key
  * @property {boolean} writable
  * @property {boolean} mandatory
  * @property {boolean} collection are we a collection (set, map, array, object)
@@ -41,7 +41,7 @@ export const default_attribute = {
   persistent: false,
   private: false,
   credential: false,
-  isKey: false
+  key: false
 };
 
 /**
@@ -101,7 +101,7 @@ export const string_set_attribute_writable = {
 export const name_attribute = {
   ...default_attribute,
   name: "name",
-  isKey: true
+  key: true
 };
 
 /**
@@ -240,7 +240,7 @@ export const empty_attribute = { ...boolean_attribute, name: "empty" };
 export const uuid_attribute = {
   ...default_attribute,
   name: "uuid",
-  isKey: true
+  key: true
 };
 
 /**
@@ -400,7 +400,7 @@ export const port_attribute_writable = {
  */
 export const id_attribute = {
   ...default_attribute,
-  isKey: true,
+  key: true,
   name: "id",
   description: "identifier"
 };

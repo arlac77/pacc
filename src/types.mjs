@@ -201,11 +201,3 @@ export function resolveTypeLinks() {
   }
 }
 
-export function typeFactory(type, owner, data) {
-  const factory = type.factoryFor?.(owner, data) || type.clazz || type;
-  const object = new factory(owner);
-
-  object.read(data);
-  owner.addObject(object);
-  return object;
-}
