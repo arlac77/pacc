@@ -55,18 +55,21 @@ export const default_attribute_writable = {
 /**
  * @type {AttributeDefinition}
  */
-export { default_attribute as string_attribute };
+export const string_attribute = { ...default_attribute, name: "string" };
 
 /**
  * @type {AttributeDefinition}
  */
-export { default_attribute_writable as string_attribute_writable };
+export const string_attribute_writable = {
+  ...string_attribute,
+  writable: true
+};
 
 /**
  * @type {AttributeDefinition}
  */
 export const string_collection_attribute = {
-  ...default_attribute,
+  ...string_attribute,
   separator: " ",
   collection: true
 };
@@ -99,7 +102,7 @@ export const string_set_attribute_writable = {
  * @type {AttributeDefinition}
  */
 export const name_attribute = {
-  ...default_attribute,
+  ...string_attribute,
   name: "name",
   key: true
 };
@@ -116,7 +119,7 @@ export const name_attribute_writable = {
  * @type {AttributeDefinition}
  */
 export const email_attribute = {
-  ...default_attribute,
+  ...string_attribute,
   name: "email",
   description: "email address"
 };
@@ -125,7 +128,7 @@ export const email_attribute = {
  * @type {AttributeDefinition}
  */
 export const version_attribute = {
-  ...default_attribute,
+  ...string_attribute,
   name: "version",
   description: "version"
 };
@@ -143,7 +146,7 @@ export const version_attribute_writable = {
  * @type {AttributeDefinition}
  */
 export const description_attribute = {
-  ...default_attribute_writable,
+  ...string_attribute_writable,
   name: "description",
   description: "human readable description"
 };
@@ -153,7 +156,7 @@ export { description_attribute as description_attribute_writable };
 /**
  * @type {AttributeDefinition}
  */
-export const type_attribute = { ...default_attribute, name: "type" };
+export const type_attribute = { ...string_attribute, name: "type" };
 
 /**
  * @type {AttributeDefinition}
@@ -238,7 +241,7 @@ export const empty_attribute = { ...boolean_attribute, name: "empty" };
  * @type {AttributeDefinition}
  */
 export const uuid_attribute = {
-  ...default_attribute,
+  ...string_attribute,
   name: "uuid",
   key: true
 };
@@ -247,7 +250,7 @@ export const uuid_attribute = {
  * @type {AttributeDefinition}
  */
 export const secret_attribute = {
-  ...default_attribute_writable,
+  ...string_attribute_writable,
   private: true,
   credential: true
 };
@@ -337,7 +340,7 @@ export { integer_attribute_writable as count_attribute_writable };
 /**
  * @type {AttributeDefinition}
  */
-export { integer_attribute as size_attribute };
+export const size_attribute = { ...integer_attribute, name: "size" };
 
 export const bytes_size_attribute = {
   ...default_attribute,
@@ -348,7 +351,11 @@ export const bytes_size_attribute = {
 /**
  * @type {AttributeDefinition}
  */
-export const object_attribute = { ...default_attribute, name: "object", type: types.object };
+export const object_attribute = {
+  ...default_attribute,
+  name: "object",
+  type: types.object
+};
 
 /**
  * @type {AttributeDefinition}
@@ -372,7 +379,7 @@ export const url_attribute_writable = {
  * @type {AttributeDefinition}
  */
 export const hostname_attribute = {
-  ...default_attribute,
+  ...string_attribute,
   name: "hostname",
   description: "hostname"
 };
@@ -399,7 +406,7 @@ export const port_attribute_writable = {
  * @type {AttributeDefinition}
  */
 export const id_attribute = {
-  ...default_attribute,
+  ...string_attribute,
   key: true,
   name: "id",
   description: "identifier"
@@ -410,7 +417,7 @@ export const id_attribute = {
  * @type {AttributeDefinition}
  */
 export const body_attribute_writable = {
-  ...default_attribute_writable,
+  ...string_attribute_writable,
   name: "body"
 };
 
@@ -419,10 +426,9 @@ export const body_attribute_writable = {
  * @type {AttributeDefinition}
  */
 export const title_attribute_writable = {
-  ...default_attribute,
+  ...string_attribute_writable,
   name: "title",
-  description: "human readable title",
-  writable: true
+  description: "human readable title"
 };
 
 /**
@@ -480,7 +486,7 @@ export const timeout_attribute = {
  * @type {AttributeDefinition}
  */
 export const language_attribute = {
-  ...default_attribute,
+  ...string_attribute,
   name: "language",
   description: "human spoken language"
 };
