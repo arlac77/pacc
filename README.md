@@ -82,9 +82,9 @@ tokens "abc" "
 *   [AttributeDefinition](#attributedefinition)
     *   [Properties](#properties-1)
 *   [default\_attribute](#default_attribute)
-*   [default\_attribute](#default_attribute-1)
 *   [default\_attribute\_writable](#default_attribute_writable)
-*   [default\_attribute\_writable](#default_attribute_writable-1)
+*   [string\_attribute](#string_attribute)
+*   [string\_attribute\_writable](#string_attribute_writable)
 *   [string\_collection\_attribute](#string_collection_attribute)
 *   [string\_collection\_attribute\_writable](#string_collection_attribute_writable)
 *   [string\_set\_attribute](#string_set_attribute)
@@ -119,9 +119,9 @@ tokens "abc" "
 *   [number\_attribute\_writable](#number_attribute_writable)
 *   [integer\_attribute](#integer_attribute)
 *   [integer\_attribute](#integer_attribute-1)
-*   [integer\_attribute](#integer_attribute-2)
 *   [integer\_attribute\_writable](#integer_attribute_writable)
 *   [integer\_attribute\_writable](#integer_attribute_writable-1)
+*   [size\_attribute](#size_attribute)
 *   [object\_attribute](#object_attribute)
 *   [url\_attribute](#url_attribute)
 *   [url\_attribute\_writable](#url_attribute_writable)
@@ -310,15 +310,15 @@ Common attribute properties.
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## default\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
 ## default\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## default\_attribute\_writable
+## string\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## string\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
@@ -460,15 +460,15 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## integer\_attribute
-
-Type: [AttributeDefinition](#attributedefinition)
-
 ## integer\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
 ## integer\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## size\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
