@@ -3,9 +3,10 @@ import {
   types,
   prepareAttributesDefinitions,
   attributeIterator,
+  extendingAttributeIterator,
   writableAttributeIterator
 } from "pacc";
-import { attributeDefinitions } from "./fixtures.mjs";
+import { attributeDefinitions, aClass, bClass } from "./fixtures.mjs";
 
 test("prepareAttributesDefinitions", t => {
   const p = prepareAttributesDefinitions({
@@ -24,6 +25,19 @@ test("prepareAttributesDefinitions", t => {
 test("attributeIterator", t => {
   t.deepEqual(
     [...attributeIterator(attributeDefinitions)],
+    [
+      [["a"], attributeDefinitions.a],
+      [["b"], attributeDefinitions.b],
+      [["c"], attributeDefinitions.c],
+      [["d"], attributeDefinitions.d],
+      [["d", "d1"], attributeDefinitions.d.attributes.d1]
+    ]
+  );
+});
+
+test.only("extendingAttributeIterator", t => {
+  t.deepEqual(
+    [...extendingAttributeIterator(aClass)],
     [
       [["a"], attributeDefinitions.a],
       [["b"], attributeDefinitions.b],

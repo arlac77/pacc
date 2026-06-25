@@ -82,12 +82,13 @@ export const attributeDefinitionsComplex = prepareAttributesDefinitions({
 });
 
 export const attributeDefinitions = {
-  a: { ...default_attribute, default: "ad" },
-  b: default_attribute,
-  c: { ...default_attribute, writable: true },
+  a: { ...default_attribute, name: "a", default: "ad" },
+  b: { ...default_attribute, name: "b" },
+  c: { ...default_attribute, name: "c", writable: true },
   d: {
+    name: "d",
     attributes: {
-      d1: { ...default_attribute, default: "dd1" }
+      d1: { ...default_attribute, name: "d1", default: "dd1" }
     }
   }
 };
