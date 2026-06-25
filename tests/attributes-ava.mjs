@@ -35,9 +35,9 @@ test("attributeIterator", t => {
   );
 });
 
-test.only("extendingAttributeIterator", t => {
+test("extendingAttributeIterator", t => {
   t.deepEqual(
-    [...extendingAttributeIterator(aClass)],
+    [...extendingAttributeIterator(bClass)],
     [
       [["a"], attributeDefinitions.a],
       [["b"], attributeDefinitions.b],

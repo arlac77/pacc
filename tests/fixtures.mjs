@@ -100,6 +100,7 @@ export class aClass {
 
 export class bClass extends aClass {
   static name = "b";
+  static extends = aClass;
 }
 
 export class cClass extends aClass {}

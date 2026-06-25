@@ -75,7 +75,9 @@ export function* extendingAttributeIterator(type, filter, path) {
   if (type.extends) {
     yield* extendingAttributeIterator(type.extends, filter, path);
   }
-  yield* attributeIterator(type.attributes, filter, path);
+  if (type.hasOwnProperty("attributes")) {
+    yield* attributeIterator(type.attributes, filter, path);
+  }
 }
 
 export const filterWritable = attribute => attribute.writable;
