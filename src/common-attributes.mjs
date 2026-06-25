@@ -438,8 +438,7 @@ export const title_attribute_writable = {
  */
 export const priority_attribute = {
   ...number_attribute_writable,
-  name: "priority",
-  default: 0
+  name: "priority"
 };
 
 /**
