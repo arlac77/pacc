@@ -4,9 +4,9 @@ import { types } from "./types.mjs";
  * @typedef {Object} AttributeDefinition
  *
  * @property {string} name
- * @property {object} type
- * @property {boolean} key
- * @property {boolean} writable
+ * @property {Type} type
+ * @property {boolean} key are we an identifying attribute
+ * @property {boolean} writable can this attribute be modified
  * @property {boolean} mandatory
  * @property {boolean} collection are we a collection (set, map, array, object)
  * @property {boolean} owner are we the owner of the value
@@ -50,6 +50,14 @@ export const default_attribute = {
 export const default_attribute_writable = {
   ...default_attribute,
   writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const default_collection_attribute_writeable = {
+  ...default_attribute_writable,
+  collection: true
 };
 
 /**
