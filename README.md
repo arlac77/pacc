@@ -83,6 +83,7 @@ tokens "abc" "
     *   [Properties](#properties-1)
 *   [default\_attribute](#default_attribute)
 *   [default\_attribute\_writable](#default_attribute_writable)
+*   [default\_collection\_attribute\_writeable](#default_collection_attribute_writeable)
 *   [string\_attribute](#string_attribute)
 *   [string\_attribute\_writable](#string_attribute_writable)
 *   [string\_collection\_attribute](#string_collection_attribute)
@@ -281,9 +282,9 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 ### Properties
 
 *   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `type` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `key` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
-*   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
+*   `type` **[Type](#type)**&#x20;
+*   `key` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** are we an identifying attribute
+*   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** can this attribute be modified
 *   `mandatory` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `collection` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** are we a collection (set, map, array, object)
 *   `owner` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** are we the owner of the value
@@ -311,6 +312,10 @@ Common attribute properties.
 Type: [AttributeDefinition](#attributedefinition)
 
 ## default\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## default\_collection\_attribute\_writeable
 
 Type: [AttributeDefinition](#attributedefinition)
 
