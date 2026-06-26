@@ -83,7 +83,7 @@ tokens "abc" "
     *   [Properties](#properties-1)
 *   [default\_attribute](#default_attribute)
 *   [default\_attribute\_writable](#default_attribute_writable)
-*   [default\_collection\_attribute\_writeable](#default_collection_attribute_writeable)
+*   [default\_collection\_attribute\_writable](#default_collection_attribute_writable)
 *   [string\_attribute](#string_attribute)
 *   [string\_attribute\_writable](#string_attribute_writable)
 *   [string\_collection\_attribute](#string_collection_attribute)
@@ -315,7 +315,7 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## default\_collection\_attribute\_writeable
+## default\_collection\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
