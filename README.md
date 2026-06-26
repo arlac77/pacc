@@ -287,7 +287,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** can this attribute be modified
 *   `mandatory` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
 *   `collection` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** are we a collection (set, map, array, object)
-*   `owner` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** are we the owner of the value
+*   `backpointer` **[AttributeDefinition](#attributedefinition)?**&#x20;
 *   `constructor` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** (collection) constructor
 *   `private` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** should the value be shown
 *   `credential` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** any type of credential
