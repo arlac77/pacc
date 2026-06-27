@@ -9,11 +9,11 @@ import { types } from "./types.mjs";
  * @property {boolean} writable can this attribute be modified
  * @property {boolean} mandatory
  * @property {boolean} collection are we a collection (set, map, array, object)
- * @property {AttributeDefinition} [backpointer]
- * @property {Function} [constructor] (collection) constructor
  * @property {boolean} [private] should the value be shown
  * @property {boolean} [credential] any type of credential
  * @property {boolean} [persistent] should we be stored (especially critical for credentials)
+ * @property {AttributeDefinition} [backpointer]
+ * @property {Function} [constructor] (collection) constructor
  * @property {string} [depends] name of an attribute we depend on
  * @property {string} [description] human readable
  * @property {any} [default] the default value
