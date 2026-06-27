@@ -2,6 +2,7 @@ export * from "./types.mjs";
 export * from "./time.mjs";
 export * from "./bytes.mjs";
 export * from "./attributes.mjs";
+export * from "./extract.mjs";
 export * from "./tokens.mjs";
 export * from "./filter.mjs";
 export * from "./multiple.mjs";

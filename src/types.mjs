@@ -201,3 +201,9 @@ export function resolveTypeLinks() {
     }
   }
 }
+
+export function create(type, owner, data) {
+  const factory = type.factoryFor?.(owner, data) || type;
+  return new factory(data);
+}
+
