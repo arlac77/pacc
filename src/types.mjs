@@ -193,11 +193,11 @@ export function resolveTypeLinks() {
       type.owners = type.owners.map(owner => raiseOnUnknownType(owner, type));
     }
 
-    for (const [path, attribute] of attributeIterator(type.attributes)) {
-      if (typeof attribute.type === "string") {
-        attribute.type = oneOfType(attribute.type);
-      }
+    for (const [path, attribute] of attributeIterator(
+      type.attributes,
+      attribute => typeof attribute.type === "string"
+    )) {
+      attribute.type = oneOfType(attribute.type);
     }
   }
 }
-
