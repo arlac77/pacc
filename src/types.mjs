@@ -98,8 +98,8 @@ export const types = {
   },
   url: {
     name: "url",
-    toInternal: emptyStringIsUndefined,
-    primitive: true
+    primitive: true,
+    toInternal: emptyStringIsUndefined
   },
   object: { name: "object", primitive: false }
 };
