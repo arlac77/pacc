@@ -6,6 +6,7 @@ test("extract", t => {
   const object = new aClass();
 
   object.a = "av";
+  object.b = ["b1","b2"];
 
-  t.deepEqual(extract(object), { a: "av"});
+  t.deepEqual(extract(object), { a: "av", b: ["b1","b2"]});
 });

@@ -19,19 +19,18 @@ export function extract(object, type = object.constructor) {
           result[name] = value;
         }
       } else {
-        const key = value.constructor.key;
-
         if (attribute.backpointer) {
           if (attribute.collection) {
             if ((value.size ?? value.length) > 0) {
               result[name] = Object.fromEntries(
-                [...value.values()].map(v => [v[key], v])
+                [...value.values()].map(v => [v[v.constructor.key], extract(v)])
               );
             }
           } else {
             result[name] = extract(value);
           }
         } else {
+          const key = value.constructor.key;
           result[name] = { [key]: value[key], type: value.constructor.name };
         }
       }
