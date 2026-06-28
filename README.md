@@ -300,6 +300,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
 *   `toInternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 *   `toExternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+*   `asMapEntry` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** deliver key and value for Map insertion
 *   `externalName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** attribute name used by external system
 *   `values` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)\<any>?** allowed values
 *   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable(s) used to provide the value
