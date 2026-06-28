@@ -83,6 +83,7 @@ tokens "abc" "
     *   [Properties](#properties-1)
 *   [default\_attribute](#default_attribute)
 *   [default\_attribute\_writable](#default_attribute_writable)
+*   [default\_collection\_attribute](#default_collection_attribute)
 *   [default\_collection\_attribute\_writable](#default_collection_attribute_writable)
 *   [string\_attribute](#string_attribute)
 *   [string\_attribute\_writable](#string_attribute_writable)
@@ -312,6 +313,10 @@ Common attribute properties.
 Type: [AttributeDefinition](#attributedefinition)
 
 ## default\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## default\_collection\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
