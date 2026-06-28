@@ -1,5 +1,6 @@
 import {
   default_attribute,
+  default_collection_attribute,
   private_key_attribute,
   url_attribute,
   certificate_attribute,
@@ -83,7 +84,7 @@ export const attributeDefinitionsComplex = prepareAttributesDefinitions({
 
 export const attributeDefinitions = {
   a: { ...default_attribute, name: "a", default: "ad" },
-  b: { ...default_attribute, name: "b" },
+  b: { ...default_collection_attribute, name: "b" },
   c: { ...default_attribute, name: "c", writable: true },
   d: {
     name: "d",

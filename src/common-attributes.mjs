@@ -54,6 +54,14 @@ export const default_attribute_writable = {
 /**
  * @type {AttributeDefinition}
  */
+export const default_collection_attribute = {
+  ...default_attribute,
+  collection: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const default_collection_attribute_writable = {
   ...default_attribute_writable,
   collection: true
