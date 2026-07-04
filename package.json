@@ -5,7 +5,7 @@
     "access": "public",
     "provenance": true
   },
-  "packageManager": "npm@11.16.0",
+  "packageManager": "npm@11.18.0",
   "types": "./types/module.d.mts",
   "exports": {
     ".": {
@@ -45,7 +45,7 @@
     "@mitata/counters": "^0.0.8",
     "aggregated-map": "^1.0.7",
     "ava": "^8.0.1",
-    "browser-ava": "^2.3.64",
+    "browser-ava": "^2.3.65",
     "c8": "^11.0.0",
     "documentation": "^14.0.3",
     "mitata": "^1.0.34",
