@@ -2,6 +2,8 @@ import { parse } from "./parser.mjs";
 
 const maxNestingLevel = 8;
 
+class _Dummy {}
+
 /**
  * Default expand context
  * using '§{' and '}' as lead in/out
@@ -9,7 +11,8 @@ const maxNestingLevel = 8;
 export const expandContextDefault = {
   root: {},
   leadIn: "${",
-  leadOut: "}"
+  leadOut: "}",
+  stopClass: _Dummy
 };
 
 /**
@@ -26,7 +29,7 @@ export const expandContextDoubbleCurly = {
  * @param {any} object
  * @param {Object} context
  * @param {any} [context.root] actual replacement values
- * @param {function} [context.stopClass]
+ * @param {function} [context.stopClass] do not expand instancif
  * @param {string} [context.leadIn] starting separator
  * @param {string} [context.leadOut] ending separator
  * @returns {any|Promise<any>}
@@ -140,6 +143,7 @@ export function expand(object, context) {
 
     if (typeof object.entries === "function") {
       const copy = new object.constructor[Symbol.species]();
+
       for (const [key, value] of object.entries()) {
         const path2 = [
           ...path,
@@ -155,11 +159,11 @@ export function expand(object, context) {
       return copy;
     }
 
-    if (context.stopClass && object instanceof context.stopClass) {
+    if (object instanceof context.stopClass) {
       return object;
     }
 
-    if(Object.prototype.toString.call(object) !== '[object Object]') {
+    if (Object.prototype.toString.call(object) !== "[object Object]") {
       return object;
     }
 
