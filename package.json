@@ -45,11 +45,11 @@
     "@mitata/counters": "^0.0.8",
     "aggregated-map": "^1.0.7",
     "ava": "^8.0.1",
-    "browser-ava": "^2.3.66",
+    "browser-ava": "^2.3.67",
     "c8": "^11.0.0",
     "documentation": "^14.0.3",
     "mitata": "^1.0.34",
-    "semantic-release": "^25.0.6",
+    "semantic-release": "^25.0.7",
     "typescript": "^7.0.2"
   },
   "overrides": {
