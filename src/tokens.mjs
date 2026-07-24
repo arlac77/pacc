@@ -15,7 +15,20 @@ const lookup = {};
 /**
  * @typedef {Object} Token
  * @property {string} str
+ * @property {number} precedence
+ * @property {Function} led
+ * @property {Function} nud
+ * 
  */
+
+/**
+ * 
+ * @param {Token} token 
+ */
+export function registerToken(token) {
+  lookup[token.str] = [token];
+  return token;
+}
 
 /**
  *
@@ -48,8 +61,8 @@ function createToken(
   }
 
   token.nud = nud;
-  lookup[str] = [token];
-  return token;
+
+  return registerToken(token);
 }
 
 function createBinopToken(str, precedence, type, binop) {
