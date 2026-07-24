@@ -173,8 +173,10 @@ tokens "abc" "
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-2)
-*   [createToken](#createtoken)
+*   [registerToken](#registertoken)
     *   [Parameters](#parameters-18)
+*   [createToken](#createtoken)
+    *   [Parameters](#parameters-19)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -209,7 +211,7 @@ tokens "abc" "
 *   [Type](#type)
     *   [Properties](#properties-3)
 *   [raiseOnUnknownType](#raiseonunknowntype)
-    *   [Parameters](#parameters-19)
+    *   [Parameters](#parameters-20)
 
 ## AST
 
@@ -729,6 +731,15 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 ### Properties
 
 *   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `precedence` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+*   `led` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
+*   `nud` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
+
+## registerToken
+
+### Parameters
+
+*   `token` **[Token](#token)**&#x20;
 
 ## createToken
 
