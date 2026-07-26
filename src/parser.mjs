@@ -2,7 +2,7 @@ import { tokens, EOF } from "./tokens.mjs";
 
 export function parseOnly(input, context) {
   input = tokens(input, context);
-  
+
   let token, value;
 
   function advance() {
@@ -21,9 +21,6 @@ export function parseOnly(input, context) {
     get token() {
       return token;
     },
-    get value() {
-      return value;
-    },
     advance,
     expect(expected) {
       if (token !== expected) {
@@ -37,7 +34,7 @@ export function parseOnly(input, context) {
     expression(precedence) {
       const last = token;
       advance();
-      let node = last.nud(parser);
+      let node = last.nud(parser, value);
 
       while (token.precedence > precedence) {
         const last = token;
@@ -54,7 +51,7 @@ export function parseOnly(input, context) {
   return parser.expression(0);
 }
 
-export function parse(input, context={}) {
+export function parse(input, context = {}) {
   const result = parseOnly(input, context);
   return result.eval ? result.eval(result, context.root, context) : result;
 }

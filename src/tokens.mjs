@@ -18,12 +18,12 @@ const lookup = {};
  * @property {number} precedence
  * @property {Function} led
  * @property {Function} nud
- * 
+ *
  */
 
 /**
- * 
- * @param {Token} token 
+ *
+ * @param {Token} token
  */
 export function registerToken(token) {
   lookup[token.str] = [token];
@@ -65,27 +65,33 @@ function createToken(
   return registerToken(token);
 }
 
-function createBinopToken(str, precedence, type, binop) {
-  const token = createToken(str, precedence, type, (left, right) => {
-    if (!left.eval && !right.eval) {
-      return binop(left, right);
-    }
+function createBinopToken(str, precedence, type, binop, nud) {
+  const token = createToken(
+    str,
+    precedence,
+    type,
+    (left, right) => {
+      if (!left.eval && !right.eval) {
+        return binop(left, right);
+      }
 
-    return {
-      eval: (node, current, context) =>
-        binop(
-          node.left.eval
-            ? node.left.eval(node.left, current, context)
-            : node.left,
-          node.right.eval
-            ? node.right.eval(node.right, current, context)
-            : node.right
-        ),
-      token,
-      left,
-      right
-    };
-  });
+      return {
+        eval: (node, current, context) =>
+          binop(
+            node.left.eval
+              ? node.left.eval(node.left, current, context)
+              : node.left,
+            node.right.eval
+              ? node.right.eval(node.right, current, context)
+              : node.right
+          ),
+        token,
+        left,
+        right
+      };
+    },
+    nud
+  );
 
   token.binop = binop;
 
@@ -110,10 +116,9 @@ export /** @type {Token} */ const MINUS = createBinopToken(
   "-",
   50,
   "infix",
-  (left, right) => left - right
+  (left, right) => left - right,
+  (parser, value) => -parser.expression(100)
 );
-
-MINUS.nud = parser => -parser.expression(100);
 
 export /** @type {Token} */ const STAR = createBinopToken(
   "*",
@@ -177,7 +182,7 @@ export /** @type {Token} */ const OPEN_ROUND = createToken(
       args: Array.isArray(args) ? args : [args]
     };
   },
-  parser => {
+  (parser, value) => {
     const result = parser.expression(0);
     parser.expect(CLOSE_ROUND);
     return result;
@@ -225,7 +230,7 @@ export /** @type {Token} */ const OPEN_BRACKET = createToken(
     left.path.push(node);
     return left;
   },
-  parser => createFilter(parser)
+  (parser, value) => createFilter(parser)
 );
 
 export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0);
@@ -255,8 +260,18 @@ export /** @type {Token} */ const DOT = createToken(
     }
 
     return { eval: pathEval, path: [left, right] };
+  },
+  (parser, value) => {
+    return {
+      eval: pathEval,
+      path: [
+        { eval: (node, current, context) => context.root },
+        { eval: keyedAccessEval, key: value }
+      ]
+    };
   }
 );
+
 export /** @type {Token} */ const AMPERSAND = createToken("&");
 export /** @type {Token} */ const DOUBLE_AMPERSAND = createBinopToken(
   "&&",
@@ -273,11 +288,11 @@ export /** @type {Token} */ const DOUBLE_BAR = createBinopToken(
 );
 export /** @type {Token} */ const IDENTIFIER = createToken(
   "IDENTIFIER",
-  0,
+  1,
   undefined,
   undefined,
-  parser => {
-    return { eval: keyedAccessOrGlobalEval, key: parser.value };
+  (parser, value) => {
+    return { eval: keyedAccessOrGlobalEval, key: value };
   }
 );
 
@@ -286,7 +301,7 @@ export /** @type {Token} */ const STRING = createToken(
   0,
   undefined,
   undefined,
-  parser => parser.value
+  (parser, value) => value
 );
 
 export /** @type {Token} */ const NUMBER = createToken(
@@ -294,14 +309,14 @@ export /** @type {Token} */ const NUMBER = createToken(
   0,
   undefined,
   undefined,
-  parser => parser.value
+  (parser, value) => value
 );
 export /** @type {Token} */ const BOOLEAN = createToken(
   "BOOLEAN",
   0,
   undefined,
   undefined,
-  parser => parser.value
+  (parser, value) => value
 );
 
 export /** @type {Token} */ const EOF = createToken(
