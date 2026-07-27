@@ -30,6 +30,7 @@ export const expandContextDoubbleCurly = {
  * @param {any} object
  * @param {Object} context
  * @param {any} [context.root] actual replacement values
+ * @param {any} [context.current] actual replacement values
  * @param {function} [context.stopClass] do not expand instancif
  * @param {string} [context.leadIn] starting separator
  * @param {string} [context.leadOut] ending separator
