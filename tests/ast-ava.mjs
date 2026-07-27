@@ -2,10 +2,10 @@ import test from "ava";
 import { AggregatedMap } from "aggregated-map";
 import { pathEval, keyedAccessEval, ASTNullFilter } from "../src/ast.mjs";
 
-export function pet(t, root, path, expectedResult) {
+export function pet(t, current, path, expectedResult) {
   const context = {
     valueFor: name => undefined,
-    root
+    current
   };
 
   const node = {
@@ -13,7 +13,7 @@ export function pet(t, root, path, expectedResult) {
     path
   };
 
-  let result = pathEval(node, root, context);
+  let result = pathEval(node, current, context);
 
   if (typeof result == "function") {
     result = Array.from(result());

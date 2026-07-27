@@ -53,5 +53,5 @@ export function parseOnly(input, context) {
 
 export function parse(input, context = {}) {
   const result = parseOnly(input, context);
-  return result.eval ? result.eval(result, context.root, context) : result;
+  return result.eval ? result.eval(result, context.current, context) : result;
 }

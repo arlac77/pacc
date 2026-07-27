@@ -2,7 +2,7 @@ import { run, bench, boxplot, summary } from "mitata";
 import { tokens } from "../src/tokens.mjs";
 import { parse, parseOnly } from "../src/parser.mjs";
 
-const root = new Map([
+const current = new Map([
   ["a", { n: 1, l: [1, 2] }],
   ["b", { n: 3, x: 7, l: [3, 4] }],
   [
@@ -15,7 +15,7 @@ const root = new Map([
   ]
 ]);
 
-const root2 = {
+const current2 = {
   a: {
     b: {
       c: {
@@ -29,11 +29,11 @@ const root2 = {
   }
 };
 
-bench('"[n<5].l"', () => parse("[n<5].l", { root }));
+bench('"[n<5].l"', () => parse("[n<5].l", { current }));
 
 const expression = "a.b.c.d.e.f.g.h.i.j.k.l.m.n";
 
-bench(`parse ${expression}`, () => parse(expression, { root: root2 }));
+bench(`parse ${expression}`, () => parse(expression, { current: current2 }));
 bench(`parseOnly ${expression}`, () => parseOnly(expression, {}));
 bench(`tokens ${expression}`, () => Array.from(tokens(expression, {})));
 

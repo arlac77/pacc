@@ -67,24 +67,24 @@ test(eat, "true = false", undefined, false);
 test(eat, "3 = 1 + 2", undefined, true);
 test(eat, "true || false", undefined, true);
 test(eat, "true && false", undefined, false);
-test(eat, "1 + a", { root: { a: 5 } }, 6);
-test(eat, "x > 2", { root: { x: 3 } }, true);
-test.skip(eat, "[ x > 2 ]", { root: { x: 3 } }, true);
-test.skip(eat, "[ 3 > '2' ]", { root: { x: 3 } }, true);
+test(eat, "1 + a", { current: { a: 5 } }, 6);
+test(eat, "x > 2", { current: { x: 3 } }, true);
+test.skip(eat, "[ x > 2 ]", { current: { x: 3 } }, true);
+test.skip(eat, "[ 3 > '2' ]", { current: { x: 3 } }, true);
 test.skip(
   eat,
   "[ x > y ]",
-  { root: { x: 3 }, valueFor: valueFor({ y: 2 }) },
+  { current: { x: 3 }, valueFor: valueFor({ y: 2 }) },
   true
 );
-test(eat, "a.b[ c > 2 ]", { root: { a: { b: [{ c: 2 }, { c: 3 }] } } }, [
+test(eat, "a.b[ c > 2 ]", { current: { a: { b: [{ c: 2 }, { c: 3 }] } } }, [
   { c: 3 }
 ]);
 test(
   eat,
   "a[ b.c > 2 && d < 7].d",
   {
-    root: {
+    current: {
       a: [
         { b: { c: 3 }, d: 2 },
         { b: { c: 1 }, d: 1 }
@@ -94,26 +94,26 @@ test(
   [2]
 );
 
-test(eat, "[1]", { root: [0, 9] }, 9);
-test(eat, "[2]", { root: [0, 3, 9].values() }, 9);
-test(eat, "['a']", { root: { a: 7 } }, 7);
-test(eat, "['b']", { root: new Map([["b", 8]]) }, 8);
-test(eat, "[b]", { root: new Map([["b", 8]]) }, 8);
-test(eat, "['c']", { root: new Map([["c", () => 9]]) }, 9);
-test(eat, "d", { root: new Set(["d"]) }, "d");
-test(eat, "[1+2].b", { root: [0, 0, 0, { b: 44 }] }, 44);
-test(eat, "[3].b", { root: [0, 0, 0, { b: 44 }] }, 44);
-test(eat, "a", { root: { a: 12 } }, 12);
-test(eat, "b", { root: { b: () => 7 } }, 7);
-test(eat, "a[2].c", { root: { a: [0, 0, { c: 17 }] } }, 17);
+test(eat, "[1]", { current: [0, 9] }, 9);
+test(eat, "[2]", { current: [0, 3, 9].values() }, 9);
+test(eat, "['a']", { current: { a: 7 } }, 7);
+test(eat, "['b']", { current: new Map([["b", 8]]) }, 8);
+test(eat, "[b]", { current: new Map([["b", 8]]) }, 8);
+test(eat, "['c']", { current: new Map([["c", () => 9]]) }, 9);
+test(eat, "d", { current: new Set(["d"]) }, "d");
+test(eat, "[1+2].b", { current: [0, 0, 0, { b: 44 }] }, 44);
+test(eat, "[3].b", { current: [0, 0, 0, { b: 44 }] }, 44);
+test(eat, "a", { current: { a: 12 } }, 12);
+test(eat, "b", { current: { b: () => 7 } }, 7);
+test(eat, "a[2].c", { current: { a: [0, 0, { c: 17 }] } }, 17);
 test(eat, ".a.b.c", { root: { a: { b: { c: 77 } } } }, 77);
-test(eat, "a . b . c", { root: { a: { b: { c: 77 } } } }, 77);
-test(eat, "a . b . d", { root: { a: { b: { d: () => 88 } } } }, 88);
+test(eat, "a . b . c", { current: { a: { b: { c: 77 } } } }, 77);
+test(eat, "a . b . d", { current: { a: { b: { d: () => 88 } } } }, 88);
 test(
   eat,
   "b[n=3].x",
   {
-    root: new Map([
+    current: new Map([
       ["b", [{ n: 1 }, { n: 2 }, { n: 3, x: () => 6 }, { n: 3, x: 7 }]],
       ["c", 2]
     ])
@@ -125,7 +125,7 @@ test(
   eat,
   "c",
   {
-    root: new Map([
+    current: new Map([
       ["b", 1],
       ["c", 2]
     ])
@@ -133,20 +133,20 @@ test(
   2
 );
 
-const root = new Map([
+const current = new Map([
   ["a", { n: 1, l: [1, 2] }],
   ["b", { n: 3, x: 7, l: [3, 4] }]
 ]);
 
-test(eat, "[n=3].x", { root }, [7]);
-test(eat, "b.x", { root }, 7);
-test.skip(eat, "[n<5].l", { root }, [1, 2, 3, 4]);
+test(eat, "[n=3].x", { current }, [7]);
+test(eat, "b.x", { current }, 7);
+test.skip(eat, "[n<5].l", { current }, [1, 2, 3, 4]);
 
 test.skip(
   eat,
   "[].n",
   {
-    root: [{ n: ["a"] }, { n: ["b"] }, { n: ["v"] }]
+    current: [{ n: ["a"] }, { n: ["b"] }, { n: ["v"] }]
   },
   ["a", "b", "c"]
 );
@@ -155,7 +155,7 @@ test(
   eat,
   "[n=2].x",
   {
-    root: new Set([{ n: 1 }, { n: 2, x: 4 }, { n: 3, x: 7 }])
+    current: new Set([{ n: 1 }, { n: 2, x: 4 }, { n: 3, x: 7 }])
   },
   [4]
 );
@@ -164,7 +164,7 @@ test(
   eat,
   "[].x",
   {
-    root: new Set([{ x: 7 }, { x: 4 }, { x: 8 }])
+    current: new Set([{ x: 7 }, { x: 4 }, { x: 8 }])
   },
   [7, 4, 8]
 );
@@ -173,7 +173,7 @@ test(
   eat,
   "a[].x",
   {
-    root: { a: new Set([{ x: 7 }, { x: 4 }, { x: 8 }]) }
+    current: { a: new Set([{ x: 7 }, { x: 4 }, { x: 8 }]) }
   },
   [7, 4, 8]
 );
@@ -211,17 +211,17 @@ test(eat, "lowercase('aA')", undefined, "aa");
 test(eat, "uppercase('aA')", undefined, "AA");
 test(eat, "trim(' aA X')", undefined, "aA X");
 test(eat, "join(',','A','B','C')", undefined, "A,B,C");
-test(eat, "join(',',a[n=2].b,'B')", { root: { a: [{ n: 2, b: "A" }] } }, "A,B");
+test(eat, "join(',',a[n=2].b,'B')", { current: { a: [{ n: 2, b: "A" }] } }, "A,B");
 test(eat, "join(',','ABC')", undefined, "ABC");
-test(eat, "sort(a)", { root: { a: [2, 1, 3] } }, [1, 2, 3]);
+test(eat, "sort(a)", { current: { a: [2, 1, 3] } }, [1, 2, 3]);
 test(
   eat,
   "sort(a,priority,'descending')",
-  { root: { a: [{ priority: 2 }, { priority: 1 }, { priority: 3 }] } },
+  { current: { a: [{ priority: 2 }, { priority: 1 }, { priority: 3 }] } },
   [{ priority: 3 }, { priority: 2 }, { priority: 1 }]
 );
-test(eat, "truncate(a,2)", { root: { a: [2, 1, 3] } }, [2, 1]);
-test(eat, "truncate(a,1)", { root: { a: [2, 1, 3].values() } }, [2]);
+test(eat, "truncate(a,2)", { current: { a: [2, 1, 3] } }, [2, 1]);
+test(eat, "truncate(a,1)", { current: { a: [2, 1, 3].values() } }, [2]);
 test(
   eat,
   "join(',',array)",
@@ -239,7 +239,7 @@ test(
   eat,
   "all[in(7,x)]",
   {
-    root: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] }
+    current: { all: [{ x: [1] }, { x: [2, 7] }, { x: [3] }] }
   },
   [{ x: [2, 7] }]
 );
@@ -247,7 +247,7 @@ test(
   eat,
   "all[in(8,y)]",
   {
-    root: {
+    current: {
       all: [{ y: new Set([1]) }, { y: new Set([2, 8]) }, { y: new Set([3]) }]
     }
   },

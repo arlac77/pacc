@@ -3,7 +3,7 @@ import { expand, expandContextDoubbleCurly } from "pacc";
 
 test("plain expand string", t => {
   const context = {
-    root: {
+    current: {
       a: 1,
       b: 2,
       c: "text"
@@ -23,7 +23,7 @@ test("plain expand string", t => {
 test("plain expand string special lead-In/Out", t => {
   const context = {
     ...expandContextDoubbleCurly,
-    root: {
+    current: {
       a: 1,
       b: 2,
       c: "text"
@@ -48,7 +48,7 @@ test("expand unterminated", t => {
 
 test("expand empty string", t => {
   const context = {
-    root: {
+    current: {
       a: ""
     }
   };
@@ -58,7 +58,7 @@ test("expand empty string", t => {
 
 test("plain expand string transitive", t => {
   const context = {
-    root: {
+    current: {
       a: "${b}",
       b: 2
     }
@@ -68,7 +68,7 @@ test("plain expand string transitive", t => {
 });
 
 test("expand Object", t =>
-  t.deepEqual(expand({ a: "${num}" }, { root: { num: 42 } }), { a: 42 }));
+  t.deepEqual(expand({ a: "${num}" }, { current: { num: 42 } }), { a: 42 }));
 test("expand undefined", t => t.is(expand(undefined, {}), undefined));
 test("expand null", t => t.is(expand(null, {}), null));
 test("expand NaN", t => t.is(expand(NaN, {}), NaN));
@@ -97,7 +97,7 @@ test("expand Boolean", t => {
   t.is(expand(object, {}).valueOf("number"), object.valueOf("number"));
 });
 test("expand Array", t =>
-  t.deepEqual(expand(["${a}", "${b}", "c"], { root: { a: "a1", b: "b2" } }), [
+  t.deepEqual(expand(["${a}", "${b}", "c"], { current: { a: "a1", b: "b2" } }), [
     "a1",
     "b2",
     "c"
@@ -105,11 +105,11 @@ test("expand Array", t =>
 
 test("expand Set", t =>
   t.deepEqual(
-    expand(new Set(["${a}", "${b}", "c"]), { root: { a: "a1", b: "b2" } }),
+    expand(new Set(["${a}", "${b}", "c"]), { current: { a: "a1", b: "b2" } }),
     new Set(["a1", "b2", "c"])
   ));
 test("expand Map", t =>
   t.deepEqual(
-    expand(new Map([["${a}", "${b}"]]), { root: { a: "a1", b: "b2" } }),
+    expand(new Map([["${a}", "${b}"]]), { current: { a: "a1", b: "b2" } }),
     new Map([["a1", "b2"]])
   ));

@@ -10,6 +10,7 @@ class _Dummy {}
  */
 export const expandContextDefault = {
   root: {},
+  current: {},
   leadIn: "${",
   leadOut: "}",
   stopClass: _Dummy

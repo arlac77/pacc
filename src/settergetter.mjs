@@ -78,7 +78,7 @@ export function setAttribute(object, expression, value, definition) {
  * @returns {any} value associated with the given property name
  */
 export function getAttribute(object, expression, definition) {
-  return parse(expression, { root: object }) ?? definition?.default;
+  return parse(expression, { current: object }) ?? definition?.default;
 }
 
 /**
