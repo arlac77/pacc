@@ -49,10 +49,10 @@ export function keyedAccessEval(node, current, context) {
   if (current === undefined) {
     return undefined;
   }
-  if (typeof current.get === 'function') {
+  if (typeof current.get === "function") {
     return plain(current.get(node.key));
   }
-  if (typeof current.has === 'function') {
+  if (typeof current.has === "function") {
     return current.has(node.key) ? node.key : undefined;
   }
   if (current instanceof Iterator) {
@@ -69,11 +69,13 @@ export function keyedAccessEval(node, current, context) {
 }
 
 export function filterEval(node, current, context) {
-  if (typeof current.values === "function") {
-    current = current.values();
-  }
+  if (current !== undefined) {
+    if (typeof current.values === "function") {
+      current = current.values();
+    }
 
-  return current.filter(item => node.filter.eval(node.filter, item, context));
+    return current.filter(item => node.filter.eval(node.filter, item, context));
+  }
 }
 
 export function nullFilterEval(node, current, context) {
