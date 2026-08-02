@@ -202,8 +202,14 @@ export function resolveTypeLinks() {
   }
 }
 
+/**
+ * Create object for a given type
+ * @param {Type} type 
+ * @param {Object} owner 
+ * @param {any} data 
+ * @returns {Object} newly created object
+ */
 export function create(type, owner, data) {
   const factory = type.factoryFor?.(owner, data) || type;
-  return new factory(data);
+  return new factory(owner, data);
 }
-
