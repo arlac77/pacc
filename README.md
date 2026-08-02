@@ -212,6 +212,8 @@ tokens "abc" "
     *   [Properties](#properties-3)
 *   [raiseOnUnknownType](#raiseonunknowntype)
     *   [Parameters](#parameters-20)
+*   [create](#create)
+    *   [Parameters](#parameters-21)
 
 ## AST
 
@@ -902,6 +904,18 @@ Throw if type is not known.
 *   `origin` **any**&#x20;
 
 Returns **[Type](#type)**&#x20;
+
+## create
+
+Create object for a given type
+
+### Parameters
+
+*   `type` **[Type](#type)**&#x20;
+*   `owner` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `data` **any**&#x20;
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** newly created object
 
 # install
 
