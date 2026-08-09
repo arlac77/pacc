@@ -24,7 +24,7 @@ function scalarAccessEval(node, current, context) {
 
   switch (typeof value) {
     case "function": {
-      value = value();
+      value = current[node.key]();
 
       switch (typeof value) {
         case "string":
@@ -43,7 +43,7 @@ function scalarAccessEval(node, current, context) {
       return context.valueFor(node.key, current);
   }
 
-  return current[node.key];
+  return value;
 }
 
 function plain(value) {
