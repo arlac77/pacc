@@ -251,12 +251,20 @@ export /** @type {Token} */ const DOT = createToken(
   80,
   "infix",
   (left, right) => {
-    if (right.eval === keyedAccessOrGlobalEval) {
-      right.eval = keyedAccessEval;
+    if (typeof right === "string") {
+      right = { eval: keyedAccessEval, key: right };
+    } else {
+      if (right.eval === keyedAccessOrGlobalEval) {
+        right.eval = keyedAccessEval;
+      }
     }
-    if (left.path) {
-      left.path.push(right);
-      return left;
+    if (typeof left === "string") {
+      left = { eval: keyedAccessEval, key: left };
+    } else {
+      if (left.path) {
+        left.path.push(right);
+        return left;
+      }
     }
 
     return { eval: pathEval, path: [left, right] };
@@ -298,7 +306,7 @@ export /** @type {Token} */ const IDENTIFIER = createToken(
 
 export /** @type {Token} */ const STRING = createToken(
   "STRING",
-  0,
+  1,
   undefined,
   undefined,
   (parser, value) => value
