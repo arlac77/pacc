@@ -108,7 +108,7 @@ test(eat, "b", { current: { b: () => 7 } }, 7);
 test(eat, "a[2].c", { current: { a: [0, 0, { c: 17 }] } }, 17);
 test(eat, ".a.b.c", { root: { a: { b: { c: 77 } } } }, 77);
 test(eat, "a . b . c", { current: { a: { b: { c: 77 } } } }, 77);
-test.only(eat, "'a-x' . b . 'c-d'", { current: { "a-x": { b: { "c-d": 77 } } } }, 77);
+test(eat, "'a-x' . b . 'c-d'", { current: { "a-x": { b: { "c-d": 77 } } } }, 77);
 test(eat, "a . b . d", { current: { a: { b: { d: () => 88 } } } }, 88);
 test(
   eat,
