@@ -20,10 +20,19 @@ export function keyedAccessOrGlobalEval(node, current, context) {
 }
 
 function scalarAccessEval(node, current, context) {
-  switch (typeof current[node.key]) {
-    case "function": {
-      const value = current[node.key]();
+  let value = current[node.key];
 
+  switch (typeof value) {
+    case "function": {
+      value = value();
+
+      switch (typeof value) {
+        case "string":
+        case "number":
+        case "boolean":
+        case "undefined":
+          return value;
+      }
       if (typeof value[Symbol.iterator] === "function") {
         return [...value];
         //return value[Symbol.iterator]();

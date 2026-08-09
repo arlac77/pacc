@@ -49,6 +49,14 @@ test(
   ],
   [{ c: 3 }]
 );
+test(
+  pet,
+  {
+    a: () => "abcde"
+  },
+  [{ eval: keyedAccessEval, key: "a" }],
+  "abcde"
+);
 
 test(pet, new Set([1, 2, 3]), [ASTNullFilter], [1, 2, 3]);
 test(pet, new Set([1, 2, 3, 4]).values(), [ASTNullFilter], [1, 2, 3, 4]);
