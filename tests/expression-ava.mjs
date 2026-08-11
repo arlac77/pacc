@@ -179,6 +179,8 @@ test(
   [7, 4, 8]
 );
 
+test(eat, "in(3,3)", { }, true);
+test(eat, "in(3,4)", { }, false);
 test(eat, "in(2,array)", { valueFor: valueFor({ array: [1, 2, 3] }) }, true);
 test(eat, "in('b',array)", { valueFor: valueFor({ array: [1, 2, 3] }) }, false);
 test(

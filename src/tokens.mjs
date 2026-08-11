@@ -373,7 +373,7 @@ export const globals = {
         }
       }
     }
-    return false;
+    return a === b;
   },
   ceil: (args, current, context) =>
     Math.ceil(evalOne(args[0], current, context)),
