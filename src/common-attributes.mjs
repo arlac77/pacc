@@ -9,8 +9,9 @@ import { types } from "./types.mjs";
  * @property {boolean} writable can this attribute be modified
  * @property {boolean} mandatory
  * @property {boolean} collection are we a collection (set, map, array, object)
+ * @property {boolean} [deferredExpression] are we a pacc expression to be evaluated
  * @property {boolean} [private] should the value be shown
- * @property {boolean} [credential] any type of credential
+ * @property {boolean} [credential] are we any type of credential
  * @property {boolean} [persistent] should we be stored (especially critical for credentials)
  * @property {AttributeDefinition} [backpointer]
  * @property {Function} [constructor] (collection) constructor
@@ -34,6 +35,7 @@ import { types } from "./types.mjs";
  * @type {AttributeDefinition}
  */
 export const default_attribute = {
+  name: "default",
   type: types.string,
   writable: false,
   mandatory: false,
@@ -145,8 +147,7 @@ export const email_attribute = {
  */
 export const version_attribute = {
   ...string_attribute,
-  name: "version",
-  description: "version"
+  name: "version"
 };
 
 /**
