@@ -132,7 +132,15 @@ export /** @type {Token} */ const DIVIDE = createBinopToken(
   "infix",
   (left, right) => left / right
 );
-export /** @type {Token} */ const NOT = createToken("!");
+export /** @type {Token} */ const NOT = createToken(
+  "!",
+  50,
+  "prefix",
+  undefined,
+  (parser, value) => !parser.expression(0)
+);
+
+
 export /** @type {Token} */ const NOT_EQUAL = createBinopToken(
   "!=",
   40,

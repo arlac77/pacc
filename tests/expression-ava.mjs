@@ -64,6 +64,8 @@ test(eat, "1 = 2", undefined, false);
 test(eat, "1 != 2", undefined, true);
 test(eat, "3 = 3", undefined, true);
 test(eat, "true = false", undefined, false);
+test(eat, "!true", undefined, false);
+test(eat, "!(3 = 1 + 2)", undefined, false);
 test(eat, "3 = 1 + 2", undefined, true);
 test(eat, "true || false", undefined, true);
 test(eat, "true && false", undefined, false);
