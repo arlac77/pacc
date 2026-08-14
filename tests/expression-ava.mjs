@@ -225,6 +225,13 @@ test(
   { current: { a: [{ priority: 2 }, { priority: 1 }, { priority: 3 }] } },
   [{ priority: 3 }, { priority: 2 }, { priority: 1 }]
 );
+test(
+  eat,
+  "sort(b,priority,'descending')",
+  { current: { b: new Set([{ priority: 2 }, { priority: 1 }, { priority: 3 }]) } },
+  [{ priority: 3 }, { priority: 2 }, { priority: 1 }]
+);
+
 test(eat, "truncate(a,2)", { current: { a: [2, 1, 3] } }, [2, 1]);
 test(eat, "truncate(a,1)", { current: { a: [2, 1, 3].values() } }, [2]);
 test(

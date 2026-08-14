@@ -140,7 +140,6 @@ export /** @type {Token} */ const NOT = createToken(
   (parser, value) => !parser.expression(0)
 );
 
-
 export /** @type {Token} */ const NOT_EQUAL = createBinopToken(
   "!=",
   40,
@@ -419,7 +418,7 @@ export const globals = {
       .join(separator);
   },
   sort: (args, current, context) => {
-    const data = evalOne(args[0], current, context);
+    let data = evalOne(args[0], current, context);
     if (args.length >= 2) {
       let order = 1;
       if (args.length > 2) {
@@ -429,6 +428,11 @@ export const globals = {
         }
       }
       const selector = args[1];
+
+      if (typeof data.sort !== "function") {
+        data = [...data];
+      }
+
       return data.sort(
         (a, b) =>
           (selector.eval(selector, a, context) -
