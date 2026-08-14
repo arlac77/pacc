@@ -419,6 +419,11 @@ export const globals = {
   },
   sort: (args, current, context) => {
     let data = evalOne(args[0], current, context);
+
+    if (typeof data.sort !== "function") {
+      data = [...data];
+    }
+
     if (args.length >= 2) {
       let order = 1;
       if (args.length > 2) {
@@ -428,10 +433,6 @@ export const globals = {
         }
       }
       const selector = args[1];
-
-      if (typeof data.sort !== "function") {
-        data = [...data];
-      }
 
       return data.sort(
         (a, b) =>

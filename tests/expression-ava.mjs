@@ -219,6 +219,7 @@ test(eat, "join(',','A','B','C')", undefined, "A,B,C");
 test(eat, "join(',',a[n=2].b,'B')", { current: { a: [{ n: 2, b: "A" }] } }, "A,B");
 test(eat, "join(',','ABC')", undefined, "ABC");
 test(eat, "sort(a)", { current: { a: [2, 1, 3] } }, [1, 2, 3]);
+test(eat, "sort(b)", { current: { b: new Set([2, 1, 3]) } }, [1, 2, 3]);
 test(
   eat,
   "sort(a,priority,'descending')",
