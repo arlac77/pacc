@@ -52,9 +52,11 @@ test(eat, "(1 + 2)", undefined, 3);
 test(eat, "(1) + 2", undefined, 3);
 test(eat, "(1)", undefined, 1);
 test(eat, "(1,2,3,4)", undefined, [1, 2, 3, 4]);
+test.skip(eat, "(a,b)", { current: { a: [1, 2], b: [3, 4] } }, [1, 2, 3, 4]);
 test(eat, "('a',2,true)", undefined, ["a", 2, true]);
 test(eat, "(1,2,3,4) + (5,6)", undefined, [1, 2, 3, 4, 5, 6]);
 test(eat, "(1,(2,3),4)", undefined, [1, [2, 3], 4]);
+test.skip(eat, "((1,2),3,4)", undefined, [[1, 2], 3, 4]);
 test(eat, "1 + (2 + 3)", undefined, 6);
 test(eat, "(1 + 2) + 3", undefined, 6);
 test(eat, "(1 + 2) * 4 + 5 + 6", undefined, 23);
@@ -110,7 +112,12 @@ test(eat, "b", { current: { b: () => 7 } }, 7);
 test(eat, "a[2].c", { current: { a: [0, 0, { c: 17 }] } }, 17);
 test(eat, ".a.b.c", { root: { a: { b: { c: 77 } } } }, 77);
 test(eat, "a . b . c", { current: { a: { b: { c: 77 } } } }, 77);
-test(eat, "'a-x' . b . 'c-d'", { current: { "a-x": { b: { "c-d": 77 } } } }, 77);
+test(
+  eat,
+  "'a-x' . b . 'c-d'",
+  { current: { "a-x": { b: { "c-d": 77 } } } },
+  77
+);
 test(eat, "a . b . d", { current: { a: { b: { d: () => 88 } } } }, 88);
 test(
   eat,
@@ -181,8 +188,8 @@ test(
   [7, 4, 8]
 );
 
-test(eat, "in(3,3)", { }, true);
-test(eat, "in(3,4)", { }, false);
+test(eat, "in(3,3)", {}, true);
+test(eat, "in(3,4)", {}, false);
 test(eat, "in(2,array)", { valueFor: valueFor({ array: [1, 2, 3] }) }, true);
 test(eat, "in('b',array)", { valueFor: valueFor({ array: [1, 2, 3] }) }, false);
 test(
@@ -216,7 +223,12 @@ test(eat, "lowercase('aA')", undefined, "aa");
 test(eat, "uppercase('aA')", undefined, "AA");
 test(eat, "trim(' aA X')", undefined, "aA X");
 test(eat, "join(',','A','B','C')", undefined, "A,B,C");
-test(eat, "join(',',a[n=2].b,'B')", { current: { a: [{ n: 2, b: "A" }] } }, "A,B");
+test(
+  eat,
+  "join(',',a[n=2].b,'B')",
+  { current: { a: [{ n: 2, b: "A" }] } },
+  "A,B"
+);
 test(eat, "join(',','ABC')", undefined, "ABC");
 test(eat, "sort(a)", { current: { a: [2, 1, 3] } }, [1, 2, 3]);
 test(eat, "sort(b)", { current: { b: new Set([2, 1, 3]) } }, [1, 2, 3]);
@@ -229,7 +241,9 @@ test(
 test(
   eat,
   "sort(b,priority,'descending')",
-  { current: { b: new Set([{ priority: 2 }, { priority: 1 }, { priority: 3 }]) } },
+  {
+    current: { b: new Set([{ priority: 2 }, { priority: 1 }, { priority: 3 }]) }
+  },
   [{ priority: 3 }, { priority: 2 }, { priority: 1 }]
 );
 

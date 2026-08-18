@@ -30,6 +30,10 @@ export function registerToken(token) {
   return token;
 }
 
+const INFIX = "infix";
+const INFIXR = "infixr";
+const PREFIX = "prefix";
+
 /**
  *
  * @param {string} str
@@ -48,11 +52,11 @@ function createToken(
   const token = { str, precedence, type };
 
   switch (type) {
-    case "infix":
+    case INFIX:
       token.led = (parser, left) =>
         led(left, parser.expression(token.precedence));
       break;
-    case "infixr":
+    case INFIXR:
       token.led = (parser, left) =>
         led(left, parser.expression(token.precedence - 1));
       break;
@@ -101,7 +105,7 @@ function createBinopToken(str, precedence, type, binop, nud) {
 export /** @type {Token} */ const PLUS = createBinopToken(
   "+",
   50,
-  "infix",
+  INFIXR,
   (left, right) => {
     if (Array.isArray(left)) {
       if (Array.isArray(right)) {
@@ -115,7 +119,7 @@ export /** @type {Token} */ const PLUS = createBinopToken(
 export /** @type {Token} */ const MINUS = createBinopToken(
   "-",
   50,
-  "infix",
+ INFIXR,
   (left, right) => left - right,
   (parser, value) => -parser.expression(100)
 );
@@ -123,19 +127,19 @@ export /** @type {Token} */ const MINUS = createBinopToken(
 export /** @type {Token} */ const STAR = createBinopToken(
   "*",
   60,
-  "infix",
+  INFIXR,
   (left, right) => left * right
 );
 export /** @type {Token} */ const DIVIDE = createBinopToken(
   "/",
   60,
-  "infix",
+  INFIXR,
   (left, right) => left / right
 );
 export /** @type {Token} */ const NOT = createToken(
   "!",
   50,
-  "prefix",
+  PREFIX,
   undefined,
   (parser, value) => !parser.expression(0)
 );
@@ -143,7 +147,7 @@ export /** @type {Token} */ const NOT = createToken(
 export /** @type {Token} */ const NOT_EQUAL = createBinopToken(
   "!=",
   40,
-  "infixr",
+  INFIXR,
   (left, right) => left != right
 );
 export /** @type {Token} */ const EQUAL = createBinopToken(
@@ -155,31 +159,31 @@ export /** @type {Token} */ const EQUAL = createBinopToken(
 export /** @type {Token} */ const GREATER = createBinopToken(
   ">",
   40,
-  "infixr",
+  INFIXR,
   (left, right) => left > right
 );
 export /** @type {Token} */ const GREATER_EQUAL = createBinopToken(
   ">=",
   40,
-  "infixr",
+  INFIXR,
   (left, right) => left >= right
 );
 export /** @type {Token} */ const LESS = createBinopToken(
   "<",
   40,
-  "infixr",
+  INFIXR,
   (left, right) => left < right
 );
 export /** @type {Token} */ const LESS_EQUAL = createBinopToken(
   "<=",
   40,
-  "infixr",
+  INFIXR,
   (left, right) => left <= right
 );
 export /** @type {Token} */ const OPEN_ROUND = createToken(
   "(",
   100,
-  "prefix",
+  PREFIX,
   (parser, left) => {
     const args = parser.expression(0);
     parser.expect(CLOSE_ROUND);
@@ -226,7 +230,7 @@ function createFilter(parser) {
 export /** @type {Token} */ const OPEN_BRACKET = createToken(
   "[",
   80,
-  "prefix",
+  PREFIX,
   (parser, left) => {
     const node = createFilter(parser);
 
@@ -243,8 +247,8 @@ export /** @type {Token} */ const OPEN_BRACKET = createToken(
 export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0);
 export /** @type {Token} */ const OPEN_CURLY = createToken("{");
 export /** @type {Token} */ const CLOSE_CURLY = createToken("}");
-export /** @type {Token} */ const QUESTION = createToken("?", 20, "infix");
-export /** @type {Token} */ const COLON = createToken(":", undefined, "infix");
+export /** @type {Token} */ const QUESTION = createToken("?", 20, INFIX);
+export /** @type {Token} */ const COLON = createToken(":", undefined, INFIX);
 export /** @type {Token} */ const SEMICOLON = createToken(";");
 export /** @type {Token} */ const COMMA = createToken(
   ",",
@@ -256,7 +260,7 @@ export /** @type {Token} */ const COMMA = createToken(
 export /** @type {Token} */ const DOT = createToken(
   ".",
   80,
-  "infix",
+  INFIX,
   (left, right) => {
     if (typeof right === "string") {
       right = { eval: keyedAccessEval, key: right };
@@ -291,14 +295,14 @@ export /** @type {Token} */ const AMPERSAND = createToken("&");
 export /** @type {Token} */ const DOUBLE_AMPERSAND = createBinopToken(
   "&&",
   30,
-  "infixr",
+  INFIXR,
   (left, right) => left && right
 );
 export /** @type {Token} */ const BAR = createToken("|");
 export /** @type {Token} */ const DOUBLE_BAR = createBinopToken(
   "||",
   30,
-  "infixr",
+  INFIXR,
   (left, right) => left || right
 );
 export /** @type {Token} */ const IDENTIFIER = createToken(
