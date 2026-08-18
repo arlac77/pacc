@@ -28,13 +28,14 @@ import {
   OPEN_BRACKET,
   OPEN_CURLY,
   OPEN_ROUND,
-  SEMICOLON
+  SEMICOLON,
+  NOT
 } from "../src/tokens.mjs";
 
 function tt(t, input, expected) {
   try {
     const context = {};
-    const result = [...tokens(input,context)];
+    const result = [...tokens(input, context)];
     expected = expected.map(e => (Array.isArray(e) ? e : [e]));
     t.deepEqual(result, expected);
   } catch (e) {
@@ -164,6 +165,22 @@ test(tt, "a[*]._b", [
   CLOSE_BRACKET,
   DOT,
   [IDENTIFIER, "_b"]
+]);
+
+test(tt, "!(in(type,('ll','lb')))", [
+  NOT,
+  OPEN_ROUND,
+  [IDENTIFIER, "in"],
+  OPEN_ROUND,
+  [IDENTIFIER, "type"],
+  COMMA,
+  OPEN_ROUND,
+  [STRING, "ll"],
+  COMMA,
+  [STRING, "lb"],
+  CLOSE_ROUND,
+  CLOSE_ROUND,
+  CLOSE_ROUND
 ]);
 
 // "\\\b\f\n\r\t\"\'\u0041"
