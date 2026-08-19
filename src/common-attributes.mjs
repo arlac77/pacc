@@ -234,14 +234,18 @@ export const boolean_attribute_false = {
 /**
  * @type {AttributeDefinition}
  */
-export { boolean_attribute_writable_true as active_attribute };
+export const active_attribute = {
+  ...boolean_attribute_writable_true,
+  name: "active"
+};
 
 /**
  * @type {AttributeDefinition}
  */
 export const yesno_attribute = {
   ...boolean_attribute,
-  type: types.yesno
+  type: types.yesno,
+  name: "yesno"
 };
 
 export const yesno_attribute_writable = {
@@ -268,6 +272,7 @@ export const uuid_attribute = {
  */
 export const secret_attribute = {
   ...string_attribute_writable,
+  name: "secret",
   private: true,
   credential: true
 };
