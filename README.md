@@ -103,9 +103,9 @@ tokens "abc" "
 *   [boolean\_attribute](#boolean_attribute)
 *   [boolean\_attribute\_writable](#boolean_attribute_writable)
 *   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true)
-*   [boolean\_attribute\_writable\_true](#boolean_attribute_writable_true-1)
 *   [boolean\_attribute\_writable\_false](#boolean_attribute_writable_false)
 *   [boolean\_attribute\_false](#boolean_attribute_false)
+*   [active\_attribute](#active_attribute)
 *   [yesno\_attribute](#yesno_attribute)
 *   [empty\_attribute](#empty_attribute)
 *   [uuid\_attribute](#uuid_attribute)
@@ -404,15 +404,15 @@ Type: [AttributeDefinition](#attributedefinition)
 
 Type: [AttributeDefinition](#attributedefinition)
 
-## boolean\_attribute\_writable\_true
-
-Type: [AttributeDefinition](#attributedefinition)
-
 ## boolean\_attribute\_writable\_false
 
 Type: [AttributeDefinition](#attributedefinition)
 
 ## boolean\_attribute\_false
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## active\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
