@@ -45,7 +45,7 @@ const PREFIX = "prefix";
 function createToken(
   str,
   precedence = 0,
-  type,
+  type = PREFIX,
   led = (parser, node) => node,
   nud = parser => this
 ) {
@@ -60,8 +60,10 @@ function createToken(
       token.led = (parser, left) =>
         led(left, parser.expression(token.precedence - 1));
       break;
-    default:
+
+    case PREFIX:
       token.led = led;
+      break;
   }
 
   token.nud = nud;
@@ -160,7 +162,7 @@ export /** @type {Token} */ const NOT_EQUAL = createBinopToken(
 export /** @type {Token} */ const EQUAL = createBinopToken(
   "=",
   40,
-  "infixr",
+  INFIXR,
   (left, right) => left == right
 );
 export /** @type {Token} */ const GREATER = createBinopToken(
@@ -260,7 +262,7 @@ export /** @type {Token} */ const SEMICOLON = createToken(";");
 export /** @type {Token} */ const COMMA = createToken(
   ",",
   20,
-  "infix",
+  INFIX,
   (left, right) => (Array.isArray(left) ? [...left, right] : [left, right])
 );
 
