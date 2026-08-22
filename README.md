@@ -125,6 +125,7 @@ tokens "abc" "
 *   [integer\_attribute\_writable](#integer_attribute_writable-1)
 *   [size\_attribute](#size_attribute)
 *   [object\_attribute](#object_attribute)
+*   [object\_attribute\_writable](#object_attribute_writable)
 *   [url\_attribute](#url_attribute)
 *   [url\_attribute\_writable](#url_attribute_writable)
 *   [hostname\_attribute](#hostname_attribute)
@@ -489,6 +490,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## object\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## object\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
