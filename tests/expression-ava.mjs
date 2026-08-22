@@ -55,6 +55,8 @@ test(eat, "(1,2,3,4)", undefined, [1, 2, 3, 4]);
 test.skip(eat, "(a,b)", { current: { a: [1, 2], b: [3, 4] } }, [1, 2, 3, 4]);
 test(eat, "('a',2,true)", undefined, ["a", 2, true]);
 test(eat, "(1,2,3,4) + (5,6)", undefined, [1, 2, 3, 4, 5, 6]);
+test(eat, "arrayA + arrayB", { current: { arrayA: [1, 2], arrayB: [3, 4] } }, [1, 2, 3, 4]);
+test(eat, "setA + arrayB", { current: { setA: new Set([1, 2]), arrayB: [3, 4] } }, [1, 2, 3, 4]);
 test(eat, "(1,(2,3),4)", undefined, [1, [2, 3], 4]);
 test.skip(eat, "((1,2),3,4)", undefined, [[1, 2], 3, 4]);
 test(eat, "1 + (2 + 3)", undefined, 6);

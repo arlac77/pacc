@@ -107,11 +107,18 @@ export /** @type {Token} */ const PLUS = createBinopToken(
   50,
   INFIXR,
   (left, right) => {
-    if (Array.isArray(left)) {
-      if (Array.isArray(right)) {
+    if (
+      typeof left === "object" &&
+      (left[Symbol.iterator] || typeof left.values === "function")
+    ) {
+      if (
+        typeof right === "object" &&
+        (right[Symbol.iterator] || typeof right.values === "function")
+      ) {
         return [...left, ...right];
       }
     }
+
     return left + right;
   }
 );
@@ -119,7 +126,7 @@ export /** @type {Token} */ const PLUS = createBinopToken(
 export /** @type {Token} */ const MINUS = createBinopToken(
   "-",
   50,
- INFIXR,
+  INFIXR,
   (left, right) => left - right,
   (parser, value) => -parser.expression(100)
 );
