@@ -382,6 +382,14 @@ export const object_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const object_attribute_writable = {
+  ...object_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const url_attribute = {
   ...default_attribute,
   type: types.url,
