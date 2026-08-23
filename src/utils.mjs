@@ -1,8 +1,10 @@
 
+
 /**
- * Convert scalar or iterable into Array.
- * @param {any} value
- * @returns {Array<any>}
+ * Convert scalar or iterable into an array.
+ * The value undefined will be represented as an empty array.
+ * @param {Iterable<any>|Array<any>|any} value
+ * @return {Array<any>} value encapsulated in an array
  */
 export function asArray(value) {
   switch (typeof value) {
