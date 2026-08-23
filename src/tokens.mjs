@@ -733,4 +733,7 @@ export function* tokens(string, context) {
     default:
       yield lookup[state];
   }
+
+  yield [EOF];
+  yield [EOF];
 }

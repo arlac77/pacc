@@ -1,4 +1,4 @@
-import { tokens, EOF } from "./tokens.mjs";
+import { tokens } from "./tokens.mjs";
 
 export function parseOnly(input, context) {
   input = tokens(input, context);
@@ -7,13 +7,9 @@ export function parseOnly(input, context) {
 
   function advance() {
     const next = input.next();
-    if (next.done) {
-      token = EOF;
-    } else {
-      token = next.value[0];
-      if (next.value.length > 1) {
-        value = next.value[1];
-      }
+    token = next.value[0];
+    if (next.value.length > 1) {
+      value = next.value[1];
     }
   }
 

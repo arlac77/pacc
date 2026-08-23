@@ -11,7 +11,7 @@ function eat(t, input, context, expected) {
     try {
       const result = parse(input, context);
     } catch (e) {
-      t.is(e.message, expected.message);
+      t.is(e.message, expected.message, input);
     }
   } else {
     let result = parse(input, context);

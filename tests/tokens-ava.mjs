@@ -29,7 +29,8 @@ import {
   OPEN_CURLY,
   OPEN_ROUND,
   SEMICOLON,
-  NOT
+  NOT,
+  EOF
 } from "../src/tokens.mjs";
 
 function tt(t, input, expected) {
@@ -37,6 +38,8 @@ function tt(t, input, expected) {
     const context = {};
     const result = [...tokens(input, context)];
     expected = expected.map(e => (Array.isArray(e) ? e : [e]));
+    expected.push([EOF]);
+    expected.push([EOF]);
     t.deepEqual(result, expected);
   } catch (e) {
     t.deepEqual(e, expected);
