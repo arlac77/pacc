@@ -30,42 +30,37 @@ export function registerToken(token) {
   return token;
 }
 
-const INFIX = "infix";
-const INFIXR = "infixr";
-const PREFIX = "prefix";
+function INFIX(token, led) {
+  token.led = (parser, left) => led(left, parser.expression(token.precedence));
+}
+
+function INFIXR(token, led) {
+  token.led = (parser, left) =>
+    led(left, parser.expression(token.precedence - 1));
+}
+
+function PREFIX(token, led) {
+  token.led = led;
+}
 
 /**
  *
  * @param {string} str
  * @param {number} [precedence]
- * @param {string} [type]
+ * @param {Function} [type]
  * @param {Function} [led]
  * @returns {Token}
  */
 function createToken(
   str,
   precedence = 0,
-  type = PREFIX,
+  ledType = PREFIX,
   led = (parser, node) => node,
   nud = parser => this
 ) {
-  const token = { str, precedence, type };
+  const token = { str, precedence };
 
-  switch (type) {
-    case INFIX:
-      token.led = (parser, left) =>
-        led(left, parser.expression(token.precedence));
-      break;
-    case INFIXR:
-      token.led = (parser, left) =>
-        led(left, parser.expression(token.precedence - 1));
-      break;
-
-    case PREFIX:
-      token.led = led;
-      break;
-  }
-
+  ledType(token, led);
   token.nud = nud;
 
   return registerToken(token);
@@ -317,7 +312,7 @@ export /** @type {Token} */ const DOUBLE_BAR = createBinopToken(
 export /** @type {Token} */ const IDENTIFIER = createToken(
   "IDENTIFIER",
   1,
-  undefined,
+  PREFIX,
   undefined,
   (parser, value) => {
     return { eval: keyedAccessOrGlobalEval, key: value };
@@ -327,7 +322,7 @@ export /** @type {Token} */ const IDENTIFIER = createToken(
 export /** @type {Token} */ const STRING = createToken(
   "STRING",
   1,
-  undefined,
+  PREFIX,
   undefined,
   (parser, value) => value
 );
@@ -335,14 +330,14 @@ export /** @type {Token} */ const STRING = createToken(
 export /** @type {Token} */ const NUMBER = createToken(
   "NUMBER",
   0,
-  undefined,
+  PREFIX,
   undefined,
   (parser, value) => value
 );
 export /** @type {Token} */ const BOOLEAN = createToken(
   "BOOLEAN",
   0,
-  undefined,
+  PREFIX,
   undefined,
   (parser, value) => value
 );
@@ -350,7 +345,7 @@ export /** @type {Token} */ const BOOLEAN = createToken(
 export /** @type {Token} */ const EOF = createToken(
   "EOF",
   -1,
-  "eof",
+  PREFIX,
   undefined,
   parser => {
     throw new Error("unexpected EOF");
