@@ -1,4 +1,5 @@
 export * from "./types.mjs";
+export * from "./utils.mjs";
 export * from "./time.mjs";
 export * from "./bytes.mjs";
 export * from "./attributes.mjs";
