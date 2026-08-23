@@ -929,13 +929,14 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## asArray
 
-Convert scalar or iterable into Array.
+Convert scalar or iterable into an array.
+The value undefined will be represented as an empty array.
 
 ### Parameters
 
-*   `value` **any**&#x20;
+*   `value` **(Iterable\<any> | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<any> | any)**&#x20;
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<any>**&#x20;
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<any>** value encapsulated in an array
 
 ## asIterator
 
