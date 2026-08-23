@@ -215,6 +215,10 @@ tokens "abc" "
     *   [Parameters](#parameters-20)
 *   [create](#create)
     *   [Parameters](#parameters-21)
+*   [asArray](#asarray)
+    *   [Parameters](#parameters-22)
+*   [asIterator](#asiterator)
+    *   [Parameters](#parameters-23)
 
 ## AST
 
@@ -922,6 +926,24 @@ Create object for a given type
 *   `data` **any**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** newly created object
+
+## asArray
+
+Convert scalar or iterable into Array.
+
+### Parameters
+
+*   `value` **any**&#x20;
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<any>**&#x20;
+
+## asIterator
+
+### Parameters
+
+*   `value` **any**&#x20;
+
+Returns **Iterable\<any>**&#x20;
 
 # install
 
