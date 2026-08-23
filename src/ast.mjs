@@ -87,14 +87,18 @@ export function filterEval(node, current, context) {
   }
 }
 
-export function nullFilterEval(node, current, context) {
-  if (typeof current.values === "function") {
-    current = current.values();
-  }
-
-  return current;
-}
-
 export const ASTNullFilter = {
-  eval: nullFilterEval
+  eval(node, current, context) {
+    if (typeof current.values === "function") {
+      current = current.values();
+    }
+
+    return current;
+  }
+};
+
+export const ASTRoot = {
+  eval(node, current, context) {
+    return context.root;
+  }
 };
