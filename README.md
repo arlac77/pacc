@@ -215,6 +215,10 @@ tokens "abc" "
     *   [Parameters](#parameters-20)
 *   [create](#create)
     *   [Parameters](#parameters-21)
+*   [asArray](#asarray)
+    *   [Parameters](#parameters-22)
+*   [asIterator](#asiterator)
+    *   [Parameters](#parameters-23)
 
 ## AST
 
@@ -756,9 +760,10 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 *   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `precedence` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?**  (optional, default `0`)
-*   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**  (optional, default `PREFIX`)
+*   `ledType`   (optional, default `PREFIX`)
 *   `led` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**  (optional, default `(parser,node)=>node`)
 *   `nud`   (optional, default `parser=>this`)
+*   `type` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 
 Returns **[Token](#token)**&#x20;
 
@@ -922,6 +927,25 @@ Create object for a given type
 *   `data` **any**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** newly created object
+
+## asArray
+
+Convert scalar or iterable into an array.
+The value undefined will be represented as an empty array.
+
+### Parameters
+
+*   `value` **(Iterable\<any> | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<any> | any)**&#x20;
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<any>** value encapsulated in an array
+
+## asIterator
+
+### Parameters
+
+*   `value` **any**&#x20;
+
+Returns **Iterable\<any>**&#x20;
 
 # install
 
