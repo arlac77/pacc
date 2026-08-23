@@ -288,10 +288,7 @@ export /** @type {Token} */ const DOT = createToken(
   (parser, value) => {
     return {
       eval: pathEval,
-      path: [
-        ASTRoot,
-        { eval: keyedAccessEval, key: value }
-      ]
+      path: [ASTRoot]
     };
   }
 );
@@ -314,7 +311,12 @@ export /** @type {Token} */ const IDENTIFIER = createToken(
   "IDENTIFIER",
   1,
   PREFIX,
-  undefined,
+  (parser, node, value) => {
+    if (node.eval === pathEval) {
+      node.path.push({ eval: keyedAccessEval, key: value });
+    }
+    return node;
+  },
   (parser, value) => {
     return { eval: keyedAccessOrGlobalEval, key: value };
   }

@@ -35,7 +35,7 @@ export function ast(input, context) {
       while (token.precedence > precedence) {
         const last = token;
         advance();
-        node = last.led(parser, node);
+        node = last.led(parser, node, value);
       }
 
       return node;
