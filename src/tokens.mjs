@@ -1,6 +1,7 @@
 import {
-  pathEval,
   ASTNullFilter,
+  ASTRoot,
+  pathEval,
   keyedAccessEval,
   keyedAccessOrGlobalEval,
   filterEval,
@@ -288,7 +289,7 @@ export /** @type {Token} */ const DOT = createToken(
     return {
       eval: pathEval,
       path: [
-        { eval: (node, current, context) => context.root },
+        ASTRoot,
         { eval: keyedAccessEval, key: value }
       ]
     };
