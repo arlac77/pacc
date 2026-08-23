@@ -3,25 +3,21 @@ import { tokens } from "./tokens.mjs";
 export function ast(input, context) {
   input = tokens(input, context);
 
-  let token, value;
+  let token;
 
   function advance() {
-    const next = input.next();
-    token = next.value[0];
-    if (next.value.length > 1) {
-      value = next.value[1];
-    }
+    token = input.next().value;
   }
 
   const parser = {
     get token() {
-      return token;
+      return token[0];
     },
     advance,
     expect(expected) {
-      if (token !== expected) {
+      if (token[0] !== expected) {
         throw new Error(
-          `unexpected '${token.str}' expecting '${expected.str}'`,
+          `unexpected '${token[0].str}' expecting '${expected.str}'`,
           { cause: token }
         );
       }
@@ -30,12 +26,12 @@ export function ast(input, context) {
     expression(precedence) {
       const last = token;
       advance();
-      let node = last.nud(parser, value);
+      let node = last[0].nud(parser, last[1]);
 
-      while (token.precedence > precedence) {
+      while (token[0].precedence > precedence) {
         const last = token;
         advance();
-        node = last.led(parser, node, value);
+        node = last[0].led(parser, node, last[1]);
       }
 
       return node;
