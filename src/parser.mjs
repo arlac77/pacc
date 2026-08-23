@@ -1,6 +1,6 @@
 import { tokens } from "./tokens.mjs";
 
-export function parseOnly(input, context) {
+export function ast(input, context) {
   input = tokens(input, context);
 
   let token, value;
@@ -48,6 +48,6 @@ export function parseOnly(input, context) {
 }
 
 export function parse(input, context = {}) {
-  const result = parseOnly(input, context);
+  const result = ast(input, context);
   return result.eval ? result.eval(result, context.current, context) : result;
 }

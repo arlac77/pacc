@@ -19,7 +19,7 @@ import {
   NUMBER,
   BOOLEAN
 } from "./tokens.mjs";
-import { parseOnly, parse } from "./parser.mjs";
+import { ast, parse } from "./parser.mjs";
 import { toInternal } from "./attributes.mjs";
 import { keyedAccessOrGlobalEval, keyedAccessEval, pathEval } from "./ast.mjs";
 
@@ -38,18 +38,18 @@ export function setAttribute(object, expression, value, definition) {
   }
 
   const context = {};
-  const ast = parseOnly(expression, context);
+  const node = ast(expression, context);
 
   let parent, parentItem;
 
-  switch (ast.eval) {
+  switch (node.eval) {
     case keyedAccessEval:
     case keyedAccessOrGlobalEval:
-      object[ast.key] = toInternal(value, definition);
+      object[node.key] = toInternal(value, definition);
       break;
 
     case pathEval:
-      for (const item of ast.path) {
+      for (const item of node.path) {
         if (typeof object !== "object") {
           object = typeof item.key === "number" ? [] : {};
           parent[parentItem.key] = object;
@@ -65,7 +65,7 @@ export function setAttribute(object, expression, value, definition) {
       break;
 
       default:
-        console.log("UKNOWN AST",ast);
+        console.log("UKNOWN ast",node);
   }
 }
 
