@@ -88,7 +88,6 @@ function createBinopToken(str, precedence, type, binop, nud) {
               ? node.right.eval(node.right, current, context)
               : node.right
           ),
-        token,
         left,
         right
       };
