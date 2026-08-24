@@ -5,9 +5,7 @@ export function ast(input, context) {
 
   let token;
 
-  function advance() {
-    token = input.next().value;
-  }
+  const advance = () => (token = input.next().value);
 
   const parser = {
     get token() {
