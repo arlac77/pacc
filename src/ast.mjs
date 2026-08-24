@@ -94,7 +94,8 @@ export const ASTNullFilter = {
     }
 
     return current;
-  }
+  },
+  preducate: true
 };
 
 export const ASTRoot = {

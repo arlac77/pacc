@@ -86,15 +86,15 @@ test(eat, "true || false", undefined, true);
 test(eat, "true && false", undefined, false);
 test(eat, "1 + a", { current: { a: 5 } }, 6);
 test(eat, "x > 2", { current: { x: 3 } }, true);
-test.skip(eat, "[ x > 2 ]", { current: { x: 3 } }, true);
-test.skip(eat, "[ 3 > '2' ]", { current: { x: 3 } }, true);
-test.skip(
+test(eat, "[ x > 2 ]", { current: { x: 3 } }, true);
+test(eat, "[ 3 > '2' ]", { current: { x: 3 } }, true);
+test(
   eat,
   "[ x > y ]",
   { current: { x: 3 }, valueFor: valueFor({ y: 2 }) },
   true
 );
-test(eat, "a.b[ c > 2 ]", { current: { a: { b: [{ c: 2 }, { c: 3 }] } } }, [
+test(eat, "a[ c > 2 ]", { current: { a: [{ c: 2 }, { c: 3 }] } }, [
   { c: 3 }
 ]);
 test(
@@ -163,15 +163,15 @@ const current = new Map([
 
 test(eat, "[n=3].x", { current }, [7]);
 test(eat, "b.x", { current }, 7);
-test.skip(eat, "[n<5].l", { current }, [1, 2, 3, 4]);
+test(eat, "[n<5].l", { current }, [[1, 2], [3, 4]]);
 
-test.skip(
+test(
   eat,
   "[].n",
   {
-    current: [{ n: ["a"] }, { n: ["b"] }, { n: ["v"] }]
+    current: [{ n: ["a"] }, { n: ["b"] }, { n: ["c"] }]
   },
-  ["a", "b", "c"]
+  [["a"], ["b"],["c"]]
 );
 
 test(

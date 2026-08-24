@@ -220,15 +220,13 @@ function createFilter(parser) {
     case "string":
     case "number":
       return { eval: keyedAccessEval, key: filter };
-    default:
-      if (
-        filter.eval === keyedAccessEval ||
-        filter.eval === keyedAccessOrGlobalEval
-      ) {
-        return filter;
-      }
 
-      return { eval: filterEval, filter };
+    case "boolean":
+      return filter;
+
+    default:
+      filter.predicate = true;
+      return filter;
   }
 }
 
@@ -237,14 +235,21 @@ export /** @type {Token} */ const OPEN_BRACKET = createToken(
   80,
   PREFIX,
   (parser, left) => {
-    const node = createFilter(parser);
+    const filter = createFilter(parser);
 
-    if (left.key) {
-      return { eval: pathEval, path: [left, node] };
+    if (
+      filter.eval === keyedAccessEval ||
+      filter.eval === keyedAccessOrGlobalEval
+    ) {
+      if (left.path) {
+        left.path.push(filter);
+        return left;
+      }
+
+      return { eval: pathEval, path: [left, filter] };
     }
 
-    left.path.push(node);
-    return left;
+    return { eval: pathEval, path: [left, { eval: filterEval, filter }] };
   },
   (parser, value) => createFilter(parser)
 );
@@ -277,9 +282,13 @@ export /** @type {Token} */ const DOT = createToken(
     if (typeof left === "string") {
       left = { eval: keyedAccessEval, key: left };
     } else {
-      if (left.path) {
-        left.path.push(right);
-        return left;
+      if (left.predicate) {
+        left = { eval: filterEval, filter: left };
+      } else {
+        if (left.path) {
+          left.path.push(right);
+          return left;
+        }
       }
     }
 
