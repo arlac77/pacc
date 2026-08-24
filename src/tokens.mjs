@@ -7,6 +7,7 @@ import {
   filterEval,
   functionEval
 } from "./ast.mjs";
+import { asArray } from "./utils.mjs";
 
 /**
  * Token lookup
@@ -56,7 +57,7 @@ function createToken(
   str,
   precedence = 0,
   ledType = PREFIX,
-  led = (parser, node) => node,
+  led = (parser, node, value) => node,
   nud = parser => this
 ) {
   const token = { str, precedence };
@@ -105,19 +106,19 @@ export /** @type {Token} */ const PLUS = createBinopToken(
   50,
   INFIXR,
   (left, right) => {
-    if (
-      typeof left === "object" &&
-      (left[Symbol.iterator] || typeof left.values === "function")
-    ) {
-      if (
-        typeof right === "object" &&
-        (right[Symbol.iterator] || typeof right.values === "function")
-      ) {
-        return [...left, ...right];
-      }
+    switch (typeof left) {
+      case "number":
+      case "bigint":
+      case "string":
+        switch (typeof right) {
+          case "number":
+          case "bigint":
+          case "string":
+            return left + right;
+        }
     }
 
-    return left + right;
+    return [...asArray(left), ...asArray(right)];
   }
 );
 
@@ -195,7 +196,7 @@ export /** @type {Token} */ const OPEN_ROUND = createToken(
     return {
       eval: functionEval,
       name: left.key,
-      args: Array.isArray(args) ? args : [args]
+      args: asArray(args)
     };
   },
   (parser, value) => {
