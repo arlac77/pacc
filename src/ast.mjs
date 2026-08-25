@@ -12,7 +12,7 @@ export function pathEval(node, current, context) {
 }
 
 export function functionEval(node, current, context) {
-  return context.valueFor(node.name)(node.args, current, context);
+  return context.valueFor(node.name)(node.args.eval(node.args,current,context), current, context);
 }
 
 export function keyedAccessOrGlobalEval(node, current, context) {
@@ -85,6 +85,12 @@ export function filterEval(node, current, context) {
 
     return current.filter(item => node.filter.eval(node.filter, item, context));
   }
+}
+
+export function sequenceEval(node, current, context) {
+  return node.sequence.map(member =>
+    member.eval ? member.eval(member, current, context) : member
+  );
 }
 
 export const ASTNullFilter = {
