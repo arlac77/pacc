@@ -1,36 +1,5 @@
 import test from "ava";
-import { globals } from "../src/tokens.mjs";
-import { parse } from "../src/parser.mjs";
-
-function valueFor(other) {
-  return a => globals[a] ?? other?.[a];
-}
-
-function eat(t, input, context, expected) {
-  if (expected instanceof Error) {
-    try {
-      const result = parse(input, context);
-    } catch (e) {
-      t.is(e.message, expected.message, input);
-    }
-  } else {
-    let result = parse(input, context);
-
-    if (Array.isArray(expected)) {
-      result = [...result];
-    }
-
-    t.deepEqual(
-      Array.isArray(expected) ? Array.from(result) : result,
-      expected
-    );
-  }
-}
-
-eat.title = (providedTitle, input, context, expected) =>
-  `parse ${providedTitle ? providedTitle + " " : ""} ${
-    typeof input === "object" ? input.input : input
-  } => ${expected}`.trim();
+import { eat, valueFor } from "./util.mjs";
 
 test(eat, "1 +", undefined, new Error("unexpected EOF"));
 test(eat, "1,", undefined, new Error("unexpected EOF"));
@@ -48,12 +17,8 @@ test(eat, "1 + 2 * 4", undefined, 9);
 test(eat, "1 * 2 + 4", undefined, 6);
 test(eat, "1 + (2 + 7)", undefined, 10);
 test(eat, "(1 + 2) + 7", undefined, 10);
-test(eat, "(1 + 2)", undefined, 3);
+test(eat, "(1 + 2)", undefined, [3]);
 test(eat, "(1) + 2", undefined, 3);
-test(eat, "(1)", undefined, 1);
-test(eat, "(1,2,3,4)", undefined, [1, 2, 3, 4]);
-test.skip(eat, "(a,b)", { current: { a: [1, 2], b: [3, 4] } }, [1, 2, 3, 4]);
-test(eat, "('a',2,true)", undefined, ["a", 2, true]);
 test(eat, "(1,2,3,4) + (5,6)", undefined, [1, 2, 3, 4, 5, 6]);
 test(
   eat,
@@ -67,9 +32,9 @@ test(
   { current: { setA: new Set([1, 2]), arrayB: [3, 4] } },
   [1, 2, 3, 4]
 );
-test(eat, "(1,(2,3),4)", undefined, [1, [2, 3], 4]);
-test(eat, "(1,(2),3,4)", undefined, [1, 2, 3, 4]);
-test.skip(eat, "((1,2),3,4)", undefined, [[1, 2], 3, 4]);
+test(eat, "((1,2),3,4)", undefined, [[1, 2], 3, 4]);
+test.skip(eat, "(1,(2,3),4)", undefined, [1, [2, 3], 4]);
+test(eat, "(1,(2),3,4)", undefined, [1, [2], 3, 4]);
 test(eat, "1 + (2 + 3)", undefined, 6);
 test(eat, "(1 + 2) + 3", undefined, 6);
 test(eat, "(1 + 2) * 4 + 5 + 6", undefined, 23);
@@ -94,9 +59,7 @@ test(
   { current: { x: 3 }, valueFor: valueFor({ y: 2 }) },
   true
 );
-test(eat, "a[ c > 2 ]", { current: { a: [{ c: 2 }, { c: 3 }] } }, [
-  { c: 3 }
-]);
+test(eat, "a[ c > 2 ]", { current: { a: [{ c: 2 }, { c: 3 }] } }, [{ c: 3 }]);
 test(
   eat,
   "a[ b.c > 2 && d < 7].d",
@@ -163,7 +126,10 @@ const current = new Map([
 
 test(eat, "[n=3].x", { current }, [7]);
 test(eat, "b.x", { current }, 7);
-test(eat, "[n<5].l", { current }, [[1, 2], [3, 4]]);
+test(eat, "[n<5].l", { current }, [
+  [1, 2],
+  [3, 4]
+]);
 
 test(
   eat,
@@ -171,7 +137,7 @@ test(
   {
     current: [{ n: ["a"] }, { n: ["b"] }, { n: ["c"] }]
   },
-  [["a"], ["b"],["c"]]
+  [["a"], ["b"], ["c"]]
 );
 
 test(

@@ -2,6 +2,8 @@ import {
   setAttributes,
   getAttributes
 } from "pacc";
+import { globals } from "../src/tokens.mjs";
+import { parse } from "../src/parser.mjs";
 
 export function sast(t, object, source, definitions, expected) {
   setAttributes(object, source, definitions);
@@ -21,3 +23,34 @@ gast.title = (providedTitle = "", object, def, expected) =>
   `getAttributes ${providedTitle} ${JSON.stringify(object)} ${JSON.stringify(
     def
   )}`.trim();
+
+
+export function valueFor(other) {
+  return a => globals[a] ?? other?.[a];
+}
+
+export function eat(t, input, context, expected) {
+  if (expected instanceof Error) {
+    try {
+      const result = parse(input, context);
+    } catch (e) {
+      t.is(e.message, expected.message, input);
+    }
+  } else {
+    let result = parse(input, context);
+
+    if (Array.isArray(expected)) {
+      result = [...result];
+    }
+
+    t.deepEqual(
+      Array.isArray(expected) ? Array.from(result) : result,
+      expected
+    );
+  }
+}
+
+eat.title = (providedTitle, input, context, expected) =>
+  `parse ${providedTitle ? providedTitle + " " : ""} ${
+    typeof input === "object" ? input.input : input
+  } => ${expected}`.trim();
