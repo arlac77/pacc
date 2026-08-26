@@ -5,7 +5,8 @@ import {
   keyedAccessEval,
   keyedAccessOrGlobalEval,
   filterEval,
-  functionEval
+  functionEval,
+  sequenceEval
 } from "./ast.mjs";
 import { asArray } from "./utils.mjs";
 
@@ -106,10 +107,31 @@ export /** @type {Token} */ const PLUS = createBinopToken(
   INFIXR,
   (left, right) => {
     switch (typeof left) {
+      case "object":
+        if (Array.isArray(left)) {
+          if (left.length !== 1) {
+            break;
+          }
+          left = left[0];
+        } else {
+          if (left.eval !== sequenceEval || left.sequence.length !== 1) {
+            break;
+          }
+
+          left = left.sequence[0];
+        }
+
       case "number":
       case "bigint":
       case "string":
         switch (typeof right) {
+          case "object":
+            if (Array.isArray(right)) {
+              if (right.length !== 1) {
+                break;
+              }
+              right = right[0];
+            }
           case "number":
           case "bigint":
           case "string":
@@ -185,24 +207,37 @@ export /** @type {Token} */ const LESS_EQUAL = createBinopToken(
   INFIXR,
   (left, right) => left <= right
 );
+
+function createSequence(parser) {
+  const result = {
+    eval: sequenceEval,
+    sequence: []
+  };
+
+  while (parser.token !== CLOSE_ROUND) {
+    const member = parser.expression(0);
+    result.sequence.push(member);
+    if (parser.token === COMMA) {
+      parser.advance();
+    }
+  }
+
+  parser.expect(CLOSE_ROUND);
+  return result;
+}
+
 export /** @type {Token} */ const OPEN_ROUND = createToken(
   "(",
   100,
   PREFIX,
   (parser, left) => {
-    const args = parser.expression(0);
-    parser.expect(CLOSE_ROUND);
     return {
       eval: functionEval,
       name: left.key,
-      args: asArray(args)
+      args: createSequence(parser)
     };
   },
-  (parser, value) => {
-    const result = parser.expression(0);
-    parser.expect(CLOSE_ROUND);
-    return result;
-  }
+  (parser, value) => createSequence(parser)
 );
 
 export /** @type {Token} */ const CLOSE_ROUND = createToken(")", 0);
@@ -221,13 +256,13 @@ function createFilter(parser) {
     case "number":
       return { eval: keyedAccessEval, key: filter };
 
+    case "bigint":
     case "boolean":
       return filter;
-
-    default:
-      filter.predicate = true;
-      return filter;
   }
+
+  filter.predicate = true;
+  return filter;
 }
 
 export /** @type {Token} */ const OPEN_BRACKET = createToken(
@@ -258,14 +293,9 @@ export /** @type {Token} */ const CLOSE_BRACKET = createToken("]", 0);
 export /** @type {Token} */ const OPEN_CURLY = createToken("{");
 export /** @type {Token} */ const CLOSE_CURLY = createToken("}");
 export /** @type {Token} */ const QUESTION = createToken("?", 20, INFIX);
-export /** @type {Token} */ const COLON = createToken(":", undefined, INFIX);
+export /** @type {Token} */ const COLON = createToken(":", 0, INFIX);
 export /** @type {Token} */ const SEMICOLON = createToken(";");
-export /** @type {Token} */ const COMMA = createToken(
-  ",",
-  20,
-  INFIX,
-  (left, right) => (Array.isArray(left) ? [...left, right] : [left, right])
-);
+export /** @type {Token} */ const COMMA = createToken(",", 0, INFIX);
 
 export /** @type {Token} */ const DOT = createToken(
   ".",
@@ -341,14 +371,14 @@ export /** @type {Token} */ const STRING = createToken(
 
 export /** @type {Token} */ const NUMBER = createToken(
   "NUMBER",
-  0,
+  1,
   PREFIX,
   undefined,
   (parser, value) => value
 );
 export /** @type {Token} */ const BOOLEAN = createToken(
   "BOOLEAN",
-  0,
+  1,
   PREFIX,
   undefined,
   (parser, value) => value

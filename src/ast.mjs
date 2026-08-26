@@ -12,7 +12,12 @@ export function pathEval(node, current, context) {
 }
 
 export function functionEval(node, current, context) {
-  return context.valueFor(node.name)(node.args.eval(node.args,current,context), current, context);
+  return context.valueFor(node.name)(
+    // TODO eval lazy ?
+    node.args.sequence, //eval(node.args, current, context),
+    current,
+    context
+  );
 }
 
 export function keyedAccessOrGlobalEval(node, current, context) {
