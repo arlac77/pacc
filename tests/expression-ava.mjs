@@ -33,7 +33,7 @@ test(
   [1, 2, 3, 4]
 );
 test(eat, "((1,2),3,4)", undefined, [[1, 2], 3, 4]);
-test.skip(eat, "(1,(2,3),4)", undefined, [1, [2, 3], 4]);
+test(eat, "(1,(2,3),4)", undefined, [1, [2, 3], 4]);
 test(eat, "(1,(2),3,4)", undefined, [1, [2], 3, 4]);
 test(eat, "1 + (2 + 3)", undefined, 6);
 test(eat, "(1 + 2) + 3", undefined, 6);
