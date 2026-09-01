@@ -50,7 +50,7 @@ function PREFIX(token, led) {
  *
  * @param {string} str
  * @param {number} [precedence]
- * @param {Function} [type]
+ * @param {Function} [ledType]
  * @param {Function} [led]
  * @returns {Token}
  */
