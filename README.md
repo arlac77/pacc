@@ -761,10 +761,9 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 *   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `precedence` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?**  (optional, default `0`)
-*   `ledType`   (optional, default `PREFIX`)
+*   `ledType` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**  (optional, default `PREFIX`)
 *   `led` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**  (optional, default `(parser,node,value)=>node`)
 *   `nud`   (optional, default `parser=>this`)
-*   `type` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 
 Returns **[Token](#token)**&#x20;
 
