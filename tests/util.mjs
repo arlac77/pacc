@@ -1,7 +1,4 @@
-import {
-  setAttributes,
-  getAttributes
-} from "pacc";
+import { setAttributes, getAttributes } from "pacc";
 import { globals } from "../src/tokens.mjs";
 import { parse } from "../src/parser.mjs";
 
@@ -24,7 +21,6 @@ gast.title = (providedTitle = "", object, def, expected) =>
     def
   )}`.trim();
 
-
 export function valueFor(other) {
   return a => globals[a] ?? other?.[a];
 }
@@ -40,7 +36,11 @@ export function eat(t, input, context, expected) {
     let result = parse(input, context);
 
     if (Array.isArray(expected)) {
-      result = [...result];
+      try {
+        result = [...result];
+      } catch (e) {
+        console.log(e, result);
+      }
     }
 
     t.deepEqual(

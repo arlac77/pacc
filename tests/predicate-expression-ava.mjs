@@ -99,7 +99,7 @@ test(
   [2]
 );
 
-test.skip(
+test(
   eat,
   "[ ]",
   {

@@ -71,6 +71,14 @@ export function keyedAccessEval(node, current, context) {
   if (typeof current.has === "function") {
     return current.has(node.key) ? node.key : undefined;
   }
+
+  if (Array.isArray(current)) {
+    if (typeof node.key === "number") {
+      return plain(current[node.key]);
+    }
+    return current.map(item => scalarAccessEval(node, item, context));
+  }
+
   if (current instanceof Iterator) {
     if (typeof node.key === "number") {
       for (const item of current.drop(node.key)) {
@@ -85,9 +93,9 @@ export function keyedAccessEval(node, current, context) {
 }
 
 export function filterEval(node, current, context) {
-  return asValueIterator(current).filter(item =>
-    node.filter.eval(node.filter, item, context)
-  );
+  return Array.from(asValueIterator(current))
+    .flat()
+    .filter(item => node.filter.eval(node.filter, item, context));
 }
 
 export function sequenceEval(node, current, context) {
@@ -97,7 +105,7 @@ export function sequenceEval(node, current, context) {
 }
 
 export const ASTNullFilter = {
-  eval: (node, current, context) => asValueIterator(current),
+  eval: (node, current, context) => Array.from(asValueIterator(current)).flat(),
   preducate: true
 };
 
