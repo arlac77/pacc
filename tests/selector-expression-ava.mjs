@@ -91,3 +91,6 @@ test(
   [2]
 );
 
+
+test(eat, "[1", undefined, new Error("unexpected 'EOF' expecting ']'"));
+
