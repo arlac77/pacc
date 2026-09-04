@@ -605,7 +605,7 @@ Expand expressions inside of object graphs.
 
     *   `context.root` **any?** actual replacement values
     *   `context.current` **any?** actual replacement values
-    *   `context.stopClass` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** do not expand instancif
+    *   `context.stopClass` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** do not expand instanceof
     *   `context.leadIn` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** starting separator
     *   `context.leadOut` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** ending separator
 
