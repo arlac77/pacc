@@ -129,5 +129,5 @@ const cyclicResult = {
 
 cyclicResult.c = cyclicResult;
 
-test.only("expand cyclic", t =>
+test("expand cyclic", t =>
   t.deepEqual(expand(cyclic, { current: cyclic }), cyclicResult));
