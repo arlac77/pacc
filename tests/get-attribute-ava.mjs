@@ -31,7 +31,7 @@ test(gat, { a: { b: 2 } }, "a.b", 2);
 test(gat, { a: [4] }, "a [ 0 ]", 4);
 test(gat, { a: [{ b: 6 }] }, "a[0].b", 6);
 test(gat, { a: [{ b: 6 }, { b: 7 }, { b: 8 }] }, "a[1].b", 7);
-test(gat, { a: 1 }, "a*", new Error("unexpected EOF"));
+test(gat, { a: 1 }, "a*", new Error("unexpected 'EOF'"));
 test(
   gat,
   {

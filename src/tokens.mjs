@@ -390,7 +390,7 @@ export /** @type {Token} */ const EOF = createToken(
   PREFIX,
   undefined,
   parser => {
-    throw new Error("unexpected EOF");
+    throw new Error("unexpected 'EOF'");
   }
 );
 
