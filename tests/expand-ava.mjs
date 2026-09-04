@@ -97,11 +97,10 @@ test("expand Boolean", t => {
   t.is(expand(object, {}).valueOf("number"), object.valueOf("number"));
 });
 test("expand Array", t =>
-  t.deepEqual(expand(["${a}", "${b}", "c"], { current: { a: "a1", b: "b2" } }), [
-    "a1",
-    "b2",
-    "c"
-  ]));
+  t.deepEqual(
+    expand(["${a}", "${b}", "c"], { current: { a: "a1", b: "b2" } }),
+    ["a1", "b2", "c"]
+  ));
 
 test("expand Set", t =>
   t.deepEqual(
@@ -113,3 +112,22 @@ test("expand Map", t =>
     expand(new Map([["${a}", "${b}"]]), { current: { a: "a1", b: "b2" } }),
     new Map([["a1", "b2"]])
   ));
+
+const cyclic = {
+  a: 1,
+  b: "${a}",
+  n: null
+};
+
+cyclic.c = cyclic;
+
+const cyclicResult = {
+  a: 1,
+  b: 1,
+  n: null
+};
+
+cyclicResult.c = cyclicResult;
+
+test.only("expand cyclic", t =>
+  t.deepEqual(expand(cyclic, { current: cyclic }), cyclicResult));

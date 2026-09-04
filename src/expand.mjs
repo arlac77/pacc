@@ -42,6 +42,7 @@ export function expand(object, context) {
   context = Object.assign({}, expandContextDefault, context);
   const leadIn = context.leadIn;
   const leadOut = context.leadOut;
+  const seen = new Map();
 
   function _expand(object, path) {
     if (path.length >= maxNestingLevel) {
@@ -53,8 +54,13 @@ export function expand(object, context) {
       );
     }
 
+    const e = seen.get(object);
+    if (e) {
+      return e;
+    }
+
     if (typeof object === "string" || object instanceof String) {
-      let result = "";
+      let copy = "";
 
       const localPromises = [];
 
@@ -69,7 +75,7 @@ export function expand(object, context) {
 
           let value = parse(expression, context);
           if (value === undefined) {
-            result += object.substring(cur, end + leadOut.length);
+            copy += object.substring(cur, end + leadOut.length);
           } else {
             if (typeof value === "string") {
               value = _expand(value, path);
@@ -82,7 +88,7 @@ export function expand(object, context) {
             if (start === 0 && end === object.length - leadOut.length) {
               return value;
             }
-            result += object.substring(cur, start) + value;
+            copy += object.substring(cur, start) + value;
           }
 
           cur = end + leadOut.length;
@@ -94,9 +100,10 @@ export function expand(object, context) {
         }
       }
 
-      result += object.substring(cur);
+      copy += object.substring(cur);
 
-      return result;
+      seen.set(object, copy);
+      return copy;
     }
 
     switch (typeof object) {
@@ -105,6 +112,7 @@ export function expand(object, context) {
       case "number":
       case "bigint":
       case "function":
+        seen.set(object, object);
         return object;
     }
 
@@ -131,6 +139,7 @@ export function expand(object, context) {
         copy[index] = r;
       }
 
+      seen.set(object, copy);
       return copy;
     }
 
@@ -140,6 +149,7 @@ export function expand(object, context) {
         copy.add(_expand(value, [...path, { value }]));
       }
 
+      seen.set(object, copy);
       return copy;
     }
 
@@ -158,18 +168,23 @@ export function expand(object, context) {
         copy.set(_expand(key, path2), _expand(value, path2));
       }
 
+      seen.set(object, copy);
       return copy;
     }
 
     if (object instanceof context.stopClass) {
+      seen.set(object, object);
       return object;
     }
 
     if (Object.prototype.toString.call(object) !== "[object Object]") {
+      seen.set(object, object);
       return object;
     }
 
-    let newObject = {};
+    let copy = {};
+
+    seen.set(object, copy);
 
     for (let [key, value] of Object.entries(object)) {
       const newKey = _expand(key, path);
@@ -185,13 +200,13 @@ export function expand(object, context) {
           promises.push(value);
           value.then(v => (newObject[newKey] = v));
         }
-        newObject[newKey] = value;
+        copy[newKey] = value;
       } else {
-        newObject = newKey;
+        copy = newKey;
+        seen.set(object, copy);
       }
     }
-
-    return newObject;
+    return copy;
   }
 
   const value = _expand(object, []);
