@@ -1,3 +1,5 @@
+import { asValueIterator } from "./utils.mjs";
+
 /**
  * @typedef {Object} AST
  * @property {Function} [eval]
@@ -83,13 +85,9 @@ export function keyedAccessEval(node, current, context) {
 }
 
 export function filterEval(node, current, context) {
-  if (current !== undefined) {
-    if (typeof current.values === "function") {
-      current = current.values();
-    }
-
-    return current.filter(item => node.filter.eval(node.filter, item, context));
-  }
+  return asValueIterator(current).filter(item =>
+    node.filter.eval(node.filter, item, context)
+  );
 }
 
 export function sequenceEval(node, current, context) {
@@ -99,13 +97,7 @@ export function sequenceEval(node, current, context) {
 }
 
 export const ASTNullFilter = {
-  eval(node, current, context) {
-    if (typeof current.values === "function") {
-      current = current.values();
-    }
-
-    return current;
-  },
+  eval: (node, current, context) => asValueIterator(current),
   preducate: true
 };
 
