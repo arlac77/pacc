@@ -40,12 +40,22 @@ test(
 
 test(
   eat,
-  "[].x",
+  "[].fromSet",
   {
-    current: new Set([{ x: 7 }, { x: 4 }, { x: 8 }])
+    current: new Set([{ fromSet: 7 }, { fromSet: 4 }, { fromSet: 8 }])
   },
   [7, 4, 8]
 );
+
+test(
+  eat,
+  "[].fromArray",
+  {
+    current: [{ fromArray: 7 }, { fromArray: 4 }, { fromArray: 8 }]
+  },
+  [7, 4, 8]
+);
+
 test(
   eat,
   "a[].x",
@@ -54,7 +64,6 @@ test(
   },
   [7, 4, 8]
 );
-
 
 const current = new Map([
   ["a", { n: 1, l: [1, 2] }],
@@ -66,7 +75,6 @@ test(eat, "[n<5].l", { current }, [
   [1, 2],
   [3, 4]
 ]);
-
 
 test(eat, "[ x > 2 ]", { current: { x: 3 } }, true);
 test(eat, "[ 3 > '2' ]", { current: { x: 3 } }, true);
@@ -91,6 +99,16 @@ test(
   [2]
 );
 
+test.skip(
+  eat,
+  "[ ]",
+  {
+    current: new Set([
+      [1, 2],
+      [3, 4]
+    ])
+  },
+  [1, 2, 3, 4]
+);
 
 test(eat, "[1", undefined, new Error("unexpected 'EOF' expecting ']'"));
-
