@@ -219,6 +219,8 @@ tokens "abc" "
     *   [Parameters](#parameters-22)
 *   [asIterator](#asiterator)
     *   [Parameters](#parameters-23)
+*   [asValueIterator](#asvalueiterator)
+    *   [Parameters](#parameters-24)
 
 ## AST
 
@@ -940,6 +942,14 @@ The value undefined will be represented as an empty array.
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<any>** value encapsulated in an array
 
 ## asIterator
+
+### Parameters
+
+*   `value` **any**&#x20;
+
+Returns **Iterable\<any>**&#x20;
+
+## asValueIterator
 
 ### Parameters
 
