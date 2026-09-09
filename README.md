@@ -221,6 +221,8 @@ tokens "abc" "
     *   [Parameters](#parameters-23)
 *   [asValueIterator](#asvalueiterator)
     *   [Parameters](#parameters-24)
+*   [leafValues](#leafvalues)
+    *   [Parameters](#parameters-25)
 
 ## AST
 
@@ -950,6 +952,16 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 Returns **Iterable\<any>**&#x20;
 
 ## asValueIterator
+
+### Parameters
+
+*   `value` **any**&#x20;
+
+Returns **Iterable\<any>**&#x20;
+
+## leafValues
+
+Walk all leavs
 
 ### Parameters
 
