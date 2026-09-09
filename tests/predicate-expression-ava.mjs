@@ -65,15 +65,24 @@ test(
   [7, 4, 8]
 );
 
-const current = new Map([
+const simpleMap = new Map([
   ["a", { n: 1, l: [1, 2] }],
   ["b", { n: 3, x: 7, l: [3, 4] }]
 ]);
 
-test(eat, "[n=3].x", { current }, [7]);
-test(eat, "[n<5].l", { current }, [
+test(eat, "[n=3].x", { current: simpleMap }, [7]);
+test(eat, "[n<5].l", { current: simpleMap }, [
   [1, 2],
   [3, 4]
+]);
+
+const arrayOfMaps = [
+  new Map([["a", { arrayOfMaps: 1 }]]),
+  new Map([["b", { arrayOfMaps: 2 }]])
+];
+
+test.skip(eat, "[arrayOfMaps>1]", { current: arrayOfMaps }, [
+  { arrayOfMaps: 2 }
 ]);
 
 test(eat, "[ x > 2 ]", { current: { x: 3 } }, true);
