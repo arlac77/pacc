@@ -68,3 +68,31 @@ export function asValueIterator(value) {
 
   return asArray(value);
 }
+
+/**
+ * Walk all leavs
+ * @param {any} value
+ * @returns {Iterable<any>}
+ */
+export function* leafValues(value) {
+  switch (typeof value) {
+    case "undefined":
+      return;
+
+    case "object":
+      if (Array.isArray(value)) {
+        for (const v of value) {
+          yield* leafValues(v);
+        }
+        return;
+      }
+      if (typeof value.values === "function") {
+        for (const v of value.values()) {
+          yield* leafValues(v);
+        }
+        return;
+      }
+  }
+
+  yield value;
+}
