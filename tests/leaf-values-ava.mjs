@@ -8,6 +8,8 @@ test("leafValues from string", t =>
   t.deepEqual(Array.from(leafValues("abc")), ["abc"]));
 test("leafValues from array", t =>
   t.deepEqual(Array.from(leafValues([1])), [1]));
+test("leafValues from array nested", t =>
+  t.deepEqual(Array.from(leafValues([1,[2,[3]]])), [1,2,3]));
 test("leafValues from undefined", t =>
   t.deepEqual(Array.from(leafValues(undefined)), []));
 test("leafValues from Map", t =>
