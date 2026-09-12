@@ -108,6 +108,33 @@ test("string collection type", t => {
   );
 });
 
+test("lowercase-string type", t => {
+  t.is(toInternal("ABC", { type: types["lowercase-string"] }), "abc");
+  t.is(toInternal(undefined, { type: types["lowercase-string"] }), undefined);
+
+  t.is(toExternal("abc", { type: types["lowercase-string"] }), "abc");
+  t.is(toExternal(undefined, { type: types["lowercase-string"] }), undefined);
+});
+
+test("lowercase-string collection type", t => {
+  t.deepEqual(
+    toInternal("A B C", {
+      collection: true,
+      separator: " ",
+      type: types["lowercase-string"]
+    }),
+    ["a", "b", "c"]
+  );
+  t.deepEqual(
+    toInternal(undefined, {
+      collection: true,
+      separator: " ",
+      type: types["lowercase-string"]
+    }),
+    undefined
+  );
+});
+
 test("boolean type", t => {
   t.is(toInternal("no", { type: types.boolean }), false);
   t.is(toInternal("yes", { type: types.boolean }), true);

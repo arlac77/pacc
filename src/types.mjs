@@ -16,31 +16,38 @@ import { parseBytes } from "./bytes.mjs";
 const emptyStringIsUndefined = value =>
   typeof value === "string" && value.length === 0 ? undefined : value;
 
+function stringToInternal(value, attribute) {
+  if (typeof value === "string") {
+    if (attribute.collection) {
+      if (attribute.constructor && attribute.constructor !== Array) {
+        return new attribute.constructor(
+          value.split(attribute.separator ?? " ")
+        );
+      }
+      return value.split(attribute.separator ?? " ");
+    }
+  }
+  return value;
+}
+
 export const types = {
   string: {
     name: "string",
     primitive: true,
-    toInternal: (value, attribute) => {
-      if (typeof value === "string") {
-        if (attribute.collection) {
-          if (attribute.constructor && attribute.constructor !== Array) {
-            return new attribute.constructor(
-              value.split(attribute.separator || " ")
-            );
-          }
-          return value.split(attribute.separator || " ");
-        }
-      }
-      return value;
-    },
+    toInternal: stringToInternal,
     toExternal: (value, attribute) => {
       if (value !== undefined) {
         if (attribute.collection && typeof value !== "string") {
-          return [...value].join(attribute.separator || " ");
+          return [...value].join(attribute.separator ?? " ");
         }
       }
       return value;
     }
+  },
+  "lowercase-string": {
+    name: "lowercase-string",
+    toInternal: (value, attribute) =>
+      stringToInternal(value?.toLowerCase(), attribute)
   },
   number: {
     name: "number",
@@ -204,9 +211,9 @@ export function resolveTypeLinks() {
 
 /**
  * Create object for a given type
- * @param {Type} type 
- * @param {Object} owner 
- * @param {any} data 
+ * @param {Type} type
+ * @param {Object} owner
+ * @param {any} data
  * @returns {Object} newly created object
  */
 export function create(type, owner, data) {
