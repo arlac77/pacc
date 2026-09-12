@@ -9,7 +9,7 @@ test("leafValues from string", t =>
 test("leafValues from array", t =>
   t.deepEqual(Array.from(leafValues([1])), [1]));
 test("leafValues from array nested", t =>
-  t.deepEqual(Array.from(leafValues([1,[2,[3]]])), [1,2,3]));
+  t.deepEqual(Array.from(leafValues([1, [2, [3]]])), [1, 2, 3]));
 test("leafValues from undefined", t =>
   t.deepEqual(Array.from(leafValues(undefined)), []));
 test("leafValues from Map", t =>
@@ -17,9 +17,7 @@ test("leafValues from Map", t =>
 test("leafValues from AggregatedMap", t =>
   t.deepEqual(
     Array.from(
-      leafValues(
-        new AggregatedMap([new Map([["a", 1]]), new Map([["b", 2]])])
-      )
+      leafValues(new AggregatedMap([new Map([["a", 1]]), new Map([["b", 2]])]))
     ),
     [1, 2]
   ));
@@ -28,8 +26,25 @@ test("leafValues from Set", t =>
 
 test("leafValues from Array of Maps", t =>
   t.deepEqual(
-    Array.from(
-      leafValues([new Map([["m1", "a"]]), new Map([["m2", "b"]])])
-    ),
+    Array.from(leafValues([new Map([["m1", "a"]]), new Map([["m2", "b"]])])),
     ["a", "b"]
   ));
+
+const iter = {
+  [Symbol.iterator]: () => {
+    let n = 0;
+    return {
+      next: () => {
+        console.log("next" + n);
+        n++;
+        return {
+          value: n,
+          last: n > 3
+        };
+      }
+    };
+  }
+};
+
+test.skip("leafValues from Iterable", t =>
+  t.deepEqual(Array.from(leafValues(iter)), [1, 2, 3]));
