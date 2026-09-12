@@ -32,10 +32,10 @@ const iter = {
   *[Symbol.iterator]() {
     let n = 0;
     while (n < 3) {
-      yield n++;
+      yield new Map([["a" + n, n++]]);
     }
   }
 };
 
-test("leafValues Iterable", t =>
+test("leafValues Iterable of Maps", t =>
   t.deepEqual(Array.from(leafValues(iter)), [0, 1, 2]));

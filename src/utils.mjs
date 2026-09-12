@@ -93,7 +93,9 @@ export function* leafValues(value) {
         return;
       }
       if (value[Symbol.iterator]) {
-        yield *value[Symbol.iterator]();
+        for (const v of value[Symbol.iterator]()) {
+          yield* leafValues(v);
+        }
         return;
       }
   }
