@@ -30,24 +30,27 @@ function stringToInternal(value, attribute) {
   return value;
 }
 
+function stringToExternal(value, attribute) {
+  if (value !== undefined) {
+    if (attribute.collection && typeof value !== "string") {
+      return [...value].join(attribute.separator ?? " ");
+    }
+  }
+  return value;
+}
+
 export const types = {
   string: {
     name: "string",
     primitive: true,
     toInternal: stringToInternal,
-    toExternal: (value, attribute) => {
-      if (value !== undefined) {
-        if (attribute.collection && typeof value !== "string") {
-          return [...value].join(attribute.separator ?? " ");
-        }
-      }
-      return value;
-    }
+    toExternal: stringToExternal
   },
   "lowercase-string": {
     name: "lowercase-string",
     toInternal: (value, attribute) =>
-      stringToInternal(value?.toLowerCase(), attribute)
+      stringToInternal(value?.toLowerCase(), attribute),
+    toExternal: stringToExternal
   },
   number: {
     name: "number",
