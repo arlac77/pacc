@@ -92,6 +92,10 @@ export function* leafValues(value) {
         }
         return;
       }
+      if (value[Symbol.iterator]) {
+        yield *value[Symbol.iterator]();
+        return;
+      }
   }
 
   yield value;

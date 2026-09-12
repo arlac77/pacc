@@ -2,12 +2,10 @@ import test from "ava";
 import { AggregatedMap } from "aggregated-map";
 import { leafValues } from "pacc";
 
-test("leafValues scalar", t =>
-  t.deepEqual(Array.from(leafValues(1)), [1]));
+test("leafValues scalar", t => t.deepEqual(Array.from(leafValues(1)), [1]));
 test("leafValues string", t =>
   t.deepEqual(Array.from(leafValues("abc")), ["abc"]));
-test("leafValues array", t =>
-  t.deepEqual(Array.from(leafValues([1])), [1]));
+test("leafValues array", t => t.deepEqual(Array.from(leafValues([1])), [1]));
 test("leafValues array nested", t =>
   t.deepEqual(Array.from(leafValues([1, [2, [3]]])), [1, 2, 3]));
 test("leafValues undefined", t =>
@@ -31,20 +29,13 @@ test("leafValues Array of Maps", t =>
   ));
 
 const iter = {
-  [Symbol.iterator]: () => {
+  *[Symbol.iterator]() {
     let n = 0;
-    return {
-      next: () => {
-        console.log("next" + n);
-        n++;
-        return {
-          value: n,
-          last: n > 3
-        };
-      }
-    };
+    while (n < 3) {
+      yield n++;
+    }
   }
 };
 
-test.skip("leafValues Iterable", t =>
-  t.deepEqual(Array.from(leafValues(iter)), [1, 2, 3]));
+test("leafValues Iterable", t =>
+  t.deepEqual(Array.from(leafValues(iter)), [0, 1, 2]));
