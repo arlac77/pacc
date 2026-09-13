@@ -94,7 +94,6 @@ export function keyedAccessEval(node, current, context) {
 
 export function filterEval(node, current, context) {
   return Array.from(leafValues(current))
-    .flat()
     .filter(item => node.filter.eval(node.filter, item, context));
 }
 
@@ -105,7 +104,7 @@ export function sequenceEval(node, current, context) {
 }
 
 export const ASTNullFilter = {
-  eval: (node, current, context) => Array.from(leafValues(current)).flat(),
+  eval: (node, current, context) => Array.from(leafValues(current)),
   preducate: true
 };
 
