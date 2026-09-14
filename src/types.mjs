@@ -17,40 +17,59 @@ const emptyStringIsUndefined = value =>
   typeof value === "string" && value.length === 0 ? undefined : value;
 
 function stringToInternal(value, attribute) {
-  if (typeof value === "string") {
-    if (attribute.collection) {
-      if (attribute.constructor && attribute.constructor !== Array) {
-        return new attribute.constructor(
-          value.split(attribute.separator ?? " ")
-        );
+  switch (typeof value) {
+    case "string": {
+      const toInternalScalar =
+        attribute.toInternalScalar ?? attribute.type.toInternalScalar;
+      if (attribute.collection) {
+        let values = value.split(attribute.separator ?? " ");
+        if (toInternalScalar) {
+          values = values.map(value => toInternalScalar(value));
+        }
+        if (attribute.constructor && attribute.constructor !== Array) {
+          return new attribute.constructor(values);
+        }
+        return values;
       }
-      return value.split(attribute.separator ?? " ");
+
+      return toInternalScalar ? toInternalScalar(value) : value;
     }
   }
+
   return value;
 }
 
 function stringToExternal(value, attribute) {
   if (value !== undefined) {
+    const toExternalScalar =
+      attribute.toExternalScalar ?? attribute.type.toExternalScalar;
+
     if (attribute.collection && typeof value !== "string") {
+      if (toExternalScalar) {
+        return [...value]
+          .map(toExternalScalar)
+          .join(attribute.separator ?? " ");
+      }
       return [...value].join(attribute.separator ?? " ");
     }
+    return toExternalScalar ? toExternalScalar(value) : value;
   }
   return value;
 }
 
+const string_type = {
+  name: "string",
+  primitive: true,
+  toInternal: stringToInternal,
+  toExternal: stringToExternal
+};
+
 export const types = {
-  string: {
-    name: "string",
-    primitive: true,
-    toInternal: stringToInternal,
-    toExternal: stringToExternal
-  },
+  string: string_type,
   "lowercase-string": {
+    ...string_type,
     name: "lowercase-string",
-    toInternal: (value, attribute) =>
-      stringToInternal(value?.toLowerCase(), attribute),
-    toExternal: stringToExternal
+    toInternalScalar: value => value?.toLowerCase()
   },
   number: {
     name: "number",

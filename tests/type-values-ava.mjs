@@ -135,6 +135,30 @@ test("lowercase-string collection type", t => {
   );
 });
 
+function quote(v, attribute, qc = "'") {
+  if (v === undefined) return "";
+
+  if (Array.isArray(v)) {
+    return "(" + v.map(x => quote(x, qc)).join(" ") + ")";
+  }
+  if (typeof v === "number" || v instanceof Number) return v;
+  if (typeof v === "string" || v instanceof String)
+    return v.match(/^\w+$/) ? v : qc + v + qc;
+}
+
+test("string collection type quoted", t => {
+  t.deepEqual(
+    toExternal(["a 1", "b", "c 2"], {
+      collection: true,
+      type: {
+        ...types.string,
+        toExternal: quote
+      }
+    }),
+    "('a 1' b 'c 2')"
+  );
+});
+
 test("boolean type", t => {
   t.is(toInternal("no", { type: types.boolean }), false);
   t.is(toInternal("yes", { type: types.boolean }), true);
