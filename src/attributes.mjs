@@ -125,7 +125,7 @@ export function* iterateToExternal(object, attributes) {
     const name = path.join(".");
     const value = toExternal(object[name], attribute);
 
-    if (value !== undefined) {
+    if (value !== undefined || !attribute.skipEmpty) {
       yield [attribute.externalName ?? name, value];
     }
   }
