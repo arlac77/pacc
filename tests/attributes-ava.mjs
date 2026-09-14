@@ -6,7 +6,7 @@ import {
   extendingAttributeIterator,
   writableAttributeIterator
 } from "pacc";
-import { attributeDefinitions, aClass, bClass } from "./fixtures.mjs";
+import { attributeDefinitions, bClass } from "./fixtures.mjs";
 
 test("prepareAttributesDefinitions", t => {
   const p = prepareAttributesDefinitions({

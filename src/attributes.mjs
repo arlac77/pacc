@@ -119,3 +119,14 @@ export function mandatoryAttributesPresent(object, attributes) {
   }
   return true;
 }
+
+export function* iterateToExternal(object, attributes) {
+  for (const [path, attribute] of attributeIterator(attributes)) {
+    const name = path.join(".");
+    const value = toExternal(object[name], attribute);
+
+    if (value !== undefined) {
+      yield [attribute.externalName ?? name, value];
+    }
+  }
+}

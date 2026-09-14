@@ -1,7 +1,6 @@
 import test from "ava";
 import { eat } from "./util.mjs";
 
-
 test(eat, "()", undefined, []);
 test(eat, "(1)", undefined, [1]);
 test(eat, "(1,2)", undefined, [1, 2]);
