@@ -69,7 +69,8 @@ export const types = {
   "lowercase-string": {
     ...string_type,
     name: "lowercase-string",
-    toInternalScalar: value => value?.toLowerCase()
+    toInternalScalar: value => value?.toLowerCase(),
+    toExternalScalar: value => value?.toLowerCase()
   },
   number: {
     name: "number",

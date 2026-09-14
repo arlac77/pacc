@@ -7,7 +7,8 @@ import {
   hostname_attribute,
   string_attribute,
   object_attribute,
-  prepareAttributesDefinitions
+  prepareAttributesDefinitions,
+  types
 } from "pacc";
 
 export const attributeDefinitionsComplex = prepareAttributesDefinitions({
@@ -83,7 +84,7 @@ export const attributeDefinitionsComplex = prepareAttributesDefinitions({
 });
 
 export const attributeDefinitions = {
-  a: { ...default_attribute, name: "a", default: "ad", externalName: "ae" },
+  a: { ...default_attribute, type: types["lowercase-string"], name: "a", default: "ad", externalName: "ae" },
   b: { ...default_collection_attribute, name: "b", skipEmpty: true },
   c: { ...default_attribute, name: "c", writable: true },
   d: {
