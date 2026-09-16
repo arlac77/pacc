@@ -44,7 +44,11 @@ function stringToExternal(value, attribute) {
     const toExternalScalar =
       attribute.toExternalScalar ?? attribute.type.toExternalScalar;
 
-    if (attribute.collection && typeof value !== "string") {
+    if (attribute.collection) {
+      if (typeof value === "string") {
+        value = [value];
+      }
+
       if (toExternalScalar) {
         value = [...value].map(toExternalScalar);
       }
@@ -55,6 +59,7 @@ function stringToExternal(value, attribute) {
 
       return value;
     }
+
     return toExternalScalar ? toExternalScalar(value) : value;
   }
   return value;
