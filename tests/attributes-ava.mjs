@@ -30,7 +30,8 @@ test("attributeIterator", t => {
       [["b"], attributeDefinitions.b],
       [["c"], attributeDefinitions.c],
       [["d"], attributeDefinitions.d],
-      [["d", "d1"], attributeDefinitions.d.attributes.d1]
+      [["d", "d1"], attributeDefinitions.d.attributes.d1],
+      [["e"], attributeDefinitions.e]
     ]
   );
 });
@@ -43,7 +44,8 @@ test("extendingAttributeIterator", t => {
       [["b"], attributeDefinitions.b],
       [["c"], attributeDefinitions.c],
       [["d"], attributeDefinitions.d],
-      [["d", "d1"], attributeDefinitions.d.attributes.d1]
+      [["d", "d1"], attributeDefinitions.d.attributes.d1],
+      [["e"], attributeDefinitions.e]
     ]
   );
 });

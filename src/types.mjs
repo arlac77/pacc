@@ -46,11 +46,14 @@ function stringToExternal(value, attribute) {
 
     if (attribute.collection && typeof value !== "string") {
       if (toExternalScalar) {
-        return [...value]
-          .map(toExternalScalar)
-          .join(attribute.separator ?? " ");
+        value = [...value].map(toExternalScalar);
       }
-      return [...value].join(attribute.separator ?? " ");
+
+      if (attribute.separator !== undefined) {
+        return [...value].join(attribute.separator);
+      }
+
+      return value;
     }
     return toExternalScalar ? toExternalScalar(value) : value;
   }

@@ -1,6 +1,7 @@
 import {
   default_attribute,
   default_collection_attribute,
+  string_collection_attribute,
   private_key_attribute,
   url_attribute,
   certificate_attribute,
@@ -84,7 +85,13 @@ export const attributeDefinitionsComplex = prepareAttributesDefinitions({
 });
 
 export const attributeDefinitions = {
-  a: { ...default_attribute, type: types["lowercase-string"], name: "a", default: "ad", externalName: "ae" },
+  a: {
+    ...default_attribute,
+    type: types["lowercase-string"],
+    name: "a",
+    default: "ad",
+    externalName: "ae"
+  },
   b: { ...default_collection_attribute, name: "b", skipEmpty: true },
   c: { ...default_attribute, name: "c", writable: true },
   d: {
@@ -93,6 +100,12 @@ export const attributeDefinitions = {
     attributes: {
       d1: { ...default_attribute, name: "d1", default: "dd1", skipEmpty: true }
     }
+  },
+  e: {
+    ...string_collection_attribute,
+    separator: undefined,
+    name: "e",
+    skipEmpty: true
   }
 };
 
