@@ -65,11 +65,22 @@ function stringToExternal(value, attribute) {
   return value;
 }
 
-const string_type = {
+export const primitive_type = {
+  name: "base",
+  primitive: true
+};
+
+export const string_type = {
+  ...primitive_type,
   name: "string",
-  primitive: true,
   toInternal: stringToInternal,
   toExternal: stringToExternal
+};
+
+export const integer_type = {
+  ...primitive_type,
+  name: "integer",
+  toInternal: value => (typeof value === "string" ? parseInt(value) : value)
 };
 
 export const types = {
@@ -81,13 +92,13 @@ export const types = {
     toExternalScalar: value => value?.toLowerCase()
   },
   number: {
+    ...primitive_type,
     name: "number",
-    primitive: true,
     toInternal: value => (typeof value === "string" ? parseFloat(value) : value)
   },
   boolean: {
+    ...primitive_type,
     name: "boolean",
-    primitive: true,
     toInternal: (value, attribute) =>
       value === undefined
         ? attribute.default
@@ -96,8 +107,8 @@ export const types = {
           : true
   },
   yesno: {
+    ...primitive_type,
     name: "yesno",
-    primitive: true,
     toInternal: (value, attribute) =>
       value === undefined
         ? attribute.default
@@ -107,36 +118,31 @@ export const types = {
     toExternal: value =>
       value === undefined ? undefined : value ? "yes" : "no"
   },
-  integer: {
-    name: "integer",
-    primitive: true,
-    toInternal: value => (typeof value === "string" ? parseInt(value) : value)
-  },
+  integer: integer_type,
   "unsigned-integer": {
-    name: "unsigned-integer",
-    primitive: true,
-    toInternal: value => (typeof value === "string" ? parseInt(value) : value)
+    ...integer_type,
+    name: "unsigned-integer"
   },
   duration: {
+    ...primitive_type,
     name: "duration",
-    primitive: true,
     toInternal: value => parseDuration(value),
     toExternal: value =>
       value === undefined ? undefined : formatDuration(value)
   },
   duration_ms: {
+    ...primitive_type,
     name: "duration_ms",
-    primitive: true,
     toInternal: value => parseDuration(value) * 1000
   },
   byte_size: {
+    ...primitive_type,
     name: "byte_size",
-    primitive: true,
     toInternal: parseBytes
   },
   url: {
+    ...primitive_type,
     name: "url",
-    primitive: true,
     toInternal: emptyStringIsUndefined
   },
   object: { name: "object", primitive: false }
