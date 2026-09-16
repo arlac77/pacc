@@ -14,4 +14,17 @@ test("iterateToExternal", t => {
   });
 });
 
+test("iterateToExternal filtered", t => {
+  const result = Object.fromEntries([
+    ...iterateToExternal(
+      { a: "ABC", e: ["a", "b"] },
+      attributeDefinitions,
+      attribute => attribute.name === "a"
+    )
+  ]);
+  t.deepEqual(result, {
+    ae: "abc"
+  });
+});
+
 import { expand, expandContextDoubbleCurly } from "pacc";
