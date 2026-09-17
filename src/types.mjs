@@ -66,7 +66,7 @@ function stringToExternal(value, attribute) {
 }
 
 export const primitive_type = {
-  name: "base",
+  name: "primitive",
   primitive: true
 };
 
