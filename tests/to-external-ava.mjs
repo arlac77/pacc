@@ -4,7 +4,7 @@ import { attributeDefinitions } from "./fixtures.mjs";
 
 test("iterateToExternal", t => {
   const result = Object.fromEntries([
-    ...iterateToExternal({ a: "ABC", e: ["a", "b"] }, attributeDefinitions)
+    ...iterateToExternal({ a: "ABC", e: new Set(["a", "b"]) }, attributeDefinitions)
   ]);
   t.deepEqual(result, {
     ae: "abc",

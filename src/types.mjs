@@ -1,6 +1,7 @@
 import { attributeIterator } from "./attributes.mjs";
 import { parseDuration, formatDuration } from "./time.mjs";
 import { parseBytes } from "./bytes.mjs";
+import { asArray } from "./utils.mjs";
 
 /**
  * @typedef {Object} Type
@@ -45,16 +46,14 @@ function stringToExternal(value, attribute) {
       attribute.toExternalScalar ?? attribute.type.toExternalScalar;
 
     if (attribute.collection) {
-      if (typeof value === "string") {
-        value = [value];
-      }
+      value = asArray(value);
 
       if (toExternalScalar) {
-        value = [...value].map(toExternalScalar);
+        value = value.map(toExternalScalar);
       }
 
       if (attribute.separator !== undefined) {
-        return [...value].join(attribute.separator);
+        return value.join(attribute.separator);
       }
 
       return value;
@@ -83,6 +82,17 @@ export const integer_type = {
   toInternal: value => (typeof value === "string" ? parseInt(value) : value)
 };
 
+export const boolean_type = {
+  ...primitive_type,
+  name: "boolean",
+  toInternal: (value, attribute) =>
+    value === undefined
+      ? attribute.default
+      : !value || value === "0" || value === "false" || value === "no"
+        ? false
+        : true
+};
+
 export const types = {
   string: string_type,
   "lowercase-string": {
@@ -96,18 +106,9 @@ export const types = {
     name: "number",
     toInternal: value => (typeof value === "string" ? parseFloat(value) : value)
   },
-  boolean: {
-    ...primitive_type,
-    name: "boolean",
-    toInternal: (value, attribute) =>
-      value === undefined
-        ? attribute.default
-        : !value || value === "0" || value === "false" || value === "no"
-          ? false
-          : true
-  },
+  boolean: boolean_type,
   yesno: {
-    ...primitive_type,
+    ...boolean_type,
     name: "yesno",
     toInternal: (value, attribute) =>
       value === undefined
@@ -136,7 +137,7 @@ export const types = {
     toInternal: value => parseDuration(value) * 1000
   },
   byte_size: {
-    ...primitive_type,
+    ...integer_type,
     name: "byte_size",
     toInternal: parseBytes
   },
