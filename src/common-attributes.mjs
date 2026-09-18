@@ -8,7 +8,7 @@ import { types } from "./types.mjs";
  * @property {boolean} key are we an identifying attribute
  * @property {boolean} writable can this attribute be modified
  * @property {boolean} mandatory
- * @property {boolean} collection are we a collection (set, map, array, object)
+ * @property {boolean} collection are we a collection (set, map, array, iterator, object)
  * @property {boolean} [deferredExpression] are we a pacc expression to be evaluated
  * @property {boolean} [private] should the value be shown
  * @property {boolean} [credential] are we any type of credential
@@ -19,8 +19,6 @@ import { types } from "./types.mjs";
  * @property {string} [depends] name of an attribute we depend on
  * @property {string} [description] human readable
  * @property {any} [default] the default value
- * @property {Function} [set] set the value
- * @property {Function} [get] get the value can be used to calculate default values
  * @property {Function} [toInternal]
  * @property {Function} [toExternal]
  * @property {Function} [asMapEntry] deliver key and value for Map insertion
@@ -28,7 +26,10 @@ import { types } from "./types.mjs";
  * @property {Set<any>} [values] allowed values
  * @property {string[]|string} [env] environment variable(s) used to provide the value
  * @property {object} [additionalValues] other values to be set in case our attribute is set
- * @property {string} [separator] separator for collections
+ * @property {string} [separator] separator for string collections
+ * 
+ * @property {Function} [set] deprecated set the value 
+ * @property {Function} [get] deprecated get the value can be used to calculate default values
  */
 
 /**
