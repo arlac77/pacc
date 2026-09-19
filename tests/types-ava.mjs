@@ -1,6 +1,21 @@
 import test from "ava";
-import { oneOfType, types, addType } from "pacc";
+import {
+  oneOfType,
+  types,
+  string_type,
+  boolean_type,
+  integer_type,
+  enum_string_type,
+  addType
+} from "pacc";
 import { aClass, bClass, cClass, cClassTypeDefinition } from "./fixtures.mjs";
+
+test("type basics", t => {
+  t.is(types.string, string_type);
+  t.is(types.boolean, boolean_type);
+  t.is(types.integer, integer_type);
+  t.is(types["enum-string"], enum_string_type);
+});
 
 test("oneOfType basics", t => {
   const type = oneOfType("boolean|string");
