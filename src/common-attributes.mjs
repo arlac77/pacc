@@ -1,4 +1,10 @@
-import { types } from "./types.mjs";
+import {
+  types,
+  string_type,
+  integer_type,
+  boolean_type,
+  enum_string_type
+} from "./types.mjs";
 
 /**
  * @typedef {Object} AttributeDefinition
@@ -28,8 +34,8 @@ import { types } from "./types.mjs";
  * @property {string[]|string} [env] environment variable(s) used to provide the value
  * @property {object} [additionalValues] other values to be set in case our attribute is set
  * @property {string} [separator] separator for string collections
- * 
- * @property {Function} [set] deprecated set the value 
+ *
+ * @property {Function} [set] deprecated set the value
  * @property {Function} [get] deprecated get the value can be used to calculate default values
  */
 
@@ -39,7 +45,7 @@ import { types } from "./types.mjs";
  */
 export const default_attribute = {
   name: "default",
-  type: types.string,
+  type: string_type,
   writable: false,
   mandatory: false,
   collection: false,
@@ -83,6 +89,23 @@ export const string_attribute = { ...default_attribute, name: "string" };
  */
 export const string_attribute_writable = {
   ...string_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const enum_string_attribute = {
+  ...default_attribute,
+  type: enum_string_type,
+  name: "string"
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
+export const enum_string_attribute_writable = {
+  ...enum_string_attribute,
   writable: true
 };
 
@@ -199,7 +222,7 @@ export const state_attribute_writable = {
  */
 export const boolean_attribute = {
   ...default_attribute,
-  type: types.boolean
+  type: boolean_type
 };
 
 /**
@@ -207,7 +230,7 @@ export const boolean_attribute = {
  */
 export const boolean_attribute_writable = {
   ...default_attribute_writable,
-  type: types.boolean
+  type: boolean_type
 };
 
 /**
@@ -342,7 +365,7 @@ export const number_attribute_writable = {
 /**
  * @type {AttributeDefinition}
  */
-export const integer_attribute = { ...default_attribute, type: types.integer };
+export const integer_attribute = { ...default_attribute, type: integer_type };
 
 /**
  * @type {AttributeDefinition}
