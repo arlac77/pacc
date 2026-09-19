@@ -87,6 +87,8 @@ tokens "abc" "
 *   [default\_collection\_attribute\_writable](#default_collection_attribute_writable)
 *   [string\_attribute](#string_attribute)
 *   [string\_attribute\_writable](#string_attribute_writable)
+*   [enum\_string\_attribute](#enum_string_attribute)
+*   [enum\_string\_attribute\_writable](#enum_string_attribute_writable)
 *   [string\_collection\_attribute](#string_collection_attribute)
 *   [string\_collection\_attribute\_writable](#string_collection_attribute_writable)
 *   [string\_set\_attribute](#string_set_attribute)
@@ -346,6 +348,14 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## string\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## enum\_string\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## enum\_string\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
