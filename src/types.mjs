@@ -76,6 +76,11 @@ export const string_type = {
   toExternal: stringToExternal
 };
 
+export const enum_string_type = {
+  ...string_type,
+  name: "enum-string"
+};
+
 export const integer_type = {
   ...primitive_type,
   name: "integer",
@@ -101,6 +106,7 @@ export const types = {
     toInternalScalar: value => value?.toLowerCase(),
     toExternalScalar: value => value?.toLowerCase()
   },
+  "enum-string": enum_string_type,
   number: {
     ...primitive_type,
     name: "number",

@@ -23,6 +23,7 @@ import { types } from "./types.mjs";
  * @property {Function} [toExternal]
  * @property {Function} [asMapEntry] deliver key and value for Map insertion
  * @property {string} [externalName] attribute name used by external system
+ * @property {string} [scope] where to apply value
  * @property {Set<any>} [values] allowed values
  * @property {string[]|string} [env] environment variable(s) used to provide the value
  * @property {object} [additionalValues] other values to be set in case our attribute is set
