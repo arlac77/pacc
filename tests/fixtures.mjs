@@ -113,15 +113,20 @@ export const attributeDefinitions = {
 export class aClass {
   static name = "a";
   static attributes = attributeDefinitions;
-}
 
-addType(aClass);
+  static {
+    addType(aClass);
+  }
+}
 
 export class bClass extends aClass {
   static name = "b";
   static extends = aClass;
+
+  static {
+    addType(bClass);
+  }
 }
-addType(bClass);
 
 export class cClass extends aClass {}
 
@@ -135,4 +140,3 @@ export const cClassTypeDefinition = {
 };
 
 addType(cClassTypeDefinition);
-
