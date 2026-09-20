@@ -9,7 +9,8 @@ import {
   string_attribute,
   object_attribute,
   prepareAttributesDefinitions,
-  types
+  types,
+  addType
 } from "pacc";
 
 export const attributeDefinitionsComplex = prepareAttributesDefinitions({
@@ -114,10 +115,13 @@ export class aClass {
   static attributes = attributeDefinitions;
 }
 
+addType(aClass);
+
 export class bClass extends aClass {
   static name = "b";
   static extends = aClass;
 }
+addType(bClass);
 
 export class cClass extends aClass {}
 
@@ -129,3 +133,6 @@ export const cClassTypeDefinition = {
     c1: default_attribute
   }
 };
+
+addType(cClassTypeDefinition);
+

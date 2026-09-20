@@ -264,3 +264,19 @@ export function create(type, owner, data) {
   const factory = type.factoryFor?.(owner, data) || type;
   return new factory(owner, data);
 }
+
+/**
+ * Is a type extending another one
+ * @param {Type} a
+ * @param {Type} b
+ * @returns {boolean} true if a is extending b (or a is b)
+ */
+export function isExtendingType(a, b) {
+  if (a === undefined) {
+    return false;
+  }
+  if (a === b) {
+    return true;
+  }
+  return isExtendingType(a.extends, b);
+}

@@ -6,7 +6,8 @@ import {
   boolean_type,
   integer_type,
   enum_string_type,
-  addType
+  addType,
+  isExtendingType
 } from "pacc";
 import { aClass, bClass, cClass, cClassTypeDefinition } from "./fixtures.mjs";
 
@@ -84,4 +85,12 @@ test("addType class with typeDefinition", t => {
   t.is(cType, types.c);
   t.is(cType.clazz, cClass);
   t.is(cType.extends, types.a);
+});
+
+test("isExtendingType", t => {
+  t.is(isExtendingType(cClassTypeDefinition, aClass), true);
+  t.is(isExtendingType(string_type, boolean_type), false);
+  t.is(isExtendingType(bClass, aClass), true);
+  t.is(isExtendingType(undefined, boolean_type), false);
+  t.is(isExtendingType(cClass, cClass), true);
 });
