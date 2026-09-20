@@ -217,14 +217,16 @@ tokens "abc" "
     *   [Parameters](#parameters-20)
 *   [create](#create)
     *   [Parameters](#parameters-21)
-*   [asArray](#asarray)
+*   [isExtendingType](#isextendingtype)
     *   [Parameters](#parameters-22)
-*   [asIterator](#asiterator)
+*   [asArray](#asarray)
     *   [Parameters](#parameters-23)
-*   [asValueIterator](#asvalueiterator)
+*   [asIterator](#asiterator)
     *   [Parameters](#parameters-24)
-*   [leafValues](#leafvalues)
+*   [asValueIterator](#asvalueiterator)
     *   [Parameters](#parameters-25)
+*   [leafValues](#leafvalues)
+    *   [Parameters](#parameters-26)
 
 ## AST
 
@@ -942,6 +944,17 @@ Create object for a given type
 *   `data` **any**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** newly created object
+
+## isExtendingType
+
+Is a type extending another one
+
+### Parameters
+
+*   `a` **[Type](#type)**&#x20;
+*   `b` **[Type](#type)**&#x20;
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if a is extending b (or a is b)
 
 ## asArray
 
