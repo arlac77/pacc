@@ -419,9 +419,8 @@ function evalOne(arg, current, context) {
 }
 
 export const globals = {
-  unique: (args, current, context) => {
-    return new Set([...leafValues(evalAll(args, current, context))]);
-  },
+  unique: (args, current, context) =>
+    new Set(leafValues(evalAll(args, current, context))),
   in: (args, current, context) => {
     const a = evalOne(args[0], current, context);
     const b = evalOne(args[1], current, context);

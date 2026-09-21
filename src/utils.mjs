@@ -80,18 +80,20 @@ export function* leafValues(value) {
       return;
 
     case "object":
-      if (Array.isArray(value)) {
+      if (value instanceof Iterator) {
         for (const v of value) {
           yield* leafValues(v);
         }
         return;
       }
+
       if (typeof value.values === "function") {
         for (const v of value.values()) {
           yield* leafValues(v);
         }
         return;
       }
+
       if (value[Symbol.iterator]) {
         for (const v of value[Symbol.iterator]()) {
           yield* leafValues(v);
