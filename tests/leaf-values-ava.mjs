@@ -21,6 +21,8 @@ test("leafValues AggregatedMap", t =>
   ));
 test("leafValues Set", t =>
   t.deepEqual(Array.from(leafValues(new Set(["a", "b"]))), ["a", "b"]));
+test("leafValues Set[iterator]", t =>
+  t.deepEqual(Array.from(leafValues( new Set([["a1","a2"], "b"])[Symbol.iterator]())), ["a1", "a2", "b"]));
 
 test("leafValues Array of Maps", t =>
   t.deepEqual(
