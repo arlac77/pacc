@@ -99,6 +99,7 @@ test(
   false
 );
 
+test(eat, "unique(1,2,1)", undefined, new Set([1,2]));
 test(eat, "ceil(0.7)", undefined, 1);
 test(eat, "floor(2.9)", undefined, 2);
 test(eat, "abs(-7)", undefined, 7);
@@ -116,14 +117,6 @@ test(eat, "length('a' + 'b')", undefined, 2);
 test(eat, "lowercase('aA')", undefined, "aa");
 test(eat, "uppercase('aA')", undefined, "AA");
 test(eat, "trim(' aA X')", undefined, "aA X");
-test(eat, "join(',','A','B','C')", undefined, "A,B,C");
-test(
-  eat,
-  "join(',',a[n=2].b,'B')",
-  { current: { a: [{ n: 2, b: "A" }] } },
-  "A,B"
-);
-test(eat, "join(',','ABC')", undefined, "ABC");
 test(eat, "sort(a)", { current: { a: [2, 1, 3] } }, [1, 2, 3]);
 test(eat, "sort(b)", { current: { b: new Set([2, 1, 3]) } }, [1, 2, 3]);
 test(
@@ -143,6 +136,15 @@ test(
 
 test(eat, "truncate(a,2)", { current: { a: [2, 1, 3] } }, [2, 1]);
 test(eat, "truncate(a,1)", { current: { a: [2, 1, 3].values() } }, [2]);
+
+test(eat, "join(',','A','B','C')", undefined, "A,B,C");
+test(
+  eat,
+  "join(',',a[n=2].b,'B')",
+  { current: { a: [{ n: 2, b: "A" }] } },
+  "A,B"
+);
+test(eat, "join(',','ABC')", undefined, "ABC");
 test(
   eat,
   "join(',',array)",
