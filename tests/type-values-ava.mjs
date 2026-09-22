@@ -168,6 +168,16 @@ test("string collection type quoted", t => {
   );
 });
 
+test("integer type", t => {
+  t.is(toInternal("1", { type: types.integer }), 1);
+  t.is(toInternal(2, { type: types.integer }), 2);
+});
+
+test("number type", t => {
+  t.is(toInternal("1.2", { type: types.number }), 1.2);
+  t.is(toInternal(2.3, { type: types.number }), 2.3);
+});
+
 test("boolean type", t => {
   t.is(toInternal("no", { type: types.boolean }), false);
   t.is(toInternal("yes", { type: types.boolean }), true);
