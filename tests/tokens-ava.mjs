@@ -190,7 +190,7 @@ test(tt, "!(in(type,('ll','lb')))", [
 
 test(
   tt,
-  `4711 0.23 12345.0
+  `4711,0.23 12345.0
 "str2""str3" "\\\"\'\u0041" 'str4''str5'
 name1 name_2 _name3
 n
@@ -209,6 +209,7 @@ n
 2 + (3 * 17)`,
   [
     [NUMBER, 4711],
+    COMMA,
     [NUMBER, 0.23],
     [NUMBER, 12345.0],
     [STRING, "str2"],
