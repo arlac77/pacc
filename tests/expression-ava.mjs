@@ -52,6 +52,7 @@ test(eat, "true && false", undefined, false);
 test(eat, "1 + a", { current: { a: 5 } }, 6);
 test(eat, "x > 2", { current: { x: 3 } }, true);
 test(eat, "d", { current: new Set(["d"]) }, "d");
+test(eat, "e", { current: new Set(["d"]) }, undefined);
 test(eat, "a", { current: { a: 12 } }, 12);
 test(eat, "b", { current: { b: () => 7 } }, 7);
 test(eat, ".a.b.c", { root: { a: { b: { c: 77 } } } }, 77);
