@@ -33,17 +33,13 @@ function scalarAccessEval(node, current, context) {
     case "function": {
       value = current[node.key]();
 
-      switch (typeof value) {
-        case "string":
-        case "number":
-        case "boolean":
-        case "undefined":
-          return value;
+      if (typeof value === "object") {
+        if (typeof value[Symbol.iterator] === "function") {
+          return [...value];
+          //return value[Symbol.iterator]();
+        }
       }
-      if (typeof value[Symbol.iterator] === "function") {
-        return [...value];
-        //return value[Symbol.iterator]();
-      }
+
       return value;
     }
     case "undefined":
@@ -93,8 +89,9 @@ export function keyedAccessEval(node, current, context) {
 }
 
 export function filterEval(node, current, context) {
-  return leafValues(current)
-    .filter(item => node.filter.eval(node.filter, item, context));
+  return leafValues(current).filter(item =>
+    node.filter.eval(node.filter, item, context)
+  );
 }
 
 export function sequenceEval(node, current, context) {
