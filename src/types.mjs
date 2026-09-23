@@ -79,6 +79,12 @@ export const string_type = {
 export const enum_string_type = {
   ...string_type,
   name: "enum-string"
+  toInternal(value,attribute) {
+    if(attribute.values.has(value)) {
+      return value;
+    }
+    // TODO error
+  } 
 };
 
 export const integer_type = {

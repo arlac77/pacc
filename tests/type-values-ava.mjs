@@ -117,6 +117,10 @@ test("string collection type", t => {
   );
 });
 
+test("enum-string type", t => {
+  t.is(toInternal("a", { type: types["enum-string"], values: new Set(["a"]) }), "a");
+});
+
 test("lowercase-string type", t => {
   t.is(toInternal("ABC", { type: types["lowercase-string"] }), "abc");
   t.is(toInternal(undefined, { type: types["lowercase-string"] }), undefined);
