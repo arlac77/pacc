@@ -514,6 +514,7 @@ const STATE_STRING_ESCAPING = "string-escaping";
 const STATE_STRING_ESCAPING_HEX = "string-escaping-hex";
 const STATE_NUMBER = "number";
 const STATE_IDENTIFIER = "identifier";
+const STATE_UNDEFINED = undefined;
 
 /**
  * Split expression path into tokens.
@@ -568,8 +569,8 @@ export function* tokens(string, context) {
         switch (state) {
           case STATE_NUMBER:
             yield [NUMBER, context.parseFloat(value)];
-            state = undefined;
-          case undefined:
+            state = STATE_UNDEFINED;
+          case STATE_UNDEFINED:
             break;
           case STATE_STRING:
             value += c;
@@ -577,11 +578,11 @@ export function* tokens(string, context) {
           case STATE_IDENTIFIER:
             yield keywordOrIdentifier();
             value = undefined;
-            state = undefined;
+            state = STATE_UNDEFINED;
             break;
           default:
             yield lookup[state];
-            state = undefined;
+            state = STATE_UNDEFINED;
         }
         break;
 
@@ -597,13 +598,13 @@ export function* tokens(string, context) {
         switch (state) {
           case STATE_NUMBER:
             yield [NUMBER, context.parseFloat(value)];
-          case undefined:
+          case STATE_UNDEFINED:
             startString(c);
             break;
           case STATE_STRING:
             if (c === quote) {
               yield [STRING, value];
-              state = undefined;
+              state = STATE_UNDEFINED;
             } else {
               value += c;
             }
@@ -625,7 +626,7 @@ export function* tokens(string, context) {
         switch (state) {
           case STATE_NUMBER:
             yield [NUMBER, context.parseFloat(value)];
-          case undefined:
+          case STATE_UNDEFINED:
             state = c;
             break;
           case "&":
@@ -633,7 +634,7 @@ export function* tokens(string, context) {
             if (state === c) {
               state += c;
               yield lookup[state];
-              state = undefined;
+              state = STATE_UNDEFINED;
             } else {
               yield lookup[state];
               state = c;
@@ -656,7 +657,7 @@ export function* tokens(string, context) {
         switch (state) {
           case STATE_NUMBER:
             yield [NUMBER, context.parseFloat(value)];
-          case undefined:
+          case STATE_UNDEFINED:
             state = c;
             break;
           case STATE_IDENTIFIER:
@@ -697,7 +698,7 @@ export function* tokens(string, context) {
         switch (state) {
           case STATE_NUMBER:
             yield [NUMBER, context.parseFloat(value)];
-          case undefined:
+          case STATE_UNDEFINED:
             state = c;
             break;
           case STATE_IDENTIFIER:
@@ -725,7 +726,7 @@ export function* tokens(string, context) {
         switch (state) {
           default:
             yield lookup[state];
-          case undefined:
+          case STATE_UNDEFINED:
             value = c;
             state = STATE_NUMBER;
             break;
@@ -748,7 +749,7 @@ export function* tokens(string, context) {
         switch (state) {
           case STATE_NUMBER:
             yield [NUMBER, context.parseFloat(value)];
-          case undefined:
+          case STATE_UNDEFINED:
             state = STATE_IDENTIFIER;
             value = c;
             break;
@@ -765,7 +766,7 @@ export function* tokens(string, context) {
   }
 
   switch (state) {
-    case undefined:
+    case STATE_UNDEFINED:
       break;
     case STATE_STRING:
       throw new Error("unterminated string", { cause: string });
