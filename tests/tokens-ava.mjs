@@ -54,6 +54,7 @@ tt.title = (providedTitle = "token", input, expected) =>
 test(tt, '"a', (() => new Error("unterminated string", { cause: '"a' }))());
 test(tt, "", []);
 test(tt, "3", [[NUMBER, 3]]);
+test(tt, "4d", [[NUMBER, 4],[IDENTIFIER, "d"]]);
 test(tt, "12345.0", [[NUMBER, 12345.0]]);
 test(tt, "true", [[BOOLEAN, true]]);
 test(tt, "true false", [
