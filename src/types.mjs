@@ -25,7 +25,7 @@ function stringToInternal(value, attribute) {
       if (attribute.collection) {
         let values = value.split(attribute.separator ?? " ");
         if (toInternalScalar) {
-          values = values.map(value => toInternalScalar(value));
+          values = values.map(value => toInternalScalar(value, attribute));
         }
         if (attribute.constructor && attribute.constructor !== Array) {
           return new attribute.constructor(values);
@@ -33,7 +33,7 @@ function stringToInternal(value, attribute) {
         return values;
       }
 
-      return toInternalScalar ? toInternalScalar(value) : value;
+      return toInternalScalar ? toInternalScalar(value, attribute) : value;
     }
   }
 
@@ -78,13 +78,14 @@ export const string_type = {
 
 export const enum_string_type = {
   ...string_type,
-  name: "enum-string"
-  toInternal(value,attribute) {
-    if(attribute.values.has(value)) {
+  name: "enum-string",
+
+  toInternalScalar(value, attribute) {
+    if (attribute.values.has(value)) {
       return value;
     }
     // TODO error
-  } 
+  }
 };
 
 export const integer_type = {

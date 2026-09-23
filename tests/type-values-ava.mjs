@@ -120,6 +120,17 @@ test("string collection type", t => {
 test("enum-string type", t => {
   t.is(toInternal("a", { type: types["enum-string"], values: new Set(["a"]) }), "a");
 });
+test("enum-string collection type", t => {
+  t.deepEqual(
+    toInternal("a b c", {
+      collection: true,
+      separator: " ",
+      values: new Set(["a", "b", "c"]),
+      type: types["enum-string"]
+    }),
+    ["a", "b", "c"]
+  );
+});
 
 test("lowercase-string type", t => {
   t.is(toInternal("ABC", { type: types["lowercase-string"] }), "abc");
