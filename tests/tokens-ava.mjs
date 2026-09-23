@@ -64,7 +64,8 @@ test(tt, "true false", [
 test(tt, '"A"', [[STRING, "A"]]);
 test(tt, '"\'B"', [[STRING, "'B"]]);
 test(tt, "'\"C'", [[STRING, '"C']]);
-test(tt, '"\'\u0041"', [[STRING, "'\u0041"]]);
+test(tt, '"\u0043"', [[STRING, "C"]]);
+test(tt, '"\'\u0044"', [[STRING, "'D"]]);
 test(tt, ` \t'a'b"c"d `, [
   [STRING, "a"],
   [IDENTIFIER, "b"],

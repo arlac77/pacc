@@ -542,9 +542,7 @@ export function* tokens(string, context) {
     switch (state) {
       case STATE_STRING_ESCAPING_HEX:
         hex += c;
-        // @ts-ignore
         if (hex.length === 4) {
-          // @ts-ignore
           value += String.fromCharCode(parseInt(hex, 16));
           state = STATE_STRING;
         }
