@@ -110,6 +110,7 @@ test(eat, "min(1,2)+3", undefined, 4);
 test(eat, "3+(min(1,2))", undefined, 4);
 test(eat, "3+min(1,2)", undefined, 4);
 test(eat, "max(1,2,3)", undefined, 3);
+test(eat, "substring('abcd',1)", undefined, "bcd");
 test(eat, "substring('abcd',1,3)", undefined, "bc");
 test(eat, "substring('abcd',1,1+2)", undefined, "bc");
 test(eat, "substring('abcd',1,min(3,4))", undefined, "bc");
