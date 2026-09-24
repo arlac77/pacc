@@ -24,7 +24,7 @@ import {
  * @property {Function} [constructor] (collection) constructor
  * @property {string} [depends] name of an attribute we depend on
  * @property {string} [description] human readable
- * @property {any} [default] the default value
+ * @property {any} [default] the (internal) default value
  * @property {Function} [toInternal]
  * @property {Function} [toExternal]
  * @property {Function} [asMapEntry] deliver key and value for Map insertion

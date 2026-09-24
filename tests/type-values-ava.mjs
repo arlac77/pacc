@@ -12,6 +12,7 @@ test("empty url type", t => {
 test("string type", t => {
   t.is(toInternal("abc", { type: types.string }), "abc");
   t.is(toInternal(undefined, { type: types.string }), undefined);
+  t.is(toInternal(undefined, { type: types.string, default: "abcd" }), "abcd");
 
   t.is(toExternal("abc", { type: types.string }), "abc");
   t.is(toExternal(undefined, { type: types.string }), undefined);
@@ -118,7 +119,18 @@ test("string collection type", t => {
 });
 
 test("enum-string type", t => {
-  t.is(toInternal("a", { type: types["enum-string"], values: new Set(["a"]) }), "a");
+  t.is(
+    toInternal("a", { type: types["enum-string"], values: new Set(["a"]) }),
+    "a"
+  );
+  t.is(
+    toInternal(undefined, {
+      type: types["enum-string"],
+      values: new Set(["a", "b"]),
+      default: "a"
+    }),
+    "a"
+  );
 });
 test("enum-string collection type", t => {
   t.deepEqual(
@@ -135,6 +147,10 @@ test("enum-string collection type", t => {
 test("lowercase-string type", t => {
   t.is(toInternal("ABC", { type: types["lowercase-string"] }), "abc");
   t.is(toInternal(undefined, { type: types["lowercase-string"] }), undefined);
+  t.is(
+    toInternal(undefined, { type: types["lowercase-string"], default: "abc" }),
+    "abc"
+  );
 
   t.is(toExternal("abc", { type: types["lowercase-string"] }), "abc");
   t.is(toExternal(undefined, { type: types["lowercase-string"] }), undefined);
@@ -186,11 +202,13 @@ test("string collection type quoted", t => {
 test("integer type", t => {
   t.is(toInternal("1", { type: types.integer }), 1);
   t.is(toInternal(2, { type: types.integer }), 2);
+  t.is(toInternal(undefined, { type: types.integer, default: 3 }), 3);
 });
 
 test("number type", t => {
   t.is(toInternal("1.2", { type: types.number }), 1.2);
   t.is(toInternal(2.3, { type: types.number }), 2.3);
+  t.is(toInternal(undefined, { type: types.number, default: 3.4 }), 3.4);
 });
 
 test("boolean type", t => {

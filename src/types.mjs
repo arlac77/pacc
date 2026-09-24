@@ -35,6 +35,8 @@ function stringToInternal(value, attribute) {
 
       return toInternalScalar ? toInternalScalar(value, attribute) : value;
     }
+    case "undefined":
+      return attribute.default;
   }
 
   return value;
@@ -81,6 +83,7 @@ export const enum_string_type = {
   name: "enum-string",
 
   toInternalScalar(value, attribute) {
+    value ??= attribute.default;
     if (attribute.values.has(value)) {
       return value;
     }
@@ -91,7 +94,8 @@ export const enum_string_type = {
 export const integer_type = {
   ...primitive_type,
   name: "integer",
-  toInternal: value => (typeof value === "string" ? parseInt(value) : value)
+  toInternal: (value, attribute) =>
+    typeof value === "string" ? parseInt(value) : (value ?? attribute.default)
 };
 
 export const boolean_type = {
@@ -117,7 +121,10 @@ export const types = {
   number: {
     ...primitive_type,
     name: "number",
-    toInternal: value => (typeof value === "string" ? parseFloat(value) : value)
+    toInternal: (value, attribute) =>
+      typeof value === "string"
+        ? parseFloat(value)
+        : (value ?? attribute.default)
   },
   boolean: boolean_type,
   yesno: {
