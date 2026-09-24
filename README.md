@@ -314,7 +314,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `constructor` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** (collection) constructor
 *   `depends` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** name of an attribute we depend on
 *   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** human readable
-*   `default` **any?** the default value
+*   `default` **any?** the (internal) default value
 *   `toInternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 *   `toExternal` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
 *   `asMapEntry` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** deliver key and value for Map insertion
