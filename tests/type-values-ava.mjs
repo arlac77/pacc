@@ -249,6 +249,9 @@ test("duration_ms type", t => {
   t.is(toInternal("1 h", { type: types.duration_ms }), 3600000);
   t.is(toInternal("1 h 30m", { type: types.duration_ms }), 5400000);
   t.is(toInternal("1hour 30m 5seconds", { type: types.duration_ms }), 5405000);
+
+  t.is(toInternal(undefined, { type: types.duration_ms }), undefined);
+  t.is(toInternal(undefined, { type: types.duration_ms, default: 1001 }), 1001);
 });
 
 test("duration type", t => {
@@ -260,6 +263,7 @@ test("duration type", t => {
   t.is(toInternal("1 h 30m", { type: types.duration }), 5400);
   t.is(toInternal("1hour 30m 5seconds", { type: types.duration }), 5405);
   t.is(toInternal(undefined, { type: types.duration }), undefined);
+  t.is(toInternal(undefined, { type: types.duration, default: 999 }), 999);
 
   t.is(toExternal(5405, { type: types.duration }), "1h 30m 5s");
   t.is(toExternal(undefined, { type: types.duration }), undefined);

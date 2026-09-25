@@ -147,14 +147,17 @@ export const types = {
   duration: {
     ...primitive_type,
     name: "duration",
-    toInternal: value => parseDuration(value),
+    toInternal: (value, attribute) => parseDuration(value) ?? attribute.default,
     toExternal: value =>
       value === undefined ? undefined : formatDuration(value)
   },
   duration_ms: {
     ...primitive_type,
     name: "duration_ms",
-    toInternal: value => parseDuration(value) * 1000
+    toInternal: (value, attribute) => {
+      value = parseDuration(value);
+      return value === undefined ? attribute.default : value * 1000
+    }
   },
   byte_size: {
     ...integer_type,
