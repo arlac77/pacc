@@ -120,16 +120,27 @@ test("string collection type", t => {
 
 test("enum-string type", t => {
   t.is(
-    toInternal("a", { type: types["enum-string"], values: new Set(["a"]) }),
+    toInternal("a", {
+      type: types["enum-string"],
+      values: new Set(["a", "b"])
+    }),
+    "a"
+  );
+  t.is(
+    toInternal("a", {
+      type: types["enum-string"],
+      values: new Set(["a", "b"]),
+      default: "b"
+    }),
     "a"
   );
   t.is(
     toInternal(undefined, {
       type: types["enum-string"],
       values: new Set(["a", "b"]),
-      default: "a"
+      default: "b"
     }),
-    "a"
+    "b"
   );
 });
 test("enum-string collection type", t => {
