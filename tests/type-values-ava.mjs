@@ -12,7 +12,7 @@ test("empty url type", t => {
 test("string type", t => {
   t.is(toInternal("abc", { type: types.string }), "abc");
   t.is(toInternal(undefined, { type: types.string }), undefined);
-  t.is(toInternal(undefined, { type: types.string, default: "abcd" }), "abcd");
+  t.is(toInternal(undefined, { type: types.string }, "abcd"), "abcd");
 
   t.is(toExternal("abc", { type: types.string }), "abc");
   t.is(toExternal(undefined, { type: types.string }), undefined);
@@ -127,19 +127,25 @@ test("enum-string type", t => {
     "a"
   );
   t.is(
-    toInternal("a", {
-      type: types["enum-string"],
-      values: new Set(["a", "b"]),
-      default: "b"
-    }),
+    toInternal(
+      "a",
+      {
+        type: types["enum-string"],
+        values: new Set(["a", "b"])
+      },
+      "b"
+    ),
     "a"
   );
   t.is(
-    toInternal(undefined, {
-      type: types["enum-string"],
-      values: new Set(["a", "b"]),
-      default: "b"
-    }),
+    toInternal(
+      undefined,
+      {
+        type: types["enum-string"],
+        values: new Set(["a", "b"])
+      },
+      "b"
+    ),
     "b"
   );
 });
@@ -159,7 +165,7 @@ test("lowercase-string type", t => {
   t.is(toInternal("ABC", { type: types["lowercase-string"] }), "abc");
   t.is(toInternal(undefined, { type: types["lowercase-string"] }), undefined);
   t.is(
-    toInternal(undefined, { type: types["lowercase-string"], default: "abc" }),
+    toInternal(undefined, { type: types["lowercase-string"] }, "abc"),
     "abc"
   );
 
@@ -213,13 +219,13 @@ test("string collection type quoted", t => {
 test("integer type", t => {
   t.is(toInternal("1", { type: types.integer }), 1);
   t.is(toInternal(2, { type: types.integer }), 2);
-  t.is(toInternal(undefined, { type: types.integer, default: 3 }), 3);
+  t.is(toInternal(undefined, { type: types.integer }, 3), 3);
 });
 
 test("number type", t => {
   t.is(toInternal("1.2", { type: types.number }), 1.2);
   t.is(toInternal(2.3, { type: types.number }), 2.3);
-  t.is(toInternal(undefined, { type: types.number, default: 3.4 }), 3.4);
+  t.is(toInternal(undefined, { type: types.number }, 3.4), 3.4);
 });
 
 test("boolean type", t => {
@@ -229,8 +235,8 @@ test("boolean type", t => {
   t.is(toInternal(0, { type: types.boolean }), false);
   t.is(toInternal(1, { type: types.boolean }), true);
   t.is(toInternal(undefined, { type: types.boolean }), undefined);
-  t.is(toInternal(undefined, { type: types.boolean, default: true }), true);
-  t.is(toInternal(undefined, { type: types.boolean, default: false }), false);
+  t.is(toInternal(undefined, { type: types.boolean }, true), true);
+  t.is(toInternal(undefined, { type: types.boolean }, false), false);
 
   t.is(toExternal(true, { type: types.boolean }), true);
   t.is(toExternal(false, { type: types.boolean }), false);
@@ -244,8 +250,8 @@ test("yesno type", t => {
   t.is(toInternal(0, { type: types.yesno }), false);
   t.is(toInternal(1, { type: types.yesno }), true);
   t.is(toInternal(undefined, { type: types.yesno }), undefined);
-  t.is(toInternal(undefined, { type: types.yesno, default: true }), true);
-  t.is(toInternal(undefined, { type: types.yesno, default: false }), false);
+  t.is(toInternal(undefined, { type: types.yesno }, true), true);
+  t.is(toInternal(undefined, { type: types.yesno }, false), false);
 
   t.is(toExternal(true, { type: types.yesno }), "yes");
   t.is(toExternal(false, { type: types.yesno }), "no");
@@ -262,7 +268,7 @@ test("duration_ms type", t => {
   t.is(toInternal("1hour 30m 5seconds", { type: types.duration_ms }), 5405000);
 
   t.is(toInternal(undefined, { type: types.duration_ms }), undefined);
-  t.is(toInternal(undefined, { type: types.duration_ms, default: 1001 }), 1001);
+  t.is(toInternal(undefined, { type: types.duration_ms }, 1001), 1001);
 });
 
 test("duration type", t => {
@@ -274,7 +280,7 @@ test("duration type", t => {
   t.is(toInternal("1 h 30m", { type: types.duration }), 5400);
   t.is(toInternal("1hour 30m 5seconds", { type: types.duration }), 5405);
   t.is(toInternal(undefined, { type: types.duration }), undefined);
-  t.is(toInternal(undefined, { type: types.duration, default: 999 }), 999);
+  t.is(toInternal(undefined, { type: types.duration }, 999), 999);
 
   t.is(toExternal(5405, { type: types.duration }), "1h 30m 5s");
   t.is(toExternal(undefined, { type: types.duration }), undefined);

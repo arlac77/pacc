@@ -17,7 +17,7 @@ import { asArray } from "./utils.mjs";
 const emptyStringIsUndefined = value =>
   typeof value === "string" && value.length === 0 ? undefined : value;
 
-function stringToInternal(value, attribute) {
+function stringToInternal(value, attribute, defaultValue) {
   switch (typeof value) {
     case "string": {
       const toInternalScalar =
@@ -36,7 +36,7 @@ function stringToInternal(value, attribute) {
       return toInternalScalar ? toInternalScalar(value, attribute) : value;
     }
     case "undefined":
-      return attribute.default;
+      return defaultValue;
   }
 
   return value;
@@ -82,8 +82,8 @@ export const enum_string_type = {
   ...string_type,
   name: "enum-string",
 
-  toInternalScalar(value, attribute) {
-    value ??= attribute.default;
+  toInternalScalar(value, attribute, defaultValue) {
+    value ??= defaultValue;
     if (attribute.values.has(value)) {
       return value;
     }
@@ -94,16 +94,16 @@ export const enum_string_type = {
 export const integer_type = {
   ...primitive_type,
   name: "integer",
-  toInternal: (value, attribute) =>
-    typeof value === "string" ? parseInt(value) : (value ?? attribute.default)
+  toInternal: (value, attribute, defaultValue) =>
+    typeof value === "string" ? parseInt(value) : (value ?? defaultValue)
 };
 
 export const boolean_type = {
   ...primitive_type,
   name: "boolean",
-  toInternal: (value, attribute) =>
+  toInternal: (value, attribute, defaultValue) =>
     value === undefined
-      ? attribute.default
+      ? defaultValue
       : !value || value === "0" || value === "false" || value === "no"
         ? false
         : true
@@ -121,18 +121,16 @@ export const types = {
   number: {
     ...primitive_type,
     name: "number",
-    toInternal: (value, attribute) =>
-      typeof value === "string"
-        ? parseFloat(value)
-        : (value ?? attribute.default)
+    toInternal: (value, attribute, defaultValue) =>
+      typeof value === "string" ? parseFloat(value) : (value ?? defaultValue)
   },
   boolean: boolean_type,
   yesno: {
     ...boolean_type,
     name: "yesno",
-    toInternal: (value, attribute) =>
+    toInternal: (value, attribute, defaultValue) =>
       value === undefined
-        ? attribute.default
+        ? defaultValue
         : !value || value === "0" || value === "false" || value === "no"
           ? false
           : true,
@@ -147,16 +145,17 @@ export const types = {
   duration: {
     ...primitive_type,
     name: "duration",
-    toInternal: (value, attribute) => parseDuration(value) ?? attribute.default,
+    toInternal: (value, attribute, defaultValue) =>
+      parseDuration(value) ?? defaultValue,
     toExternal: value =>
       value === undefined ? undefined : formatDuration(value)
   },
   duration_ms: {
     ...primitive_type,
     name: "duration_ms",
-    toInternal: (value, attribute) => {
+    toInternal: (value, attribute, defaultValue) => {
       value = parseDuration(value);
-      return value === undefined ? attribute.default : value * 1000
+      return value === undefined ? defaultValue : value * 1000;
     }
   },
   byte_size: {

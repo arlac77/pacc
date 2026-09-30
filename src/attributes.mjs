@@ -87,14 +87,14 @@ export function* writableAttributeIterator(definition) {
   yield* attributeIterator(definition, filterWritable);
 }
 
-export function toInternal(value, attribute) {
+export function toInternal(value, attribute, defaultValue) {
   if (attribute) {
     const toInternal = attribute.toInternal ?? attribute.type?.toInternal;
     if (toInternal) {
-      return toInternal(value, attribute);
+      return toInternal(value, attribute, defaultValue);
     }
   }
-  return value;
+  return value ?? defaultValue;
 }
 
 export function toExternal(value, attribute) {
