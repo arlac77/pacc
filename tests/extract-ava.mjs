@@ -1,5 +1,5 @@
 import test from "ava";
-import { extract, extendingAttributeIterator } from "pacc";
+import { extract } from "pacc";
 import { aClass } from "./fixtures.mjs";
 
 test("extract", t => {
@@ -13,4 +13,19 @@ test("extract", t => {
     b: ["b1", "b2"],
     d: { d1: "dd1" }
   });
+});
+
+test("extract wit filter", t => {
+  const object = new aClass();
+
+  object.a = "av";
+  object.b = ["b1", "b2"];
+
+  t.deepEqual(
+    extract(object, aClass, attribute => attribute.name !== "b"),
+    {
+      a: "av",
+      d: { d1: "dd1" }
+    }
+  );
 });

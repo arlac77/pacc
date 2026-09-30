@@ -1,12 +1,20 @@
 import { extendingAttributeIterator } from "pacc";
 
-export function extract(object, type = object.constructor) {
+/**
+ * extract key value paris
+ * @param {object} object 
+ * @param {Type} type 
+ * @param {function} filter 
+ * @returns {object}
+ */
+export function extract(
+  object,
+  type = object.constructor,
+  filter = attribute => !attribute.private
+) {
   const result = {};
 
-  for (const [path, attribute] of extendingAttributeIterator(
-    type,
-    attribute => !attribute.private
-  )) {
+  for (const [path, attribute] of extendingAttributeIterator(type, filter)) {
     let name;
     let r = result;
 
