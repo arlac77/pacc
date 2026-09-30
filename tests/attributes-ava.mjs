@@ -6,7 +6,7 @@ import {
   extendingAttributeIterator,
   writableAttributeIterator
 } from "pacc";
-import { attributeDefinitions, bClass } from "./fixtures.mjs";
+import { attributeDefinitions, aClass, bClass } from "./fixtures.mjs";
 
 test("prepareAttributesDefinitions", t => {
   const p = prepareAttributesDefinitions({
@@ -54,5 +54,14 @@ test("writableAttributeIterator", t => {
   t.deepEqual(
     [...writableAttributeIterator(attributeDefinitions)],
     [[["c"], attributeDefinitions.c]]
+  );
+});
+
+test("extendingAttributeIterator aClass", t => {
+  t.deepEqual(
+    [...extendingAttributeIterator(aClass)].map(([path, attribute]) =>
+      path.join(".")
+    ),
+    ["a", "b", "c", "d", "d.d1", "e"]
   );
 });
