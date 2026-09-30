@@ -150,36 +150,38 @@ tokens "abc" "
 *   [expand](#expand)
     *   [Parameters](#parameters-6)
 *   [promises](#promises)
-*   [filter](#filter)
+*   [extract](#extract)
     *   [Parameters](#parameters-7)
-*   [setAttributes](#setattributes)
+*   [filter](#filter)
     *   [Parameters](#parameters-8)
-*   [getAttributes](#getattributes)
+*   [setAttributes](#setattributes)
     *   [Parameters](#parameters-9)
-*   [getAttributesJSON](#getattributesjson)
+*   [getAttributes](#getattributes)
     *   [Parameters](#parameters-10)
+*   [getAttributesJSON](#getattributesjson)
+    *   [Parameters](#parameters-11)
 *   [tokens](#tokens)
 *   [tokens](#tokens-1)
-    *   [Parameters](#parameters-11)
-*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-12)
-*   [getAttribute](#getattribute)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-13)
-*   [getAttributeAndOperator](#getattributeandoperator)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-14)
-*   [parseDuration](#parseduration)
+*   [getAttributeAndOperator](#getattributeandoperator)
     *   [Parameters](#parameters-15)
-*   [formatDuration](#formatduration)
+*   [parseDuration](#parseduration)
     *   [Parameters](#parameters-16)
-*   [formatDurationISO](#formatdurationiso)
+*   [formatDuration](#formatduration)
     *   [Parameters](#parameters-17)
+*   [formatDurationISO](#formatdurationiso)
+    *   [Parameters](#parameters-18)
 *   [lookup](#lookup)
 *   [Token](#token)
     *   [Properties](#properties-2)
 *   [registerToken](#registertoken)
-    *   [Parameters](#parameters-18)
-*   [createToken](#createtoken)
     *   [Parameters](#parameters-19)
+*   [createToken](#createtoken)
+    *   [Parameters](#parameters-20)
 *   [PLUS](#plus)
 *   [MINUS](#minus)
 *   [STAR](#star)
@@ -214,19 +216,19 @@ tokens "abc" "
 *   [Type](#type)
     *   [Properties](#properties-3)
 *   [raiseOnUnknownType](#raiseonunknowntype)
-    *   [Parameters](#parameters-20)
-*   [create](#create)
     *   [Parameters](#parameters-21)
-*   [isExtendingType](#isextendingtype)
+*   [create](#create)
     *   [Parameters](#parameters-22)
-*   [asArray](#asarray)
+*   [isExtendingType](#isextendingtype)
     *   [Parameters](#parameters-23)
-*   [asIterator](#asiterator)
+*   [asArray](#asarray)
     *   [Parameters](#parameters-24)
-*   [asValueIterator](#asvalueiterator)
+*   [asIterator](#asiterator)
     *   [Parameters](#parameters-25)
-*   [leafValues](#leafvalues)
+*   [asValueIterator](#asvalueiterator)
     *   [Parameters](#parameters-26)
+*   [leafValues](#leafvalues)
+    *   [Parameters](#parameters-27)
 
 ## AST
 
@@ -631,6 +633,18 @@ Returns **(any | [Promise](https://developer.mozilla.org/docs/Web/JavaScript/Ref
 ## promises
 
 Type: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<any>>
+
+## extract
+
+extract key value paris
+
+### Parameters
+
+*   `object` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `type` **[Type](#type)**  (optional, default `object.constructor`)
+*   `filter` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**  (optional, default `attribute=>!attribute.private`)
+
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 ## filter
 
