@@ -25,12 +25,11 @@ export function definePropertiesFromAttributes(
 
     let value =
       getAttribute(initialValues, externalName, attribute) ??
-      initialValues?.[externalName] ??
-      attribute.default;
+      initialValues?.[externalName];
+
+    value = toInternal(value, attribute, attribute.default);
 
     if (value !== undefined) {
-      value = toInternal(value, attribute, attribute.default);
-
       if (path.length === 1) {
         const property = properties[name];
 
