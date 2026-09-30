@@ -69,9 +69,6 @@ export function getAttributesJSON(object, definitions, filter) {
     let value = getAttribute(object, name, attribute);
     if (value !== undefined) {
       value = toExternal(value, attribute);
-      if (value instanceof Set) {
-        value = [...value];
-      }
       setAttribute(
         result,
         attribute.externalName ?? name,
