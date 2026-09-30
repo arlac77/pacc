@@ -29,7 +29,7 @@ export function definePropertiesFromAttributes(
       attribute.default;
 
     if (value !== undefined) {
-      value = toInternal(value, attribute);
+      value = toInternal(value, attribute, attribute.default);
 
       if (path.length === 1) {
         const property = properties[name];
