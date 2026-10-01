@@ -34,15 +34,13 @@ export function extract(object, options = {}) {
     let value = object[name] ?? attribute.default;
 
     if (value !== undefined) {
-      value = toExternal(value,attribute);
+      if (attribute.collection && attribute.skipEmpty && value.size === 0) {
+        continue;
+      }
+
+      value = toExternal(value, attribute);
       if (attribute.type.primitive) {
-        if (attribute.collection) {
-          if ((value.size ?? value.length) > 0) {
-            r[outName] = [...value.values()];
-          }
-        } else {
-          r[outName] = value;
-        }
+        r[outName] = value;
       } else {
         if (attribute.backpointer) {
           if (attribute.collection) {

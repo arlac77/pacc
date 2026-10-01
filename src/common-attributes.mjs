@@ -131,6 +131,7 @@ export const string_collection_attribute_writable = {
  */
 export const string_set_attribute = {
   ...string_collection_attribute,
+  separator: undefined,
   constructor: Set
 };
 
