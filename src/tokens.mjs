@@ -464,10 +464,7 @@ export const globals = {
   },
   join: (args, current, context) => {
     const separator = evalOne(args.shift(), current, context);
-    return evalAll(args, current, context)
-      .map(item => (item instanceof Iterator ? Array.from(item) : item))
-      .flat()
-      .join(separator);
+    return [...leafValues(evalAll(args, current, context))].join(separator);
   },
   sort: (args, current, context) => {
     let data = evalOne(args[0], current, context);

@@ -160,6 +160,7 @@ function* iter() {
   yield "C";
 }
 test(eat, "join(',',iter)", { valueFor: valueFor({ iter: iter() }) }, "A,B,C");
+test(eat, "join(',',Set)", { valueFor: valueFor({ Set: new Set(["A","B","C"]) }) }, "A,B,C");
 
 test(
   eat,
