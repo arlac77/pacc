@@ -466,6 +466,18 @@ export const globals = {
     const separator = evalOne(args.shift(), current, context);
     return [...leafValues(evalAll(args, current, context))].join(separator);
   },
+  map: (args, current, context) => {
+    const action = args.shift();
+    return [...leafValues(evalAll(args, current, context))].map(current =>
+      evalOne(action, current, {
+        ...context,
+        valueFor(name, x) {
+          if (name === "_") return current;
+          return context.valueFor(name, x);
+        }
+      })
+    );
+  },
   sort: (args, current, context) => {
     let data = evalOne(args[0], current, context);
 

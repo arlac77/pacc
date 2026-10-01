@@ -162,6 +162,9 @@ function* iter() {
 test(eat, "join(',',iter)", { valueFor: valueFor({ iter: iter() }) }, "A,B,C");
 test(eat, "join(',',Set)", { valueFor: valueFor({ Set: new Set(["A","B","C"]) }) }, "A,B,C");
 
+
+test(eat, "map( _ * 2, 1, 2, 3)", {}, [2,4,6]);
+
 test(
   eat,
   "all[in(7,x)]",
