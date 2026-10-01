@@ -27,31 +27,33 @@ export function extract(
       }
     }
 
+    const outName = attribute.externalName ?? name;
     const value = object[name] ?? attribute.default;
+
 
     if (value !== undefined) {
       if (attribute.type.primitive) {
         if (attribute.collection) {
           if ((value.size ?? value.length) > 0) {
-            r[name] = [...value.values()];
+            r[outName] = [...value.values()];
           }
         } else {
-          r[name] = value;
+          r[outName] = value;
         }
       } else {
         if (attribute.backpointer) {
           if (attribute.collection) {
             if ((value.size ?? value.length) > 0) {
-              r[name] = Object.fromEntries(
+              r[outName] = Object.fromEntries(
                 [...value.values()].map(v => [v[v.constructor.key], extract(v)])
               );
             }
           } else {
-            r[name] = extract(value);
+            r[outName] = extract(value);
           }
         } else {
           const key = value.constructor.key;
-          r[name] = { [key]: value[key], type: value.constructor.name };
+          r[outName] = { [key]: value[key], type: value.constructor.name };
         }
       }
     }

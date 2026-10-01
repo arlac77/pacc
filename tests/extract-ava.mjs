@@ -9,7 +9,7 @@ test("extract", t => {
   object.b = ["b1", "b2"];
 
   t.deepEqual(extract(object), {
-    a: "av",
+    ae: "av",
     b: ["b1", "b2"],
     d: { d1: "dd1" }
   });
@@ -24,7 +24,7 @@ test("extract wit filter", t => {
   t.deepEqual(
     extract(object, aClass, attribute => attribute.name !== "b"),
     {
-      a: "av",
+      ae: "av",
       d: { d1: "dd1" }
     }
   );
