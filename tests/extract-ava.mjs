@@ -20,6 +20,7 @@ test("extract with options filter + externalNames", t => {
 
   object.a = "av";
   object.b = ["b1", "b2"];
+  object.c = 100;
 
   t.deepEqual(
     extract(object, {
@@ -29,6 +30,7 @@ test("extract with options filter + externalNames", t => {
     }),
     {
       ae: "av",
+      c: '1m 40s',
       d: { d1: "dd1" }
     }
   );

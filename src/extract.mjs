@@ -1,4 +1,4 @@
-import { extendingAttributeIterator } from "pacc";
+import { toExternal, extendingAttributeIterator } from "pacc";
 
 /**
  * extract key value paris
@@ -31,9 +31,10 @@ export function extract(object, options = {}) {
     }
 
     const outName = (options.externalNames && attribute.externalName) || name;
-    const value = object[name] ?? attribute.default;
+    let value = object[name] ?? attribute.default;
 
     if (value !== undefined) {
+      value = toExternal(value,attribute);
       if (attribute.type.primitive) {
         if (attribute.collection) {
           if ((value.size ?? value.length) > 0) {

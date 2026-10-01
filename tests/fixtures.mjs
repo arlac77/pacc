@@ -94,7 +94,7 @@ export const attributeDefinitions = {
     externalName: "ae"
   },
   b: { ...default_collection_attribute, name: "b", skipEmpty: true },
-  c: { ...default_attribute, name: "c", writable: true },
+  c: { ...default_attribute, type: types.duration, name: "c", writable: true },
   d: {
     name: "d",
     skipEmpty: true,
