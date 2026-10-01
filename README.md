@@ -641,8 +641,11 @@ extract key value paris
 ### Parameters
 
 *   `object` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `type` **[Type](#type)**  (optional, default `object.constructor`)
-*   `filter` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**  (optional, default `attribute=>!attribute.private`)
+*   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+
+    *   `options.type` **[Type](#type)?**&#x20;
+*   `filter` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?**&#x20;
+*   `externalNames` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?**&#x20;
 
 Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
