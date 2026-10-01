@@ -9,20 +9,24 @@ test("extract", t => {
   object.b = ["b1", "b2"];
 
   t.deepEqual(extract(object), {
-    ae: "av",
+    a: "av",
     b: ["b1", "b2"],
     d: { d1: "dd1" }
   });
 });
 
-test("extract wit filter", t => {
+test("extract with options filter + externalNames", t => {
   const object = new aClass();
 
   object.a = "av";
   object.b = ["b1", "b2"];
 
   t.deepEqual(
-    extract(object, aClass, attribute => attribute.name !== "b"),
+    extract(object, {
+      type: aClass,
+      filter: attribute => attribute.name !== "b",
+      externalNames: true
+    }),
     {
       ae: "av",
       d: { d1: "dd1" }

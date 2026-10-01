@@ -2,19 +2,22 @@ import { extendingAttributeIterator } from "pacc";
 
 /**
  * extract key value paris
- * @param {object} object 
- * @param {Type} type 
- * @param {function} filter 
+ * @param {object} object
+ * @param {object} options
+ * @param {Type} [options.type]
+ * @param {function} [filter]
+ * @param {boolean} [externalNames]
  * @returns {object}
  */
-export function extract(
-  object,
-  type = object.constructor,
-  filter = attribute => !attribute.private
-) {
+export function extract(object, options = {}) {
+  const type = options.type ?? object.constructor;
+
   const result = {};
 
-  for (const [path, attribute] of extendingAttributeIterator(type, filter)) {
+  for (const [path, attribute] of extendingAttributeIterator(
+    type,
+    options.filter
+  )) {
     let name;
     let r = result;
 
@@ -27,9 +30,8 @@ export function extract(
       }
     }
 
-    const outName = attribute.externalName ?? name;
+    const outName = (options.externalNames && attribute.externalName) || name;
     const value = object[name] ?? attribute.default;
-
 
     if (value !== undefined) {
       if (attribute.type.primitive) {
