@@ -545,3 +545,28 @@ export const language_attribute = {
   name: "language",
   description: "human spoken language"
 };
+
+export const architecture_attribute = {
+  ...enum_string_attribute,
+  name: "architecture",
+  values: new Set([
+    "aarch64",
+    "armv7h",
+    "mips",
+    "mipsel",
+    "ppc",
+    "s390",
+    "s390x",
+    "x32",
+    "x86_64",
+    "x86",
+    "ppc64",
+    "riscv",
+    "any"
+  ])
+};
+
+export const architecture_attribute_writable = {
+  ...architecture_attribute,
+  writable: true
+};
