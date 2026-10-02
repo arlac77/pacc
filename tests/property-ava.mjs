@@ -21,7 +21,12 @@ const attributes = prepareAttributesDefinitions({
     ...object_attribute,
     attributes: {
       token: { ...token_attribute, externalName: "user_token" },
-      user: { ...string_attribute, externalName: "user_name", default: "hugo" }
+      user: {
+        ...string_attribute,
+        writable: true,
+        externalName: "user_name",
+        default: "hugo"
+      }
     }
   },
 

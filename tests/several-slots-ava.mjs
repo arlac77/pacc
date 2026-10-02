@@ -11,10 +11,12 @@ const definitions = prepareAttributesDefinitions({
   dir: {
     ...string_attribute,
     description: "recording base directory",
+    writable: true,
     default: "/tmp"
   },
   recorders: {
     ...string_attribute,
+    writable: true,
     description: "well known recorders"
   }
 });

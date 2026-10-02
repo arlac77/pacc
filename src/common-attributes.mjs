@@ -39,6 +39,8 @@ import {
  * @property {Function} [get] deprecated get the value can be used to calculate default values
  */
 
+export const SCOPE_RUNTIME = "runtime";
+
 /**
  * Common attribute properties.
  * @type {AttributeDefinition}
@@ -213,9 +215,18 @@ export const type_attribute_writable = {
 /**
  * @type {AttributeDefinition}
  */
+export const state_attribute = {
+  ...default_attribute,
+  name: "state",
+  scope: SCOPE_RUNTIME
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const state_attribute_writable = {
-  ...default_attribute_writable,
-  name: "state"
+  ...state_attribute,
+  writable: true
 };
 
 /**
@@ -321,6 +332,10 @@ export const username_attribute = { ...secret_attribute, name: "username" };
  * @type {AttributeDefinition}
  */
 export const password_attribute = { ...secret_attribute, name: "password" };
+export const password_attribute_writable = {
+  ...password_attribute,
+  writable: true
+};
 
 /**
  * @type {AttributeDefinition}

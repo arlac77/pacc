@@ -2,7 +2,7 @@ import test from "ava";
 import { sast, gast } from "./util.mjs";
 import {
   prepareAttributesDefinitions,
-  password_attribute,
+  password_attribute_writable,
   string_attribute
 } from "pacc";
 
@@ -10,10 +10,13 @@ const definitions = prepareAttributesDefinitions({
   att1: {
     ...string_attribute,
     mandatory: true,
-    private: true
+    private: true,
+    writable: true
   },
   att2: {
     type: "string",
+    writable: true,
+
     set(value) {
       this.att2x = value;
       return true;
@@ -24,14 +27,16 @@ const definitions = prepareAttributesDefinitions({
   },
   att3: {
     type: "unsigned-integer",
+    writable: true,
     default: 77
   },
-  att4: password_attribute,
+  att4: password_attribute_writable,
   nested: {
     attributes: {
       att1: {
         ...string_attribute,
-        default: "the default"
+        default: "the default",
+        writable: true
       }
     }
   }

@@ -21,6 +21,7 @@ export const attributeDefinitionsComplex = prepareAttributesDefinitions({
       public: {
         ...private_key_attribute,
         description: "public key to check token against",
+        writable: true,
         mandatory: true
       }
     }
@@ -42,6 +43,7 @@ export const attributeDefinitionsComplex = prepareAttributesDefinitions({
       },
       socket: {
         ...string_attribute,
+        writable: true,
         description: "listening port|socket of the http(s) server",
         needsRestart: true
       }
@@ -91,15 +93,29 @@ export const attributeDefinitions = {
     type: types["lowercase-string"],
     name: "a",
     default: "ad",
-    externalName: "ae"
+    externalName: "ae",
+    writable: true
   },
-  b: { ...default_collection_attribute, name: "b", skipEmpty: true },
+  b: {
+    ...default_collection_attribute,
+    name: "b",
+    writable: true,
+    skipEmpty: true
+  },
   c: { ...default_attribute, type: types.duration, name: "c", writable: true },
   d: {
     name: "d",
     skipEmpty: true,
+    writable: true,
+
     attributes: {
-      d1: { ...default_attribute, name: "d1", default: "dd1", skipEmpty: true }
+      d1: {
+        ...default_attribute,
+        name: "d1",
+        default: "dd1",
+        writable: true,
+        skipEmpty: true
+      }
     }
   },
   e: {

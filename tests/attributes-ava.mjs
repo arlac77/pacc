@@ -50,10 +50,16 @@ test("extendingAttributeIterator", t => {
   );
 });
 
-test("writableAttributeIterator", t => {
+test.only("writableAttributeIterator", t => {
   t.deepEqual(
     [...writableAttributeIterator(attributeDefinitions)],
-    [[["c"], attributeDefinitions.c]]
+    [
+      [["a"], attributeDefinitions.a],
+      [["b"], attributeDefinitions.b],
+      [["c"], attributeDefinitions.c],
+      [["d"], attributeDefinitions.d],
+      [["d", "d1"], attributeDefinitions.d.attributes.d1]
+    ]
   );
 });
 

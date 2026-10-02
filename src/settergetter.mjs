@@ -32,9 +32,14 @@ import { keyedAccessOrGlobalEval, keyedAccessEval, pathEval } from "./ast.mjs";
  * @param {Object} [definition] type def
  */
 export function setAttribute(object, expression, value, definition) {
-  if(definition?.set) {
-    definition.set.call(object, value, definition);
-    return;
+  if (definition) {
+    if (!definition.writable) {
+      return;
+    }
+    if (definition.set) {
+      definition.set.call(object, value, definition);
+      return;
+    }
   }
 
   const context = {};
@@ -64,8 +69,8 @@ export function setAttribute(object, expression, value, definition) {
       parent[parentItem.key] = toInternal(value, definition);
       break;
 
-      default:
-        console.log("UKNOWN ast",node);
+    default:
+      console.log("UKNOWN ast", node);
   }
 }
 
