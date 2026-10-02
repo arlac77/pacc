@@ -18,9 +18,10 @@ export function extract(object, options = {}) {
     type,
     options.filter
   )) {
-    let name;
     let r = result;
     let o = object;
+
+    let name;
 
     for (const i in path) {
       name = path[i];
@@ -29,6 +30,8 @@ export function extract(object, options = {}) {
           const nextLevel = {};
           r[name] = nextLevel;
           r = nextLevel;
+        } else {
+          r = r[name];
         }
 
         if (o[name] !== undefined) {

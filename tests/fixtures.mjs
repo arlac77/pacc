@@ -116,6 +116,13 @@ export const attributeDefinitions = {
         default: "dd1",
         writable: true,
         skipEmpty: true
+      },
+      d2: {
+        ...default_attribute,
+        name: "d2",
+        default: "dd2",
+        writable: true,
+        skipEmpty: true
       }
     }
   },

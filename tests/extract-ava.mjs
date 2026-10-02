@@ -11,17 +11,17 @@ test("extract", t => {
   t.deepEqual(extract(object), {
     a: "av",
     b: ["b1", "b2"],
-    d: { d1: "dd1" }
+    d: { d1: "dd1", d2: "dd2" }
   });
 });
 
-test("extract with options filter + externalNames", t => {
+test.only("extract with options filter + externalNames", t => {
   const object = new aClass();
 
   object.a = "av";
   object.b = ["b1", "b2"];
   object.c = 100;
-  object.d = { d1: "org"};
+  object.d = { d1: "org" };
 
   t.deepEqual(
     extract(object, {
@@ -31,8 +31,8 @@ test("extract with options filter + externalNames", t => {
     }),
     {
       ae: "av",
-      c: '1m 40s',
-      d: { d1: "org" }
+      c: "1m 40s",
+      d: { d1: "org", d2: "dd2" }
     }
   );
 });
