@@ -533,9 +533,13 @@ export const duration_ms_attribute = {
  * @type {AttributeDefinition}
  */
 export const timeout_attribute = {
-  ...number_attribute_writable,
-  name: "timeout",
-  description: "timeout"
+  ...number_attribute,
+  name: "timeout"
+};
+
+export const timeout_attribute_writable = {
+  ...timeout_attribute,
+  writable: true
 };
 
 /**
