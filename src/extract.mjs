@@ -45,7 +45,8 @@ export function extract(object, options = {}) {
     const outName = (options.externalNames && attribute.externalName) || name;
 
     if (value !== undefined) {
-      if (attribute.collection && attribute.skipEmpty && value.size === 0) {
+      if(value == attribute.default && attribute.skipDefault ||
+         attribute.collection && attribute.skipEmpty && value.size === 0) {
         continue;
       }
 

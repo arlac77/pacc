@@ -20,6 +20,7 @@ import {
  * @property {boolean} [credential] are we any type of credential
  * @property {boolean} [persistent] should we be stored (especially critical for credentials)
  * @property {boolean} [skipEmpty] do not write (toExternal) empty attribute values at all
+ * @property {boolean} [skipDefault] do not write (toExternal) if value is the default value
  * @property {AttributeDefinition} [backpointer]
  * @property {Function} [constructor] (collection) constructor
  * @property {string} [depends] name of an attribute we depend on
