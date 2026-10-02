@@ -101,6 +101,7 @@ tokens "abc" "
 *   [description\_attribute](#description_attribute)
 *   [type\_attribute](#type_attribute)
 *   [type\_attribute\_writable](#type_attribute_writable)
+*   [state\_attribute](#state_attribute)
 *   [state\_attribute\_writable](#state_attribute_writable)
 *   [boolean\_attribute](#boolean_attribute)
 *   [boolean\_attribute\_writable](#boolean_attribute_writable)
@@ -410,6 +411,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## type\_attribute\_writable
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## state\_attribute
 
 Type: [AttributeDefinition](#attributedefinition)
 
