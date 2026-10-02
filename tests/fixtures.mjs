@@ -104,6 +104,7 @@ export const attributeDefinitions = {
   },
   c: { ...default_attribute, type: types.duration, name: "c", writable: true },
   d: {
+    ...object_attribute,
     name: "d",
     skipEmpty: true,
     writable: true,

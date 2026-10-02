@@ -20,18 +20,26 @@ export function extract(object, options = {}) {
   )) {
     let name;
     let r = result;
+    let o = object;
 
     for (const i in path) {
       name = path[i];
-      if (path.length > i + 1 && r[name] === undefined) {
-        const nextLevel = {};
-        r[name] = nextLevel;
-        r = nextLevel;
+      if (path.length > i + 1) {
+        if (r[name] === undefined) {
+          const nextLevel = {};
+          r[name] = nextLevel;
+          r = nextLevel;
+        }
+
+        if (o[name] !== undefined) {
+          o = o[name];
+        }
       }
     }
 
+    let value = o[name] ?? attribute.default;
+
     const outName = (options.externalNames && attribute.externalName) || name;
-    let value = object[name] ?? attribute.default;
 
     if (value !== undefined) {
       if (attribute.collection && attribute.skipEmpty && value.size === 0) {
@@ -54,7 +62,9 @@ export function extract(object, options = {}) {
           }
         } else {
           const key = value.constructor.key;
-          r[outName] = { [key]: value[key], type: value.constructor.name };
+          if(key) {
+            r[outName] = { [key]: value[key], type: value.constructor.name };
+          }
         }
       }
     }
