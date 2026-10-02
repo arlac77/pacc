@@ -313,6 +313,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 *   `credential` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** are we any type of credential
 *   `persistent` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** should we be stored (especially critical for credentials)
 *   `skipEmpty` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** do not write (toExternal) empty attribute values at all
+*   `skipDefault` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** do not write (toExternal) if value is the default value
 *   `backpointer` **[AttributeDefinition](#attributedefinition)?**&#x20;
 *   `constructor` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** (collection) constructor
 *   `depends` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** name of an attribute we depend on
