@@ -3,17 +3,22 @@ export * from "./utils.mjs";
 export * from "./time.mjs";
 export * from "./bytes.mjs";
 export * from "./attributes.mjs";
+export * from "./assign.mjs";
 export * from "./extract.mjs";
 export * from "./tokens.mjs";
 export * from "./filter.mjs";
-export * from "./multiple.mjs";
 export * from "./common-attributes.mjs";
 export * from "./properties.mjs";
 export * from "./parser.mjs";
 export * from "./expand.mjs";
 export * from "./environment.mjs";
+
+
+// DEPRECATED
+
 export {
   setAttribute,
   getAttribute,
   getAttributeAndOperator
 } from "./settergetter.mjs";
+export * from "./multiple.mjs";

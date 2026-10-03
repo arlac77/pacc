@@ -10,12 +10,10 @@ import { toExternal, extendingAttributeIterator } from "pacc";
  * @returns {object}
  */
 export function extract(object, options = {}) {
-  const type = options.type ?? object.constructor;
-
   const result = {};
 
   for (const [path, attribute] of extendingAttributeIterator(
-    type,
+    options.type ?? object.constructor,
     options.filter
   )) {
     let r = result;
