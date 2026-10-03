@@ -538,11 +538,21 @@ export const duration_attribute_writable = {
 };
 
 /**
+ * Duration in milliseconds
  * @type {AttributeDefinition}
  */
 export const duration_ms_attribute = {
   ...default_attribute,
   type: types.duration_ms
+};
+
+/**
+ * Duration in milliseconds
+ * @type {AttributeDefinition}
+ */
+export const duration_ms_attribute_writable = {
+  ...duration_ms_attribute,
+  writable: true
 };
 
 /**
