@@ -40,13 +40,15 @@ test(sat, {}, { a: 1, b: {}, c: { c1: {} } }, attributeDefinitions, {
   b: {},
   c: { c1: {} },
   d: {
-    d1: "dd1"
+    d1: "dd1",
+    d2: "dd2"
   }
 });
 
 test(sat, {}, {}, attributeDefinitions, {
   a: "ad",
   d: {
-    d1: "dd1"
+    d1: "dd1",
+    d2: "dd2"
   }
 });

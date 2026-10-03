@@ -10,6 +10,7 @@ test("iterateToExternal", t => {
     ae: "abc",
     c: undefined,
     "d.d1": "dd1",
+    "d.d2": "dd2",
     e: ["a", "b"]
   });
 });

@@ -45,6 +45,7 @@ test("extendingAttributeIterator", t => {
       [["c"], attributeDefinitions.c],
       [["d"], attributeDefinitions.d],
       [["d", "d1"], attributeDefinitions.d.attributes.d1],
+      [["d", "d2"], attributeDefinitions.d.attributes.d2],
       [["e"], attributeDefinitions.e]
     ]
   );
@@ -58,7 +59,8 @@ test.only("writableAttributeIterator", t => {
       [["b"], attributeDefinitions.b],
       [["c"], attributeDefinitions.c],
       [["d"], attributeDefinitions.d],
-      [["d", "d1"], attributeDefinitions.d.attributes.d1]
+      [["d", "d1"], attributeDefinitions.d.attributes.d1],
+      [["d", "d2"], attributeDefinitions.d.attributes.d2]
     ]
   );
 });
