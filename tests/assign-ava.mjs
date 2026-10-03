@@ -61,7 +61,7 @@ test("with defaults", ast, {}, { att3: 17 }, attributes, (t, object) =>
   t.is(object.att3, 17)
 );
 
-test.skip("use default", ast, {}, { att1: 17 }, attributes, (t, object) =>
+test("use default", ast, {}, { att1: 17 }, attributes, (t, object) =>
   t.is(object.att3, 77)
 );
 
@@ -100,7 +100,7 @@ test(
   (t, object) => t.is(object.nested.att1, "value1b")
 );
 
-test.skip("nested default", ast, {}, {}, attributes, (t, object) =>
+test("nested default", ast, {}, {}, attributes, (t, object) =>
   t.is(object.nested?.att1, "the default")
 );
 

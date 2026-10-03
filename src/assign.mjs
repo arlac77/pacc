@@ -5,14 +5,17 @@ import { toInternal, extendingAttributeIterator } from "pacc";
  * @param {object} object
  * @param {object} values
  * @param {object} options
+ * @param {Type} [options.type]
+ * @param {function} [filter] filer attributes
+ * @param {boolean} [externalNames] use external names
  */
 export function assign(object, values, options = {}) {
-  nextValue: for (const [path, attribute] of extendingAttributeIterator(
+  for (const [path, attribute] of extendingAttributeIterator(
     options.type ?? object.constructor,
     options.filter
   )) {
-    let v = values;
     let o = object;
+    let v = values;
 
     let name;
 
@@ -27,17 +30,18 @@ export function assign(object, values, options = {}) {
           o = o[name];
         }
 
-        if (v[name] === undefined) {
-          continue nextValue;
-        } else {
-          v = v[name];
-        }
+        v = v?.[name];
       }
     }
 
-    let value = v[name];
-    if (value !== undefined) {
-      o[name] = value;
+    let value = toInternal(v?.[name], attribute);
+
+    if (value === undefined && attribute.default && o[name] === undefined) {
+      o[name] = attribute.default;
+    } else {
+      if (value !== undefined) {
+        o[name] = value;
+      }
     }
   }
 }
