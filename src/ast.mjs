@@ -110,3 +110,9 @@ export const ASTRoot = {
     return context.root;
   }
 };
+
+export const ASTCurrent = {
+  eval(node, current, context) {
+    return current;
+  }
+};

@@ -1,6 +1,7 @@
 import {
   ASTNullFilter,
   ASTRoot,
+  ASTCurrent,
   pathEval,
   keyedAccessEval,
   keyedAccessOrGlobalEval,
@@ -384,6 +385,14 @@ export /** @type {Token} */ const BOOLEAN = createToken(
   (parser, value) => value
 );
 
+export /** @type {Token} */ const CURRENT = createToken(
+  "current",
+  1,
+  PREFIX,
+  undefined,
+  (parser, value) => ASTCurrent
+);
+
 export /** @type {Token} */ const EOF = createToken(
   "EOF",
   -1,
@@ -405,7 +414,8 @@ const esc = {
 
 export const keywords = {
   true: [BOOLEAN, true],
-  false: [BOOLEAN, false]
+  false: [BOOLEAN, false],
+  _: [CURRENT]
 };
 
 function evalAll(args, current, context) {
@@ -469,13 +479,7 @@ export const globals = {
   map: (args, current, context) => {
     const action = args.shift();
     return [...leafValues(evalAll(args, current, context))].map(current =>
-      evalOne(action, current, {
-        ...context,
-        valueFor(name, x) {
-          if (name === "_") return current;
-          return context.valueFor(name, x);
-        }
-      })
+      evalOne(action, current, context)
     );
   },
   sort: (args, current, context) => {

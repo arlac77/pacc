@@ -51,6 +51,7 @@ test(eat, "true || false", undefined, true);
 test(eat, "true && false", undefined, false);
 test(eat, "1 + a", { current: { a: 5 } }, 6);
 test(eat, "x > 2", { current: { x: 3 } }, true);
+test(eat, "_", { current: 77 }, 77);
 test(eat, "d", { current: new Set(["d"]) }, "d");
 test(eat, "e", { current: new Set(["d"]) }, undefined);
 test(eat, "a", { current: { a: 12 } }, 12);
