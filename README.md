@@ -245,6 +245,10 @@ Assign values into object
 *   `values` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
+    *   `options.type` **[Type](#type)?**&#x20;
+*   `filter` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** filer attributes
+*   `externalNames` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** use external names
+
 ## AST
 
 Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
