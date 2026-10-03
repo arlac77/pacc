@@ -142,6 +142,7 @@ tokens "abc" "
 *   [duration\_attribute](#duration_attribute)
 *   [duration\_attribute\_writable](#duration_attribute_writable)
 *   [duration\_ms\_attribute](#duration_ms_attribute)
+*   [duration\_ms\_attribute\_writable](#duration_ms_attribute_writable)
 *   [timeout\_attribute](#timeout_attribute)
 *   [language\_attribute](#language_attribute)
 *   [environmentValues](#environmentvalues)
@@ -213,6 +214,7 @@ tokens "abc" "
 *   [STRING](#string)
 *   [NUMBER](#number)
 *   [BOOLEAN](#boolean)
+*   [CURRENT](#current)
 *   [EOF](#eof)
 *   [Type](#type)
     *   [Properties](#properties-3)
@@ -588,6 +590,14 @@ Type: [AttributeDefinition](#attributedefinition)
 
 ## duration\_ms\_attribute
 
+Duration in milliseconds
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## duration\_ms\_attribute\_writable
+
+Duration in milliseconds
+
 Type: [AttributeDefinition](#attributedefinition)
 
 ## timeout\_attribute
@@ -924,6 +934,10 @@ Type: [Token](#token)
 Type: [Token](#token)
 
 ## BOOLEAN
+
+Type: [Token](#token)
+
+## CURRENT
 
 Type: [Token](#token)
 
