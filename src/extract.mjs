@@ -2,11 +2,11 @@ import { toExternal, extendingAttributeIterator } from "pacc";
 
 /**
  * extract key value paris
- * @param {object} object
+ * @param {object} object value source
  * @param {object} options
  * @param {Type} [options.type]
- * @param {function} [filter]
- * @param {boolean} [externalNames]
+ * @param {function} [filter] filer attributes
+ * @param {boolean} [externalNames] use external names
  * @returns {object}
  */
 export function extract(object, options = {}) {
