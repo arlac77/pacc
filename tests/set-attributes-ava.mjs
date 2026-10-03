@@ -2,7 +2,7 @@ import test from "ava";
 import { sast, gast } from "./util.mjs";
 import {
   prepareAttributesDefinitions,
-  password_attribute_writable,
+  password_attribute,
   string_attribute
 } from "pacc";
 
@@ -30,7 +30,7 @@ const definitions = prepareAttributesDefinitions({
     writable: true,
     default: 77
   },
-  att4: password_attribute_writable,
+  att4: password_attribute,
   nested: {
     attributes: {
       att1: {

@@ -52,7 +52,7 @@ test("extendingAttributeIterator", t => {
   );
 });
 
-test.only("writableAttributeIterator", t => {
+test("writableAttributeIterator", t => {
   t.deepEqual(
     [...writableAttributeIterator(attributeDefinitions)],
     [
