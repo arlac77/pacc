@@ -214,6 +214,7 @@ tokens "abc" "
 *   [STRING](#string)
 *   [NUMBER](#number)
 *   [BOOLEAN](#boolean)
+*   [CURRENT](#current)
 *   [EOF](#eof)
 *   [Type](#type)
     *   [Properties](#properties-3)
@@ -933,6 +934,10 @@ Type: [Token](#token)
 Type: [Token](#token)
 
 ## BOOLEAN
+
+Type: [Token](#token)
+
+## CURRENT
 
 Type: [Token](#token)
 
