@@ -31,6 +31,7 @@ test("attributeIterator", t => {
       [["c"], attributeDefinitions.c],
       [["d"], attributeDefinitions.d],
       [["d", "d1"], attributeDefinitions.d.attributes.d1],
+      [["d", "d2"], attributeDefinitions.d.attributes.d2],
       [["e"], attributeDefinitions.e]
     ]
   );
@@ -70,6 +71,6 @@ test("extendingAttributeIterator aClass", t => {
     [...extendingAttributeIterator(aClass)].map(([path, attribute]) =>
       path.join(".")
     ),
-    ["a", "b", "c", "d", "d.d1", "e"]
+    ["a", "b", "c", "d", "d.d1", "d.d2", "e"]
   );
 });
