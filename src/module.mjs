@@ -8,13 +8,14 @@ export * from "./extract.mjs";
 export * from "./tokens.mjs";
 export * from "./filter.mjs";
 export * from "./common-attributes.mjs";
-export * from "./properties.mjs";
 export * from "./parser.mjs";
 export * from "./expand.mjs";
 export * from "./environment.mjs";
 
 
 // DEPRECATED
+
+export * from "./properties.mjs";
 
 export {
   setAttribute,

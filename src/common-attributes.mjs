@@ -486,6 +486,14 @@ export const id_attribute = {
 };
 
 /**
+ * @type {AttributeDefinition}
+ */
+export const id_attribute_writable = {
+  ...id_attribute,
+  writable: true
+};
+
+/**
  * The body text.
  * @type {AttributeDefinition}
  */
