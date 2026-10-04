@@ -4,7 +4,7 @@ import {
   password_attribute_writable,
   string_attribute_writable,
   integer_attribute_writable,
-  object_attribute
+  object_attribute_writable
 } from "pacc";
 
 export function ast(t, object, source, attributes, expected) {
@@ -116,7 +116,7 @@ test(
   },
   {
     data: {
-      ...object_attribute,
+      ...object_attribute_writable,
       attributes: {}
     }
   },
