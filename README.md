@@ -248,6 +248,7 @@ Assign values into object
     *   `options.type` **[Type](#type)?**&#x20;
 *   `filter` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** filer attributes
 *   `externalNames` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** use external names
+*   `assigned` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** called after one attribute assignment
 
 ## AST
 
