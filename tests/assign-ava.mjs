@@ -7,15 +7,15 @@ import {
   object_attribute_writable
 } from "pacc";
 
-export function ast(t, object, source, attributes, expected) {
-  assign(object, source, { type: { attributes } });
+export function ast(t, object, source, options, expected) {
+  assign(object, source, options);
   expected(t, object);
 }
 
-ast.title = (providedTitle = "", object, source, attributes, expected) =>
+ast.title = (providedTitle = "", object, source, options, expected) =>
   `assign ${providedTitle} ${JSON.stringify(
     object
-  )} ${source} ${JSON.stringify(attributes)}`.trim();
+  )} ${source} ${JSON.stringify(options)}`.trim();
 
 const attributes = {
   att1: {
@@ -48,24 +48,28 @@ const attributes = {
   }
 };
 
-test(ast, {}, { att1: "value1" }, attributes, (t, object) => {
+const options = {
+  type: { attributes }
+};
+
+test(ast, {}, { att1: "value1" }, options, (t, object) => {
   t.is(object.att1, "value1");
   //t.is(object.att3, 77);
 });
 
-test("unknown key", ast, {}, { att7: "value7" }, attributes, (t, object) =>
+test("unknown key", ast, {}, { att7: "value7" }, options, (t, object) =>
   t.is(object.att7, undefined)
 );
 
-test("with defaults", ast, {}, { att3: 17 }, attributes, (t, object) =>
+test("with defaults", ast, {}, { att3: 17 }, options, (t, object) =>
   t.is(object.att3, 17)
 );
 
-test("use default", ast, {}, { att1: 17 }, attributes, (t, object) =>
+test("use default", ast, {}, { att1: 17 }, options, (t, object) =>
   t.is(object.att3, 77)
 );
 
-test("keep old value", ast, { att3: 4711 }, {}, attributes, (t, object) =>
+test("keep old value", ast, { att3: 4711 }, {}, options, (t, object) =>
   t.is(object.att3, 4711)
 );
 
@@ -78,7 +82,7 @@ test(
       att1: "value1a"
     }
   },
-  attributes,
+  options,
   (t, object) => t.is(object.nested.att1, "value1a")
 );
 
@@ -96,11 +100,11 @@ test(
       att1: "value1b"
     }
   },
-  attributes,
+  options,
   (t, object) => t.is(object.nested.att1, "value1b")
 );
 
-test("nested default", ast, {}, {}, attributes, (t, object) =>
+test("nested default", ast, {}, {}, options, (t, object) =>
   t.is(object.nested?.att1, "the default")
 );
 
@@ -115,9 +119,13 @@ test(
     }
   },
   {
-    data: {
-      ...object_attribute_writable,
-      attributes: {}
+    type: {
+      attributes: {
+        data: {
+          ...object_attribute_writable,
+          attributes: {}
+        }
+      }
     }
   },
   (t, object) =>
@@ -134,6 +142,6 @@ test.skip(
   {
     att2: "value2"
   },
-  attributes,
+  options,
   (t, object) => t.is(object.att2x, "value2")
 );

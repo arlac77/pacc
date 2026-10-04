@@ -8,6 +8,7 @@ import { toInternal, extendingAttributeIterator, filterWritable } from "pacc";
  * @param {Type} [options.type]
  * @param {function} [filter] filer attributes
  * @param {boolean} [externalNames] use external names
+ * @param {function} [assigned] called after one attribute assignment
  */
 export function assign(object, values, options = {}) {
   for (const [path, attribute] of extendingAttributeIterator(
@@ -38,10 +39,18 @@ export function assign(object, values, options = {}) {
 
     if (value === undefined && attribute.default && o[name] === undefined) {
       o[name] = attribute.default;
+      options.assigned?.(attribute, attribute.default);
     } else {
       if (value !== undefined) {
         o[name] = value;
+        options.assigned?.(attribute, value);
       }
     }
   }
+}
+
+export function assignAttribute(attribute, object, value) {
+  value = toInternal(value, attribute);
+
+  object[attribute.name] = value;
 }
