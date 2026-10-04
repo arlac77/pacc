@@ -1,4 +1,4 @@
-import { toInternal, extendingAttributeIterator } from "pacc";
+import { toInternal, extendingAttributeIterator, filterWritable } from "pacc";
 
 /**
  * Assign values into object
@@ -12,7 +12,7 @@ import { toInternal, extendingAttributeIterator } from "pacc";
 export function assign(object, values, options = {}) {
   for (const [path, attribute] of extendingAttributeIterator(
     options.type ?? object.constructor,
-    options.filter
+    options.filter ?? filterWritable
   )) {
     let o = object;
     let v = values;
