@@ -98,6 +98,7 @@ tokens "abc" "
 *   [name\_attribute](#name_attribute)
 *   [name\_attribute\_writable](#name_attribute_writable)
 *   [email\_attribute](#email_attribute)
+*   [email\_attribute\_writable](#email_attribute_writable)
 *   [version\_attribute](#version_attribute)
 *   [version\_attribute\_writable](#version_attribute_writable)
 *   [description\_attribute](#description_attribute)
@@ -410,6 +411,10 @@ Type: [AttributeDefinition](#attributedefinition)
 Type: [AttributeDefinition](#attributedefinition)
 
 ## email\_attribute
+
+Type: [AttributeDefinition](#attributedefinition)
+
+## email\_attribute\_writable
 
 Type: [AttributeDefinition](#attributedefinition)
 
