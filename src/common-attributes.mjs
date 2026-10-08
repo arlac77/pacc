@@ -175,6 +175,14 @@ export const email_attribute = {
 /**
  * @type {AttributeDefinition}
  */
+export const email_attribute_writable = {
+  ...email_attribute,
+  writable: true
+};
+
+/**
+ * @type {AttributeDefinition}
+ */
 export const version_attribute = {
   ...string_attribute,
   name: "version"
